@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 920" role="img" aria-labelledby="title desc">
+    <title id="title">Technical training classroom</title>
+    <desc id="desc">A technical institute training lab with students, an instructor, computer desks, electronic equipment, and a classroom board.</desc>
+    <defs>
+        <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#dbeafe"/>
+            <stop offset=".5" stop-color="#bfd7e9"/>
+            <stop offset="1" stop-color="#0f3446"/>
+        </linearGradient>
+        <linearGradient id="desk" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#87612b"/>
+            <stop offset="1" stop-color="#4b3218"/>
+        </linearGradient>
+        <linearGradient id="shirt" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fde047"/>
+            <stop offset="1" stop-color="#d97706"/>
+        </linearGradient>
+        <linearGradient id="instructor" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#111827"/>
+            <stop offset="1" stop-color="#020617"/>
+        </linearGradient>
+        <radialGradient id="lamp" cx="50%" cy="45%" r="65%">
+            <stop offset="0" stop-color="#fff7ed"/>
+            <stop offset=".5" stop-color="#f59e0b"/>
+            <stop offset="1" stop-color="#0f172a" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="11"/>
+        </filter>
+    </defs>
+
+    <rect width="1600" height="920" fill="url(#wall)"/>
+    <rect y="410" width="1600" height="510" fill="#132d3c"/>
+    <rect x="-20" y="110" width="440" height="250" rx="18" fill="#e6eef6" opacity=".85"/>
+    <path d="M90 175h235M90 240h250M90 305h210" stroke="#1e3a8a" stroke-width="13" stroke-linecap="round" opacity=".34"/>
+    <path d="m337 162 30 34 68-76M350 235l30 34 68-76M330 301l30 34 68-76" fill="none" stroke="#dc2626" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity=".48"/>
+    <rect x="456" y="72" width="484" height="306" rx="16" fill="#cfe3ef" opacity=".75"/>
+    <rect x="495" y="106" width="405" height="230" rx="10" fill="#f8fafc"/>
+    <text x="635" y="155" fill="#334155" font-family="Arial, sans-serif" font-size="34" font-weight="700">Basics of Computer</text>
+    <circle cx="545" cy="205" r="5" fill="#334155"/>
+    <circle cx="545" cy="247" r="5" fill="#334155"/>
+    <circle cx="545" cy="289" r="5" fill="#334155"/>
+    <path d="M572 205h218M572 247h245M572 289h178" stroke="#64748b" stroke-width="8" stroke-linecap="round" opacity=".42"/>
+    <rect x="789" y="210" width="80" height="74" rx="5" fill="#94a3b8"/>
+    <rect x="801" y="222" width="56" height="42" fill="#dbeafe"/>
+    <path d="M824 284v24M793 309h75" stroke="#64748b" stroke-width="8" stroke-linecap="round"/>
+
+    <g opacity=".42">
+        <rect x="1052" y="166" width="155" height="92" rx="10" fill="#e2e8f0"/>
+        <rect x="1075" y="187" width="109" height="26" rx="5" fill="#f59e0b"/>
+        <rect x="1075" y="225" width="46" height="12" rx="4" fill="#334155"/>
+        <rect x="1139" y="225" width="45" height="12" rx="4" fill="#334155"/>
+        <rect x="1243" y="185" width="174" height="100" rx="13" fill="#e2e8f0"/>
+        <circle cx="1291" cy="235" r="21" fill="#334155"/>
+        <circle cx="1372" cy="236" r="16" fill="#f59e0b"/>
+    </g>
+
+    <ellipse cx="1372" cy="163" rx="210" ry="175" fill="url(#lamp)" opacity=".72"/>
+    <path d="M1355 0h90l-36 122h-27z" fill="#0f172a" opacity=".82"/>
+    <ellipse cx="1396" cy="125" rx="88" ry="28" fill="#f8fafc"/>
+
+    <path d="M0 680c224-62 447-88 669-78 295 13 595 96 931 22v296H0z" fill="url(#desk)"/>
+    <path d="M0 652c295-34 585-18 876 34 255 46 494 42 724-12v84c-250 48-509 41-779-8-279-50-551-62-821-23z" fill="#a16207" opacity=".66"/>
+
+    <g transform="translate(205 300)">
+        <path d="M120 115c-40 2-68 36-70 82-4 81 68 118 130 95 66-25 82-135 30-171-21-14-49-8-90-6z" fill="#b45309"/>
+        <path d="M70 128c37-72 165-62 196 22-49-26-104-21-196-22z" fill="#111827"/>
+        <path d="M76 190c6 64 39 100 90 100 51 0 84-40 86-105-44-4-89-16-128-41-7 28-22 42-48 46z" fill="#a16207"/>
+        <path d="M101 291h120v86H101z" fill="#92400e"/>
+        <path d="M-40 630c23-177 95-285 202-285s179 108 207 285z" fill="url(#shirt)"/>
+        <path d="M77 350c39 40 106 40 148 0l23 96c-64 37-130 33-196-2z" fill="#fef3c7" opacity=".58"/>
+        <path d="M95 440c-8 68-1 126 16 174M214 438c14 70 15 129 6 176" stroke="#1f2937" stroke-width="9" stroke-linecap="round" opacity=".45"/>
+        <text x="80" y="548" fill="#111827" font-family="Arial, sans-serif" font-size="45" font-weight="900" transform="rotate(-5 80 548)">TECHNOLOGY</text>
+        <text x="117" y="596" fill="#111827" font-family="Arial, sans-serif" font-size="24" font-weight="700" opacity=".7">THE FUTURE IS HERE</text>
+        <path d="M26 508c-58 37-71 95-61 146M292 493c70 16 99 67 104 140" stroke="#b45309" stroke-width="46" stroke-linecap="round"/>
+        <path d="M-23 629h136" stroke="#1d4ed8" stroke-width="13" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(772 112)">
+        <path d="M154 132c-43 4-76 38-77 88-2 76 58 123 119 109 76-17 100-126 48-174-21-19-50-26-90-23z" fill="#8b5e34"/>
+        <path d="M77 187c16-77 114-110 175-54 25 23 37 53 34 90-51-40-122-50-209-36z" fill="#0f172a"/>
+        <path d="M115 311h115v92H115z" fill="#7c4a24"/>
+        <path d="M-18 740c5-207 63-356 192-356 133 0 201 148 226 356z" fill="url(#instructor)"/>
+        <path d="M86 388c44 36 110 38 158 2" fill="none" stroke="#d97706" stroke-width="12" stroke-linecap="round"/>
+        <path d="M116 407c45 69 67 166 65 291M237 406c-32 79-46 177-27 293" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" opacity=".85"/>
+        <path d="M122 441c34 28 76 28 111 0M112 491c47 32 92 33 138 0M108 543c55 33 104 32 154 0" stroke="#f59e0b" stroke-width="7" stroke-linecap="round" opacity=".82"/>
+        <path d="M19 479c-123 78-177 141-202 244" stroke="#111827" stroke-width="65" stroke-linecap="round"/>
+        <path d="M-150 691c-63 46-99 77-123 112" stroke="#8b5e34" stroke-width="38" stroke-linecap="round"/>
+        <circle cx="-285" cy="815" r="30" fill="#8b5e34"/>
+        <path d="M300 496c-60 78-111 123-189 164" stroke="#111827" stroke-width="61" stroke-linecap="round"/>
+        <path d="M121 655c-36 24-70 35-101 35" stroke="#8b5e34" stroke-width="36" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(790 565)" opacity=".84">
+        <rect x="0" y="35" width="324" height="172" rx="18" fill="#0f172a"/>
+        <rect x="28" y="58" width="268" height="116" rx="11" fill="#0e7490"/>
+        <path d="m60 144 51-46 38 33 70-70 49 78" fill="none" stroke="#34d399" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="107" y="207" width="111" height="22" fill="#64748b"/>
+    </g>
+
+    <g transform="translate(1110 528)" opacity=".76">
+        <rect x="0" y="0" width="355" height="172" rx="17" fill="#dbeafe"/>
+        <rect x="34" y="34" width="102" height="47" rx="10" fill="#1e293b"/>
+        <rect x="165" y="33" width="153" height="26" rx="7" fill="#f59e0b"/>
+        <rect x="165" y="83" width="125" height="14" rx="5" fill="#64748b"/>
+        <rect x="165" y="115" width="95" height="14" rx="5" fill="#64748b"/>
+        <circle cx="84" cy="122" r="29" fill="#0f766e"/>
+        <circle cx="84" cy="122" r="11" fill="#34d399"/>
+    </g>
+
+    <g opacity=".26" filter="url(#blur)">
+        <circle cx="260" cy="700" r="270" fill="#f59e0b"/>
+        <circle cx="1190" cy="280" r="270" fill="#0ea5e9"/>
+        <circle cx="810" cy="780" r="260" fill="#10b981"/>
+    </g>
+</svg>

@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+    <title id="title">Bangladesh National Youth Technical Institute logo</title>
+    <desc id="desc">Official-style crest for Bangladesh National Youth Technical Institute with navy gear, orange panels, book, graduation, and globe symbols.</desc>
+    <defs>
+        <path id="topArc" d="M 258 540 A 342 342 0 0 1 942 540" />
+        <path id="bottomArc" d="M 250 742 A 350 350 0 0 0 950 742" />
+        <linearGradient id="navy" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#172e65" />
+            <stop offset="1" stop-color="#071c42" />
+        </linearGradient>
+        <linearGradient id="orange" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#df6726" />
+            <stop offset="1" stop-color="#c94f13" />
+        </linearGradient>
+        <filter id="softShadow" x="-15%" y="-15%" width="130%" height="130%">
+            <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#071c42" flood-opacity=".14" />
+        </filter>
+    </defs>
+
+    <rect width="1200" height="1200" fill="#ffffff" />
+
+    <g filter="url(#softShadow)">
+        <g fill="url(#navy)">
+            <circle cx="600" cy="525" r="425" />
+            <g transform="translate(600 525)">
+                <g id="tooth">
+                    <rect x="-31" y="-508" width="62" height="104" rx="6" />
+                </g>
+                <use href="#tooth" transform="rotate(15)" />
+                <use href="#tooth" transform="rotate(30)" />
+                <use href="#tooth" transform="rotate(45)" />
+                <use href="#tooth" transform="rotate(60)" />
+                <use href="#tooth" transform="rotate(75)" />
+                <use href="#tooth" transform="rotate(90)" />
+                <use href="#tooth" transform="rotate(105)" />
+                <use href="#tooth" transform="rotate(120)" />
+                <use href="#tooth" transform="rotate(135)" />
+                <use href="#tooth" transform="rotate(150)" />
+                <use href="#tooth" transform="rotate(165)" />
+                <use href="#tooth" transform="rotate(180)" />
+                <use href="#tooth" transform="rotate(195)" />
+                <use href="#tooth" transform="rotate(210)" />
+                <use href="#tooth" transform="rotate(225)" />
+                <use href="#tooth" transform="rotate(240)" />
+                <use href="#tooth" transform="rotate(255)" />
+                <use href="#tooth" transform="rotate(270)" />
+                <use href="#tooth" transform="rotate(285)" />
+                <use href="#tooth" transform="rotate(300)" />
+                <use href="#tooth" transform="rotate(315)" />
+                <use href="#tooth" transform="rotate(330)" />
+                <use href="#tooth" transform="rotate(345)" />
+            </g>
+        </g>
+
+        <path d="M204 875c-64 12-112 47-147 104 43-12 82-10 121 6 22-40 51-75 87-105Z" fill="url(#navy)" />
+        <path d="M996 875c64 12 112 47 147 104-43-12-82-10-121 6-22-40-51-75-87-105Z" fill="url(#navy)" />
+        <path d="M168 767c-72 42-107 103-107 184 52-42 105-60 160-54 6-49 23-93 51-132Z" fill="url(#navy)" />
+        <path d="M1032 767c72 42 107 103 107 184-52-42-105-60-160-54-6-49-23-93-51-132Z" fill="url(#navy)" />
+
+        <circle cx="600" cy="525" r="372" fill="#ffffff" />
+        <circle cx="600" cy="525" r="349" fill="none" stroke="#d95a1a" stroke-width="14" />
+        <circle cx="600" cy="525" r="304" fill="none" stroke="#d95a1a" stroke-width="8" opacity=".8" />
+
+        <text fill="#172e65" font-family="Arial, Helvetica, sans-serif" font-size="57" font-weight="900" letter-spacing=".5">
+            <textPath href="#topArc" startOffset="50%" text-anchor="middle">Bangladesh National Youth Technical Institute</textPath>
+        </text>
+
+        <path d="M302 491a298 298 0 0 1 596 0v62H302Z" fill="url(#navy)" />
+        <path d="M312 584h276v244H312Z" fill="url(#orange)" />
+        <path d="M612 584h276v244H612Z" fill="url(#orange)" />
+        <path d="M312 553h576" stroke="#ffffff" stroke-width="18" />
+        <path d="M600 584v244" stroke="#ffffff" stroke-width="18" />
+
+        <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M505 448c40-20 79-20 118 0 40-20 79-20 118 0v55c-40-18-79-18-118 0-39-18-78-18-118 0Z" stroke-width="18" />
+            <path d="M623 448v58" stroke-width="10" />
+            <path d="M585 376c0-38 31-69 69-69s69 31 69 69c0 36-25 54-43 71h-52c-18-17-43-35-43-71Z" stroke-width="16" />
+            <path d="M639 473h30M641 500h26" stroke-width="12" />
+            <circle cx="654" cy="355" r="30" stroke-width="14" />
+            <circle cx="573" cy="376" r="25" stroke-width="12" />
+            <path d="M542 337l-23-15M768 337l23-15M655 270v-34" stroke-width="12" />
+        </g>
+
+        <g fill="#ffffff">
+            <path d="M453 665l79 32-79 32-79-32Z" />
+            <path d="M398 720c22 24 87 24 109 0v58c-22 20-87 20-109 0Z" />
+            <path d="M432 778h42c51 0 92 41 92 92H340c0-51 41-92 92-92Z" />
+            <path d="M370 876h168v24H370Z" />
+            <path d="M390 908h126c14 0 25 11 25 25v10H365v-10c0-14 11-25 25-25Z" />
+        </g>
+
+        <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="15">
+            <circle cx="744" cy="705" r="80" />
+            <path d="M665 705h158M744 625c32 33 48 60 48 80s-16 47-48 80M744 625c-32 33-48 60-48 80s16 47 48 80" />
+            <path d="M641 839c42-54 83-58 123-12 42-46 83-42 123 12" />
+            <circle cx="641" cy="786" r="23" fill="#ffffff" stroke="none" />
+            <circle cx="887" cy="786" r="23" fill="#ffffff" stroke="none" />
+        </g>
+
+        <path d="M285 797c78 37 183 57 315 57s237-20 315-57v116c-79 44-184 66-315 66s-236-22-315-66Z" fill="url(#navy)" />
+        <text fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="500" letter-spacing="1">
+            <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">Govt. Reg No-198120</textPath>
+        </text>
+
+        <path d="M226 895c86 83 207 125 374 125s288-42 374-125v96c-87 80-212 121-374 121s-287-41-374-121Z" fill="url(#navy)" />
+        <text x="600" y="983" fill="#ffffff" font-family="Noto Sans Bengali, Arial, sans-serif" font-size="47" font-weight="800" text-anchor="middle">বাংলাদেশ জাতীয় যুব কারিগরি ইনস্টিটিউট</text>
+
+        <path d="M340 1074c102 42 189 63 260 63s158-21 260-63c-85 62-172 93-260 93s-175-31-260-93Z" fill="#d95a1a" />
+        <g fill="#172e65">
+            <path d="M600 1093l18 36 40 6-29 28 7 40-36-19-36 19 7-40-29-28 40-6Z" />
+            <path d="M505 1114l12 25 28 4-20 19 5 27-25-13-25 13 5-27-20-19 28-4Z" />
+            <path d="M695 1114l12 25 28 4-20 19 5 27-25-13-25 13 5-27-20-19 28-4Z" />
+            <path d="M415 1090l10 20 22 3-16 16 4 22-20-10-20 10 4-22-16-16 22-3Z" />
+            <path d="M785 1090l10 20 22 3-16 16 4 22-20-10-20 10 4-22-16-16 22-3Z" />
+        </g>
+
+        <g fill="#d95a1a">
+            <path d="M249 686l17 34 38 6-28 27 7 38-34-18-34 18 7-38-28-27 38-6Z" />
+            <path d="M951 686l17 34 38 6-28 27 7 38-34-18-34 18 7-38-28-27 38-6Z" />
+        </g>
+
+        <g fill="none" stroke="#172e65" stroke-linecap="round" stroke-width="18">
+            <path d="M170 820c-32 65-36 137-13 218" />
+            <path d="M121 991c29-29 55-43 78-41" />
+            <path d="M108 914c37-16 66-17 89-2" />
+            <path d="M132 846c38 0 65 11 80 33" />
+            <path d="M1030 820c32 65 36 137 13 218" />
+            <path d="M1079 991c-29-29-55-43-78-41" />
+            <path d="M1092 914c-37-16-66-17-89-2" />
+            <path d="M1068 846c-38 0-65 11-80 33" />
+        </g>
+    </g>
+</svg>

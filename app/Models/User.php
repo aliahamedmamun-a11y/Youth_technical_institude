@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'role', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -26,7 +27,21 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'role' => UserRole::class,
             'password' => 'hashed',
         ];
+    }
+
+    public function hasRole(UserRole|string ...$roles): bool
+    {
+        foreach ($roles as $role) {
+            $roleValue = $role instanceof UserRole ? $role->value : $role;
+
+            if ($this->role->value === $roleValue) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

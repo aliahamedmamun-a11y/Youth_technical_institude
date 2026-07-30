@@ -104,7 +104,7 @@ const translations = {
         studentAdmission: 'Student admission',
         resultCheck: 'Result checking',
         certificateVerify: 'Certificate verification',
-        branchApplication: 'Branch application',
+        branchApplication: 'Branch Register',
         rights: 'All rights reserved.',
         footerLine: 'Skills for work. Confidence for life.',
     },
@@ -213,7 +213,7 @@ const translations = {
         studentAdmission: 'শিক্ষার্থী ভর্তি',
         resultCheck: 'ফলাফল দেখুন',
         certificateVerify: 'সনদ যাচাই',
-        branchApplication: 'শাখা আবেদন',
+        branchApplication: 'শাখা নিবন্ধন',
         rights: 'সর্বস্বত্ব সংরক্ষিত।',
         footerLine: 'কাজের জন্য দক্ষতা। জীবনের জন্য আত্মবিশ্বাস।',
     },
@@ -317,6 +317,71 @@ window.addEventListener('resize', () => {
 });
 
 const revealElements = document.querySelectorAll('.reveal');
+
+document.querySelectorAll('[data-location-form]').forEach((locationForm) => {
+    const districtSelect = locationForm.querySelector('[data-district-select]');
+    const upazilaSelect = locationForm.querySelector('[data-upazila-select]');
+    const postOfficeSelect = locationForm.querySelector('[data-post-office-select]');
+    const upazilasByDistrict = JSON.parse(locationForm.dataset.upazilas || '{}');
+    const oldUpazila = locationForm.dataset.oldUpazila || '';
+    const oldPostOffice = locationForm.dataset.oldPostOffice || '';
+
+    const updatePostOffices = () => {
+        if (!postOfficeSelect) {
+            return;
+        }
+
+        const postOffice = upazilaSelect.value ? `${upazilaSelect.value} Post Office` : '';
+        postOfficeSelect.replaceChildren(new Option(postOffice || 'Select upazila first', postOffice));
+        postOfficeSelect.disabled = !postOffice;
+        if (postOffice === oldPostOffice) {
+            postOfficeSelect.value = oldPostOffice;
+        }
+    };
+
+    const updateUpazilas = () => {
+        const upazilas = upazilasByDistrict[districtSelect.value] || [];
+        upazilaSelect.replaceChildren(new Option(upazilas.length ? 'Select upazila' : 'No upazilas found', ''));
+        upazilas.forEach((upazila) => upazilaSelect.add(new Option(upazila, upazila)));
+        upazilaSelect.disabled = upazilas.length === 0;
+        if (upazilas.includes(oldUpazila)) {
+            upazilaSelect.value = oldUpazila;
+        }
+        updatePostOffices();
+    };
+
+    districtSelect.addEventListener('change', updateUpazilas);
+    upazilaSelect.addEventListener('change', updatePostOffices);
+    updateUpazilas();
+});
+
+document.querySelectorAll('[data-result-form]').forEach((resultForm) => {
+    const subjectsBody = resultForm.querySelector('[data-result-subjects]');
+    const addButton = resultForm.querySelector('[data-add-result-subject]');
+
+    const renumberRows = () => {
+        subjectsBody.querySelectorAll('[data-result-subject-row]').forEach((row, index) => {
+            row.querySelectorAll('input').forEach((input) => {
+                input.name = input.name.replace(/subjects\[\d+\]/, `subjects[${index}]`);
+            });
+        });
+    };
+
+    addButton.addEventListener('click', () => {
+        const index = subjectsBody.querySelectorAll('[data-result-subject-row]').length;
+        const row = document.createElement('tr');
+        row.dataset.resultSubjectRow = '';
+        row.innerHTML = `<td class="px-3 py-2"><input name="subjects[${index}][code]" required class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input name="subjects[${index}][title]" required class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][credit]" required min="0.5" max="20" step="0.5" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][marks]" min="0" max="100" step="0.01" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input name="subjects[${index}][grade]" required class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][grade_point]" required min="0" max="4" step="0.01" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2 text-right"><button type="button" data-remove-result-subject class="font-black text-rose-600">Remove</button></td>`;
+        subjectsBody.append(row);
+    });
+
+    subjectsBody.addEventListener('click', (event) => {
+        if (event.target.matches('[data-remove-result-subject]') && subjectsBody.querySelectorAll('[data-result-subject-row]').length > 1) {
+            event.target.closest('[data-result-subject-row]').remove();
+            renumberRows();
+        }
+    });
+});
 
 if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(

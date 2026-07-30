@@ -36,6 +36,8 @@ class StudentController extends Controller
         Gate::authorize('create', Student::class);
 
         $studentData = $request->safe()->except('image');
+        $studentData['registration_number'] = $this->registrationNumber();
+        $studentData['result_status'] = 'Pending';
 
         if ($request->hasFile('image')) {
             $studentData['image_path'] = $request->file('image')->store('students', 'public');
@@ -98,5 +100,14 @@ class StudentController extends Controller
     private function courses(): Collection
     {
         return Course::query()->orderBy('name')->get();
+    }
+
+    private function registrationNumber(): string
+    {
+        do {
+            $registrationNumber = 'BNYTI-'.now()->format('YmdHis').'-'.random_int(100, 999);
+        } while (Student::query()->where('registration_number', $registrationNumber)->exists());
+
+        return $registrationNumber;
     }
 }

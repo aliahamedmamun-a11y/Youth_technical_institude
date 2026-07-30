@@ -42,13 +42,13 @@ class AcademicDataSeeder extends Seeder
         ];
     }
 
-    /** @return list<array{name: string, employee_number: string, email: string, phone: string, designation: string, department: string, qualification: string, joined_at: string, is_active: bool}> */
+    /** @return list<array{name: string, employee_number: string, email: string, phone: string, designation: string, department: string, qualification: string, image_path: string, joined_at: string, is_active: bool}> */
     private function teachers(): array
     {
         return [
-            ['name' => 'Md. Rahim Uddin', 'employee_number' => 'T-1001', 'email' => 'rahim@bnyti.test', 'phone' => '01710000001', 'designation' => 'Senior Instructor', 'department' => 'Computer', 'qualification' => 'BSc in Computer Science', 'joined_at' => '2022-01-10', 'is_active' => true],
-            ['name' => 'Farhana Akter', 'employee_number' => 'T-1002', 'email' => 'farhana@bnyti.test', 'phone' => '01710000002', 'designation' => 'Instructor', 'department' => 'Design', 'qualification' => 'BFA in Graphic Design', 'joined_at' => '2023-03-15', 'is_active' => true],
-            ['name' => 'Kamal Hossain', 'employee_number' => 'T-1003', 'email' => 'kamal@bnyti.test', 'phone' => '01710000003', 'designation' => 'Technical Instructor', 'department' => 'Electrical', 'qualification' => 'Diploma in Electrical Engineering', 'joined_at' => '2021-07-01', 'is_active' => true],
+            ['name' => 'Md. Rahim Uddin', 'employee_number' => 'T-1001', 'email' => 'rahim@bnyti.test', 'phone' => '01710000001', 'designation' => 'Senior Instructor', 'department' => 'Computer', 'qualification' => 'BSc in Computer Science', 'image_path' => 'teachers/md-rahim-uddin.png', 'joined_at' => '2022-01-10', 'is_active' => true],
+            ['name' => 'Farhana Akter', 'employee_number' => 'T-1002', 'email' => 'farhana@bnyti.test', 'phone' => '01710000002', 'designation' => 'Instructor', 'department' => 'Design', 'qualification' => 'BFA in Graphic Design', 'image_path' => 'teachers/farhana-akter.png', 'joined_at' => '2023-03-15', 'is_active' => true],
+            ['name' => 'Kamal Hossain', 'employee_number' => 'T-1003', 'email' => 'kamal@bnyti.test', 'phone' => '01710000003', 'designation' => 'Technical Instructor', 'department' => 'Electrical', 'qualification' => 'Diploma in Electrical Engineering', 'image_path' => 'teachers/kamal-hossain.png', 'joined_at' => '2021-07-01', 'is_active' => true],
         ];
     }
 

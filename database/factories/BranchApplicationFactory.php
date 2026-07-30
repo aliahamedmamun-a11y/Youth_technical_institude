@@ -6,20 +6,11 @@ use App\Enums\BranchApplicationStatus;
 use App\Models\BranchApplication;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends Factory<BranchApplication>
- */
+/** @extends Factory<BranchApplication> */
 class BranchApplicationFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
-        return [
-            'proposed_branch_name' => fake()->city().' Technical Institute', 'applicant_name' => fake()->name(), 'email' => fake()->safeEmail(), 'phone' => fake()->numerify('01#########'), 'district' => fake()->city(), 'address' => fake()->address(), 'years_of_experience' => fake()->numberBetween(1, 15), 'message' => fake()->paragraph(), 'status' => BranchApplicationStatus::Pending,
-        ];
+        return ['director_name' => fake()->name(), 'father_name' => fake()->name(), 'mother_name' => fake()->name(), 'institute_name' => fake()->city().' Technical Institute', 'full_address' => fake()->address(), 'district' => fake()->city(), 'upazila' => fake()->city(), 'post_office' => fake()->city().' Post Office', 'email' => fake()->unique()->safeEmail(), 'sex' => fake()->randomElement(['Male', 'Female']), 'username' => fake()->unique()->userName(), 'password' => 'password', 'mobile_number' => fake()->numerify('01#########'), 'status' => BranchApplicationStatus::Pending];
     }
 }

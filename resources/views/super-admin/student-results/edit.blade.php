@@ -1,0 +1,1 @@
+<x-dashboard-shell title="Edit Result" eyebrow="Result management" :description="'Update '.$result->student->name.' · '.$result->semester"><x-student-result-form :result="$result" :action="route('super-admin.results.update', $result)" method="PUT" submit-label="Save changes" /></x-dashboard-shell>

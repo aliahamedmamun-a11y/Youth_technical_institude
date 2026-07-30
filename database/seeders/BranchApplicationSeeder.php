@@ -8,16 +8,13 @@ use Illuminate\Database\Seeder;
 
 class BranchApplicationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         foreach ([
-            ['proposed_branch_name' => 'BNYTI Chattogram Branch', 'applicant_name' => 'Mohammad Arif', 'email' => 'arif@example.test', 'phone' => '01730000001', 'district' => 'Chattogram', 'address' => 'Panchlaish, Chattogram', 'years_of_experience' => 8, 'message' => 'We have suitable training facilities and an experienced local team.', 'status' => BranchApplicationStatus::Pending],
-            ['proposed_branch_name' => 'BNYTI Rajshahi Branch', 'applicant_name' => 'Shamima Noor', 'email' => 'shamima@example.test', 'phone' => '01730000002', 'district' => 'Rajshahi', 'address' => 'Boalia, Rajshahi', 'years_of_experience' => 6, 'message' => 'We would like to expand technical education opportunities in Rajshahi.', 'status' => BranchApplicationStatus::Approved, 'reviewed_at' => now()],
+            ['director_name' => 'Mohammad Arif', 'father_name' => 'Abdul Karim', 'mother_name' => 'Rokeya Begum', 'institute_name' => 'BNYTI Chattogram Branch', 'full_address' => 'Panchlaish, Chattogram', 'district' => 'Chattogram', 'upazila' => 'Panchlaish', 'post_office' => 'Chattogram GPO', 'email' => 'arif@example.test', 'sex' => 'Male', 'username' => 'arif_branch', 'password' => 'password', 'mobile_number' => '01730000001', 'status' => BranchApplicationStatus::Pending],
+            ['director_name' => 'Shamima Noor', 'father_name' => 'Nurul Islam', 'mother_name' => 'Shirin Akter', 'institute_name' => 'BNYTI Rajshahi Branch', 'full_address' => 'Boalia, Rajshahi', 'district' => 'Rajshahi', 'upazila' => 'Boalia', 'post_office' => 'Rajshahi GPO', 'email' => 'shamima@example.test', 'sex' => 'Female', 'username' => 'shamima_branch', 'password' => 'password', 'mobile_number' => '01730000002', 'status' => BranchApplicationStatus::Approved, 'reviewed_at' => now()],
         ] as $application) {
-            BranchApplication::query()->updateOrCreate(['email' => $application['email']], $application);
+            BranchApplication::query()->updateOrCreate(['username' => $application['username']], $application);
         }
     }
 }

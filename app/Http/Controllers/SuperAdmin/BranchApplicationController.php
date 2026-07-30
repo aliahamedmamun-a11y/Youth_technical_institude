@@ -16,7 +16,7 @@ class BranchApplicationController extends Controller
     {
         Gate::authorize('viewAny', BranchApplication::class);
 
-        return view('super-admin.branch-applications.index', ['applications' => BranchApplication::query()->latest()->paginate(15)]);
+        return view('super-admin.branch-applications.index', ['applications' => BranchApplication::query()->whereNotNull('username')->latest()->paginate(15)]);
     }
 
     public function show(BranchApplication $branchApplication): View

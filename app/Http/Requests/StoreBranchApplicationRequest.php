@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreBranchApplicationRequest extends FormRequest
 {
@@ -22,7 +23,7 @@ class StoreBranchApplicationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'proposed_branch_name' => ['required', 'string', 'max:255'], 'applicant_name' => ['required', 'string', 'max:255'], 'email' => ['required', 'email', 'max:255'], 'phone' => ['required', 'string', 'max:30'], 'district' => ['required', 'string', 'max:255'], 'address' => ['required', 'string', 'max:2000'], 'years_of_experience' => ['nullable', 'integer', 'min:0', 'max:80'], 'message' => ['nullable', 'string', 'max:5000'],
+            'director_name' => ['required', 'string', 'max:255'], 'father_name' => ['required', 'string', 'max:255'], 'mother_name' => ['required', 'string', 'max:255'], 'institute_name' => ['required', 'string', 'max:255'], 'full_address' => ['required', 'string', 'max:2000'], 'district' => ['required', Rule::in(config('bangladesh.districts'))], 'upazila' => ['required', Rule::in(config('bangladesh.upazilas.'.$this->input('district'), []))], 'post_office' => ['required', 'string', 'max:255'], 'email' => ['required', 'email', 'max:255'], 'sex' => ['required', Rule::in(['Male', 'Female', 'Other'])], 'username' => ['required', 'string', 'alpha_dash', 'min:4', 'max:50', Rule::unique('branch_applications', 'username')], 'password' => ['required', 'string', 'min:8', 'confirmed'], 'mobile_number' => ['required', 'string', 'max:30'], 'director_signature' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'], 'nid_photo' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'], 'director_photo' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ];
     }
 }

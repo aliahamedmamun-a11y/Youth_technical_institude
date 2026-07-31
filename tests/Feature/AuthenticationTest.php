@@ -50,6 +50,28 @@ test('dashboard redirects authenticated users to their own dashboard', function 
         ->assertRedirect(route('dashboards.editor', absolute: false));
 });
 
+test('branch dashboard displays a secure logout form', function () {
+    $user = User::factory()->role(UserRole::Branch)->create();
+
+    $this->actingAs($user)
+        ->get(route('dashboards.branch'))
+        ->assertSuccessful()
+        ->assertSee('action="'.route('logout').'"', false)
+        ->assertSee('method="POST"', false)
+        ->assertSee('name="_token"', false)
+        ->assertSee('Log out of the branch dashboard', false);
+});
+
+test('users can log out from the branch dashboard', function () {
+    $user = User::factory()->role(UserRole::Branch)->create();
+
+    $this->actingAs($user)
+        ->post(route('logout'))
+        ->assertRedirect(route('login', absolute: false));
+
+    $this->assertGuest();
+});
+
 test('super admin dashboard shows academic management navigation', function () {
     $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
 

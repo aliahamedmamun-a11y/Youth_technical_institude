@@ -15,7 +15,6 @@ test('super admins can manage courses', function () {
     $this->actingAs($superAdmin)
         ->post(route('super-admin.courses.store'), [
             'name' => 'Computer Office Applications',
-            'code' => 'COA-101',
             'duration' => '6 Months',
             'description' => 'Practical office application training.',
             'is_active' => '1',
@@ -26,13 +25,11 @@ test('super admins can manage courses', function () {
 
     expect($course)
         ->name->toBe('Computer Office Applications')
-        ->code->toBe('COA-101')
         ->is_active->toBeTrue();
 
     $this->actingAs($superAdmin)
         ->put(route('super-admin.courses.update', $course), [
             'name' => 'Advanced Computer Office Applications',
-            'code' => 'COA-101',
             'duration' => '1 Year',
             'description' => 'Advanced practical office application training.',
             'is_active' => '0',
@@ -64,20 +61,18 @@ test('non-super-admin users cannot access course management', function () {
         ->assertForbidden();
 });
 
-test('course codes must be unique', function () {
+test('departments do not require a department code', function () {
     $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
-    Course::factory()->create(['code' => 'COA-101']);
 
     $this->actingAs($superAdmin)
-        ->from(route('super-admin.courses.create'))
         ->post(route('super-admin.courses.store'), [
-            'name' => 'Another Course',
-            'code' => 'COA-101',
+            'name' => 'Another Department',
             'duration' => '3 Months',
             'is_active' => '1',
         ])
-        ->assertRedirect(route('super-admin.courses.create'))
-        ->assertSessionHasErrors('code');
+        ->assertRedirect(route('super-admin.courses.index'));
+
+    expect(Course::query()->where('name', 'Another Department')->exists())->toBeTrue();
 });
 
 test('super admins can upload a course image', function () {
@@ -87,7 +82,6 @@ test('super admins can upload a course image', function () {
     $this->actingAs($superAdmin)
         ->post(route('super-admin.courses.store'), [
             'name' => 'Web Design',
-            'code' => 'WEB-101',
             'duration' => '6 Months',
             'is_active' => '1',
             'image' => UploadedFile::fake()->image('web-design.png'),

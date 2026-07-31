@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\CourseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Course extends Model
 {
@@ -16,7 +17,6 @@ class Course extends Model
      */
     protected $fillable = [
         'name',
-        'code',
         'duration',
         'description',
         'image_path',
@@ -28,5 +28,10 @@ class Course extends Model
         return [
             'is_active' => 'boolean',
         ];
+    }
+
+    public function semesters(): HasMany
+    {
+        return $this->hasMany(Semester::class)->orderBy('sort_order');
     }
 }

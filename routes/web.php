@@ -8,9 +8,12 @@ use App\Http\Controllers\PublicResultController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\SuperAdmin\BranchApplicationController as SuperAdminBranchApplicationController;
 use App\Http\Controllers\SuperAdmin\CourseController;
+use App\Http\Controllers\SuperAdmin\SemesterController;
+use App\Http\Controllers\SuperAdmin\SemesterSetupController;
 use App\Http\Controllers\SuperAdmin\StudentController;
 use App\Http\Controllers\SuperAdmin\StudentDocumentController;
 use App\Http\Controllers\SuperAdmin\StudentResultController;
+use App\Http\Controllers\SuperAdmin\SubjectController;
 use App\Http\Controllers\SuperAdmin\TeacherController;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +69,20 @@ Route::middleware('auth')->group(function (): void {
     Route::resource('/super-admin/courses', CourseController::class)
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->names('super-admin.courses');
+
+    Route::get('/super-admin/semester-setup', [SemesterSetupController::class, 'index'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.semester-setup.index');
+
+    Route::resource('/super-admin/courses/{course}/semesters', SemesterController::class)
+        ->except(['show'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->names('super-admin.courses.semesters');
+
+    Route::resource('/super-admin/semesters/{semester}/subjects', SubjectController::class)
+        ->except(['show'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->names('super-admin.semesters.subjects');
 
     Route::resource('/super-admin/students', StudentController::class)
         ->middleware('role:'.UserRole::SuperAdmin->value)

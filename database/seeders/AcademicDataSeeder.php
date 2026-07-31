@@ -12,33 +12,34 @@ class AcademicDataSeeder extends Seeder
     public function run(): void
     {
         foreach ($this->courses() as $course) {
-            Course::query()->updateOrCreate(['code' => $course['code']], $course);
+            Course::query()->updateOrCreate(['name' => $course['name']], $course);
         }
 
         foreach ($this->teachers() as $teacher) {
             Teacher::query()->updateOrCreate(['employee_number' => $teacher['employee_number']], $teacher);
         }
 
-        $courses = Course::query()->pluck('id', 'code');
+        $courses = Course::query()->pluck('id', 'name');
+        $departmentNames = ['COA-101' => 'Computer Office Applications', 'GDM-201' => 'Graphic Design and Multimedia', 'EIM-301' => 'Electrical Installation and Maintenance'];
 
         foreach ($this->students() as $student) {
-            $courseCode = $student['course_code'];
+            $departmentName = $departmentNames[$student['course_code']];
             unset($student['course_code']);
 
             Student::query()->updateOrCreate(
                 ['registration_number' => $student['registration_number']],
-                [...$student, 'course_id' => $courses[$courseCode]],
+                [...$student, 'course_id' => $courses[$departmentName]],
             );
         }
     }
 
-    /** @return list<array{name: string, code: string, duration: string, description: string, is_active: bool}> */
+    /** @return list<array{name: string, duration: string, description: string, is_active: bool}> */
     private function courses(): array
     {
         return [
-            ['name' => 'Computer Office Applications', 'code' => 'COA-101', 'duration' => '6 Months', 'description' => 'Practical training in office productivity and computer fundamentals.', 'is_active' => true],
-            ['name' => 'Graphic Design and Multimedia', 'code' => 'GDM-201', 'duration' => '6 Months', 'description' => 'Hands-on design, illustration, and multimedia production training.', 'is_active' => true],
-            ['name' => 'Electrical Installation and Maintenance', 'code' => 'EIM-301', 'duration' => '1 Year', 'description' => 'Technical training in safe electrical installation and maintenance.', 'is_active' => true],
+            ['name' => 'Computer Office Applications', 'duration' => '6 Months', 'description' => 'Practical training in office productivity and computer fundamentals.', 'is_active' => true],
+            ['name' => 'Graphic Design and Multimedia', 'duration' => '6 Months', 'description' => 'Hands-on design, illustration, and multimedia production training.', 'is_active' => true],
+            ['name' => 'Electrical Installation and Maintenance', 'duration' => '1 Year', 'description' => 'Technical training in safe electrical installation and maintenance.', 'is_active' => true],
         ];
     }
 

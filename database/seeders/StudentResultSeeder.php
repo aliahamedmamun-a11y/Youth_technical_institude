@@ -2,44 +2,95 @@
 
 namespace Database\Seeders;
 
+use App\Models\Semester;
 use App\Models\Student;
 use App\Models\StudentResult;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class StudentResultSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $student = Student::query()->first();
+        $student = Student::query()->with('course')->first();
 
         if (! $student) {
             return;
         }
 
-        $result = StudentResult::query()->updateOrCreate(
-            ['student_id' => $student->id, 'semester' => 'First Year First Semester', 'session' => 'July 2025 - December 2025'],
-            ['status' => 'published', 'verification_token' => Str::random(48), 'published_at' => now()],
-        );
+        $semester = Semester::query()
+            ->whereBelongsTo($student->course)
+            ->where('name', 'First Semester')
+            ->with('subjects')
+            ->firstOrFail();
 
-        $subjects = [
-            ['code' => '101', 'title' => 'Principles of Management', 'credit' => 4, 'marks' => 72, 'grade' => 'B', 'grade_point' => 3],
-            ['code' => '102', 'title' => 'Business Communication', 'credit' => 3, 'marks' => 86, 'grade' => 'A+', 'grade_point' => 4],
-            ['code' => '103', 'title' => 'Accounting', 'credit' => 4, 'marks' => 88, 'grade' => 'A+', 'grade_point' => 4],
-            ['code' => '104', 'title' => 'Business Mathematics', 'credit' => 3, 'marks' => 89, 'grade' => 'A+', 'grade_point' => 4],
-            ['code' => '105', 'title' => 'Marketing Management', 'credit' => 4, 'marks' => 90, 'grade' => 'A+', 'grade_point' => 4],
-            ['code' => '106', 'title' => 'Human Resource Management', 'credit' => 3, 'marks' => 91, 'grade' => 'A+', 'grade_point' => 4],
-            ['code' => '107', 'title' => 'Computer Application in Business', 'credit' => 3, 'marks' => 87, 'grade' => 'A+', 'grade_point' => 4],
-            ['code' => '108', 'title' => 'Business Organization and Entrepreneurship', 'credit' => 4, 'marks' => 88, 'grade' => 'A+', 'grade_point' => 4],
-        ];
+        DB::transaction(function () use ($student, $semester): void {
+            $result = StudentResult::query()
+                ->where('student_id', $student->id)
+                ->where('session', 'July 2025 - December 2025')
+                ->where(function ($query) use ($semester): void {
+                    $query->where('semester_id', $semester->id)->orWhere('semester', $semester->name);
+                })
+                ->first() ?? new StudentResult;
 
-        $result->subjects()->delete();
-        foreach ($subjects as $order => $subject) {
-            $result->subjects()->create([...$subject, 'sort_order' => $order]);
-        }
-        $result->update(['total_credit' => 28, 'credit_earned' => 28, 'gpa' => 3.86, 'overall_grade' => 'A']);
+            $result->fill([
+                'student_id' => $student->id,
+                'semester_id' => $semester->id,
+                'semester' => $semester->name,
+                'session' => 'July 2025 - December 2025',
+                'status' => 'published',
+                'verification_token' => $result->verification_token ?? Str::random(48),
+                'published_at' => $result->published_at ?? now(),
+            ]);
+            $result->save();
+
+            $result->subjects()->delete();
+            $totalCredit = 0;
+            $qualityPoints = 0;
+            $creditEarned = 0;
+
+            foreach ($semester->subjects as $order => $subject) {
+                $gradePoint = [4, 3.75, 3.5, 3.25][$order] ?? 3;
+                $totalCredit += (float) $subject->credit;
+                $qualityPoints += (float) $subject->credit * $gradePoint;
+                $creditEarned += (float) $subject->credit;
+
+                $result->subjects()->create([
+                    'code' => $subject->code,
+                    'title' => $subject->title,
+                    'credit' => $subject->credit,
+                    'marks' => [88, 82, 78, 91][$order] ?? 80,
+                    'grade' => ['A+', 'A-', 'B+', 'A+'][$order] ?? 'B+',
+                    'grade_point' => $gradePoint,
+                    'sort_order' => $order,
+                ]);
+            }
+
+            $gpa = $totalCredit > 0 ? round($qualityPoints / $totalCredit, 2) : null;
+            $result->update([
+                'total_credit' => $totalCredit,
+                'credit_earned' => $creditEarned,
+                'gpa' => $gpa,
+                'overall_grade' => $this->overallGrade($gpa),
+            ]);
+        });
+    }
+
+    private function overallGrade(?float $gpa): ?string
+    {
+        return match (true) {
+            $gpa === null => null,
+            $gpa >= 4 => 'A+',
+            $gpa >= 3.75 => 'A',
+            $gpa >= 3.5 => 'A-',
+            $gpa >= 3.25 => 'B+',
+            $gpa >= 3 => 'B',
+            $gpa >= 2.75 => 'B-',
+            $gpa >= 2.5 => 'C+',
+            $gpa >= 2 => 'C',
+            $gpa >= 1.65 => 'D',
+            default => 'F',
+        };
     }
 }

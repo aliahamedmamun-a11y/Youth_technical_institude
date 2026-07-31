@@ -24,7 +24,8 @@ class StoreStudentResultRequest extends FormRequest
     {
         return [
             'student_id' => ['required', 'integer', Rule::exists('students', 'id')],
-            'semester' => ['required', 'string', 'max:150'],
+            'semester_id' => ['nullable', 'integer', Rule::exists('semesters', 'id')],
+            'semester' => ['required_without:semester_id', 'nullable', 'string', 'max:150'],
             'session' => ['required', 'string', 'max:100'],
             'status' => ['required', Rule::in(['draft', 'published'])],
             'subjects' => ['required', 'array', 'min:1'],

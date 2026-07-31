@@ -358,6 +358,8 @@ document.querySelectorAll('[data-location-form]').forEach((locationForm) => {
 document.querySelectorAll('[data-result-form]').forEach((resultForm) => {
     const subjectsBody = resultForm.querySelector('[data-result-subjects]');
     const addButton = resultForm.querySelector('[data-add-result-subject]');
+    const semesterSelect = resultForm.querySelector('[data-result-semester]');
+    const configuredSubjects = JSON.parse(resultForm.dataset.semesterSubjects || '{}');
 
     const renumberRows = () => {
         subjectsBody.querySelectorAll('[data-result-subject-row]').forEach((row, index) => {
@@ -366,6 +368,21 @@ document.querySelectorAll('[data-result-form]').forEach((resultForm) => {
             });
         });
     };
+
+    const renderConfiguredSubjects = (subjects) => {
+        if (!subjects.length) {
+            return;
+        }
+
+        subjectsBody.replaceChildren(...subjects.map((subject, index) => {
+            const row = document.createElement('tr');
+            row.dataset.resultSubjectRow = '';
+            row.innerHTML = `<td class="px-3 py-2"><input name="subjects[${index}][code]" required value="${subject.code}" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input name="subjects[${index}][title]" required value="${subject.title}" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][credit]" required min="0.5" max="20" step="0.5" value="${subject.credit}" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][marks]" min="0" max="100" step="0.01" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input name="subjects[${index}][grade]" required class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][grade_point]" required min="0" max="4" step="0.01" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2 text-right"><button type="button" data-remove-result-subject class="font-black text-rose-600">Remove</button></td>`;
+            return row;
+        }));
+    };
+
+    semesterSelect?.addEventListener('change', () => renderConfiguredSubjects(configuredSubjects[semesterSelect.value] || []));
 
     addButton.addEventListener('click', () => {
         const index = subjectsBody.querySelectorAll('[data-result-subject-row]').length;

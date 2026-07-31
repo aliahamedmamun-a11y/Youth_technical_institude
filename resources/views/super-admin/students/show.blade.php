@@ -9,7 +9,7 @@
                 <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700">{{ $student->result_status }}</span>
             </div>
             <dl class="mt-6 grid gap-6 sm:grid-cols-2">
-                @foreach (['father_name' => "Father's name", 'mother_name' => "Mother's name", 'gender' => 'Sex', 'phone' => 'Phone number', 'passport_nid_number' => 'Passport / NID', 'education_qualification' => 'Education qualification', 'course.name' => 'Course name', 'duration' => 'Duration', 'session' => 'Session', 'district' => 'District', 'upazila' => 'Upazila', 'date_of_birth' => 'Date of birth', 'admitted_at' => 'Join date', 'expire_date' => 'Expire date'] as $field => $label)
+                @foreach (['father_name' => "Father's name", 'mother_name' => "Mother's name", 'gender' => 'Sex', 'phone' => 'Phone number', 'passport_nid_number' => 'Passport / NID', 'education_qualification' => 'Education qualification', 'course.name' => 'Department', 'duration' => 'Duration', 'session' => 'Session', 'district' => 'District', 'upazila' => 'Upazila', 'date_of_birth' => 'Date of birth', 'admitted_at' => 'Join date', 'expire_date' => 'Expire date'] as $field => $label)
                     @php($value = str_contains($field, '.') ? data_get($student, $field) : $student->{$field})
                     <div><dt class="text-xs font-black uppercase tracking-wide text-slate-500">{{ $label }}</dt><dd class="mt-2 font-bold text-slate-900">{{ $value instanceof \Carbon\CarbonInterface ? $value->format('d M Y') : ($value ?: '—') }}</dd></div>
                 @endforeach

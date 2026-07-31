@@ -1,1 +1,1 @@
-<x-dashboard-shell title="Add Result" eyebrow="Result management" :description="'Create a subject-wise result for '.$student->name"><x-student-result-form :student="$student" :action="route('super-admin.students.results.store')" submit-label="Save result" /></x-dashboard-shell>
+<x-dashboard-shell title="Add Result" eyebrow="Result management" :description="'Create a subject-wise result for '.$student->name"><x-student-result-form :student="$student" :semesters="$semesters" :action="route('super-admin.students.results.store')" submit-label="Save result" /></x-dashboard-shell>

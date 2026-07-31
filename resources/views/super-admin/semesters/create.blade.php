@@ -1,0 +1,1 @@
+<x-dashboard-shell title="Add Semester" eyebrow="Academic setup" :description="'Create a reusable semester for '.$course->name"><x-semester-form :course="$course" :action="route('super-admin.courses.semesters.store', $course)" /></x-dashboard-shell>

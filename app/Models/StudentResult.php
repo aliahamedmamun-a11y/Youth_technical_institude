@@ -14,7 +14,7 @@ class StudentResult extends Model
     use HasFactory;
 
     /** @var list<string> */
-    protected $fillable = ['student_id', 'semester', 'session', 'status', 'verification_token', 'total_credit', 'credit_earned', 'gpa', 'overall_grade', 'published_at'];
+    protected $fillable = ['student_id', 'semester_id', 'semester', 'session', 'status', 'verification_token', 'total_credit', 'credit_earned', 'gpa', 'overall_grade', 'published_at'];
 
     protected function casts(): array
     {
@@ -24,6 +24,11 @@ class StudentResult extends Model
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
+    }
+
+    public function semesterDefinition(): BelongsTo
+    {
+        return $this->belongsTo(Semester::class, 'semester_id');
     }
 
     public function subjects(): HasMany

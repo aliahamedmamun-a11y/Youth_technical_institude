@@ -318,6 +318,10 @@
                 object-position: right bottom;
             }
 
+            .sunrise-image {
+                bottom: 52px !important;
+            }
+
             .country-flag {
                 position: absolute;
                 top: 31%;
@@ -432,7 +436,7 @@
             <div class="branch-canvas relative w-full max-w-[1600px] overflow-hidden bg-white sm:rounded-[26px] sm:border sm:border-slate-200">
                 <section class="hero-grid relative min-h-[500px] overflow-hidden">
                     <div class="hero-left relative isolate min-h-[470px] overflow-hidden bg-white lg:min-h-0">
-                        <img src="{{ asset('images/dashboard/sunrise.png') }}" alt="" class="absolute inset-x-0 bottom-0 z-[3] h-[46%] w-full object-cover object-bottom">
+                        <img src="{{ asset('images/dashboard/sunrise.png') }}" alt="" class="sunrise-image absolute inset-x-0 bottom-0 z-[3] h-[46%] w-full object-cover object-bottom">
                         <div class="absolute inset-x-0 bottom-[34%] z-[4] h-[20%] bg-gradient-to-b from-white via-white/80 to-transparent"></div>
 
                         <div class="greeting-content">
@@ -631,9 +635,12 @@
                     </footer>
                 </section>
 
-                <form method="POST" action="{{ route('logout') }}" class="absolute right-3 top-3 z-50 opacity-0 transition-opacity hover:opacity-100 focus-within:opacity-100">
+                <form method="POST" action="{{ route('logout') }}" class="absolute right-4 top-4 z-50">
                     @csrf
-                    <button type="submit" class="rounded-full bg-slate-950/75 px-3 py-1.5 text-[10px] font-bold text-white backdrop-blur">Logout</button>
+                    <button type="submit" aria-label="Log out of the branch dashboard" class="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/30 bg-slate-950/80 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-slate-950/20 backdrop-blur transition hover:bg-[#087b3d] focus:outline-none focus:ring-2 focus:ring-[#087b3d] focus:ring-offset-2">
+                        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M21 3v18"/></svg>
+                        Logout
+                    </button>
                 </form>
             </div>
         </main>

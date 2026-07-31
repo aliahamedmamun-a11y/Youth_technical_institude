@@ -8,15 +8,9 @@
 
     <div class="grid gap-6 md:grid-cols-2">
         <label class="grid gap-2 text-sm font-bold text-slate-700">
-            Course name
+            Department name
             <input name="name" value="{{ old('name', $course?->name) }}" required maxlength="255" class="rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-600 focus:ring-4 focus:ring-emerald-100">
             @error('name') <span class="text-sm font-medium text-rose-600">{{ $message }}</span> @enderror
-        </label>
-
-        <label class="grid gap-2 text-sm font-bold text-slate-700">
-            Course code
-            <input name="code" value="{{ old('code', $course?->code) }}" required maxlength="50" class="rounded-xl border border-slate-300 px-4 py-3 uppercase outline-none transition focus:border-emerald-600 focus:ring-4 focus:ring-emerald-100">
-            @error('code') <span class="text-sm font-medium text-rose-600">{{ $message }}</span> @enderror
         </label>
 
         <label class="grid gap-2 text-sm font-bold text-slate-700">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentResultRequest;
 use App\Http\Requests\UpdateStudentResultRequest;
+use App\Models\Semester;
 use App\Models\Student;
 use App\Models\StudentResult;
 use App\Services\ResultQrCodeService;
@@ -27,7 +28,9 @@ class StudentResultController extends Controller
     {
         Gate::authorize('update', $student);
 
-        return view('super-admin.student-results.create', ['student' => $student->load('course')]);
+        $student->load('course.semesters');
+
+        return view('super-admin.student-results.create', ['student' => $student, 'semesters' => $student->course->semesters->where('is_active', true)]);
     }
 
     public function show(StudentResult $result, ResultQrCodeService $qrCode): View
@@ -41,10 +44,12 @@ class StudentResultController extends Controller
     {
         $student = Student::query()->findOrFail($request->integer('student_id'));
         Gate::authorize('update', $student);
+        $semester = $this->semesterForStudent($request->input('semester_id') ? (int) $request->input('semester_id') : null, $student);
 
-        $result = DB::transaction(function () use ($request, $student): StudentResult {
+        $result = DB::transaction(function () use ($request, $student, $semester): StudentResult {
             $result = $student->results()->create([
-                'semester' => $request->string('semester')->toString(),
+                'semester_id' => $semester?->id,
+                'semester' => $semester?->name ?? $request->string('semester')->toString(),
                 'session' => $request->string('session')->toString(),
                 'status' => $request->string('status')->toString(),
                 'verification_token' => $this->verificationToken(),
@@ -63,16 +68,20 @@ class StudentResultController extends Controller
     {
         Gate::authorize('update', $result->student);
 
-        return view('super-admin.student-results.edit', ['result' => $result->load(['student.course', 'subjects'])]);
+        $result->load(['student.course.semesters', 'subjects']);
+
+        return view('super-admin.student-results.edit', ['result' => $result, 'semesters' => $result->student->course->semesters->where('is_active', true)]);
     }
 
     public function update(UpdateStudentResultRequest $request, StudentResult $result): RedirectResponse
     {
         Gate::authorize('update', $result->student);
+        $semester = $this->semesterForStudent($request->input('semester_id') ? (int) $request->input('semester_id') : null, $result->student);
 
-        DB::transaction(function () use ($request, $result): void {
+        DB::transaction(function () use ($request, $result, $semester): void {
             $result->update([
-                'semester' => $request->string('semester')->toString(),
+                'semester_id' => $semester?->id,
+                'semester' => $semester?->name ?? $request->string('semester')->toString(),
                 'session' => $request->string('session')->toString(),
                 'status' => $request->string('status')->toString(),
                 'published_at' => $request->input('status') === 'published' ? ($result->published_at ?? now()) : null,
@@ -144,5 +153,14 @@ class StudentResultController extends Controller
         } while (StudentResult::query()->where('verification_token', $token)->exists());
 
         return $token;
+    }
+
+    private function semesterForStudent(?int $semesterId, Student $student): ?Semester
+    {
+        if ($semesterId === null) {
+            return null;
+        }
+
+        return Semester::query()->whereKey($semesterId)->whereBelongsTo($student->course)->with('subjects')->firstOrFail();
     }
 }

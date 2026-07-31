@@ -28,8 +28,8 @@
             <input type="date" name="date_of_birth" value="{{ old('date_of_birth', $student?->date_of_birth?->format('Y-m-d')) }}" required class="{{ $inputClass }}">
             @error('date_of_birth')<span class="text-rose-600">{{ $message }}</span>@enderror
         </label>
-        <label class="grid gap-2 text-sm font-bold text-slate-700">Course name
-            <select name="course_id" required class="{{ $selectClass }}"><option value="">Select a course</option>@foreach ($courses as $course)<option value="{{ $course->id }}" @selected(old('course_id', $student?->course_id) == $course->id)>{{ $course->name }} ({{ $course->code }})</option>@endforeach</select>
+        <label class="grid gap-2 text-sm font-bold text-slate-700">Department
+            <select name="course_id" required class="{{ $selectClass }}"><option value="">Select a department</option>@foreach ($courses as $course)<option value="{{ $course->id }}" @selected(old('course_id', $student?->course_id) == $course->id)>{{ $course->name }}</option>@endforeach</select>
             @error('course_id')<span class="text-rose-600">{{ $message }}</span>@enderror
         </label>
         <label class="grid gap-2 text-sm font-bold text-slate-700">Sex

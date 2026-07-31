@@ -19,7 +19,6 @@ class CourseFactory extends Factory
     {
         return [
             'name' => fake()->unique()->sentence(3),
-            'code' => fake()->unique()->bothify('CRS-###'),
             'duration' => fake()->randomElement(['3 Months', '6 Months', '1 Year']),
             'description' => fake()->paragraph(),
             'is_active' => true,

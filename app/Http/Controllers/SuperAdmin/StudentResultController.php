@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreEnrollmentResultRequest;
 use App\Http\Requests\StoreStudentResultRequest;
 use App\Http\Requests\UpdateStudentResultRequest;
 use App\Models\Semester;
 use App\Models\Student;
 use App\Models\StudentResult;
+use App\Models\StudentSemesterEnrollment;
+use App\Services\ResultGradingService;
 use App\Services\ResultQrCodeService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -33,11 +36,54 @@ class StudentResultController extends Controller
         return view('super-admin.student-results.create', ['student' => $student, 'semesters' => $student->course->semesters->where('is_active', true)]);
     }
 
+    public function createForEnrollment(StudentSemesterEnrollment $enrollment): View
+    {
+        Gate::authorize('update', $enrollment->student);
+        $enrollment->load(['student', 'semester', 'subjects']);
+
+        return view('super-admin.student-results.enrollment-create', compact('enrollment'));
+    }
+
+    public function storeForEnrollment(StoreEnrollmentResultRequest $request, StudentSemesterEnrollment $enrollment, ResultGradingService $grading): RedirectResponse
+    {
+        Gate::authorize('update', $enrollment->student);
+        $enrollment->load(['student', 'semester', 'subjects']);
+        $markRows = collect($request->array('subjects'))->keyBy(fn (array $row): int => (int) $row['id']);
+        $assignedSubjects = $enrollment->subjects;
+
+        abort_unless($markRows->keys()->diff($assignedSubjects->pluck('id'))->isEmpty(), 422);
+        $rows = $assignedSubjects->map(function ($assignedSubject) use ($markRows, $grading): array {
+            $marks = $markRows->get($assignedSubject->id)['marks'] ?? null;
+            $grade = $grading->gradeForMarks($marks === null || $marks === '' ? null : (float) $marks);
+
+            return ['code' => $assignedSubject->code, 'title' => $assignedSubject->title, 'credit' => $assignedSubject->credit, 'marks' => $marks === '' ? null : $marks, 'grade' => $grade['grade'], 'grade_point' => $grade['grade_point'], 'sort_order' => $assignedSubject->sort_order];
+        });
+
+        if ($request->string('status')->toString() === 'published' && $rows->contains(fn (array $row): bool => $row['marks'] === null)) {
+            return back()->withErrors(['subjects' => 'Every subject must have marks before publishing.'])->withInput();
+        }
+
+        $summary = $grading->summarize($rows->map(fn (array $row): array => ['credit' => $row['credit'], 'grade_point' => $row['grade_point']])->all());
+        $result = DB::transaction(function () use ($request, $enrollment, $rows, $summary): StudentResult {
+            $result = StudentResult::query()->firstOrNew(['student_semester_enrollment_id' => $enrollment->id]);
+            $result->fill(['student_id' => $enrollment->student_id, 'semester_id' => $enrollment->semester_id, 'semester' => $enrollment->semester->name, 'session' => $request->string('session')->toString(), 'status' => $request->string('status')->toString(), 'verification_token' => $result->verification_token ?? $this->verificationToken(), 'published_at' => $request->string('status')->toString() === 'published' ? ($result->published_at ?? now()) : null, ...$summary]);
+            $result->save();
+            $result->subjects()->delete();
+            $result->subjects()->createMany($rows->all());
+
+            return $result;
+        });
+
+        return redirect()->route('super-admin.results.edit', $result)->with('status', 'Marks saved successfully.');
+    }
+
     public function show(StudentResult $result, ResultQrCodeService $qrCode): View
     {
         Gate::authorize('view', $result);
 
-        return view('results.sheet', ['result' => $result->load(['student.course', 'subjects']), 'qrCode' => $qrCode->dataUri($result), 'adminPreview' => true]);
+        $result->load(['student.course', 'subjects']);
+
+        return view('results.sheet', ['result' => $result, 'cumulativeGpa' => app(ResultGradingService::class)->cumulativeGpa($result->student), 'qrCode' => $qrCode->dataUri($result), 'adminPreview' => true]);
     }
 
     public function store(StoreStudentResultRequest $request): RedirectResponse
@@ -67,6 +113,12 @@ class StudentResultController extends Controller
     public function edit(StudentResult $result): View
     {
         Gate::authorize('update', $result->student);
+
+        if ($result->student_semester_enrollment_id !== null) {
+            $result->load(['student', 'enrollment.semester', 'enrollment.subjects', 'subjects']);
+
+            return view('super-admin.student-results.enrollment-edit', compact('result'));
+        }
 
         $result->load(['student.course.semesters', 'subjects']);
 

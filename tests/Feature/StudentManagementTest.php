@@ -15,10 +15,36 @@ test('public visitors can access student registration', function () {
 
     $this->get(route('student-registrations.create'))
         ->assertSuccessful()
-        ->assertSee('Student registration')
+        ->assertSee('Student Registration')
+        ->assertSee('Personal Information')
+        ->assertSee('Address Information')
+        ->assertSee('Academic Information')
+        ->assertSee('Photo Upload')
+        ->assertSee('Important Notes')
+        ->assertSee('APPLICATION SUBMIT')
+        ->assertSee('RESET FORM')
+        ->assertSee('declaration')
         ->assertSee(route('student-registrations.store'));
 
     $this->get(route('home'))->assertSuccessful()->assertSee(route('student-registrations.create'));
+});
+
+test('public applicants must accept the declaration and can submit a registration', function () {
+    Storage::fake('public');
+    $course = Course::factory()->create();
+    $payload = [
+        'course_id' => $course->id, 'name' => 'Nusrat Jahan', 'father_name' => 'Abdul Karim', 'mother_name' => 'Rokeya Begum', 'address' => 'Savar, Dhaka', 'district' => 'Dhaka', 'upazila' => 'Savar', 'date_of_birth' => '2005-06-14', 'passport_nid_number' => 'NID-12345', 'phone' => '01700000000', 'gender' => 'Female', 'education_qualification' => 'HSC', 'duration' => '6 Months', 'session' => '2026', 'admitted_at' => '2026-01-01', 'expire_date' => '2026-06-30', 'image' => UploadedFile::fake()->image('nusrat.png'),
+    ];
+
+    $this->post(route('student-registrations.store'), $payload)
+        ->assertSessionHasErrors('declaration');
+
+    $this->post(route('student-registrations.store'), [...$payload, 'declaration' => '1', 'image' => UploadedFile::fake()->image('nusrat.png')])
+        ->assertRedirect(route('student-registrations.create'));
+
+    $student = Student::query()->where('name', 'Nusrat Jahan')->firstOrFail();
+    expect($student->result_status)->toBe('Pending')->and($student->registration_number)->toStartWith('BNYTI-');
+    Storage::disk('public')->assertExists($student->image_path);
 });
 
 test('super admins can add and update students', function () {

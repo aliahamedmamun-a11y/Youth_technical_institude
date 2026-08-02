@@ -40,6 +40,7 @@ class StoreStudentRequest extends FormRequest
             'admitted_at' => ['required', 'date'],
             'expire_date' => ['required', 'date', 'after:admitted_at'],
             'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'declaration' => [Rule::when($this->routeIs('student-registrations.store'), ['required', 'accepted'])],
         ];
     }
 }

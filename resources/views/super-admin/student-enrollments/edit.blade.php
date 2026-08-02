@@ -1,0 +1,1 @@
+<x-dashboard-shell title="Manage Assigned Subjects" eyebrow="Academic records" :description="$enrollment->semester->name.' · '.$student->name"><x-student-enrollment-form :student="$student" :enrollment="$enrollment" :semesters="collect()" :action="route('super-admin.students.semester-enrollments.update', [$student, $enrollment])" method="PUT" /></x-dashboard-shell>

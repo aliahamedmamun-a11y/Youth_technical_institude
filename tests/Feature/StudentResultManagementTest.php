@@ -58,7 +58,7 @@ test('public users can find and verify only published results', function () {
     $published = StudentResult::factory()->for($student)->create(['status' => 'published', 'published_at' => now()]);
     StudentResult::factory()->for($student)->create(['status' => 'draft', 'published_at' => null]);
 
-    $this->get(route('results.index', ['registration_number' => $student->registration_number, 'roll_number' => $student->roll_number]))
+    $this->get(route('results.index', ['roll_number' => $student->roll_number]))
         ->assertRedirect(route('results.show', $published->verification_token));
 
     $this->get(route('results.show', $published->verification_token))
@@ -68,6 +68,26 @@ test('public users can find and verify only published results', function () {
         ->assertSee('SCAN TO VERIFY');
 
     $this->get(route('results.show', 'invalid-token'))->assertNotFound();
+});
+
+test('the public result portal uses roll number lookup and rejects unmatched searches', function () {
+    $student = Student::factory()->create(['roll_number' => '412005']);
+
+    $this->get(route('results.index'))
+        ->assertSuccessful()
+        ->assertSee('STUDENT')
+        ->assertSee('RESULT')
+        ->assertSee('PORTAL')
+        ->assertSee('Enter Your Roll Number')
+        ->assertSee('FAST &amp; EASY', false)
+        ->assertSee('TRUSTED INSTITUTE');
+
+    $this->get(route('results.index', ['roll_number' => '999999']))
+        ->assertSuccessful()
+        ->assertSee('No published result was found for this Roll Number.');
+
+    $this->get(route('results.index', ['roll_number' => '']))
+        ->assertSessionHasErrors('roll_number');
 });
 
 test('non-super-admins cannot manage student results', function () {

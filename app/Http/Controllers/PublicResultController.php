@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StudentResult;
+use App\Services\ResultGradingService;
 use App\Services\ResultQrCodeService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,14 +13,16 @@ class PublicResultController extends Controller
 {
     public function index(Request $request): View|RedirectResponse
     {
-        $registrationNumber = $request->string('registration_number')->trim()->toString();
-        $rollNumber = $request->string('roll_number')->trim()->toString();
+        $validated = $request->validate([
+            'roll_number' => ['sometimes', 'required', 'string', 'max:50'],
+        ]);
+        $rollNumber = trim((string) ($validated['roll_number'] ?? ''));
 
-        if ($registrationNumber !== '' && $rollNumber !== '') {
+        if ($rollNumber !== '') {
             $result = StudentResult::query()
                 ->where('status', 'published')
                 ->whereNotNull('published_at')
-                ->whereHas('student', fn ($query) => $query->where('registration_number', $registrationNumber)->where('roll_number', $rollNumber))
+                ->whereHas('student', fn ($query) => $query->where('roll_number', $rollNumber))
                 ->latest('published_at')
                 ->first();
 
@@ -28,10 +31,10 @@ class PublicResultController extends Controller
             }
         }
 
-        return view('results.index', ['searched' => $registrationNumber !== '' || $rollNumber !== '']);
+        return view('results.index', ['searched' => $rollNumber !== '', 'rollNumber' => $rollNumber]);
     }
 
-    public function show(string $verificationToken, ResultQrCodeService $qrCode): View
+    public function show(string $verificationToken, ResultQrCodeService $qrCode, ResultGradingService $grading): View
     {
         $result = StudentResult::query()
             ->where('verification_token', $verificationToken)
@@ -40,6 +43,6 @@ class PublicResultController extends Controller
             ->with(['student.course', 'subjects'])
             ->firstOrFail();
 
-        return view('results.sheet', ['result' => $result, 'qrCode' => $qrCode->dataUri($result), 'adminPreview' => false]);
+        return view('results.sheet', ['result' => $result, 'cumulativeGpa' => $grading->cumulativeGpa($result->student), 'qrCode' => $qrCode->dataUri($result), 'adminPreview' => false]);
     }
 }

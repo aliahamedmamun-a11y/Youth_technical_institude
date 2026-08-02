@@ -30,4 +30,9 @@ class Student extends Model
     {
         return $this->hasMany(StudentResult::class);
     }
+
+    public function semesterEnrollments(): HasMany
+    {
+        return $this->hasMany(StudentSemesterEnrollment::class);
+    }
 }

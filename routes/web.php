@@ -13,6 +13,7 @@ use App\Http\Controllers\SuperAdmin\SemesterSetupController;
 use App\Http\Controllers\SuperAdmin\StudentController;
 use App\Http\Controllers\SuperAdmin\StudentDocumentController;
 use App\Http\Controllers\SuperAdmin\StudentResultController;
+use App\Http\Controllers\SuperAdmin\StudentSemesterEnrollmentController;
 use App\Http\Controllers\SuperAdmin\SubjectController;
 use App\Http\Controllers\SuperAdmin\TeacherController;
 use App\Models\Teacher;
@@ -88,9 +89,16 @@ Route::middleware('auth')->group(function (): void {
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->names('super-admin.students');
 
+    Route::resource('/super-admin/students/{student}/semester-enrollments', StudentSemesterEnrollmentController::class)
+        ->except(['show'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->names('super-admin.students.semester-enrollments');
+
     Route::get('/super-admin/students/{student}/results', [StudentResultController::class, 'index'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.students.results.index');
     Route::get('/super-admin/students/{student}/results/create', [StudentResultController::class, 'create'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.students.results.create');
     Route::post('/super-admin/students/results', [StudentResultController::class, 'store'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.students.results.store');
+    Route::get('/super-admin/semester-enrollments/{enrollment}/result/create', [StudentResultController::class, 'createForEnrollment'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.enrollments.results.create');
+    Route::post('/super-admin/semester-enrollments/{enrollment}/result', [StudentResultController::class, 'storeForEnrollment'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.enrollments.results.store');
     Route::get('/super-admin/results/{result}', [StudentResultController::class, 'show'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.results.show');
     Route::get('/super-admin/results/{result}/edit', [StudentResultController::class, 'edit'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.results.edit');
     Route::put('/super-admin/results/{result}', [StudentResultController::class, 'update'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.results.update');

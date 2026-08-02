@@ -20,6 +20,22 @@ test('people can submit a complete branch registration', function () {
     Storage::disk('public')->assertExists($application->director_photo_path);
 });
 
+test('public visitors can access the branded branch registration form', function () {
+    $this->get(route('branch-applications.create'))
+        ->assertSuccessful()
+        ->assertSee('Branch Registration')
+        ->assertSee('Director Information')
+        ->assertSee('Institute Information')
+        ->assertSee('Address Information')
+        ->assertSee('Login Credentials')
+        ->assertSee('Required Documents')
+        ->assertSee('Important Notes')
+        ->assertSee('APPLICATION SUBMIT')
+        ->assertSee('RESET FORM')
+        ->assertSee('Student Register')
+        ->assertSee('Student Results');
+});
+
 test('super admins can approve branch registrations', function () {
     $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
     $application = BranchApplication::factory()->create();

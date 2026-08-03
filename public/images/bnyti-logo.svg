@@ -17,8 +17,6 @@
         </filter>
     </defs>
 
-    <rect width="1200" height="1200" fill="#ffffff" />
-
     <g filter="url(#softShadow)">
         <g fill="url(#navy)">
             <circle cx="600" cy="525" r="425" />

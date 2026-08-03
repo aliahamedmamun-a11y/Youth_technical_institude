@@ -52,13 +52,7 @@
                 grid-template-columns: minmax(0, 32fr) minmax(0, 36fr) minmax(0, 32fr);
             }
 
-            .brand-logo {
-                display: block;
-                width: 220px !important;
-                max-width: 42% !important;
-                height: 170px !important;
-                object-fit: contain;
-            }
+
 
             .brand-panel {
                 position: relative;
@@ -68,7 +62,7 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                padding: 20px 20px 84px;
+                padding: 20px 20px 40px;
                 text-align: center;
             }
 
@@ -87,6 +81,28 @@
                 color: var(--branch-green);
                 font-size: clamp(38px, 2.8vw, 49px);
                 letter-spacing: .01em;
+            }
+
+            .brand-institute-line {
+                display: flex;
+                width: min(100%, 520px);
+                align-items: center;
+                gap: 12px;
+            }
+
+            .brand-institute-line::before,
+            .brand-institute-line::after {
+                flex: 1;
+                height: 1px;
+                background: #0f172a;
+                content: "";
+            }
+
+            .brand-institute-line p {
+                white-space: nowrap;
+                text-align: center;
+                font-size: clamp(14px, 1.25vw, 22px);
+                letter-spacing: .06em;
             }
 
             .greeting-title {
@@ -161,7 +177,7 @@
                 flex: none;
                 min-width: 74%;
                 padding: 8px 24px;
-                background: linear-gradient(90deg, var(--branch-green), var(--branch-green-dark));
+                background: linear-gradient(90deg, var(--branch-red-dark), var(--branch-red));
                 color: white;
                 font-size: clamp(13px, 1.1vw, 18px);
                 font-weight: 900;
@@ -395,7 +411,6 @@
                 }
 
                 .brand-logo {
-                    width: min(220px, 36%) !important;
                     height: 35% !important;
                 }
 
@@ -438,7 +453,65 @@
     </head>
 
     <body class="branch-dashboard min-h-screen bg-[#edf1f5] text-slate-950 antialiased">
-        <main class="flex min-h-screen items-center justify-center p-0 sm:p-3">
+        <header class="fixed inset-x-0 top-0 z-50 border-b border-slate-900/5 bg-stone-50/95 backdrop-blur-xl">
+            <div class="border-b border-slate-900/5 bg-ink text-white">
+                <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 text-[11px] font-semibold tracking-wide sm:px-6 lg:px-8">
+                    <p class="flex items-center gap-2"><span class="size-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_#34d399]"></span>Branch management workspace</p>
+                    <div class="hidden gap-5 sm:flex"><a href="tel:+8809696481628" class="hover:text-emerald-300">+880 9696-481628</a><a href="mailto:bnyti-edubd@gmail.com" class="hover:text-emerald-300">bnyti-edubd@gmail.com</a></div>
+                </div>
+            </div>
+
+            <nav class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8" aria-label="Primary navigation">
+                <a href="{{ route('home') }}#home" class="group flex min-w-0 items-center gap-3" aria-label="BNYTI home">
+                    <img src="{{ asset('images/bnyti-logo.svg') }}" alt="Bangladesh National Youth Technical Institute logo" class="size-12 shrink-0 transition duration-300 group-hover:-rotate-3 sm:size-14">
+                    <span class="hidden min-w-0 sm:block"><span class="block truncate text-sm font-black tracking-tight text-slate-950 sm:text-[15px]"><span class="text-emerald-600">BANGLADESH</span><span class="text-red-600"> NATIONAL</span></span><span class="block truncate text-[10px] font-bold tracking-[.17em] text-slate-600 sm:text-[11px]">YOUTH TECHNICAL INSTITUTE</span></span>
+                    <span class="sm:hidden"><span class="block text-base font-black tracking-tight text-slate-950">BNYTI</span><span class="block text-[9px] font-bold tracking-[.14em] text-slate-500">TECHNICAL INSTITUTE</span></span>
+                </a>
+
+                <div class="hidden items-center gap-7 lg:flex">
+                    <a href="{{ route('home') }}#home" class="nav-link active">Home</a>
+                    <a href="{{ route('home') }}#courses" class="nav-link">Courses</a>
+                    <a href="{{ route('home') }}#about" class="nav-link">About</a>
+                    <a href="{{ route('home') }}#branch-application-promo" class="nav-link">Branches</a>
+                    <a href="{{ route('results.index') }}" class="nav-link">Results</a>
+                    <details class="group relative">
+                        <summary class="nav-link flex cursor-pointer list-none items-center gap-1">Apply Now <svg viewBox="0 0 24 24" class="size-4 transition group-open:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg></summary>
+                        <div class="absolute right-0 top-full z-50 mt-3 w-52 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl">
+                            <a href="{{ route('student-registrations.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700">Student Registration</a>
+                            <a href="{{ route('branch-applications.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700">Branch Registration</a>
+                        </div>
+                    </details>
+                    <a href="{{ route('home') }}#latest-news-contact" class="nav-link">Contact</a>
+                </div>
+
+                <div class="flex shrink-0 items-center gap-2">
+                    <button type="button" class="icon-button" data-theme-toggle aria-label="Toggle color theme">
+                        <svg data-theme-sun viewBox="0 0 24 24" aria-hidden="true" class="size-5"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l-1.42 1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/></svg>
+                        <svg data-theme-moon viewBox="0 0 24 24" aria-hidden="true" class="hidden size-5"><path d="M20 15.1A8.5 8.5 0 0 1 8.9 4a8.5 8.5 0 1 0 11.1 11.1Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/></svg>
+                    </button>
+                    <button type="button" class="icon-button lg:hidden" data-menu-toggle aria-expanded="false" aria-controls="branch-dashboard-mobile-menu" aria-label="Open menu">
+                        <svg data-menu-open viewBox="0 0 24 24" aria-hidden="true" class="size-6"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>
+                        <svg data-menu-close viewBox="0 0 24 24" aria-hidden="true" class="hidden size-6"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>
+                    </button>
+                </div>
+            </nav>
+
+            <div id="branch-dashboard-mobile-menu" class="border-t border-slate-900/5 bg-stone-50 px-4 py-5 shadow-2xl lg:hidden" data-mobile-menu hidden>
+                <nav class="mx-auto grid max-w-7xl gap-1" aria-label="Mobile navigation">
+                    <a href="{{ route('home') }}#home" class="mobile-nav-link">Home</a>
+                    <a href="{{ route('home') }}#courses" class="mobile-nav-link">Courses</a>
+                    <a href="{{ route('home') }}#about" class="mobile-nav-link">About</a>
+                    <a href="{{ route('home') }}#branch-application-promo" class="mobile-nav-link">Branches</a>
+                    <a href="{{ route('results.index') }}" class="mobile-nav-link">Results</a>
+                    <p class="px-4 pt-3 text-xs font-black uppercase tracking-widest text-emerald-700">Apply Now</p>
+                    <a href="{{ route('student-registrations.create') }}" class="mobile-nav-link pl-8">Student Registration</a>
+                    <a href="{{ route('branch-applications.create') }}" class="mobile-nav-link pl-8">Branch Registration</a>
+                    <a href="{{ route('home') }}#latest-news-contact" class="mobile-nav-link">Contact</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="flex min-h-screen items-center justify-center p-0 pt-[108px] sm:px-3 sm:pb-3 sm:pt-[108px]">
             <div class="branch-canvas relative w-full max-w-[1600px] overflow-hidden bg-white sm:rounded-[26px] sm:border sm:border-slate-200">
                 <section class="hero-grid relative min-h-[500px] overflow-hidden">
                     <div class="hero-left relative isolate min-h-[470px] overflow-hidden bg-white lg:min-h-0">
@@ -479,17 +552,15 @@
                             <path d="M68 8Q73 3 78 8Q83 3 88 8"/>
                         </svg>
 
-                        <img src="{{ asset('images/dashboard/bnyti-branch-logo.svg') }}" alt="BNYTI logo" class="brand-logo">
+                        <img src="{{ asset('images/bnyti-logo.svg') }}" alt="Bangladesh National Youth Technical Institute logo" class="brand-logo">
 
-                        <div class="brand-condensed mt-2 uppercase leading-[.88]">
+                        <div class="brand-condensed mt-4 uppercase leading-10">
                             <p class="brand-bangladesh">Bangladesh</p>
                             <p class="brand-national">National Youth</p>
                         </div>
 
-                        <div class="mt-3 flex w-full max-w-[520px] items-center gap-3">
-                            <span class="h-px flex-1 bg-slate-900"></span>
-                            <p class="whitespace-nowrap text-base font-black tracking-[.06em] sm:text-xl lg:text-[1.25vw] xl:text-[22px]">TECHNICAL INSTITUTE</p>
-                            <span class="h-px flex-1 bg-slate-900"></span>
+                        <div class=" mt-3">
+                            <p class="font-black">TECHNICAL INSTITUTE</p>
                         </div>
 
                         <div class="brand-ribbon-row">

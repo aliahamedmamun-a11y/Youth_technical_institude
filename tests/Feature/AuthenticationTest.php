@@ -63,7 +63,11 @@ test('branch dashboard displays a secure logout form', function () {
         ->assertSee('BRANCH MANAGEMENT SYSTEM')
         ->assertSee('ADMISSION')
         ->assertSee('CERTIFICATES')
-        ->assertSee('NEWS &amp; NOTICE', false);
+        ->assertSee('NEWS &amp; NOTICE', false)
+        ->assertSee('Apply Now')
+        ->assertSee('Student Registration')
+        ->assertSee('Branch Registration')
+        ->assertSee('branch-dashboard-mobile-menu', false);
 });
 
 test('users can log out from the branch dashboard', function () {

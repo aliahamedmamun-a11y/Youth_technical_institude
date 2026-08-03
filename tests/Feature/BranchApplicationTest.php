@@ -32,8 +32,9 @@ test('public visitors can access the branded branch registration form', function
         ->assertSee('Important Notes')
         ->assertSee('APPLICATION SUBMIT')
         ->assertSee('RESET FORM')
-        ->assertSee('Student Register')
-        ->assertSee('Student Results');
+        ->assertSee('Student Registration')
+        ->assertSee('Results')
+        ->assertSee('Apply Now');
 });
 
 test('super admins can approve branch registrations', function () {

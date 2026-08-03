@@ -309,7 +309,7 @@
             .building-image {
                 position: absolute;
                 right: 0;
-                bottom: 70px;
+                bottom: 0;
                 left: 0;
                 z-index: 10;
                 width: 100%;
@@ -319,7 +319,7 @@
             }
 
             .sunrise-image {
-                bottom: 52px !important;
+                bottom: 0 !important;
             }
 
             .country-flag {
@@ -451,9 +451,10 @@
 
                             <div class="mt-[-2px] w-full max-w-[355px] lg:ml-[4%]">
                                 <span class="inline-flex rounded-[10px] bg-gradient-to-r from-[#a90008] to-[#d71920] px-5 py-1 text-lg font-black text-white shadow-md">শুভেচ্ছা</span>
-                                <h1 class="greeting-title">
-                                    <span class="text-[#bc0d16]">শুভ</span>
-                                    <span class="text-[#087b3d]">সকাল!</span>
+                                <h1 id="dashboard-greeting-title" class="greeting-title" aria-live="polite">
+                                    <span id="dashboard-greeting-icon" class="mr-2 text-[.72em]" aria-hidden="true">🌞</span>
+                                    <span id="dashboard-greeting-primary" class="text-[#bc0d16]">শুভ</span>
+                                    <span id="dashboard-greeting-secondary" class="text-[#087b3d]">সকাল!</span>
                                 </h1>
 
                                 <div class="mx-auto my-4 flex max-w-[300px] items-center">
@@ -463,10 +464,8 @@
                                     <span class="h-[2px] flex-1 bg-gradient-to-r from-[#087b3d] to-transparent"></span>
                                 </div>
 
-                                <p class="text-[18px] font-semibold leading-[1.75] text-slate-900 xl:text-[21px]">
-                                    নতুন দিনের নতুন সম্ভাবনাকে স্বাগতম।<br>
-                                    শিখুন, দক্ষতা অর্জন করুন,<br>
-                                    গড়ুন উজ্জ্বল ভবিষ্যৎ।
+                                <p id="dashboard-greeting-message" class="text-[18px] font-semibold leading-[1.75] text-slate-900 xl:text-[21px]" aria-live="polite">
+                                    আপনার আজকের দিনটি সফল ও ফলপ্রসূ হোক।
                                 </p>
                             </div>
                         </div>
@@ -651,6 +650,56 @@
                 const dayElement = document.getElementById('dashboard-day');
                 const timeElement = document.getElementById('dashboard-time');
                 const ampmElement = document.getElementById('dashboard-ampm');
+                const greetingIconElement = document.getElementById('dashboard-greeting-icon');
+                const greetingPrimaryElement = document.getElementById('dashboard-greeting-primary');
+                const greetingSecondaryElement = document.getElementById('dashboard-greeting-secondary');
+                const greetingMessageElement = document.getElementById('dashboard-greeting-message');
+                const timeZone = 'Asia/Dhaka';
+                let currentGreetingKey = null;
+
+                const greetings = {
+                    morning: { icon: '🌞', title: 'শুভ সকাল!', message: 'আপনার আজকের দিনটি সফল ও ফলপ্রসূ হোক।' },
+                    afternoon: { icon: '🌤️', title: 'শুভ দুপুর!', message: 'আপনার সকল কার্যক্রম সফলভাবে সম্পন্ন হোক।' },
+                    evening: { icon: '🌇', title: 'শুভ বিকেল!', message: 'নতুন উদ্যমে আপনার কাজ এগিয়ে নিন।' },
+                    nightfall: { icon: '🌆', title: 'শুভ সন্ধ্যা!', message: 'শেখার প্রতিটি মুহূর্ত হোক আনন্দময়।' },
+                    night: { icon: '🌙', title: 'শুভ রাত্রি!', message: 'আগামী দিনের জন্য আন্তরিক শুভকামনা।' },
+                };
+
+                const greetingKeyForHour = (hour) => {
+                    if (hour >= 5 && hour < 12) {
+                        return 'morning';
+                    }
+
+                    if (hour >= 12 && hour < 16) {
+                        return 'afternoon';
+                    }
+
+                    if (hour >= 16 && hour < 18) {
+                        return 'evening';
+                    }
+
+                    if (hour >= 18 && hour < 20) {
+                        return 'nightfall';
+                    }
+
+                    return 'night';
+                };
+
+                const updateGreeting = (hour) => {
+                    const key = greetingKeyForHour(hour);
+
+                    if (key === currentGreetingKey) {
+                        return;
+                    }
+
+                    const greeting = greetings[key];
+                    const [primary, ...secondary] = greeting.title.split(' ');
+                    greetingIconElement.textContent = greeting.icon;
+                    greetingPrimaryElement.textContent = primary;
+                    greetingSecondaryElement.textContent = secondary.join(' ');
+                    greetingMessageElement.textContent = greeting.message;
+                    currentGreetingKey = key;
+                };
 
                 const updateClock = () => {
                     const now = new Date();
@@ -658,13 +707,23 @@
                         day: '2-digit',
                         month: 'long',
                         year: 'numeric',
+                        timeZone,
                     }).format(now);
-                    dayElement.textContent = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(now);
+                    dayElement.textContent = new Intl.DateTimeFormat('en-US', { weekday: 'long', timeZone }).format(now);
+
+                    const hourText = new Intl.DateTimeFormat('en-GB', {
+                        hour: '2-digit',
+                        hour12: false,
+                        timeZone,
+                    }).format(now);
+                    const hour = Number(hourText) === 24 ? 0 : Number(hourText);
+                    updateGreeting(hour);
 
                     const parts = new Intl.DateTimeFormat('en-US', {
                         hour: '2-digit',
                         minute: '2-digit',
                         hour12: true,
+                        timeZone,
                     }).formatToParts(now);
 
                     timeElement.textContent = `${parts.find((part) => part.type === 'hour')?.value ?? '00'}:${parts.find((part) => part.type === 'minute')?.value ?? '00'}`;

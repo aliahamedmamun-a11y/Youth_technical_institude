@@ -11,7 +11,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="min-h-screen overflow-x-hidden bg-stone-50 text-slate-900 antialiased dark:bg-ink dark:text-white">
-        <header class="border-b border-slate-900/5 bg-stone-50/95 backdrop-blur-xl dark:border-white/10 dark:bg-ink/95">
+        <header class="relative z-50 border-b border-slate-900/5 bg-stone-50/95 backdrop-blur-xl dark:border-white/10 dark:bg-ink/95">
             <div class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
                 <a href="{{ route('home') }}" class="group flex min-w-0 items-center gap-3" aria-label="BNYTI home">
                     <img src="{{ asset('images/bnyti-logo.svg') }}" alt="Bangladesh National Youth Technical Institute logo" class="brand-logo size-12 shrink-0 transition duration-300 group-hover:-rotate-3 sm:size-14">
@@ -23,9 +23,8 @@
                     <a href="{{ route('home') }}#courses" class="nav-link">Courses</a>
                     <a href="{{ route('home') }}#about" class="nav-link">About</a>
                     <a href="{{ route('home') }}#branch-application-promo" class="nav-link">Branches</a>
-                    <a href="{{ route('branch-applications.create') }}" class="nav-link">Branch Register</a>
-                    <a href="{{ route('student-registrations.create') }}" class="nav-link">Student Register</a>
-                    <a href="{{ route('results.index') }}" class="nav-link active" aria-current="page">Student Results</a>
+                    <a href="{{ route('results.index') }}" class="nav-link active" aria-current="page">Results</a>
+                    <details class="group relative"><summary class="nav-link flex cursor-pointer list-none items-center gap-1">Apply Now <svg viewBox="0 0 24 24" class="size-4 transition group-open:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg></summary><div class="absolute right-0 top-full z-30 mt-3 w-52 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-white/10 dark:bg-ink"><a href="{{ route('student-registrations.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-200 dark:hover:bg-emerald-500/10">Student Registration</a><a href="{{ route('branch-applications.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-200 dark:hover:bg-emerald-500/10">Branch Registration</a></div></details>
                 </nav>
                 <div class="flex shrink-0 items-center gap-2">
                     <button type="button" class="icon-button" data-locale-toggle aria-label="Switch language"><span class="text-xs font-black" data-locale-label>বাংলা</span></button>
@@ -35,7 +34,7 @@
             </div>
             <div id="results-mobile-menu" class="border-t border-slate-900/5 bg-stone-50 px-4 py-5 shadow-2xl dark:border-white/10 dark:bg-ink lg:hidden" data-mobile-menu hidden>
                 <nav class="mx-auto grid max-w-7xl gap-1" aria-label="Mobile navigation">
-                    <a href="{{ route('home') }}#home" class="mobile-nav-link">Home</a><a href="{{ route('home') }}#courses" class="mobile-nav-link">Courses</a><a href="{{ route('home') }}#about" class="mobile-nav-link">About</a><a href="{{ route('home') }}#branch-application-promo" class="mobile-nav-link">Branches</a><a href="{{ route('branch-applications.create') }}" class="mobile-nav-link">Branch Register</a><a href="{{ route('student-registrations.create') }}" class="mobile-nav-link">Student Register</a><a href="{{ route('results.index') }}" class="mobile-nav-link bg-emerald-500/10 text-emerald-700 dark:text-emerald-300" aria-current="page">Student Results</a>
+                    <a href="{{ route('home') }}#home" class="mobile-nav-link">Home</a><a href="{{ route('home') }}#courses" class="mobile-nav-link">Courses</a><a href="{{ route('home') }}#about" class="mobile-nav-link">About</a><a href="{{ route('home') }}#branch-application-promo" class="mobile-nav-link">Branches</a><a href="{{ route('results.index') }}" class="mobile-nav-link bg-emerald-500/10 text-emerald-700 dark:text-emerald-300" aria-current="page">Results</a><p class="px-4 pt-3 text-xs font-black uppercase tracking-widest text-emerald-700 dark:text-emerald-300">Apply Now</p><a href="{{ route('student-registrations.create') }}" class="mobile-nav-link pl-8">Student Registration</a><a href="{{ route('branch-applications.create') }}" class="mobile-nav-link pl-8">Branch Registration</a>
                 </nav>
             </div>
         </header>

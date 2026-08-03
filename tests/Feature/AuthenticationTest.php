@@ -59,7 +59,11 @@ test('branch dashboard displays a secure logout form', function () {
         ->assertSee('action="'.route('logout').'"', false)
         ->assertSee('method="POST"', false)
         ->assertSee('name="_token"', false)
-        ->assertSee('Log out of the branch dashboard', false);
+        ->assertSee('Log out of the branch dashboard', false)
+        ->assertSee('BRANCH MANAGEMENT SYSTEM')
+        ->assertSee('ADMISSION')
+        ->assertSee('CERTIFICATES')
+        ->assertSee('NEWS &amp; NOTICE', false);
 });
 
 test('users can log out from the branch dashboard', function () {

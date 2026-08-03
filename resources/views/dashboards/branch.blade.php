@@ -140,6 +140,12 @@
                 box-shadow: 0 10px 22px rgb(15 23 42 / .2), inset 0 0 0 6px rgb(255 255 255 / .9);
             }
 
+            .greeting-badge-icon {
+                font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+                font-size: 68px;
+                line-height: 1;
+            }
+
             .greeting-content {
                 position: relative;
                 z-index: 10;
@@ -441,18 +447,12 @@
 
                         <div class="greeting-content">
                             <div class="sun-badge">
-                                <svg viewBox="0 0 100 100" class="size-[86px]" aria-hidden="true">
-                                    <g stroke="#ffbd12" stroke-linecap="round" stroke-width="5">
-                                        <path d="M50 5v13M50 82v13M5 50h13M82 50h13M18 18l9 9M73 73l9 9M82 18l-9 9M27 73l-9 9"/>
-                                    </g>
-                                    <circle cx="50" cy="50" r="22" fill="#ffc21c"/>
-                                </svg>
+                                <span id="dashboard-greeting-badge-icon" class="greeting-badge-icon" aria-hidden="true">🌞</span>
                             </div>
 
                             <div class="mt-[-2px] w-full max-w-[355px] lg:ml-[4%]">
                                 <span class="inline-flex rounded-[10px] bg-gradient-to-r from-[#a90008] to-[#d71920] px-5 py-1 text-lg font-black text-white shadow-md">শুভেচ্ছা</span>
                                 <h1 id="dashboard-greeting-title" class="greeting-title" aria-live="polite">
-                                    <span id="dashboard-greeting-icon" class="mr-2 text-[.72em]" aria-hidden="true">🌞</span>
                                     <span id="dashboard-greeting-primary" class="text-[#bc0d16]">শুভ</span>
                                     <span id="dashboard-greeting-secondary" class="text-[#087b3d]">সকাল!</span>
                                 </h1>
@@ -650,7 +650,7 @@
                 const dayElement = document.getElementById('dashboard-day');
                 const timeElement = document.getElementById('dashboard-time');
                 const ampmElement = document.getElementById('dashboard-ampm');
-                const greetingIconElement = document.getElementById('dashboard-greeting-icon');
+                const greetingBadgeIconElement = document.getElementById('dashboard-greeting-badge-icon');
                 const greetingPrimaryElement = document.getElementById('dashboard-greeting-primary');
                 const greetingSecondaryElement = document.getElementById('dashboard-greeting-secondary');
                 const greetingMessageElement = document.getElementById('dashboard-greeting-message');
@@ -694,7 +694,7 @@
 
                     const greeting = greetings[key];
                     const [primary, ...secondary] = greeting.title.split(' ');
-                    greetingIconElement.textContent = greeting.icon;
+                    greetingBadgeIconElement.textContent = greeting.icon;
                     greetingPrimaryElement.textContent = primary;
                     greetingSecondaryElement.textContent = secondary.join(' ');
                     greetingMessageElement.textContent = greeting.message;

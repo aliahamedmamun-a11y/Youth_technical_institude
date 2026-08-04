@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Services\ResultGradingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
@@ -22,7 +23,7 @@ class StudentDocumentController extends Controller
         'results' => 'Results',
     ];
 
-    public function show(Student $student, string $document): View|RedirectResponse
+    public function show(Student $student, string $document, ResultGradingService $grading): View|RedirectResponse
     {
         Gate::authorize('view', $student);
 
@@ -36,10 +37,15 @@ class StudentDocumentController extends Controller
             }
         }
 
+        $student->load('course');
+        $latestResult = $student->results()->where('status', 'published')->whereNotNull('published_at')->latest('published_at')->first();
+
         return view('super-admin.students.document', [
-            'student' => $student->load('course'),
+            'student' => $student,
             'document' => $document,
             'documentTitle' => self::DOCUMENTS[$document],
+            'latestResult' => $latestResult,
+            'cumulativeGpa' => $grading->cumulativeGpa($student),
         ]);
     }
 }

@@ -5,75 +5,76 @@ namespace Database\Seeders;
 use App\Models\Semester;
 use App\Models\Student;
 use App\Models\StudentResult;
+use App\Services\ResultGradingService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class StudentResultSeeder extends Seeder
 {
-    public function run(): void
+    public function run(ResultGradingService $grading): void
     {
-        $student = Student::query()->with('course')->first();
+        Student::query()->with('course')->each(function (Student $student) use ($grading): void {
+            $semesters = Semester::query()
+                ->whereBelongsTo($student->course)
+                ->where('is_active', true)
+                ->with('subjects')
+                ->orderBy('sort_order')
+                ->get();
 
-        if (! $student) {
-            return;
-        }
+            foreach ($semesters as $semester) {
+                DB::transaction(function () use ($student, $semester, $grading): void {
+                    $result = StudentResult::query()
+                        ->where('student_id', $student->id)
+                        ->where('session', 'July 2025 - December 2025')
+                        ->where(function ($query) use ($semester): void {
+                            $query->where('semester_id', $semester->id)->orWhere('semester', $semester->name);
+                        })
+                        ->first() ?? new StudentResult;
 
-        $semester = Semester::query()
-            ->whereBelongsTo($student->course)
-            ->where('name', 'First Semester')
-            ->with('subjects')
-            ->firstOrFail();
+                    $result->fill([
+                        'student_id' => $student->id,
+                        'semester_id' => $semester->id,
+                        'semester' => $semester->name,
+                        'session' => 'July 2025 - December 2025',
+                        'status' => 'published',
+                        'verification_token' => $result->verification_token ?? Str::random(48),
+                        'published_at' => $result->published_at ?? now(),
+                    ]);
+                    $result->save();
 
-        DB::transaction(function () use ($student, $semester): void {
-            $result = StudentResult::query()
-                ->where('student_id', $student->id)
-                ->where('session', 'July 2025 - December 2025')
-                ->where(function ($query) use ($semester): void {
-                    $query->where('semester_id', $semester->id)->orWhere('semester', $semester->name);
-                })
-                ->first() ?? new StudentResult;
+                    $result->subjects()->delete();
+                    $totalCredit = 0;
+                    $qualityPoints = 0;
+                    $creditEarned = 0;
 
-            $result->fill([
-                'student_id' => $student->id,
-                'semester_id' => $semester->id,
-                'semester' => $semester->name,
-                'session' => 'July 2025 - December 2025',
-                'status' => 'published',
-                'verification_token' => $result->verification_token ?? Str::random(48),
-                'published_at' => $result->published_at ?? now(),
-            ]);
-            $result->save();
+                    foreach ($semester->subjects as $order => $subject) {
+                        $marks = 70 + (($student->id * 7 + $semester->sort_order * 5 + $order * 3) % 26);
+                        $grade = $grading->gradeForMarks((float) $marks);
+                        $totalCredit += (float) $subject->credit;
+                        $qualityPoints += (float) $subject->credit * (float) $grade['grade_point'];
+                        $creditEarned += (float) $subject->credit;
 
-            $result->subjects()->delete();
-            $totalCredit = 0;
-            $qualityPoints = 0;
-            $creditEarned = 0;
+                        $result->subjects()->create([
+                            'code' => $subject->code,
+                            'title' => $subject->title,
+                            'credit' => $subject->credit,
+                            'marks' => $marks,
+                            'grade' => $grade['grade'],
+                            'grade_point' => $grade['grade_point'],
+                            'sort_order' => $order,
+                        ]);
+                    }
 
-            foreach ($semester->subjects as $order => $subject) {
-                $gradePoint = [4, 3.75, 3.5, 3.25][$order] ?? 3;
-                $totalCredit += (float) $subject->credit;
-                $qualityPoints += (float) $subject->credit * $gradePoint;
-                $creditEarned += (float) $subject->credit;
-
-                $result->subjects()->create([
-                    'code' => $subject->code,
-                    'title' => $subject->title,
-                    'credit' => $subject->credit,
-                    'marks' => [88, 82, 78, 91][$order] ?? 80,
-                    'grade' => ['A+', 'A-', 'B+', 'A+'][$order] ?? 'B+',
-                    'grade_point' => $gradePoint,
-                    'sort_order' => $order,
-                ]);
+                    $gpa = $totalCredit > 0 ? round($qualityPoints / $totalCredit, 2) : null;
+                    $result->update([
+                        'total_credit' => $totalCredit,
+                        'credit_earned' => $creditEarned,
+                        'gpa' => $gpa,
+                        'overall_grade' => $this->overallGrade($gpa),
+                    ]);
+                });
             }
-
-            $gpa = $totalCredit > 0 ? round($qualityPoints / $totalCredit, 2) : null;
-            $result->update([
-                'total_credit' => $totalCredit,
-                'credit_earned' => $creditEarned,
-                'gpa' => $gpa,
-                'overall_grade' => $this->overallGrade($gpa),
-            ]);
         });
     }
 

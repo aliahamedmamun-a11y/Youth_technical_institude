@@ -19,15 +19,16 @@ class PublicResultController extends Controller
         $rollNumber = trim((string) ($validated['roll_number'] ?? ''));
 
         if ($rollNumber !== '') {
-            $result = StudentResult::query()
+            $results = StudentResult::query()
                 ->where('status', 'published')
                 ->whereNotNull('published_at')
                 ->whereHas('student', fn ($query) => $query->where('roll_number', $rollNumber))
+                ->with('semesterDefinition')
                 ->latest('published_at')
-                ->first();
+                ->get();
 
-            if ($result) {
-                return redirect()->route('results.show', $result->verification_token);
+            if ($results->isNotEmpty()) {
+                return redirect()->route('results.show', $results->first()->verification_token);
             }
         }
 
@@ -43,6 +44,25 @@ class PublicResultController extends Controller
             ->with(['student.course', 'subjects'])
             ->firstOrFail();
 
-        return view('results.sheet', ['result' => $result, 'cumulativeGpa' => $grading->cumulativeGpa($result->student), 'qrCode' => $qrCode->dataUri($result), 'adminPreview' => false]);
+        $semesterResults = StudentResult::query()
+            ->whereBelongsTo($result->student)
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->orderBy('semester')
+            ->get(['semester', 'verification_token']);
+
+        $allResults = StudentResult::query()
+            ->whereBelongsTo($result->student)
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->with('subjects')
+            ->orderBy('semester')
+            ->get();
+
+        $qrCodes = $allResults->mapWithKeys(fn (StudentResult $semesterResult): array => [
+            $semesterResult->id => $qrCode->dataUri($semesterResult),
+        ]);
+
+        return view('results.sheet', ['result' => $result, 'allResults' => $allResults, 'qrCodes' => $qrCodes, 'semesterResults' => $semesterResults, 'cumulativeGpa' => $grading->cumulativeGpa($result->student), 'qrCode' => $qrCode->dataUri($result), 'adminPreview' => false]);
     }
 }

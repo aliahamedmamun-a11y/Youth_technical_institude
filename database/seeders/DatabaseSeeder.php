@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             RoleUserSeeder::class,
             AcademicDataSeeder::class,
             AcademicStructureSeeder::class,
+            StudentSemesterEnrollmentSeeder::class,
             StudentResultSeeder::class,
             BranchApplicationSeeder::class,
         ]);

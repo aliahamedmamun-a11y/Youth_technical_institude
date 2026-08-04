@@ -25,6 +25,7 @@ class StoreStudentRequest extends FormRequest
         return [
             'course_id' => ['required', 'integer', Rule::exists('courses', 'id')],
             'name' => ['required', 'string', 'max:255'],
+            'roll_number' => ['nullable', 'string', 'max:50', Rule::unique('students', 'roll_number')],
             'father_name' => ['required', 'string', 'max:255'],
             'mother_name' => ['required', 'string', 'max:255'],
             'address' => ['required', 'string', 'max:2000'],

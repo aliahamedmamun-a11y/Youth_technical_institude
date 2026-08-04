@@ -69,6 +69,7 @@
                         <button type="submit" class="mt-5 inline-flex min-h-16 w-full items-center justify-center gap-4 rounded-2xl bg-gradient-to-r from-green-600 to-emerald-700 px-6 text-lg font-black text-white shadow-lg shadow-emerald-700/25 transition hover:-translate-y-0.5 hover:from-green-500 hover:to-emerald-600 focus-visible:outline-emerald-500 sm:text-xl"><svg viewBox="0 0 24 24" class="size-8 fill-none stroke-current" aria-hidden="true" stroke-width="2"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5" stroke-linecap="round"/></svg>VIEW RESULT</button>
                         <p class="mt-5 flex items-center justify-center gap-2 text-sm font-semibold text-emerald-800 dark:text-emerald-300"><svg viewBox="0 0 24 24" class="size-5 fill-none stroke-current" aria-hidden="true" stroke-width="1.8"><path d="M12 3 20 6v5c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6z"/><path d="m8.5 12 2.3 2.3 4.8-5" stroke-linecap="round" stroke-linejoin="round"/></svg>Please enter a valid Roll Number to view your official result.</p>
                     </form>
+
                 </div>
             </section>
 

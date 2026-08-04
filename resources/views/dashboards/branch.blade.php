@@ -1,6 +1,4 @@
 @php
-    $branchName = $branchName ?? 'Dhaka Main Branch';
-    $branchCode = $branchCode ?? 'BNY-DHA-001';
     $homeUrl = route('home');
 
     $quickMenus = [
@@ -72,15 +70,22 @@
             }
 
             .brand-bangladesh {
-                color: var(--branch-red);
-                font-size: clamp(42px, 3.25vw, 55px);
-                letter-spacing: .01em;
+                color: #050505;
+                font-size: clamp(40px, 3vw, 52px);
+                letter-spacing: .015em;
+                line-height: .92;
             }
 
             .brand-national {
-                color: var(--branch-green);
-                font-size: clamp(38px, 2.8vw, 49px);
-                letter-spacing: .01em;
+                display: inline-block;
+                margin-top: 4px;
+                padding: 4px 18px 6px;
+                border-radius: 7px;
+                background: var(--branch-green);
+                color: white;
+                font-size: clamp(34px, 2.55vw, 45px);
+                letter-spacing: .015em;
+                line-height: .9;
             }
 
             .brand-institute-line {
@@ -93,16 +98,17 @@
             .brand-institute-line::before,
             .brand-institute-line::after {
                 flex: 1;
-                height: 1px;
-                background: #0f172a;
+                height: 2px;
+                background: var(--branch-green);
                 content: "";
             }
 
             .brand-institute-line p {
                 white-space: nowrap;
                 text-align: center;
-                font-size: clamp(14px, 1.25vw, 22px);
-                letter-spacing: .06em;
+                color: #050505;
+                font-size: clamp(14px, 1.2vw, 21px);
+                letter-spacing: .045em;
             }
 
             .greeting-title {
@@ -175,11 +181,14 @@
 
             .system-ribbon {
                 flex: none;
-                min-width: 74%;
-                padding: 8px 24px;
-                background: linear-gradient(90deg, var(--branch-red-dark), var(--branch-red));
-                color: white;
-                font-size: clamp(13px, 1.1vw, 18px);
+                min-width: 82%;
+                padding: 8px 22px;
+                border: 2px solid white;
+                outline: 2px solid #10231a;
+                outline-offset: 3px;
+                background: var(--branch-green);
+                color: #07150d;
+                font-size: clamp(12px, 1.02vw, 17px);
                 font-weight: 900;
                 letter-spacing: .05em;
                 clip-path: polygon(4% 0, 96% 0, 100% 50%, 96% 100%, 4% 100%, 0 50%);
@@ -198,20 +207,6 @@
                 border-radius: 28px 28px 0 0;
                 background: white;
                 box-shadow: 0 -8px 24px rgb(15 23 42 / .08);
-            }
-
-            .branch-info-card {
-                position: absolute;
-                top: 7%;
-                right: 4%;
-                z-index: 20;
-                width: 88%;
-                padding: 6% 7%;
-                border: 1px solid rgb(255 255 255 / .8);
-                border-radius: 38px;
-                background: rgb(255 255 255 / .94);
-                box-shadow: 0 14px 40px rgb(15 23 42 / .15);
-                backdrop-filter: blur(6px);
             }
 
             .notice-bar {
@@ -328,31 +323,73 @@
                 gap: 8px;
             }
 
-            .building-image {
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                z-index: 10;
-                width: 100%;
-                height: 58%;
-                object-fit: cover;
-                object-position: right bottom;
-            }
-
             .sunrise-image {
                 bottom: 0 !important;
             }
 
-            .country-flag {
+            .prayer-times-card {
                 position: absolute;
-                top: 31%;
-                right: 5px;
+                top: 7%;
+                right: 4%;
                 z-index: 20;
-                width: 68px;
-                height: 152px;
-                overflow: visible;
-                filter: drop-shadow(0 3px 2px rgb(15 23 42 / .12));
+                width: 88%;
+                padding: 20px 24px;
+                border: 1px solid rgb(255 255 255 / .8);
+                border-radius: 24px;
+                background: rgb(255 255 255 / .96);
+                box-shadow: 0 14px 40px rgb(15 23 42 / .12);
+                backdrop-filter: blur(6px);
+            }
+
+            .prayer-times-grid {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 8px;
+                margin-top: 14px;
+            }
+
+            .prayer-time-item {
+                padding: 8px 10px;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                background: #f8fafc;
+            }
+
+            .prayer-time-item.is-next {
+                border-color: rgb(8 123 61 / .35);
+                background: #ecfdf5;
+                box-shadow: 0 0 0 2px rgb(8 123 61 / .08);
+            }
+
+            .prayer-time-name {
+                display: block;
+                color: #64748b;
+                font-size: 11px;
+                font-weight: 800;
+            }
+
+            .prayer-time-value {
+                display: block;
+                margin-top: 2px;
+                color: #0f172a;
+                font-size: 14px;
+                font-weight: 900;
+            }
+
+            @media (max-width: 1023px) {
+                .prayer-times-card {
+                    position: relative;
+                    top: auto;
+                    right: auto;
+                    width: auto;
+                    margin: 24px;
+                }
+            }
+
+            @media (max-width: 639px) {
+                .prayer-times-grid {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
             }
 
             .footer-swoop {
@@ -485,6 +522,13 @@
                 </div>
 
                 <div class="flex shrink-0 items-center gap-2">
+                    <form method="POST" action="{{ route('logout') }}" class="hidden lg:block">
+                        @csrf
+                        <button type="submit" aria-label="Log out of the branch dashboard" class="inline-flex min-h-10 items-center gap-2 rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black text-red-700 transition hover:border-red-300 hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                            <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M21 3v18"/></svg>
+                            Logout
+                        </button>
+                    </form>
                     <button type="button" class="icon-button" data-theme-toggle aria-label="Toggle color theme">
                         <svg data-theme-sun viewBox="0 0 24 24" aria-hidden="true" class="size-5"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l-1.42 1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/></svg>
                         <svg data-theme-moon viewBox="0 0 24 24" aria-hidden="true" class="hidden size-5"><path d="M20 15.1A8.5 8.5 0 0 1 8.9 4a8.5 8.5 0 1 0 11.1 11.1Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/></svg>
@@ -507,12 +551,16 @@
                     <a href="{{ route('student-registrations.create') }}" class="mobile-nav-link pl-8">Student Registration</a>
                     <a href="{{ route('branch-applications.create') }}" class="mobile-nav-link pl-8">Branch Registration</a>
                     <a href="{{ route('home') }}#latest-news-contact" class="mobile-nav-link">Contact</a>
+                    <form method="POST" action="{{ route('logout') }}" class="mt-3 border-t border-slate-200 pt-3">
+                        @csrf
+                        <button type="submit" class="mobile-nav-link w-full text-left font-black text-red-700">Logout</button>
+                    </form>
                 </nav>
             </div>
         </header>
 
-        <main class="flex min-h-screen items-center justify-center p-0 pt-[108px] sm:px-3 sm:pb-3 sm:pt-[108px]">
-            <div class="branch-canvas relative w-full max-w-[1600px] overflow-hidden bg-white sm:rounded-[26px] sm:border sm:border-slate-200">
+        <main class="flex min-h-screen items-center justify-center p-0 pt-[108px]">
+            <div class="branch-canvas relative w-full max-w-none overflow-hidden bg-white">
                 <section class="hero-grid relative min-h-[500px] overflow-hidden">
                     <div class="hero-left relative isolate min-h-[470px] overflow-hidden bg-white lg:min-h-0">
                         <img src="{{ asset('images/dashboard/sunrise.png') }}" alt="" class="sunrise-image absolute inset-x-0 bottom-0 z-[3] h-[46%] w-full object-cover object-bottom">
@@ -524,7 +572,7 @@
                             </div>
 
                             <div class="mt-[-2px] w-full max-w-[355px] lg:ml-[4%]">
-                                <span class="inline-flex rounded-[10px] bg-gradient-to-r from-[#a90008] to-[#d71920] px-5 py-1 text-lg font-black text-white shadow-md">শুভেচ্ছা</span>
+                                <span class="inline-flex rounded-[10px] bg-gradient-to-r from-[#03592a] to-[#087b3d] px-5 py-1 text-lg font-black text-white shadow-md">শুভেচ্ছা</span>
                                 <h1 id="dashboard-greeting-title" class="greeting-title" aria-live="polite">
                                     <span id="dashboard-greeting-primary" class="text-[#bc0d16]">শুভ</span>
                                     <span id="dashboard-greeting-secondary" class="text-[#087b3d]">সকাল!</span>
@@ -554,65 +602,45 @@
 
                         <img src="{{ asset('images/bnyti-logo.svg') }}" alt="Bangladesh National Youth Technical Institute logo" class="brand-logo">
 
-                        <div class="brand-condensed mt-4 uppercase leading-10">
+                        <div class="brand-condensed mt-4 uppercase">
                             <p class="brand-bangladesh">Bangladesh</p>
                             <p class="brand-national">National Youth</p>
                         </div>
 
-                        <div class=" mt-3">
+                        <div class="brand-institute-line mt-3">
                             <p class="font-black">TECHNICAL INSTITUTE</p>
                         </div>
 
                         <div class="brand-ribbon-row">
-                            <span class="relative h-0.5 flex-1 bg-gradient-to-r from-transparent to-[#087b3d]"><span class="absolute right-0 top-1/2 size-2 -translate-y-1/2 rotate-45 bg-[#d71920]"></span></span>
+                            <span class="relative h-0.5 flex-1 bg-gradient-to-r from-transparent to-[#087b3d]"><span class="absolute right-0 top-1/2 size-2 -translate-y-1/2 rotate-45 bg-[#087b3d]"></span></span>
                             <span class="system-ribbon shadow-md">BRANCH MANAGEMENT SYSTEM</span>
-                            <span class="relative h-0.5 flex-1 bg-gradient-to-l from-transparent to-[#087b3d]"><span class="absolute left-0 top-1/2 size-2 -translate-y-1/2 rotate-45 bg-[#d71920]"></span></span>
+                            <span class="relative h-0.5 flex-1 bg-gradient-to-l from-transparent to-[#087b3d]"><span class="absolute left-0 top-1/2 size-2 -translate-y-1/2 rotate-45 bg-[#087b3d]"></span></span>
                         </div>
                     </div>
 
                     <div class="relative min-h-[470px] overflow-hidden bg-gradient-to-b from-white via-white to-sky-50 lg:min-h-0">
-                        <div class="branch-info-card">
-                            <div class="grid grid-cols-2 divide-x divide-slate-300">
-                                <div class="flex items-start gap-3 pr-4">
-                                    <svg viewBox="0 0 24 24" class="mt-0.5 size-10 shrink-0 text-[#087b3d]" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
-                                    <div>
-                                        <p id="dashboard-date" class="whitespace-nowrap text-base font-black sm:text-lg lg:text-[1.1vw] xl:text-[19px]"></p>
-                                        <p id="dashboard-day" class="mt-1 text-sm text-slate-500"></p>
-                                    </div>
+                        <section class="prayer-times-card" aria-labelledby="prayer-times-heading">
+                            <div class="flex items-center justify-between gap-3">
+                                <div>
+                                    <h2 id="prayer-times-heading" class="text-base font-black text-slate-950">Today's Prayer Times</h2>
+                                    <p id="prayer-times-date" class="mt-1 text-xs font-medium text-slate-500">Dhaka, Bangladesh</p>
                                 </div>
-                                <div class="flex items-start gap-3 pl-5">
-                                    <svg viewBox="0 0 24 24" class="mt-0.5 size-10 shrink-0 text-[#d2111a]" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></svg>
+                                <div class="flex items-center gap-2 text-right">
+                                    <svg viewBox="0 0 24 24" class="size-5 shrink-0 text-[#087b3d]" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="9" />
+                                        <path d="M12 7v5l3 2" />
+                                    </svg>
                                     <div>
-                                        <div class="flex items-center gap-2">
-                                            <p id="dashboard-time" class="text-2xl font-black leading-none lg:text-[1.65vw] xl:text-[28px]"></p>
-                                            <span id="dashboard-ampm" class="rounded bg-[#d2111a] px-2 py-1 text-[10px] font-black text-white"></span>
-                                        </div>
-                                        <p class="mt-1 text-sm text-slate-500">Local Time</p>
+                                        <p id="prayer-current-time" class="whitespace-nowrap text-sm font-black leading-none text-slate-950" aria-live="polite">--:--:--</p>
+                                        <p class="mt-1 text-[10px] font-bold uppercase tracking-wide text-slate-400">Dhaka Time</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="mt-5 border-t border-slate-200 pt-5">
-                                <div class="flex items-start gap-4">
-                                    <svg viewBox="0 0 24 24" class="size-12 shrink-0 text-[#087b3d]" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
-                                    <div>
-                                        <h2 class="text-xl font-black lg:text-[1.3vw] xl:text-[22px]">{{ $branchName }}</h2>
-                                        <p class="mt-1 text-sm font-medium text-slate-500">Branch Code: <span class="font-black text-[#d2111a]">{{ $branchCode }}</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <div id="prayer-times-grid" class="prayer-times-grid" aria-live="polite"></div>
+                            <p class="mt-3 text-[10px] font-medium text-slate-400">Live timings from Aladhan API · Dhaka, Bangladesh</p>
+                        </section>
 
-                        <img src="{{ asset('images/dashboard/building.png') }}" alt="BNYTI technical institute building" class="building-image">
-                        <div class="absolute inset-x-0 bottom-0 z-[11] h-[20%] bg-gradient-to-t from-white/15 to-transparent"></div>
-                        <svg viewBox="0 0 70 125" class="country-flag" role="img" aria-labelledby="bangladesh-flag-title">
-                            <title id="bangladesh-flag-title">Bangladesh flag</title>
-                            <circle cx="17" cy="5" r="3.2" fill="#5b3b20"/>
-                            <path d="M17 6V121" stroke="#5b3b20" stroke-linecap="round" stroke-width="2.6"/>
-                            <path d="M19 14C30 19 42 12 61 17V68C44 63 31 70 19 65Z" fill="#087b3d"/>
-                            <path d="M19 14C30 19 42 12 61 17" fill="none" stroke="#069447" stroke-linecap="round" stroke-width="1.5"/>
-                            <circle cx="40" cy="41" r="11.5" fill="#ed1c24"/>
-                        </svg>
                     </div>
                 </section>
 
@@ -705,28 +733,24 @@
                     </footer>
                 </section>
 
-                <form method="POST" action="{{ route('logout') }}" class="absolute right-4 top-4 z-50">
-                    @csrf
-                    <button type="submit" aria-label="Log out of the branch dashboard" class="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/30 bg-slate-950/80 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-slate-950/20 backdrop-blur transition hover:bg-[#087b3d] focus:outline-none focus:ring-2 focus:ring-[#087b3d] focus:ring-offset-2">
-                        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M21 3v18"/></svg>
-                        Logout
-                    </button>
-                </form>
             </div>
         </main>
 
         <script>
             (() => {
-                const dateElement = document.getElementById('dashboard-date');
-                const dayElement = document.getElementById('dashboard-day');
-                const timeElement = document.getElementById('dashboard-time');
-                const ampmElement = document.getElementById('dashboard-ampm');
                 const greetingBadgeIconElement = document.getElementById('dashboard-greeting-badge-icon');
                 const greetingPrimaryElement = document.getElementById('dashboard-greeting-primary');
                 const greetingSecondaryElement = document.getElementById('dashboard-greeting-secondary');
                 const greetingMessageElement = document.getElementById('dashboard-greeting-message');
+                const prayerDateElement = document.getElementById('prayer-times-date');
+                const prayerGridElement = document.getElementById('prayer-times-grid');
+                const prayerCurrentTimeElement = document.getElementById('prayer-current-time');
                 const timeZone = 'Asia/Dhaka';
                 let currentGreetingKey = null;
+                let currentPrayerDateKey = null;
+                let prayerTimings = null;
+                let prayerTimesRequest = null;
+                let prayerRetryAt = 0;
 
                 const greetings = {
                     morning: { icon: '🌞', title: 'শুভ সকাল!', message: 'আপনার আজকের দিনটি সফল ও ফলপ্রসূ হোক।' },
@@ -772,16 +796,149 @@
                     currentGreetingKey = key;
                 };
 
+                const getDhakaDateParts = (now) => new Intl.DateTimeFormat('en-CA', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone,
+                }).formatToParts(now).reduce((parts, part) => {
+                    parts[part.type] = part.value;
+
+                    return parts;
+                }, {});
+
+                const formatPrayerTime = (value) => {
+                    const [hours, minutes] = value.match(/^\d{1,2}:\d{2}/)?.[0].split(':') ?? [];
+                    const date = new Date(Date.UTC(2000, 0, 1, Number(hours), Number(minutes)));
+
+                    return new Intl.DateTimeFormat('en-US', {
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: true,
+                        timeZone: 'UTC',
+                    }).format(date);
+                };
+
+                const prayerTimeInMinutes = (value) => {
+                    const [hours, minutes] = value.match(/^\d{1,2}:\d{2}/)?.[0].split(':') ?? [];
+
+                    return Number(hours) * 60 + Number(minutes);
+                };
+
+                const currentDhakaMinutes = (now) => {
+                    const parts = new Intl.DateTimeFormat('en-GB', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false,
+                        timeZone,
+                    }).formatToParts(now);
+
+                    return Number(parts.find((part) => part.type === 'hour')?.value ?? 0) * 60
+                        + Number(parts.find((part) => part.type === 'minute')?.value ?? 0);
+                };
+
+                const renderPrayerTimes = (now) => {
+                    const entries = [
+                        ['Fajr', prayerTimings.Fajr, true],
+                        ['Sunrise', prayerTimings.Sunrise, false],
+                        ['Dhuhr', prayerTimings.Dhuhr, true],
+                        ['Asr', prayerTimings.Asr, true],
+                        ['Maghrib', prayerTimings.Maghrib, true],
+                        ['Isha', prayerTimings.Isha, true],
+                    ];
+                    const currentMinutes = currentDhakaMinutes(now);
+                    const nextPrayer = entries.find(([, time, isPrayer]) => isPrayer && prayerTimeInMinutes(time) > currentMinutes)?.[0];
+
+                    prayerGridElement.replaceChildren(...entries.map(([name, time]) => {
+                        const item = document.createElement('div');
+                        const nameElement = document.createElement('span');
+                        const timeElement = document.createElement('span');
+
+                        item.className = `prayer-time-item${name === nextPrayer ? ' is-next' : ''}`;
+                        nameElement.className = 'prayer-time-name';
+                        nameElement.textContent = `${name}${name === nextPrayer ? ' · Next' : ''}`;
+                        timeElement.className = 'prayer-time-value';
+                        timeElement.textContent = formatPrayerTime(time);
+                        item.append(nameElement, timeElement);
+
+                        return item;
+                    }));
+                };
+
+                const showPrayerTimesUnavailable = () => {
+                    prayerDateElement.textContent = 'Dhaka, Bangladesh';
+                    prayerGridElement.replaceChildren();
+                    const message = document.createElement('p');
+                    message.className = 'col-span-full py-3 text-center text-sm font-semibold text-slate-500';
+                    message.textContent = 'Prayer times are temporarily unavailable. Please try again shortly.';
+                    prayerGridElement.append(message);
+                };
+
+                const fetchPrayerTimes = async (now) => {
+                    const { day, month, year } = getDhakaDateParts(now);
+                    const dateKey = `${day}-${month}-${year}`;
+                    const cacheKey = `bnyti-prayer-times-${dateKey}`;
+
+                    if (dateKey === currentPrayerDateKey && prayerTimings) {
+                        renderPrayerTimes(now);
+
+                        return;
+                    }
+
+                    if (prayerTimesRequest) {
+                        return;
+                    }
+
+                    if (Date.now() < prayerRetryAt) {
+                        return;
+                    }
+
+                    try {
+                        const cachedTimings = JSON.parse(window.localStorage.getItem(cacheKey) ?? 'null');
+
+                        if (cachedTimings) {
+                            prayerTimings = cachedTimings;
+                        } else {
+                            prayerTimesRequest = fetch(`https://api.aladhan.com/v1/timingsByCity/${dateKey}?city=Dhaka&country=Bangladesh&method=1&school=1`, {
+                                headers: { Accept: 'application/json' },
+                            });
+                            const response = await prayerTimesRequest;
+
+                            if (!response.ok) {
+                                throw new Error('Prayer-times service request failed.');
+                            }
+
+                            const payload = await response.json();
+                            const timings = payload?.data?.timings;
+
+                            if (!timings || !['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].every((name) => typeof timings[name] === 'string')) {
+                                throw new Error('Prayer-times service returned incomplete data.');
+                            }
+
+                            prayerTimings = timings;
+                            window.localStorage.setItem(cacheKey, JSON.stringify(timings));
+                        }
+
+                        currentPrayerDateKey = dateKey;
+                        prayerDateElement.textContent = new Intl.DateTimeFormat('en-GB', {
+                            day: '2-digit',
+                            month: 'long',
+                            year: 'numeric',
+                            timeZone,
+                        }).format(now) + ' · Dhaka';
+                        renderPrayerTimes(now);
+                    } catch (error) {
+                        currentPrayerDateKey = null;
+                        prayerTimings = null;
+                        prayerRetryAt = Date.now() + 5 * 60 * 1000;
+                        showPrayerTimesUnavailable();
+                    } finally {
+                        prayerTimesRequest = null;
+                    }
+                };
+
                 const updateClock = () => {
                     const now = new Date();
-                    dateElement.textContent = new Intl.DateTimeFormat('en-GB', {
-                        day: '2-digit',
-                        month: 'long',
-                        year: 'numeric',
-                        timeZone,
-                    }).format(now);
-                    dayElement.textContent = new Intl.DateTimeFormat('en-US', { weekday: 'long', timeZone }).format(now);
-
                     const hourText = new Intl.DateTimeFormat('en-GB', {
                         hour: '2-digit',
                         hour12: false,
@@ -789,16 +946,14 @@
                     }).format(now);
                     const hour = Number(hourText) === 24 ? 0 : Number(hourText);
                     updateGreeting(hour);
-
-                    const parts = new Intl.DateTimeFormat('en-US', {
-                        hour: '2-digit',
+                    prayerCurrentTimeElement.textContent = new Intl.DateTimeFormat('en-US', {
+                        hour: 'numeric',
                         minute: '2-digit',
+                        second: '2-digit',
                         hour12: true,
                         timeZone,
-                    }).formatToParts(now);
-
-                    timeElement.textContent = `${parts.find((part) => part.type === 'hour')?.value ?? '00'}:${parts.find((part) => part.type === 'minute')?.value ?? '00'}`;
-                    ampmElement.textContent = parts.find((part) => part.type === 'dayPeriod')?.value ?? '';
+                    }).format(now);
+                    void fetchPrayerTimes(now);
                 };
 
                 updateClock();

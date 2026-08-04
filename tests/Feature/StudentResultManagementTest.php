@@ -90,6 +90,20 @@ test('the public result portal uses roll number lookup and rejects unmatched sea
         ->assertSessionHasErrors('roll_number');
 });
 
+test('student roll numbers are unique when managed by administrators', function () {
+    $admin = User::factory()->role(UserRole::SuperAdmin)->create();
+    $existing = Student::factory()->create(['roll_number' => '412005']);
+    $duplicate = Student::factory()->make(['roll_number' => $existing->roll_number]);
+
+    $this->actingAs($admin)
+        ->put(route('super-admin.students.update', $existing), [
+            ...$duplicate->only(['course_id', 'name', 'father_name', 'mother_name', 'address', 'district', 'upazila', 'date_of_birth', 'passport_nid_number', 'phone', 'gender', 'education_qualification', 'duration', 'session', 'admitted_at', 'expire_date']),
+            'roll_number' => '412006',
+        ]);
+
+    expect($existing->refresh()->roll_number)->toBe('412006');
+});
+
 test('non-super-admins cannot manage student results', function () {
     $branchUser = User::factory()->role(UserRole::Branch)->create();
     $student = Student::factory()->create();

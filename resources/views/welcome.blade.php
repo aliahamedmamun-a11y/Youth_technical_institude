@@ -655,7 +655,7 @@
                                 <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Latest News &amp; Updates</h2>
                                 <span class="mt-1 block h-0.5 w-6 rounded-full bg-emerald-500"></span>
                             </div>
-                            <a href="#latest-news-contact" class="group inline-flex items-center gap-1.5 text-[9px] font-bold text-slate-700 transition hover:text-emerald-600 dark:text-slate-300 dark:hover:text-emerald-400">
+                            <a href="{{ route('news.index') }}" class="group inline-flex items-center gap-1.5 text-[9px] font-bold text-slate-700 transition hover:text-emerald-600 dark:text-slate-300 dark:hover:text-emerald-400">
                                 View All News
                                 <svg viewBox="0 0 20 20" aria-hidden="true" class="size-3.5 text-emerald-500 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
                                     <path d="M4 10h12m-4-4 4 4-4 4" />
@@ -664,12 +664,12 @@
                         </div>
 
                         <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                            @foreach ([
+                            @foreach (($latestNews ?? collect())->isNotEmpty() ? $latestNews : collect([
                                 ['Admission Open', 'New batch admission is going on.', '26 May, 2026', 'emerald', 'megaphone'],
                                 ['Exam Notice', 'Final exam routine has been published.', '24 May, 2026', 'blue', 'document'],
                                 ['Result Published', 'Check your latest online result.', '23 May, 2026', 'rose', 'clipboard'],
                                 ['Workshop', 'Web Development Workshop held.', '20 May, 2026', 'sky', 'workshop'],
-                            ] as [$title, $description, $date, $tone, $icon])
+                            ])->map(fn ($item): array => is_array($item) ? $item : [$item->title, $item->excerpt ?: Str::limit($item->content, 80), $item->published_at?->format('d M, Y'), 'emerald', 'megaphone'])->all() as [$title, $description, $date, $tone, $icon])
                                 <article class="flex h-full gap-2.5 rounded-xl bg-slate-50 px-3 py-3 ring-1 ring-slate-900/5 dark:bg-slate-900/40 dark:ring-white/10">
                                     <span @class([
                                         'grid size-9 shrink-0 place-items-center rounded-lg',

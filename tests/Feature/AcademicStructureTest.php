@@ -10,6 +10,7 @@ use App\Models\User;
 use Database\Seeders\AcademicDataSeeder;
 use Database\Seeders\AcademicStructureSeeder;
 use Database\Seeders\StudentResultSeeder;
+use Database\Seeders\StudentSemesterEnrollmentSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -19,19 +20,38 @@ test('academic structure seeding is complete and idempotent', function () {
     $this->seed(AcademicStructureSeeder::class);
 
     expect(Course::query()->count())->toBe(3)
-        ->and(Semester::query()->count())->toBe(6)
-        ->and(Subject::query()->count())->toBe(24);
+        ->and(Semester::query()->count())->toBe(24)
+        ->and(Subject::query()->count())->toBe(120)
+        ->and(Semester::query()->withCount('subjects')->get()->every(fn (Semester $semester): bool => $semester->subjects_count >= 5))->toBeTrue();
 
     $semester = Semester::query()->where('name', 'First Semester')->firstOrFail();
-    expect($semester->subjects()->pluck('sort_order')->all())->toBe([0, 1, 2, 3])
-        ->and($semester->subjects()->pluck('code')->unique()->count())->toBe(4);
+    expect($semester->subjects()->pluck('sort_order')->all())->toBe([0, 1, 2, 3, 4])
+        ->and($semester->subjects()->pluck('code')->unique()->count())->toBe(5);
 
     $this->seed(AcademicDataSeeder::class);
     $this->seed(AcademicStructureSeeder::class);
 
     expect(Course::query()->count())->toBe(3)
-        ->and(Semester::query()->count())->toBe(6)
-        ->and(Subject::query()->count())->toBe(24);
+        ->and(Semester::query()->count())->toBe(24)
+        ->and(Subject::query()->count())->toBe(120);
+});
+
+test('student semester enrollment seeding assigns every semester subject idempotently', function () {
+    $this->seed(AcademicDataSeeder::class);
+    $this->seed(AcademicStructureSeeder::class);
+    $this->seed(StudentSemesterEnrollmentSeeder::class);
+    $this->seed(StudentSemesterEnrollmentSeeder::class);
+
+    $students = Student::query()->with('course.semesters', 'semesterEnrollments.subjects')->get();
+
+    foreach ($students as $student) {
+        expect($student->semesterEnrollments)->toHaveCount($student->course->semesters->count());
+
+        foreach ($student->semesterEnrollments as $enrollment) {
+            expect($enrollment->subjects)->toHaveCount($enrollment->semester()->with('subjects')->first()->subjects->count());
+            expect($enrollment->subjects)->toHaveCount(5);
+        }
+    }
 });
 
 test('sample result seeding snapshots the configured semester subjects', function () {
@@ -39,13 +59,18 @@ test('sample result seeding snapshots the configured semester subjects', functio
     $this->seed(AcademicStructureSeeder::class);
     $this->seed(StudentResultSeeder::class);
 
-    $student = Student::query()->firstOrFail();
-    $result = StudentResult::query()->whereBelongsTo($student)->with(['semesterDefinition', 'subjects'])->firstOrFail();
+    expect(StudentResult::query()->count())->toBe(24);
 
-    expect($result->semesterDefinition->name)->toBe('First Semester')
-        ->and($result->subjects)->toHaveCount(4)
-        ->and($result->subjects->pluck('code')->all())->toBe($result->semesterDefinition->subjects()->pluck('code')->all())
-        ->and((float) $result->total_credit)->toBe(14.0);
+    foreach (Student::query()->with('course')->get() as $student) {
+        $result = StudentResult::query()->whereBelongsTo($student)->where('semester', 'First Semester')->with(['semesterDefinition', 'subjects'])->firstOrFail();
+
+        expect($result->semesterDefinition->name)->toBe('First Semester')
+            ->and($result->subjects)->toHaveCount(5)
+            ->and($result->subjects->pluck('code')->all())->toBe($result->semesterDefinition->subjects()->pluck('code')->all())
+            ->and((float) $result->total_credit)->toBe(17.0)
+            ->and($result->isPublished())->toBeTrue()
+            ->and($result->subjects->every(fn ($subject): bool => $subject->marks !== null && $subject->grade !== null && $subject->grade_point !== null && $subject->marks >= 0 && $subject->marks <= 100))->toBeTrue();
+    }
 });
 
 test('super admins can manage course semesters and subjects', function () {

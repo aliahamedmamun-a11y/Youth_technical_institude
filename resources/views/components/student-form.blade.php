@@ -57,6 +57,13 @@
                     <span class="mt-1 block text-rose-600">{{ $message }}</span>
                 @enderror
             </label>
+            <label class="block min-w-0 text-sm font-bold text-slate-700">Roll Number
+                <input name="roll_number" value="{{ old('roll_number', $student?->roll_number) }}" maxlength="50"
+                    inputmode="numeric" placeholder="Enter roll number" class="{{ $inputClass }} mt-2">
+                @error('roll_number')
+                    <span class="mt-1 block text-rose-600">{{ $message }}</span>
+                @enderror
+            </label>
             <label class="block min-w-0 text-sm font-bold text-slate-700">Date of Birth <span
                     class="text-rose-600">*</span><input type="date" name="date_of_birth"
                     value="{{ old('date_of_birth', $student?->date_of_birth?->format('Y-m-d')) }}" required

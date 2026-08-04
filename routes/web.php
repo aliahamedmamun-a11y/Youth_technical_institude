@@ -4,10 +4,12 @@ use App\Enums\UserRole;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\BranchApplicationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PublicResultController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\SuperAdmin\BranchApplicationController as SuperAdminBranchApplicationController;
 use App\Http\Controllers\SuperAdmin\CourseController;
+use App\Http\Controllers\SuperAdmin\NewsController as SuperAdminNewsController;
 use App\Http\Controllers\SuperAdmin\SemesterController;
 use App\Http\Controllers\SuperAdmin\SemesterSetupController;
 use App\Http\Controllers\SuperAdmin\StudentController;
@@ -16,6 +18,7 @@ use App\Http\Controllers\SuperAdmin\StudentResultController;
 use App\Http\Controllers\SuperAdmin\StudentSemesterEnrollmentController;
 use App\Http\Controllers\SuperAdmin\SubjectController;
 use App\Http\Controllers\SuperAdmin\TeacherController;
+use App\Models\News;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 
@@ -44,7 +47,9 @@ Route::get('/', function () {
         ->take(4)
         ->values();
 
-    return view('welcome', compact('teacherCards'));
+    $latestNews = News::query()->published()->latest('published_at')->limit(4)->get();
+
+    return view('welcome', compact('teacherCards', 'latestNews'));
 })->name('home');
 
 Route::get('/branch-application', [BranchApplicationController::class, 'create'])->name('branch-applications.create');
@@ -53,6 +58,8 @@ Route::get('/student-registration', [StudentRegistrationController::class, 'crea
 Route::post('/student-registration', [StudentRegistrationController::class, 'store'])->name('student-registrations.store');
 Route::get('/results', [PublicResultController::class, 'index'])->name('results.index');
 Route::get('/results/{verificationToken}', [PublicResultController::class, 'show'])->name('results.show');
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{news:slug}', [NewsController::class, 'show'])->name('news.show');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -107,6 +114,10 @@ Route::middleware('auth')->group(function (): void {
     Route::resource('/super-admin/teachers', TeacherController::class)
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->names('super-admin.teachers');
+    Route::resource('/super-admin/news', SuperAdminNewsController::class)
+        ->except(['show'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->names('super-admin.news');
 
     Route::get('/super-admin/branch-applications', [SuperAdminBranchApplicationController::class, 'index'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.index');
     Route::get('/super-admin/branch-applications/{branchApplication}', [SuperAdminBranchApplicationController::class, 'show'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.show');

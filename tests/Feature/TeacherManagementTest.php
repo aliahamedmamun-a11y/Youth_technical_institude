@@ -11,11 +11,11 @@ uses(RefreshDatabase::class);
 
 test('super admins can manage teachers', function () {
     $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
-    $data = ['name' => 'Farhana Akter', 'employee_number' => 'T-1001', 'email' => 'farhana@example.com', 'phone' => '01700000000', 'designation' => 'Senior Instructor', 'department' => 'Computer', 'is_active' => '1'];
+    $data = ['name' => 'Farhana Akter', 'employee_number' => 'T-1001', 'email' => 'farhana@example.com', 'phone' => '01700000000', 'designation' => 'Senior Instructor', 'department' => 'Computer', 'description' => 'Specialist in practical computer training.', 'is_active' => '1'];
     $this->actingAs($superAdmin)->post(route('super-admin.teachers.store'), $data)->assertRedirect(route('super-admin.teachers.index'));
     $teacher = Teacher::query()->firstOrFail();
     $this->actingAs($superAdmin)->put(route('super-admin.teachers.update', $teacher), [...$data, 'designation' => 'Head Instructor', 'is_active' => '0'])->assertRedirect(route('super-admin.teachers.index'));
-    expect($teacher->refresh())->designation->toBe('Head Instructor')->is_active->toBeFalse();
+    expect($teacher->refresh())->designation->toBe('Head Instructor')->description->toBe('Specialist in practical computer training.')->is_active->toBeFalse();
     $this->actingAs($superAdmin)->delete(route('super-admin.teachers.destroy', $teacher))->assertRedirect(route('super-admin.teachers.index'));
     $this->assertModelMissing($teacher);
 });

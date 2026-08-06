@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Result Sheet | {{ $result->student->name }}</title>
     @fonts @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>@page{size:A4 portrait;margin:12mm}@media print{.no-print{display:none!important}body{background:#fff!important}.result-sheet{box-shadow:none!important;border:0!important}}</style>
+    <style>@page{size:A4 portrait;margin:12mm}tbody tr:nth-child(even){background:#f8fafc}@media print{.no-print{display:none!important}body{background:#fff!important}.result-sheet{box-shadow:none!important;border:0!important}}</style>
 </head>
 <body class="bg-slate-100 text-slate-900">
 <main class="mx-auto max-w-5xl px-4 py-8 sm:px-6">

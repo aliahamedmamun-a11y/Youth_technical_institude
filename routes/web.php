@@ -18,36 +18,48 @@ use App\Http\Controllers\SuperAdmin\StudentResultController;
 use App\Http\Controllers\SuperAdmin\StudentSemesterEnrollmentController;
 use App\Http\Controllers\SuperAdmin\SubjectController;
 use App\Http\Controllers\SuperAdmin\TeacherController;
+use App\Http\Controllers\TeacherController as PublicTeacherController;
 use App\Models\News;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 Route::get('/', function () {
     $teacherCards = Teacher::query()
         ->where('is_active', true)
         ->orderBy('name')
         ->limit(4)
-        ->get(['name', 'designation', 'department', 'image_path', 'joined_at'])
+        ->get(['id', 'name', 'designation', 'department', 'description', 'image_path', 'joined_at'])
         ->map(fn (Teacher $teacher): array => [
+            'id' => $teacher->id,
             'name' => $teacher->name,
             'designation' => $teacher->designation,
             'department' => $teacher->department,
+            'description' => $teacher->description,
             'image_path' => $teacher->image_path,
-            'experience' => max(1, (int) $teacher->joined_at->diffInYears(now())),
+            'experience' => $teacher->joined_at ? max(1, (int) $teacher->joined_at->diffInYears(now())) : 1,
         ])
         ->concat([
-            ['name' => 'Engr. Md. Rasel', 'designation' => 'Head of Electrical Dept.', 'department' => 'Electrical Technology', 'image_path' => null, 'experience' => 8],
-            ['name' => 'Mr. Arif Hossain', 'designation' => 'Senior Instructor', 'department' => 'Computer & IT', 'image_path' => null, 'experience' => 7],
-            ['name' => 'Ms. Nusrat Jahan', 'designation' => 'Graphic Design Expert', 'department' => 'Graphic Design', 'image_path' => null, 'experience' => 6],
-            ['name' => 'Mr. Tanvir Hasan', 'designation' => 'Web Development Expert', 'department' => 'Web Development', 'image_path' => null, 'experience' => 5],
-            ['name' => 'Mr. Saiful Islam', 'designation' => 'Hospitality Trainer', 'department' => 'Hotel Management', 'image_path' => null, 'experience' => 10],
-            ['name' => 'Mr. Mahmud Karim', 'designation' => 'Technical Instructor', 'department' => 'Office Application', 'image_path' => null, 'experience' => 6],
+            ['id' => null, 'name' => 'Engr. Md. Rasel', 'designation' => 'Head of Electrical Dept.', 'department' => 'Electrical Technology', 'description' => 'Experienced electrical technology instructor focused on practical, industry-ready training.', 'image_path' => null, 'experience' => 8],
+            ['id' => null, 'name' => 'Mr. Arif Hossain', 'designation' => 'Senior Instructor', 'department' => 'Computer & IT', 'description' => 'Guides learners through computer fundamentals, office applications, and digital skills.', 'image_path' => null, 'experience' => 7],
+            ['id' => null, 'name' => 'Ms. Nusrat Jahan', 'designation' => 'Graphic Design Expert', 'department' => 'Graphic Design', 'description' => 'Helps students turn creative ideas into polished visual designs and portfolios.', 'image_path' => null, 'experience' => 6],
+            ['id' => null, 'name' => 'Mr. Tanvir Hasan', 'designation' => 'Web Development Expert', 'department' => 'Web Development', 'description' => 'Teaches modern web development through hands-on projects and real-world workflows.', 'image_path' => null, 'experience' => 5],
+            ['id' => null, 'name' => 'Mr. Saiful Islam', 'designation' => 'Hospitality Trainer', 'department' => 'Hotel Management', 'description' => 'Prepares students for professional hospitality careers with service-focused training.', 'image_path' => null, 'experience' => 10],
+            ['id' => null, 'name' => 'Mr. Mahmud Karim', 'designation' => 'Technical Instructor', 'department' => 'Office Application', 'description' => 'Builds confident office professionals with practical productivity and documentation skills.', 'image_path' => null, 'experience' => 6],
         ])
         ->unique('name')
         ->take(4)
         ->values();
 
-    $latestNews = News::query()->published()->latest('published_at')->limit(4)->get();
+    $latestNews = News::query()->published()->latest('published_at')->limit(4)->get()->map(fn (News $item): array => [
+        $item->title,
+        $item->excerpt ?: Str::limit($item->content, 80),
+        $item->published_at?->format('d M, Y'),
+        'emerald',
+        'megaphone',
+        $item->image_path,
+        $item->slug,
+    ]);
 
     return view('welcome', compact('teacherCards', 'latestNews'));
 })->name('home');
@@ -60,6 +72,7 @@ Route::get('/results', [PublicResultController::class, 'index'])->name('results.
 Route::get('/results/{verificationToken}', [PublicResultController::class, 'show'])->name('results.show');
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{news:slug}', [NewsController::class, 'show'])->name('news.show');
+Route::get('/teachers/{teacher}', [PublicTeacherController::class, 'show'])->name('teachers.show');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');

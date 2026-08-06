@@ -12,7 +12,7 @@ class Teacher extends Model
     use HasFactory;
 
     /** @var list<string> */
-    protected $fillable = ['name', 'employee_number', 'email', 'phone', 'designation', 'department', 'qualification', 'image_path', 'joined_at', 'is_active'];
+    protected $fillable = ['name', 'employee_number', 'email', 'phone', 'designation', 'department', 'qualification', 'description', 'image_path', 'joined_at', 'is_active'];
 
     protected function casts(): array
     {

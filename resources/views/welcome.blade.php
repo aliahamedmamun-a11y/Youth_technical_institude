@@ -407,21 +407,32 @@
                                         <div
                                             role="img"
                                             aria-label="{{ $teacher['name'] }}"
-                                            class="size-full bg-[url('/images/expert-teachers-sprite-v2.png')] bg-no-repeat transition duration-500 group-hover:scale-105"
-                                            style="background-size: 600% auto; background-position: {{ $loop->index * 20 }}% 52%;"
+                                            class="size-full bg-no-repeat transition duration-500 group-hover:scale-105"
+                                            style="background-image: url('{{ asset('images/expert-teachers-sprite-v2.png') }}'); background-size: 600% auto; background-position: {{ $loop->index * 20 }}% 52%;"
                                         ></div>
                                     @endif
                                 </div>
 
-                                <div class="flex flex-1 flex-col px-3 py-3 text-center">
-                                    <h3 class="line-clamp-2 text-sm leading-5 font-black text-emerald-700 dark:text-emerald-400">{{ $teacher['name'] }}</h3>
-                                    <p class="mt-1 truncate text-[11px] font-bold text-slate-900 dark:text-white">{{ $teacher['department'] }}</p>
-                                    <span class="mt-1.5 inline-flex rounded-full bg-emerald-600 px-2.5 py-1 text-[9px] leading-none font-bold text-white">
+                                <div class="flex flex-1 flex-col items-center px-4 py-4 text-center">
+                                    <h3 class="line-clamp-2 text-sm leading-5 font-black text-slate-950 dark:text-white">{{ $teacher['name'] }}</h3>
+                                    <p class="mt-1 truncate text-[11px] font-bold text-emerald-700 dark:text-emerald-400">{{ $teacher['department'] }}</p>
+                                    <span class="mt-3 inline-flex max-w-full rounded-full bg-emerald-600 px-3 py-1.5 text-[9px] leading-none font-bold text-white shadow-sm">
                                         {{ $teacher['designation'] }}
                                     </span>
-                                    <a href="#latest-news-contact" class="mt-auto block pt-2 text-[11px] font-black text-emerald-600 transition hover:text-emerald-500 dark:text-emerald-400">
-                                        আরও পড়ুন...
-                                    </a>
+                                    @if ($teacher['id'])
+                                        <a href="{{ route('teachers.show', $teacher['id']) }}" class="mt-3 inline-flex items-center justify-center gap-1 rounded-full border border-emerald-200 px-3 py-2 text-[11px] font-black text-emerald-700 transition hover:border-emerald-400 hover:bg-emerald-50 dark:border-emerald-400/30 dark:text-emerald-300 dark:hover:bg-emerald-400/10">
+                                            আরও পড়ুন... <span aria-hidden="true" class="text-sm">→</span>
+                                        </a>
+                                    @else
+                                        <details class="mt-3 w-full text-left">
+                                            <summary class="flex cursor-pointer list-none items-center justify-center gap-1 rounded-full border border-emerald-200 px-3 py-2 text-[11px] font-black text-emerald-700 transition hover:border-emerald-400 hover:bg-emerald-50 dark:border-emerald-400/30 dark:text-emerald-300 dark:hover:bg-emerald-400/10">
+                                                আরও পড়ুন... <span aria-hidden="true" class="text-sm">→</span>
+                                            </summary>
+                                            <p class="mt-3 rounded-xl bg-slate-50 px-3 py-3 text-left text-[11px] leading-5 text-slate-600 dark:bg-white/5 dark:text-slate-300">
+                                                {{ $teacher['description'] ?: 'Our instructor brings practical guidance and industry-focused experience to every class.' }}
+                                            </p>
+                                        </details>
+                                    @endif
                                 </div>
                             </article>
                         @endforeach
@@ -665,12 +676,15 @@
 
                         <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
                             @foreach (($latestNews ?? collect())->isNotEmpty() ? $latestNews : collect([
-                                ['Admission Open', 'New batch admission is going on.', '26 May, 2026', 'emerald', 'megaphone'],
-                                ['Exam Notice', 'Final exam routine has been published.', '24 May, 2026', 'blue', 'document'],
-                                ['Result Published', 'Check your latest online result.', '23 May, 2026', 'rose', 'clipboard'],
-                                ['Workshop', 'Web Development Workshop held.', '20 May, 2026', 'sky', 'workshop'],
-                            ])->map(fn ($item): array => is_array($item) ? $item : [$item->title, $item->excerpt ?: Str::limit($item->content, 80), $item->published_at?->format('d M, Y'), 'emerald', 'megaphone'])->all() as [$title, $description, $date, $tone, $icon])
-                                <article class="flex h-full gap-2.5 rounded-xl bg-slate-50 px-3 py-3 ring-1 ring-slate-900/5 dark:bg-slate-900/40 dark:ring-white/10">
+                                ['Admission Open', 'New batch admission is going on.', '26 May, 2026', 'emerald', 'megaphone', null, null],
+                                ['Exam Notice', 'Final exam routine has been published.', '24 May, 2026', 'blue', 'document', null, null],
+                                ['Result Published', 'Check your latest online result.', '23 May, 2026', 'rose', 'clipboard', null, null],
+                                ['Workshop', 'Web Development Workshop held.', '20 May, 2026', 'sky', 'workshop', null, null],
+                            ]) as [$title, $description, $date, $tone, $icon, $imagePath, $slug])
+                                <a href="{{ $slug ? route('news.show', $slug) : route('news.index') }}" class="group flex h-full flex-col overflow-hidden rounded-xl bg-slate-50 ring-1 ring-slate-900/5 transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:bg-slate-900/40 dark:ring-white/10">
+                                    @if ($imagePath)
+                                        <img src="{{ str_starts_with($imagePath, 'images/') ? asset($imagePath) : Storage::disk('public')->url($imagePath) }}" alt="" class="h-24 w-full object-cover">
+                                    @else
                                     <span @class([
                                         'grid size-9 shrink-0 place-items-center rounded-lg',
                                         'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400' => $tone === 'emerald',
@@ -690,12 +704,13 @@
                                             @endif
                                         </svg>
                                     </span>
-                                    <div class="min-w-0">
+                                    @endif
+                                    <div class="min-w-0 flex-1 px-3 py-3">
                                         <h3 class="truncate text-[10px] font-black text-[#0b2447] dark:text-white">{{ $title }} <span class="text-emerald-500">•</span></h3>
                                         <p class="mt-1 line-clamp-2 text-[10px] leading-4 text-slate-500 dark:text-slate-400">{{ $description }}</p>
                                         <time class="mt-2 block text-[10px] font-bold text-slate-400">{{ $date }}</time>
                                     </div>
-                                </article>
+                                </a>
                             @endforeach
                         </div>
                     </div>

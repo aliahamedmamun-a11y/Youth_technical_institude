@@ -1,0 +1,1 @@
+<x-dashboard-shell title="Edit Homepage Item" eyebrow="Homepage CMS" description="Update content in {{ $section->label }}."><x-homepage-item-form :item="$item" :section="$section" :action="route('super-admin.homepage.items.update', $item)" method="PUT" submit-label="Save changes" /></x-dashboard-shell>

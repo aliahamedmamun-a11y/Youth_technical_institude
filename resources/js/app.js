@@ -227,6 +227,7 @@ const menuToggle = document.querySelector('[data-menu-toggle]');
 const menuOpenIcon = document.querySelector('[data-menu-open]');
 const menuCloseIcon = document.querySelector('[data-menu-close]');
 const heroCarousel = document.querySelector('[data-hero-carousel]');
+const aboutCarousels = document.querySelectorAll('[data-about-carousel]');
 
 let locale = localStorage.locale === 'bn' ? 'bn' : 'en';
 
@@ -449,6 +450,66 @@ if (heroCarousel) {
         }, 5200);
     }
 }
+
+aboutCarousels.forEach((carousel) => {
+    const slides = [...carousel.querySelectorAll('[data-about-slide]')];
+    const dots = [...carousel.querySelectorAll('[data-about-dot]')];
+    const currentLabel = carousel.querySelector('[data-about-current]');
+    const previous = carousel.querySelector('[data-about-prev]');
+    const next = carousel.querySelector('[data-about-next]');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const interval = Number(carousel.dataset.aboutInterval || 10000);
+    let activeIndex = 0;
+    let timer;
+    let paused = false;
+
+    if (slides.length < 2) {
+        return;
+    }
+
+    const render = (index) => {
+        activeIndex = (index + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => slide.classList.toggle('hidden', slideIndex !== activeIndex));
+        dots.forEach((dot, dotIndex) => {
+            dot.dataset.active = String(dotIndex === activeIndex);
+            dot.setAttribute('aria-selected', String(dotIndex === activeIndex));
+        });
+        if (currentLabel) {
+            currentLabel.textContent = String(activeIndex + 1);
+        }
+    };
+
+    const stop = () => {
+        window.clearInterval(timer);
+    };
+
+    const start = () => {
+        stop();
+        if (!prefersReducedMotion && !paused) {
+            timer = window.setInterval(() => render(activeIndex + 1), interval);
+        }
+    };
+
+    previous?.addEventListener('click', () => { render(activeIndex - 1); start(); });
+    next?.addEventListener('click', () => { render(activeIndex + 1); start(); });
+    dots.forEach((dot) => dot.addEventListener('click', () => { render(Number(dot.dataset.aboutDot)); start(); }));
+    carousel.addEventListener('mouseenter', () => { paused = true; stop(); });
+    carousel.addEventListener('mouseleave', () => { paused = false; start(); });
+    carousel.addEventListener('focusin', () => { paused = true; stop(); });
+    carousel.addEventListener('focusout', (event) => {
+        if (!carousel.contains(event.relatedTarget)) {
+            paused = false;
+            start();
+        }
+    });
+
+    render(0);
+    start();
+});
+
+document.querySelectorAll('[data-print-document]').forEach((button) => {
+    button.addEventListener('click', () => window.print());
+});
 
 applyLocale(locale);
 updateThemeControls();

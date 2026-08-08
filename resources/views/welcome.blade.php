@@ -136,15 +136,15 @@
         </header>
 
         <main id="main-content">
+            @php
+                $heroItems = $homepageItems('hero');
+                $heroLead = $heroItems->first();
+            @endphp
             <section id="home" class="hero-slide relative min-h-[560px] overflow-hidden bg-ink pt-[108px] text-white sm:min-h-[600px] lg:min-h-[620px] lg:pt-[116px]" data-hero-carousel>
-                @foreach ([
-                    ['images/bnyti-hero-premium-1.png', 'Students learning computer and electronics skills in a modern technical lab'],
-                    ['images/bnyti-hero-premium-2.png', 'Students practicing electrical and solar installation skills with safety equipment'],
-                    ['images/bnyti-hero-premium-3.png', 'Students working in a creative digital design and fashion training studio'],
-                ] as [$image, $alt])
+                @foreach ($heroItems as $hero)
                     <img
-                        src="{{ asset($image) }}"
-                        alt="{{ $alt }}"
+                        src="{{ str_starts_with($hero->image_path, 'images/') ? asset($hero->image_path) : Storage::disk('public')->url($hero->image_path) }}"
+                        alt="{{ $hero->title }}"
                         class="hero-carousel-image absolute inset-0 size-full object-cover object-[58%_center] opacity-0"
                         data-hero-image
                         @if ($loop->first) fetchpriority="high" @else loading="lazy" @endif
@@ -156,25 +156,22 @@
 
                 <div class="relative mx-auto flex min-h-[452px] max-w-7xl items-center px-4 py-12 sm:min-h-[492px] sm:px-6 lg:min-h-[504px] lg:px-8">
                     <div class="reveal is-visible flex w-full max-w-[620px] flex-col items-start gap-6 sm:gap-8 lg:ml-12">
-                        <h1 class="sr-only">
-                            <span data-i18n="heroTitleOne">Practical skills for a</span>
-                            <span data-i18n="heroTitleTwo">future without limits.</span>
-                        </h1>
+                        <h1 class="sr-only">{{ $heroLead?->title ?? 'Practical skills for a future without limits.' }}</h1>
 
                         <div class="hero-badge">
                             <span class="size-2.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_16px_#34d399]"></span>
-                            <span data-i18n="heroEyebrow">Bangladesh National Youth Technical Institute</span>
+                            <span>{{ $heroLead?->subtitle ?? 'Bangladesh National Youth Technical Institute' }}</span>
                         </div>
 
                         <div class="h-1 w-28 rounded-full bg-emerald-500 shadow-[0_0_24px_rgba(16,185,129,.65)]"></div>
 
                         <p class="sr-only" data-i18n="heroBody">
-                            Industry-focused technical training, experienced mentors, and nationwide opportunity—designed to turn ambition into employable expertise.
+                            {{ $heroLead?->body }}
                         </p>
 
                         <div class="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:items-center">
-                            <a href="#courses" class="hero-primary-button group">
-                                <span data-i18n="getStarted">Get Started</span>
+                            <a href="{{ $heroLead?->link_url ?? '#courses' }}" class="hero-primary-button group">
+                                <span>{{ $heroLead?->link_label ?? 'Get Started' }}</span>
                                 <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5 transition group-hover:translate-x-1">
                                     <path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                                 </svg>
@@ -183,32 +180,60 @@
                                 <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5">
                                     <path d="M7.2 3h3l1.5 4.2-2 1.7c1.3 2.8 2.8 4.3 5.5 5.5l1.7-2 4.1 1.5v3c0 2.2-1.8 4-4 4C9.3 20.9 3 14.7 3 7a4 4 0 0 1 4.2-4Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"/>
                                 </svg>
-                                <span data-i18n="contactUs">Contact Us</span>
+                                <span>Contact Us</span>
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <div class="absolute right-4 bottom-8 hidden rounded-full border border-white/15 bg-emerald-500/70 px-4 py-3 text-sm font-black text-white shadow-2xl backdrop-blur-md sm:block lg:right-10 lg:bottom-14" aria-live="polite">
-                    <span data-hero-current>1</span> / 3
+                    <span data-hero-current>1</span> / {{ $heroItems->count() }}
                 </div>
                 <div class="absolute bottom-7 left-1/2 flex -translate-x-1/2 items-center gap-3 sm:bottom-10" aria-hidden="true">
-                    <span class="hero-carousel-dot is-active"></span>
-                    <span class="hero-carousel-dot"></span>
-                    <span class="hero-carousel-dot"></span>
+                    @foreach ($heroItems as $hero)
+                        <span class="hero-carousel-dot {{ $loop->first ? 'is-active' : '' }}"></span>
+                    @endforeach
                 </div>
             </section>
 
-            <section class="relative z-20 -mt-5 px-3 pb-5 sm:-mt-6 sm:px-5 lg:px-8" aria-label="Why choose BNYTI">
+            <section id="notice-bar" class="border-b border-emerald-900/10 bg-white dark:border-white/10 dark:bg-deep" aria-label="Institute notices">
+                <div class="flex min-h-12 items-stretch overflow-hidden">
+                    <div class="notice-label relative flex shrink-0 items-center gap-2 bg-emerald-700 py-3 pr-7 pl-4 text-[11px] font-black tracking-[0.2em] text-white sm:pl-8" aria-hidden="true">
+                        <span class="size-2 rounded-full bg-white"></span>
+                        <span class="relative flex size-2">
+                            <span class="absolute inline-flex size-full animate-ping rounded-full bg-amber-300 opacity-75 motion-reduce:animate-none"></span>
+                            <span class="relative inline-flex size-2 rounded-full bg-amber-300"></span>
+                        </span>
+                        <span>NOTICE</span>
+                    </div>
+                    <div class="min-w-0 flex-1 overflow-hidden py-3" aria-live="polite">
+                        <div class="notice-track flex gap-12 whitespace-nowrap px-8 text-xs font-bold text-slate-700 motion-reduce:transform-none dark:text-slate-200">
+                            @forelse ($noticeItems as $notice)
+                                <a href="{{ $notice['link'] ?: '#notice-bar' }}" class="transition hover:text-emerald-700 dark:hover:text-emerald-400">{{ $notice['title'] }} <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> {{ $notice['message'] }}</a>
+                            @empty
+                                <span>Admission for the July 2026 session is now open <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> Branch applications are being accepted nationwide <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> Contact us for course counselling</span>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            @if ($isSectionVisible('trust'))
+            <section class="relative z-20 mt-6 px-3 pb-6 sm:mt-8 sm:px-5 lg:px-8" aria-label="Why choose BNYTI">
                 <div class="mx-auto grid max-w-[1460px] grid-cols-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_4px_15px_rgba(15,23,42,.12)] dark:border-white/10 dark:bg-deep sm:grid-cols-3 lg:grid-cols-6">
-                    @foreach ([
-                        ['Government Approved', 'Recognized by the Govt. of Bangladesh', 'M12 2.5v4m0 11v4m9.5-9.5h-4m-11 0h-4m16.2-6.2-2.8 2.8m-7.8 7.8-2.8 2.8m13.4 0-2.8-2.8M8.1 6.6 5.3 3.8M16.5 10a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm-6.4 9.5h3.8'],
-                        ['Practical Lab Training', 'Hands-on training with modern tools', 'M9.5 3h5v5.2l4.9 8.5A2.9 2.9 0 0 1 16.9 21H7.1a2.9 2.9 0 0 1-2.5-4.3l4.9-8.5V3Zm-2 11h9M8 17h8m-4-14v5'],
-                        ['Expert Trainers', 'Experienced & industry-certified instructors', 'M9.5 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm5.5 1a2.5 2.5 0 1 0 0-5m-11 12a5.5 5.5 0 0 1 11 0v2H4v-2Zm11-4a4.5 4.5 0 0 1 5 4v2h-3'],
-                        ['Industry Partnership', 'Collaboration with leading industries', 'M8.5 13.5 12 17l3.5-3.5m-9-4 3-3a2 2 0 0 1 2.8 0l.7.7.7-.7a2 2 0 0 1 2.8 0l3 3-7 7a2 2 0 0 1-2.8 0l-7-7 3-3m1 3 2 2m7-2 2 2'],
-                        ['Online Verification', 'Verify your certificate anytime, anywhere', 'M7 2.5h7l4 4V21H7a2 2 0 0 1-2-2V4.5a2 2 0 0 1 2-2Zm7 0v4h4M8.5 12l2 2 4-4m-6 7h6'],
-                        ['Career Support', 'Internship, placement & career guidance', 'M4 7.5 12 3l8 4.5-8 4.5-8-4.5Zm3 2.2V15c3 2.3 7 2.3 10 0V9.7M20 8v6m-1 2h2'],
-                    ] as [$title, $description, $icon])
+                    @foreach ($homepageItems('trust') as $item)
+                        @php
+                            $title = $item->title;
+                            $description = $item->body;
+                            $icon = match ($item->icon) {
+                            'shield' => 'M12 2.5v4m0 11v4m9.5-9.5h-4m-11 0h-4m16.2-6.2-2.8 2.8m-7.8 7.8-2.8 2.8m13.4 0-2.8-2.8M8.1 6.6 5.3 3.8M16.5 10a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm-6.4 9.5h3.8',
+                            'lab' => 'M9.5 3h5v5.2l4.9 8.5A2.9 2.9 0 0 1 16.9 21H7.1a2.9 2.9 0 0 1-2.5-4.3l4.9-8.5V3Zm-2 11h9M8 17h8m-4-14v5',
+                            'users' => 'M9.5 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm5.5 1a2.5 2.5 0 1 0 0-5m-11 12a5.5 5.5 0 0 1 11 0v2H4v-2Zm11-4a4.5 4.5 0 0 1 5 4v2h-3',
+                            'handshake' => 'M8.5 13.5 12 17l3.5-3.5m-9-4 3-3a2 2 0 0 1 2.8 0l.7.7.7-.7a2 2 0 0 1 2.8 0l3 3-7 7a2 2 0 0 1-2.8 0l-7-7 3-3m1 3 2 2m7-2 2 2',
+                            'verification' => 'M7 2.5h7l4 4V21H7a2 2 0 0 1-2-2V4.5a2 2 0 0 1 2-2Zm7 0v4h4M8.5 12l2 2 4-4m-6 7h6',
+                            default => 'M4 7.5 12 3l8 4.5-8 4.5-8-4.5Zm3 2.2V15c3 2.3 7 2.3 10 0V9.7M20 8v6m-1 2h2',
+                            };
+                        @endphp
                         <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-emerald-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-emerald-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0">
                             <span class="grid h-8 place-items-center text-[#159b63] transition-transform duration-200 group-hover:-translate-y-0.5 dark:text-emerald-400">
                                 <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55">
@@ -223,35 +248,89 @@
                     @endforeach
                 </div>
             </section>
+            @endif
 
-            <section id="about" class="overflow-hidden bg-white py-12 dark:bg-deep sm:py-16">
+            @if ($isSectionVisible('about'))
+            <section id="about" class="overflow-hidden bg-white py-12 dark:bg-deep sm:py-16" data-about-carousel data-about-interval="10000">
+                @if ($aboutEntries->isNotEmpty())
+                    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                        <div class="relative overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white shadow-[0_18px_45px_rgba(15,23,42,.14)] dark:border-white/10 dark:bg-ink">
+                            @foreach ($aboutEntries as $about)
+                                @php
+                                    $aboutImage = $about->image_path ?: $about->principal_image_path;
+                                @endphp
+                                <article class="grid items-center gap-8 p-5 sm:p-8 lg:grid-cols-[0.82fr_1.35fr] lg:gap-10 {{ $loop->first ? '' : 'hidden' }}" data-about-slide>
+                                    <div class="overflow-hidden rounded-[1.1rem] bg-stone-100">
+                                        <img src="{{ $aboutImage ? (str_starts_with($aboutImage, 'images/') ? asset($aboutImage) : Storage::disk('public')->url($aboutImage)) : asset('images/principal-portrait.webp') }}" alt="{{ $about->about_heading }}" class="aspect-[4/4.6] w-full object-cover object-top" loading="lazy">
+                                        @if ($about->principal_name)
+                                            <div class="bg-[#0b2447] px-5 py-4 text-center text-white"><h3 class="text-lg font-black">{{ $about->principal_name }}</h3><p class="mt-1 text-xs text-slate-200">{{ $about->principal_title }}</p></div>
+                                        @endif
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">About the institute</p>
+                                        <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl dark:text-white">{{ $about->about_heading }}</h2>
+                                        <span class="mt-4 block h-1 w-24 rounded-full bg-emerald-600"></span>
+                                        <p class="mt-5 line-clamp-4 text-sm leading-7 text-slate-600 dark:text-slate-300">{{ $about->summary }}</p>
+                                        <a href="{{ route('about.show', $about) }}" class="mt-6 inline-flex min-h-11 items-center justify-center bg-slate-950 px-6 text-sm font-black tracking-wide text-white uppercase transition hover:bg-emerald-600 dark:bg-emerald-500 dark:text-ink">Read more <span class="ml-2" aria-hidden="true">→</span></a>
+                                    </div>
+                                </article>
+                            @endforeach
+                            @if ($aboutEntries->count() > 1)
+                                <div class="flex items-center justify-between border-t border-slate-200 px-5 py-3 dark:border-white/10">
+                                    <span class="text-xs font-bold text-slate-500" aria-live="polite"><span data-about-current>1</span> / {{ $aboutEntries->count() }}</span>
+                                    <div class="flex items-center gap-2"><button type="button" data-about-prev class="grid size-9 place-items-center rounded-full border border-slate-200 font-black hover:bg-emerald-50" aria-label="Previous About entry">←</button><div class="flex gap-1.5" role="tablist" aria-label="About entries">@foreach ($aboutEntries as $about)<button type="button" data-about-dot="{{ $loop->index }}" class="size-2.5 rounded-full bg-slate-300 data-[active=true]:bg-emerald-600" aria-label="Show About entry {{ $loop->iteration }}" role="tab"></button>@endforeach</div><button type="button" data-about-next class="grid size-9 place-items-center rounded-full border border-slate-200 font-black hover:bg-emerald-50" aria-label="Next About entry">→</button></div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                  @else
+                     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                         <div class="rounded-[1.35rem] border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-white/10 dark:bg-ink">
+                             <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">About the institute</p>
+                             <h2 class="mt-3 text-3xl font-black tracking-tight">Education that moves beyond the classroom.</h2>
+                             <p class="mx-auto mt-4 max-w-3xl whitespace-pre-line text-slate-600 dark:text-slate-300">Bangladesh National Youth Technical Institute (BNYTI) is committed to empowering young people with industry-relevant knowledge, practical expertise, and modern technological skills.</p>
+                         </div>
+                     </div>
+                  @endif
+            </section>
+            @endif
+
+            <section id="about-legacy" class="hidden" aria-hidden="true">
+                @php
+                    $aboutContent = $instituteProfile?->content ?? "Bangladesh National Youth Technical Institute (BNYTI) is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation's youth with industry-relevant knowledge, practical expertise, and modern technological skills.\n\nBNYTI provides a comprehensive learning environment that combines theoretical knowledge with hands-on training, professional ethics, and practical experience. Our goal is to equip every learner with the confidence and competence required to succeed in today's competitive world.\n\nThrough years of excellence and dedication, the institute has expanded its educational services across Bangladesh. Our growing branch network continues to deliver accessible, quality technical education and skills development training to students and trainees.";
+                    $aboutParagraphs = preg_split('/\R{2,}/', trim($aboutContent)) ?: [];
+                    $principalImage = $instituteProfile?->principal_image_path;
+                @endphp
                 <div class="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[0.82fr_1.35fr] lg:gap-10 lg:px-8">
                     <article class="reveal mx-auto w-full max-w-[360px] overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white shadow-[0_18px_45px_rgba(15,23,42,.14)] dark:border-white/10 dark:bg-ink">
                         <div class="aspect-[4/4.6] max-h-[415px] overflow-hidden bg-stone-100">
                             <img
-                                src="{{ asset('images/principal-portrait.webp') }}"
-                                alt="Portrait of Mst Salma Rahman, Principal"
+                                src="{{ $principalImage ? (str_starts_with($principalImage, 'images/') ? asset($principalImage) : Storage::disk('public')->url($principalImage)) : asset('images/principal-portrait.webp') }}"
+                                alt="Portrait of {{ $instituteProfile?->principal_name ?? 'Mst Salma Rahman' }}, {{ $instituteProfile?->principal_title ?? 'Principal' }}"
                                 class="size-full object-cover object-top"
                                 loading="lazy"
                             >
                         </div>
                         <div class="bg-[#0b2447] px-6 py-5 text-center text-white">
-                            <h3 class="text-xl font-black tracking-tight sm:text-2xl">Mst Salma Rahman</h3>
-                            <p class="mt-1 text-sm font-medium text-slate-200">Principal</p>
+                            <h3 class="text-xl font-black tracking-tight sm:text-2xl">{{ $instituteProfile?->principal_name ?? 'Mst Salma Rahman' }}</h3>
+                            <p class="mt-1 text-sm font-medium text-slate-200">{{ $instituteProfile?->principal_title ?? 'Principal' }}</p>
                         </div>
                     </article>
 
                     <div class="reveal" style="--reveal-delay: 120ms">
                         <div class="flex items-center gap-4">
-                            <h2 class="text-3xl font-black tracking-tight text-slate-950 sm:text-4xl dark:text-white">
-                                About <span class="text-emerald-600 dark:text-emerald-400">Us</span>
-                            </h2>
+                            <h2 class="text-3xl font-black tracking-tight text-slate-950 sm:text-4xl dark:text-white">{{ $instituteProfile?->about_heading ?? 'About Us' }}</h2>
                             <span class="mt-2 h-1 w-24 rounded-full bg-emerald-600 sm:w-32"></span>
                         </div>
                         <div class="mt-4 h-px w-full bg-slate-200 dark:bg-white/10"></div>
 
                         <div class="mt-5 flex flex-col gap-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
                             <h3 class="font-bold text-slate-900 dark:text-white">About the Institution</h3>
+                            @if ($instituteProfile)
+                                @foreach ($aboutParagraphs as $paragraph)
+                                    <p>{{ $paragraph }}</p>
+                                @endforeach
+                            @else
                             <p>
                                 Bangladesh National Youth Technical Institute (BNYTI) is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation’s youth with industry-relevant knowledge, practical expertise, and modern technological skills.
                             </p>
@@ -261,6 +340,7 @@
                             <p>
                                 Through years of excellence and dedication, the institute has expanded its educational services across Bangladesh. Our growing branch network continues to deliver accessible, quality technical education and skills development training to students and trainees.
                             </p>
+                            @endif
                         </div>
 
                         <a href="#latest-news-contact" class="mt-6 inline-flex min-h-11 items-center justify-center bg-slate-950 px-6 text-sm font-black tracking-wide text-white uppercase transition hover:bg-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-200 dark:bg-emerald-500 dark:text-ink dark:hover:bg-emerald-400">
@@ -270,16 +350,21 @@
                 </div>
             </section>
 
+            @if ($isSectionVisible('statistics'))
             <section class="bg-white px-3 pb-7 dark:bg-deep sm:px-5 lg:px-8" aria-label="BNYTI achievements">
                 <div class="mx-auto grid max-w-[1460px] grid-cols-2 overflow-hidden rounded-xl bg-[#071f3f] px-2 py-2.5 shadow-[0_5px_18px_rgba(7,31,63,.2)] sm:grid-cols-3 sm:px-3 lg:grid-cols-6 lg:px-4">
-                    @foreach ([
-                        ['20,000+', 'Students Enrolled', 'M8.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7-1a2.75 2.75 0 1 0 0-5.5M2.5 20v-2.5a5.5 5.5 0 0 1 11 0V20h-11Zm11.5-6a4.75 4.75 0 0 1 7.5 3.9V20H17'],
-                        ['250+', 'Branches Across BD', 'M4 21V10l8-7 8 7v11M8 21v-7h8v7M6.5 8.5V4H9v2.3M3 21h18'],
-                        ['80+', 'Courses Offered', 'M3.5 5.5c2.8-.8 5.6-.4 8.5 1.3v14c-2.9-1.7-5.7-2.1-8.5-1.3v-14Zm17 0c-2.8-.8-5.6-.4-8.5 1.3v14c2.9-1.7 5.7-2.1 8.5-1.3v-14ZM12 6.8V21'],
-                        ['150+', 'Expert Trainers', 'M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 21v-2a7 7 0 0 1 14 0v2M18 8.5h3m-1.5-1.5v3'],
-                        ['98%', 'Student Satisfaction', 'M12 21s7-3.8 7-10V5.5L12 3 5 5.5V11c0 6.2 7 10 7 10Zm-3-10 2 2 4-4'],
-                        ['92%', 'Employment Success', 'M12 21s7-3.8 7-10V5.5L12 3 5 5.5V11c0 6.2 7 10 7 10Zm-3-9.5 2 2 4-4'],
-                    ] as [$value, $label, $icon])
+                    @foreach ($homepageItems('statistics') as $item)
+                        @php
+                            $value = $item->title;
+                            $label = $item->subtitle ?: $item->body;
+                            $icon = match ($item->icon) {
+                                'students' => 'M8.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7-1a2.75 2.75 0 1 0 0-5.5M2.5 20v-2.5a5.5 5.5 0 0 1 11 0V20h-11Zm11.5-6a4.75 4.75 0 0 1 7.5 3.9V20H17',
+                                'branches' => 'M4 21V10l8-7 8 7v11M8 21v-7h8v7M6.5 8.5V4H9v2.3M3 21h18',
+                                'courses' => 'M3.5 5.5c2.8-.8 5.6-.4 8.5 1.3v14c-2.9-1.7-5.7-2.1-8.5-1.3v-14Zm17 0c-2.8-.8-5.6-.4-8.5 1.3v14c2.9-1.7 5.7-2.1 8.5-1.3v-14ZM12 6.8V21',
+                                'trainers' => 'M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 21v-2a7 7 0 0 1 14 0v2M18 8.5h3m-1.5-1.5v3',
+                                default => 'M12 21s7-3.8 7-10V5.5L12 3 5 5.5V11c0 6.2 7 10 7 10Zm-3-10 2 2 4-4',
+                            };
+                        @endphp
                         <article class="flex min-h-[66px] items-center justify-center gap-2.5 px-2 py-2 sm:min-h-[70px] lg:justify-start lg:px-3">
                             <span class="grid size-8 shrink-0 place-items-center text-[#16a467]">
                                 <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65">
@@ -294,24 +379,7 @@
                     @endforeach
                 </div>
             </section>
-
-            <section class="hidden" aria-hidden="true">
-                <div class="flex items-stretch overflow-hidden">
-                    <div class="notice-label relative flex shrink-0 items-center gap-3 bg-emerald-600 py-3 pr-8 pl-4 text-xs font-black tracking-[0.22em] text-white sm:pl-8">
-                        <span class="size-2 rounded-full bg-white"></span>
-                        <span class="relative flex size-2">
-                            <span class="absolute inline-flex size-full animate-ping rounded-full bg-amber-300 opacity-75 motion-reduce:animate-none"></span>
-                            <span class="relative inline-flex size-2 rounded-full bg-amber-300"></span>
-                        </span>
-                        <span data-i18n="notice">NOTICE</span>
-                    </div>
-                    <div class="min-w-0 flex-1 overflow-hidden py-3">
-                        <p class="notice-track whitespace-nowrap px-8 text-sm font-bold text-slate-700 motion-reduce:transform-none dark:text-slate-200" data-i18n="noticeText">
-                            Admission for the July 2026 session is now open • Branch applications are being accepted nationwide • Contact us for course counselling
-                        </p>
-                    </div>
-                </div>
-            </section>
+            @endif
 
             <section id="courses" class="bg-stone-50 py-12 dark:bg-ink sm:py-16">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -329,29 +397,33 @@
                     </div>
 
                     <div class="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                        @foreach ([
-                            ['Electrical Technology', '6 Months', '8,000', 'images/bnyti-hero-premium-2.png', 'object-[68%_center]', 'bg-amber-400', 'M13 2 6 13h5l-1 9 8-12h-5V2Z'],
-                            ['Computer Office Application', '3 Months', '4,500', 'images/bnyti-hero-premium-1.png', 'object-[58%_center]', 'bg-sky-500', 'M4 4h16v12H4V4Zm4 16h8m-4-4v4'],
-                            ['Graphic Design', '6 Months', '10,000', 'images/bnyti-hero-premium-3.png', 'object-[52%_center]', 'bg-pink-500', 'm4 20 4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10L4 20Zm10-13 3 3M4 20l1-4 3 3-4 1Z'],
-                            ['Web Development', '6 Months', '12,000', 'images/bnyti-hero-premium-1.png', 'object-[78%_center]', 'bg-violet-600', 'm8 8-4 4 4 4m8-8 4 4-4 4m-2-11-4 18'],
-                        ] as [$title, $duration, $fee, $image, $position, $badgeColor, $icon])
+                        @forelse ($popularCourses as $course)
+                            @php
+                                $courseImages = ['images/bnyti-hero-premium-2.png', 'images/bnyti-hero-premium-1.png', 'images/bnyti-hero-premium-3.png', 'images/bnyti-hero-premium-1.png'];
+                                $coursePositions = ['object-[68%_center]', 'object-[58%_center]', 'object-[52%_center]', 'object-[78%_center]'];
+                                $courseBadges = ['bg-amber-400', 'bg-sky-500', 'bg-pink-500', 'bg-violet-600'];
+                                $courseIcons = ['M13 2 6 13h5l-1 9 8-12h-5V2Z', 'M4 4h16v12H4V4Zm4 16h8m-4-4v4', 'M4 20l4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10L4 20Zm10-13 3 3M4 20l1-4 3 3-4 1Z', 'M8 8 4 12l4 4m8-8 4 4-4 4m-2-11-4 18'];
+                                $courseIndex = $loop->index % 4;
+                                $courseImage = $course->image_path ? Storage::disk('public')->url($course->image_path) : asset($courseImages[$courseIndex]);
+                            @endphp
                             <article class="group mx-auto flex h-full w-full max-w-sm flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_3px_12px_rgba(15,23,42,.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,.13)] sm:max-w-none dark:border-white/10 dark:bg-deep">
                                 <div class="relative aspect-video shrink-0 overflow-hidden bg-slate-100">
                                     <img
-                                        src="{{ asset($image) }}"
-                                        alt="{{ $title }} training"
-                                        class="size-full object-cover {{ $position }} transition duration-500 group-hover:scale-105"
+                                        src="{{ $courseImage }}"
+                                        alt="{{ $course->name }} training"
+                                        class="size-full object-cover {{ $coursePositions[$courseIndex] }} transition duration-500 group-hover:scale-105"
                                         loading="lazy"
                                     >
-                                    <span class="absolute bottom-0 left-4 grid size-9 translate-y-1/2 place-items-center rounded-lg {{ $badgeColor }} text-white shadow-lg ring-4 ring-white dark:ring-deep">
+                                    <span class="absolute bottom-0 left-4 grid size-9 translate-y-1/2 place-items-center rounded-lg {{ $courseBadges[$courseIndex] }} text-white shadow-lg ring-4 ring-white dark:ring-deep">
                                         <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                            <path d="{{ $icon }}" />
+                                            <path d="{{ $courseIcons[$courseIndex] }}" />
                                         </svg>
                                     </span>
                                 </div>
 
                                 <div class="flex min-h-[174px] flex-1 flex-col px-4 pt-7 pb-4">
-                                    <h3 class="line-clamp-2 min-h-10 text-sm leading-5 font-extrabold text-[#0b2447] dark:text-white">{{ $title }}</h3>
+                                    <h3 class="line-clamp-2 min-h-10 text-sm leading-5 font-extrabold text-[#0b2447] dark:text-white">{{ $course->name }}</h3>
+                                    <p class="mt-2 line-clamp-2 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{{ $course->description }}</p>
                                     <dl class="mt-3 grid gap-1.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
                                         <div class="flex items-center gap-1.5">
                                             <dt class="sr-only">Duration</dt>
@@ -359,12 +431,12 @@
                                                 <circle cx="10" cy="10" r="7" />
                                                 <path d="M10 6v4l2.5 1.5" />
                                             </svg>
-                                            <dd>{{ $duration }}</dd>
+                                            <dd>{{ $course->duration }}</dd>
                                         </div>
                                         <div class="flex items-center gap-1.5">
-                                            <dt class="sr-only">Course fee</dt>
+                                            <dt class="sr-only">Course overview</dt>
                                             <span class="w-3.5 text-center font-black">৳</span>
-                                            <dd class="font-extrabold text-slate-800 dark:text-white">{{ $fee }}</dd>
+                                            <dd class="line-clamp-1">{{ Str::limit($course->description, 48) }}</dd>
                                         </div>
                                     </dl>
                                     <a href="{{ route('student-registrations.create') }}" class="mt-auto inline-flex min-h-9 w-full items-center justify-center rounded-md bg-emerald-600 px-4 text-[11px] font-bold text-white shadow-sm transition hover:bg-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-200 dark:focus:ring-emerald-500/20">
@@ -372,7 +444,11 @@
                                     </a>
                                 </div>
                             </article>
-                        @endforeach
+                        @empty
+                            <div class="col-span-full rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-10 text-center text-sm font-semibold text-slate-500 dark:border-white/15 dark:bg-deep dark:text-slate-300">
+                                Course information will be available soon.
+                            </div>
+                        @endforelse
                     </div>
                 </div>
             </section>
@@ -588,16 +664,12 @@
                     </div>
 
                     <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-8">
-                        @foreach ([
-                            ['Smart Classroom', 'images/institute-gallery-1.png', 0],
-                            ['Practical Lab', 'images/institute-gallery-1.png', 1],
-                            ['Computer Lab', 'images/institute-gallery-1.png', 2],
-                            ['Workshop', 'images/institute-gallery-1.png', 3],
-                            ['Seminar Hall', 'images/institute-gallery-2.png', 0],
-                            ['Graduation Ceremony', 'images/institute-gallery-2.png', 1],
-                            ['Student Activities', 'images/institute-gallery-2.png', 2],
-                            ['Campus View', 'images/institute-gallery-2.png', 3],
-                        ] as [$label, $image, $panel])
+                        @foreach ($homepageItems('gallery') as $item)
+                            @php
+                                $label = $item->title;
+                                $image = $item->image_path ?: 'images/institute-gallery-1.png';
+                                $panel = $item->metadata['panel'] ?? 0;
+                            @endphp
                             <figure class="group min-w-0">
                                 <div
                                     role="img"
@@ -620,12 +692,12 @@
                     </div>
 
                     <div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
-                        @foreach ([
-                            ['BNYTI helped me gain practical skills and confidence. Today, I am working as a Web Developer in a top IT firm.', 'Riad Hasan', 'Web Developer, Brain Station 23'],
-                            ['The hands-on design training helped me build a strong portfolio and begin my career with confidence.', 'Sadia Rahman', 'Graphic Designer, Creative IT'],
-                            ['Practical lab sessions prepared me for real technical work and helped me secure a rewarding position.', 'Mehedi Islam', 'Electrical Technician, Energypac'],
-                            ['The instructors guided me from basic computer skills to a professional office career.', 'Nusrat Jahan', 'Office Executive, Tech Solutions'],
-                        ] as [$quote, $name, $position])
+                        @foreach ($homepageItems('testimonials') as $item)
+                            @php
+                                $quote = $item->body;
+                                $name = $item->title;
+                                $position = $item->subtitle;
+                            @endphp
                             <article class="relative mx-auto flex h-full w-full max-w-sm flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white px-5 py-5 shadow-[0_7px_24px_rgba(15,23,42,.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(15,23,42,.12)] md:max-w-none dark:border-white/10 dark:bg-deep">
                                 <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7 text-emerald-600 dark:text-emerald-400" fill="currentColor">
                                     <path d="M9.2 6.4C6.2 7.8 4.5 10 4.2 13H8v5H3.1v-3.3c0-4.3 2-7.5 6.1-9.5v1.2Zm10 0c-3 1.4-4.7 3.6-5 6.6H18v5h-4.9v-3.3c0-4.3 2-7.5 6.1-9.5v1.2Z" />
@@ -721,15 +793,15 @@
                             <div class="mt-4 grid gap-3 text-[9px] font-semibold text-slate-600 dark:text-slate-300">
                                 <a href="tel:+8809696481628" class="flex items-start gap-2 transition hover:text-emerald-600">
                                     <svg viewBox="0 0 20 20" aria-hidden="true" class="mt-0.5 size-3.5 shrink-0 text-emerald-500" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h3l1 4-2 1c1 2.5 2.5 4 5 5l1-2 4 1v3c0 1.1-.9 2-2 2C8.4 17 3 11.6 3 5a2 2 0 0 1 2-2Z" /></svg>
-                                    +880 9696-481628
+                                    {{ $contactSettings?->metadata['phone'] ?? '+880 9696-481628' }}
                                 </a>
                                 <a href="mailto:bnyti-edubd@gmail.com" class="flex items-start gap-2 transition hover:text-emerald-600">
                                     <svg viewBox="0 0 20 20" aria-hidden="true" class="mt-0.5 size-3.5 shrink-0 text-emerald-500" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 5h14v10H3V5Zm0 1 7 5 7-5" /></svg>
-                                    bnyti-edubd@gmail.com
+                                    {{ $contactSettings?->metadata['email'] ?? 'bnyti-edubd@gmail.com' }}
                                 </a>
                                 <p class="flex items-start gap-2">
                                     <svg viewBox="0 0 20 20" aria-hidden="true" class="mt-0.5 size-3.5 shrink-0 text-emerald-500" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 18s6-5 6-10A6 6 0 1 0 4 8c0 5 6 10 6 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /></svg>
-                                    Haji Hossain Plaza, Demra Bazar Road, Dhaka-1360
+                                    {{ $contactSettings?->metadata['address'] ?? 'Haji Hossain Plaza, Demra Bazar Road, Dhaka-1360' }}
                                 </p>
                             </div>
                         </div>
@@ -931,7 +1003,7 @@
                                 </span>
                             </span>
                         </a>
-                        <p class="mt-4 text-xs font-semibold text-slate-300">Skills Today, Success Tomorrow</p>
+                        <p class="mt-4 text-xs font-semibold text-slate-300">{{ $footerSettings?->body ?? 'Skills Today, Success Tomorrow' }}</p>
                         <div class="mt-5 flex items-center gap-3">
                             <a href="#" class="grid size-8 place-items-center rounded-full bg-[#1877f2] text-white transition hover:-translate-y-0.5" aria-label="Follow BNYTI on Facebook">
                                 <svg viewBox="0 0 24 24" class="size-4 fill-current" aria-hidden="true">
@@ -1020,7 +1092,7 @@
             <div class="border-t border-white/10">
                 <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4 text-center text-[11px] text-slate-400 sm:px-6 md:flex-row md:items-center md:justify-between md:text-left lg:px-8">
                     <p>© {{ date('Y') }} Bangladesh National Youth Technical Institute. All rights reserved.</p>
-                    <p>Skills Today, Success Tomorrow</p>
+                    <p>{{ $footerSettings?->body ?? 'Skills Today, Success Tomorrow' }}</p>
                 </div>
             </div>
         </footer>

@@ -38,7 +38,12 @@ class StudentDocumentController extends Controller
         }
 
         $student->load('course');
-        $latestResult = $student->results()->where('status', 'published')->whereNotNull('published_at')->latest('published_at')->first();
+        $latestResult = $student->results()
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->latest('published_at')
+            ->latest('id')
+            ->first();
 
         return view('super-admin.students.document', [
             'student' => $student,
@@ -46,6 +51,7 @@ class StudentDocumentController extends Controller
             'documentTitle' => self::DOCUMENTS[$document],
             'latestResult' => $latestResult,
             'cumulativeGpa' => $grading->cumulativeGpa($student),
+            'certificateSerial' => $latestResult ? sprintf('CERT-%06d', $latestResult->id) : null,
         ]);
     }
 }

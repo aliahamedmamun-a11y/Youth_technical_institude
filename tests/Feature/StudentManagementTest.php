@@ -3,6 +3,7 @@
 use App\Enums\UserRole;
 use App\Models\Course;
 use App\Models\Student;
+use App\Models\StudentResult;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -65,12 +66,111 @@ test('super admins can add and update students', function () {
     expect($student->refresh())->upazila->toBe('Dumuria')->expire_date->format('Y-m-d')->toBe('2026-07-01');
 });
 
-test('super admins can access student documents', function () {
+test('super admins can print certificates with the latest published result', function () {
     $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
-    $student = Student::factory()->create();
+    $course = Course::factory()->create(['name' => 'Web Design and Development']);
+    $student = Student::factory()->for($course)->create([
+        'name' => 'Ayesha Rahman',
+        'registration_number' => 'BNYTI-2026-001',
+        'roll_number' => '101',
+        'session' => 'Student Session',
+        'father_name' => 'Abdul Rahman',
+        'mother_name' => 'Salma Begum',
+    ]);
 
-    $this->actingAs($superAdmin)->get(route('super-admin.students.documents.show', [$student, 'certificate']))
-        ->assertSuccessful()->assertSee('Certificate')->assertSee($student->name);
+    StudentResult::factory()->for($student)->create([
+        'semester' => 'First Semester',
+        'session' => '2025-2026',
+        'gpa' => 3.00,
+        'total_credit' => 10,
+        'published_at' => '2026-07-15 10:00:00',
+    ]);
+    $latestResult = StudentResult::factory()->for($student)->create([
+        'semester' => 'Final Semester',
+        'session' => '2026-2027',
+        'gpa' => 4.00,
+        'total_credit' => 10,
+        'published_at' => '2026-07-15 10:00:00',
+    ]);
+
+    $this->actingAs($superAdmin)
+        ->get(route('super-admin.students.documents.show', [$student, 'certificate']))
+        ->assertSuccessful()
+        ->assertSeeText(sprintf('CERT-%06d', $latestResult->id))
+        ->assertSeeText('BNYTI-2026-001')
+        ->assertSeeText('2026-2027')
+        ->assertSeeText('Ayesha Rahman')
+        ->assertSeeText('Abdul Rahman')
+        ->assertSeeText('Salma Begum')
+        ->assertSeeText('Web Design and Development')
+        ->assertSeeText('101')
+        ->assertSeeText('Final Semester')
+        ->assertSeeText('July 2026')
+        ->assertSeeText('3.50')
+        ->assertSeeText('15/07/2026')
+        ->assertSee(asset('images/certificate-template.png'));
+});
+
+test('certificates safely display missing result information', function () {
+    $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
+    $student = Student::factory()->create([
+        'registration_number' => null,
+        'roll_number' => null,
+        'session' => null,
+        'father_name' => null,
+        'mother_name' => null,
+    ]);
+
+    $this->actingAs($superAdmin)
+        ->get(route('super-admin.students.documents.show', [$student, 'certificate']))
+        ->assertSuccessful()
+        ->assertSeeText('—')
+        ->assertDontSeeText(now()->format('d/m/Y'));
+});
+
+test('super admins can print admit cards with student information', function () {
+    $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
+    $course = Course::factory()->create(['name' => 'Computer Office Application']);
+    $student = Student::factory()->for($course)->create([
+        'name' => 'Ayesha Rahman',
+        'registration_number' => 'BNYTI-2026-001',
+        'roll_number' => '101',
+        'session' => '2026',
+        'duration' => '6 Months',
+        'father_name' => 'Abdul Rahman',
+        'mother_name' => 'Salma Begum',
+    ]);
+
+    $this->actingAs($superAdmin)
+        ->get(route('super-admin.students.documents.show', [$student, 'admit-card']))
+        ->assertSuccessful()
+        ->assertSeeText('Ayesha Rahman')
+        ->assertSeeText('BNYTI-2026-001')
+        ->assertSeeText('101')
+        ->assertSeeText('Computer Office Application')
+        ->assertSeeText('2026')
+        ->assertSeeText('6 Months')
+        ->assertSeeText('Abdul Rahman')
+        ->assertSeeText('Salma Begum')
+        ->assertSee(asset('images/admit-card-template.png'));
+});
+
+test('admit cards safely display missing optional student information', function () {
+    $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
+    $student = Student::factory()->create([
+        'roll_number' => null,
+        'session' => null,
+        'duration' => null,
+        'father_name' => null,
+        'mother_name' => null,
+        'image_path' => null,
+    ]);
+
+    $this->actingAs($superAdmin)
+        ->get(route('super-admin.students.documents.show', [$student, 'admit-card']))
+        ->assertSuccessful()
+        ->assertSeeText('—')
+        ->assertSeeText('No photo');
 });
 
 test('non-super-admins cannot access student management', function () {

@@ -1,0 +1,175 @@
+.certificate-screen {
+    min-height: 100vh;
+    padding: 1.5rem;
+    overflow-x: auto;
+    background: #292a26;
+}
+
+.certificate-frame {
+    width: min(100%, 75rem);
+    margin-inline: auto;
+    overflow: hidden;
+    background: #ffffe9;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
+}
+
+.certificate-document {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 297 / 210;
+    overflow: hidden;
+    color: #111;
+    background: #ffffe9;
+}
+
+.certificate-template {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.certificate-data {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    color: #111;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(0.45rem, 1.08vw, 1.02rem);
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-shadow: 0 1px 0 rgb(255 255 238 / 0.85);
+    white-space: nowrap;
+}
+
+.certificate-data--serial {
+    top: 39.1%;
+    left: 29.5%;
+    width: 19%;
+}
+
+.certificate-data--registration {
+    top: 37.5%;
+    left: 68%;
+    width: 23%;
+}
+
+.certificate-data--session {
+    top: 42.8%;
+    left: 64.5%;
+    width: 27%;
+}
+
+.certificate-data--student {
+    top: 48.2%;
+    left: 35%;
+    width: 56%;
+    font-size: clamp(0.52rem, 1.2vw, 1.15rem);
+}
+
+.certificate-data--father {
+    top: 52.7%;
+    left: 34%;
+    width: 50%;
+}
+
+.certificate-data--mother {
+    top: 57.2%;
+    left: 27%;
+    width: 57%;
+}
+
+.certificate-data--course {
+    top: 61.7%;
+    left: 25%;
+    width: 66%;
+}
+
+.certificate-data--roll {
+    top: 66.2%;
+    left: 32%;
+    width: 14%;
+}
+
+.certificate-data--semester {
+    top: 66.2%;
+    left: 53.5%;
+    width: 37.5%;
+}
+
+.certificate-data--month {
+    top: 70.7%;
+    left: 50%;
+    width: 24%;
+}
+
+.certificate-data--gpa {
+    top: 70.7%;
+    left: 82%;
+    width: 9%;
+}
+
+.certificate-data--date {
+    top: 88.4%;
+    left: 8%;
+    width: 17%;
+    font-size: clamp(0.42rem, 0.9vw, 0.86rem);
+    font-style: normal;
+    font-weight: 800;
+}
+
+.certificate-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+@page {
+    size: A4 landscape;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        width: 297mm;
+        height: 210mm;
+        margin: 0;
+        background: white;
+    }
+
+    body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .certificate-screen,
+    .certificate-frame,
+    .certificate-document {
+        width: 297mm;
+        height: 210mm;
+        margin: 0;
+        padding: 0;
+    }
+
+    .certificate-screen {
+        min-height: 0;
+        overflow: hidden;
+        background: white;
+    }
+
+    .certificate-frame {
+        max-width: none;
+        box-shadow: none;
+    }
+
+    .certificate-document {
+        aspect-ratio: auto;
+    }
+}

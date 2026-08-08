@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\UserRole;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\BranchApplicationController;
 use App\Http\Controllers\DashboardController;
@@ -9,7 +10,10 @@ use App\Http\Controllers\PublicResultController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\SuperAdmin\BranchApplicationController as SuperAdminBranchApplicationController;
 use App\Http\Controllers\SuperAdmin\CourseController;
+use App\Http\Controllers\SuperAdmin\HomepageContentController;
+use App\Http\Controllers\SuperAdmin\InstituteProfileController;
 use App\Http\Controllers\SuperAdmin\NewsController as SuperAdminNewsController;
+use App\Http\Controllers\SuperAdmin\NoticeController;
 use App\Http\Controllers\SuperAdmin\SemesterController;
 use App\Http\Controllers\SuperAdmin\SemesterSetupController;
 use App\Http\Controllers\SuperAdmin\StudentController;
@@ -19,12 +23,30 @@ use App\Http\Controllers\SuperAdmin\StudentSemesterEnrollmentController;
 use App\Http\Controllers\SuperAdmin\SubjectController;
 use App\Http\Controllers\SuperAdmin\TeacherController;
 use App\Http\Controllers\TeacherController as PublicTeacherController;
+use App\Models\Course;
+use App\Models\HomepageSection;
+use App\Models\InstituteProfile;
 use App\Models\News;
+use App\Models\Notice;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 Route::get('/', function () {
+    $aboutEntries = InstituteProfile::query()->published()->ordered()->get();
+    $instituteProfile = $aboutEntries->first();
+    $homepageSections = HomepageSection::query()->visible()->with(['items' => fn ($query) => $query->published()])->get()->keyBy('key');
+    $homepageItems = fn (string $key) => $homepageSections->get($key)?->items ?? collect();
+    $isSectionVisible = fn (string $key): bool => $homepageSections->isEmpty() || $homepageSections->has($key);
+    $contactSettings = $homepageItems('contact')->first();
+    $footerSettings = $homepageItems('footer')->first();
+
+    $popularCourses = Course::query()
+        ->where('is_active', true)
+        ->orderBy('name')
+        ->limit(4)
+        ->get(['id', 'name', 'duration', 'description', 'image_path']);
+
     $teacherCards = Teacher::query()
         ->where('is_active', true)
         ->orderBy('name')
@@ -51,7 +73,24 @@ Route::get('/', function () {
         ->take(4)
         ->values();
 
-    $latestNews = News::query()->published()->latest('published_at')->limit(4)->get()->map(fn (News $item): array => [
+    $publishedNews = News::query()
+        ->published()
+        ->latest('published_at')
+        ->limit(6)
+        ->get(['id', 'title', 'slug', 'excerpt', 'content', 'image_path', 'published_at']);
+
+    $noticeItems = Notice::query()
+        ->published()
+        ->latest('published_at')
+        ->limit(6)
+        ->get(['id', 'title', 'message', 'link'])
+        ->map(fn (Notice $notice): array => [
+            'title' => $notice->title,
+            'message' => $notice->message,
+            'link' => $notice->link,
+        ]);
+
+    $latestNews = $publishedNews->take(4)->map(fn (News $item): array => [
         $item->title,
         $item->excerpt ?: Str::limit($item->content, 80),
         $item->published_at?->format('d M, Y'),
@@ -61,7 +100,7 @@ Route::get('/', function () {
         $item->slug,
     ]);
 
-    return view('welcome', compact('teacherCards', 'latestNews'));
+    return view('welcome', compact('teacherCards', 'latestNews', 'noticeItems', 'popularCourses', 'aboutEntries', 'instituteProfile', 'homepageSections', 'homepageItems', 'isSectionVisible', 'contactSettings', 'footerSettings'));
 })->name('home');
 
 Route::get('/branch-application', [BranchApplicationController::class, 'create'])->name('branch-applications.create');
@@ -73,6 +112,7 @@ Route::get('/results/{verificationToken}', [PublicResultController::class, 'show
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{news:slug}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/teachers/{teacher}', [PublicTeacherController::class, 'show'])->name('teachers.show');
+Route::get('/about/{about:slug}', [AboutController::class, 'show'])->name('about.show');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -131,6 +171,25 @@ Route::middleware('auth')->group(function (): void {
         ->except(['show'])
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->names('super-admin.news');
+    Route::resource('/super-admin/notices', NoticeController::class)
+        ->except(['show'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->names('super-admin.notices');
+
+    Route::resource('/super-admin/about', InstituteProfileController::class)
+        ->except(['show'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->names('super-admin.about');
+    Route::get('/super-admin/homepage/{section}/items', [HomepageContentController::class, 'index'])->name('super-admin.homepage.items.index');
+    Route::patch('/super-admin/homepage/sections/{section}', [HomepageContentController::class, 'updateSection'])->name('super-admin.homepage.sections.update');
+    Route::get('/super-admin/homepage/{section}/items/create', [HomepageContentController::class, 'create'])->name('super-admin.homepage.items.create');
+    Route::post('/super-admin/homepage/items', [HomepageContentController::class, 'store'])->name('super-admin.homepage.items.store');
+    Route::get('/super-admin/homepage/items/{item}/edit', [HomepageContentController::class, 'edit'])->name('super-admin.homepage.items.edit');
+    Route::put('/super-admin/homepage/items/{item}', [HomepageContentController::class, 'update'])->name('super-admin.homepage.items.update');
+    Route::delete('/super-admin/homepage/items/{item}', [HomepageContentController::class, 'destroy'])->name('super-admin.homepage.items.destroy');
+    Route::patch('/super-admin/about/{about}/publish', [InstituteProfileController::class, 'togglePublish'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.about.publish');
 
     Route::get('/super-admin/branch-applications', [SuperAdminBranchApplicationController::class, 'index'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.index');
     Route::get('/super-admin/branch-applications/{branchApplication}', [SuperAdminBranchApplicationController::class, 'show'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.show');

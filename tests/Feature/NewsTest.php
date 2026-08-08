@@ -19,6 +19,12 @@ test('public users can browse only published news', function () {
 test('super admins can create and delete news', function () {
     $admin = User::factory()->role(UserRole::SuperAdmin)->create();
 
+    $this->actingAs($admin)
+        ->get(route('super-admin.news.index'))
+        ->assertSuccessful()
+        ->assertSee('Notices')
+        ->assertSee('News &amp; Announcements', false);
+
     $this->actingAs($admin)->post(route('super-admin.news.store'), [
         'title' => 'Admission update',
         'excerpt' => 'Important update',

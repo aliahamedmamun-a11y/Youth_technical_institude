@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\UserRole;
+use App\Models\BranchApplication;
 use App\Models\User;
 use Database\Seeders\RoleUserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -61,13 +62,26 @@ test('branch dashboard displays a secure logout form', function () {
         ->assertSee('name="_token"', false)
         ->assertSee('Log out of the branch dashboard', false)
         ->assertSee('BRANCH MANAGEMENT SYSTEM')
-        ->assertSee('ADMISSION')
+        ->assertDontSee('Student Registration')
         ->assertSee('CERTIFICATES')
         ->assertSee('NEWS &amp; NOTICE', false)
         ->assertSee('Apply Now')
-        ->assertSee('Student Registration')
         ->assertSee('Branch Registration')
         ->assertSee('branch-dashboard-mobile-menu', false);
+});
+
+test('approved branches see the student admission action', function () {
+    $user = User::factory()->role(UserRole::Branch)->create();
+    BranchApplication::factory()->approved()->create(['email' => $user->email]);
+
+    $response = $this->actingAs($user)
+        ->get(route('dashboards.branch'))
+        ->assertSuccessful()
+        ->assertSee('Student Registration')
+        ->assertSee(route('student-registrations.create'), false);
+
+    expect(substr_count($response->getContent(), 'href="'.route('student-registrations.create').'"'))
+        ->toBeGreaterThanOrEqual(2);
 });
 
 test('users can log out from the branch dashboard', function () {

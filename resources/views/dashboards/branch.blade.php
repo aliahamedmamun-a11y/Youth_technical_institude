@@ -1,9 +1,11 @@
 @php
     $homeUrl = route('home');
+    $canRegisterStudents = auth()->user()?->can('create', \App\Models\Student::class) ?? false;
+    $studentTileUrl = $canRegisterStudents ? route('student-registrations.create') : route('dashboards.branch');
 
     $quickMenus = [
-        ['title' => 'ADMISSION', 'subtitle' => 'New Admission', 'href' => route('student-registrations.create'), 'tone' => 'green', 'icon' => 'admission'],
-        ['title' => 'STUDENTS', 'subtitle' => 'All Students', 'href' => route('dashboards.branch'), 'tone' => 'red', 'icon' => 'students'],
+        ...($canRegisterStudents ? [['title' => 'ADMISSION', 'subtitle' => 'New Admission', 'href' => route('student-registrations.create'), 'tone' => 'green', 'icon' => 'admission']] : []),
+        ['title' => 'STUDENTS', 'subtitle' => 'All Students', 'href' => $studentTileUrl, 'tone' => 'red', 'icon' => 'students'],
         ['title' => 'CERTIFICATES', 'subtitle' => 'Verification', 'href' => route('results.index'), 'tone' => 'green', 'icon' => 'certificate'],
         ['title' => 'BRANCHES', 'subtitle' => 'All Branches', 'href' => route('branch-applications.create'), 'tone' => 'red', 'icon' => 'branch'],
         ['title' => 'NEWS & NOTICE', 'subtitle' => 'Latest Updates', 'href' => $homeUrl.'#latest-news-contact', 'tone' => 'green', 'icon' => 'notice'],
@@ -514,7 +516,9 @@
                     <details class="group relative">
                         <summary class="nav-link flex cursor-pointer list-none items-center gap-1">Apply Now <svg viewBox="0 0 24 24" class="size-4 transition group-open:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg></summary>
                         <div class="absolute right-0 top-full z-50 mt-3 w-52 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl">
-                            <a href="{{ route('student-registrations.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700">Student Registration</a>
+                            @if ($canRegisterStudents)
+                                <a href="{{ route('student-registrations.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700">Student Registration</a>
+                            @endif
                             <a href="{{ route('branch-applications.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700">Branch Registration</a>
                         </div>
                     </details>
@@ -548,7 +552,9 @@
                     <a href="{{ route('home') }}#branch-application-promo" class="mobile-nav-link">Branches</a>
                     <a href="{{ route('results.index') }}" class="mobile-nav-link">Results</a>
                     <p class="px-4 pt-3 text-xs font-black uppercase tracking-widest text-emerald-700">Apply Now</p>
-                    <a href="{{ route('student-registrations.create') }}" class="mobile-nav-link pl-8">Student Registration</a>
+                    @if ($canRegisterStudents)
+                        <a href="{{ route('student-registrations.create') }}" class="mobile-nav-link pl-8">Student Registration</a>
+                    @endif
                     <a href="{{ route('branch-applications.create') }}" class="mobile-nav-link pl-8">Branch Registration</a>
                     <a href="{{ route('home') }}#latest-news-contact" class="mobile-nav-link">Contact</a>
                     <form method="POST" action="{{ route('logout') }}" class="mt-3 border-t border-slate-200 pt-3">

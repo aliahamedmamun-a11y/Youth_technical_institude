@@ -78,10 +78,10 @@
                     <details class="group relative">
                         <summary class="nav-link flex cursor-pointer list-none items-center gap-1">Apply Now <svg viewBox="0 0 24 24" class="size-4 transition group-open:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg></summary>
                         <div class="absolute right-0 top-full z-30 mt-3 w-52 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-white/10 dark:bg-ink">
-                            <a href="{{ route('student-registrations.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-200 dark:hover:bg-emerald-500/10">Student Registration</a>
                             <a href="{{ route('branch-applications.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-200 dark:hover:bg-emerald-500/10">Branch Registration</a>
                         </div>
                     </details>
+                    <a href="{{ route('login') }}" class="nav-link">Staff Login</a>
                     <a href="#latest-news-contact" class="nav-link" data-i18n="navContact">Contact</a>
                 </div>
 
@@ -127,8 +127,8 @@
                     <a href="#branch-application-promo" class="mobile-nav-link" data-i18n="navBranches">Branches</a>
                     <a href="{{ route('results.index') }}" class="mobile-nav-link">Results</a>
                     <p class="px-4 pt-3 text-xs font-black uppercase tracking-widest text-emerald-700 dark:text-emerald-300">Apply Now</p>
-                    <a href="{{ route('student-registrations.create') }}" class="mobile-nav-link pl-8">Student Registration</a>
                     <a href="{{ route('branch-applications.create') }}" class="mobile-nav-link pl-8">Branch Registration</a>
+                    <a href="{{ route('login') }}" class="mobile-nav-link pl-8">Staff Login</a>
                     <a href="#latest-news-contact" class="mobile-nav-link" data-i18n="navContact">Contact</a>
                     <a href="#latest-news-contact" class="mt-3 inline-flex min-h-12 items-center justify-center rounded-2xl bg-emerald-500 px-5 text-sm font-black text-ink" data-i18n="getStarted">Get Started</a>
                 </div>
@@ -439,9 +439,6 @@
                                             <dd class="line-clamp-1">{{ Str::limit($course->description, 48) }}</dd>
                                         </div>
                                     </dl>
-                                    <a href="{{ route('student-registrations.create') }}" class="mt-auto inline-flex min-h-9 w-full items-center justify-center rounded-md bg-emerald-600 px-4 text-[11px] font-bold text-white shadow-sm transition hover:bg-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-200 dark:focus:ring-emerald-500/20">
-                                        Enroll Now
-                                    </a>
                                 </div>
                             </article>
                         @empty
@@ -1036,8 +1033,8 @@
                             <a href="#home" class="footer-link">Home</a>
                             <a href="#about" class="footer-link">About Us</a>
                             <a href="#courses" class="footer-link">Courses</a>
-                            <a href="{{ route('student-registrations.create') }}" class="footer-link">Admission</a>
                             <a href="#branch-application-promo" class="footer-link">Branches</a>
+                            <a href="{{ route('login') }}" class="footer-link">Staff Login</a>
                             <a href="#latest-news-contact" class="footer-link">Contact Us</a>
                         </div>
                     </nav>

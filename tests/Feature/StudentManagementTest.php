@@ -28,7 +28,13 @@ test('guests must sign in to access student registration', function () {
 
     expect(Student::query()->exists())->toBeFalse();
 
-    $this->get(route('home'))->assertSuccessful()->assertSee(route('student-registrations.create'));
+    $this->get(route('home'))
+        ->assertSuccessful()
+        ->assertDontSee(route('student-registrations.create'), false)
+        ->assertDontSee('Student Registration')
+        ->assertDontSee('Enroll Now')
+        ->assertSee('Branch Registration')
+        ->assertSee('Staff Login');
 });
 
 test('approved branches and super admins can access student registration', function () {

@@ -7,12 +7,15 @@ use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class StudentRegistrationController extends Controller
 {
     public function create(): View
     {
+        Gate::authorize('create', Student::class);
+
         return view('student-registrations.create', ['courses' => $this->courses()]);
     }
 

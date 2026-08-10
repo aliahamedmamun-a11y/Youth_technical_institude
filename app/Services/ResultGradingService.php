@@ -64,7 +64,7 @@ class ResultGradingService
             'total_credit' => $totalCredit,
             'credit_earned' => $creditEarned,
             'gpa' => $gpa,
-            'overall_grade' => $this->overallGrade($gpa),
+            'overall_grade' => $this->letterGradeForGpa($gpa),
         ];
     }
 
@@ -83,7 +83,7 @@ class ResultGradingService
         return $totalCredit > 0 ? round($qualityPoints / $totalCredit, 2) : null;
     }
 
-    private function overallGrade(?float $gpa): ?string
+    public function letterGradeForGpa(?float $gpa): ?string
     {
         return match (true) {
             $gpa === null => null,
@@ -94,8 +94,8 @@ class ResultGradingService
             $gpa >= 3 => 'B',
             $gpa >= 2.75 => 'B-',
             $gpa >= 2.5 => 'C+',
-            $gpa >= 2 => 'C',
-            $gpa >= 1.65 => 'D',
+            $gpa >= 2.25 => 'C',
+            $gpa >= 2 => 'D',
             default => 'F',
         };
     }

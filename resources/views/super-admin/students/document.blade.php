@@ -36,11 +36,8 @@
         :student="$student"
         :pages="$transcriptPages"
         :cumulative-gpa="$cumulativeGpa"
-        :total-credit="$transcriptTotalCredit"
-        :credit-earned="$transcriptCreditEarned"
-        :verification-qr-code="$transcriptVerificationQrCode"
-        :verification-url="$transcriptVerificationUrl"
-        :verification-reference="$transcriptVerificationReference"
+        :letter-grade="$transcriptLetterGrade"
+        :institute-name="$transcriptInstituteName"
     />
 @else
     <x-dashboard-shell :title="$documentTitle" eyebrow="Student document" :description="$student->name.' · '.$student->registration_number">

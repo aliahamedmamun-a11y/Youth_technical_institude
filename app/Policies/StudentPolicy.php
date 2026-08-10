@@ -2,7 +2,9 @@
 
 namespace App\Policies;
 
+use App\Enums\BranchApplicationStatus;
 use App\Enums\UserRole;
+use App\Models\BranchApplication;
 use App\Models\Student;
 use App\Models\User;
 
@@ -29,7 +31,15 @@ class StudentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole(UserRole::SuperAdmin);
+        if ($user->hasRole(UserRole::SuperAdmin)) {
+            return true;
+        }
+
+        return $user->hasRole(UserRole::Branch)
+            && BranchApplication::query()
+                ->where('email', $user->email)
+                ->where('status', BranchApplicationStatus::Approved->value)
+                ->exists();
     }
 
     /**

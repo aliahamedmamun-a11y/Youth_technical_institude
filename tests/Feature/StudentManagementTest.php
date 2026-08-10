@@ -1,12 +1,15 @@
 <?php
 
+use App\Enums\BranchApplicationStatus;
 use App\Enums\UserRole;
+use App\Models\BranchApplication;
 use App\Models\Course;
 use App\Models\Semester;
 use App\Models\Student;
 use App\Models\StudentResult;
 use App\Models\StudentResultSubject;
 use App\Models\User;
+use App\Services\ResultGradingService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
@@ -14,33 +17,74 @@ use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
-test('public visitors can access student registration', function () {
+test('guests must sign in to access student registration', function () {
     Course::factory()->create();
 
     $this->get(route('student-registrations.create'))
-        ->assertSuccessful()
-        ->assertSee('Student Registration')
-        ->assertSee('Personal Information')
-        ->assertSee('Address Information')
-        ->assertSee('Academic Information')
-        ->assertSee('Photo Upload')
-        ->assertSee('Important Notes')
-        ->assertSee('APPLICATION SUBMIT')
-        ->assertSee('RESET FORM')
-        ->assertSee('declaration')
-        ->assertSee(route('student-registrations.store'));
+        ->assertRedirect(route('login'));
+
+    $this->post(route('student-registrations.store'))
+        ->assertRedirect(route('login'));
+
+    expect(Student::query()->exists())->toBeFalse();
 
     $this->get(route('home'))->assertSuccessful()->assertSee(route('student-registrations.create'));
 });
 
-test('public applicants must accept the declaration and can submit a registration', function () {
+test('approved branches and super admins can access student registration', function () {
+    Course::factory()->create();
+    $branchUser = User::factory()->role(UserRole::Branch)->create();
+    BranchApplication::factory()->approved()->create(['email' => $branchUser->email]);
+    $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
+
+    $this->actingAs($branchUser)
+        ->get(route('student-registrations.create'))
+        ->assertSuccessful()
+        ->assertSee('Student Registration')
+        ->assertSee('Personal Information')
+        ->assertSee(route('student-registrations.store'));
+
+    $this->actingAs($superAdmin)
+        ->get(route('student-registrations.create'))
+        ->assertSuccessful();
+});
+
+test('unapproved branches and other roles cannot access student registration', function (UserRole $role, ?BranchApplicationStatus $status) {
+    $user = User::factory()->role($role)->create();
+
+    if ($status !== null) {
+        BranchApplication::factory()->create([
+            'email' => $user->email,
+            'status' => $status,
+        ]);
+    }
+
+    $this->actingAs($user)
+        ->get(route('student-registrations.create'))
+        ->assertForbidden();
+
+    $this->post(route('student-registrations.store'))
+        ->assertForbidden();
+
+    expect(Student::query()->exists())->toBeFalse();
+})->with([
+    'pending branch' => [UserRole::Branch, BranchApplicationStatus::Pending],
+    'rejected branch' => [UserRole::Branch, BranchApplicationStatus::Rejected],
+    'branch without application' => [UserRole::Branch, null],
+    'editor' => [UserRole::Editor, null],
+    'student' => [UserRole::Student, null],
+]);
+
+test('approved branch applicants must accept the declaration and can submit a registration', function () {
     Storage::fake('public');
     $course = Course::factory()->create();
+    $branchUser = User::factory()->role(UserRole::Branch)->create();
+    BranchApplication::factory()->approved()->create(['email' => $branchUser->email]);
     $payload = [
         'course_id' => $course->id, 'name' => 'Nusrat Jahan', 'father_name' => 'Abdul Karim', 'mother_name' => 'Rokeya Begum', 'address' => 'Savar, Dhaka', 'district' => 'Dhaka', 'upazila' => 'Savar', 'date_of_birth' => '2005-06-14', 'passport_nid_number' => 'NID-12345', 'phone' => '01700000000', 'gender' => 'Female', 'education_qualification' => 'HSC', 'duration' => '6 Months', 'session' => '2026', 'admitted_at' => '2026-01-01', 'expire_date' => '2026-06-30', 'image' => UploadedFile::fake()->image('nusrat.png'),
     ];
 
-    $this->post(route('student-registrations.store'), $payload)
+    $this->actingAs($branchUser)->post(route('student-registrations.store'), $payload)
         ->assertSessionHasErrors('declaration');
 
     $this->post(route('student-registrations.store'), [...$payload, 'declaration' => '1', 'image' => UploadedFile::fake()->image('nusrat.png')])
@@ -229,11 +273,17 @@ test('certificates safely display missing result information', function () {
 
 test('super admins can print a verified academic transcript with published results in semester order', function () {
     $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
-    $course = Course::factory()->create(['name' => 'Computer Science and Technology']);
+    $course = Course::factory()->create([
+        'name' => 'Computer Science and Technology',
+        'duration' => '1 Year',
+    ]);
     $student = Student::factory()->for($course)->create([
         'name' => 'Ayesha Rahman',
         'registration_number' => 'BNYTI-2026-001',
         'roll_number' => '101',
+        'father_name' => 'Abdul Rahman',
+        'mother_name' => 'Salma Begum',
+        'duration' => null,
     ]);
     $firstSemester = Semester::factory()->for($course)->create(['name' => 'First Semester', 'sort_order' => 1]);
     $secondSemester = Semester::factory()->for($course)->create(['name' => 'Second Semester', 'sort_order' => 2]);
@@ -246,6 +296,7 @@ test('super admins can print a verified academic transcript with published resul
         'total_credit' => 3,
         'credit_earned' => 3,
         'gpa' => 4,
+        'overall_grade' => 'A+',
         'published_at' => '2026-07-15 10:00:00',
     ]);
     StudentResultSubject::factory()->for($secondResult, 'result')->create([
@@ -265,6 +316,7 @@ test('super admins can print a verified academic transcript with published resul
         'total_credit' => 3,
         'credit_earned' => 3,
         'gpa' => 3,
+        'overall_grade' => 'B',
         'published_at' => '2026-01-15 10:00:00',
     ]);
     StudentResultSubject::factory()->for($firstResult, 'result')->create([
@@ -287,26 +339,50 @@ test('super admins can print a verified academic transcript with published resul
         ->get(route('super-admin.students.documents.show', [$student, 'transcript']))
         ->assertSuccessful()
         ->assertSee(asset('images/academic-transcript-template.png'))
+        ->assertSeeText(sprintf('TRANS-%06d', $firstResult->id))
+        ->assertSeeText(sprintf('TRANS-%06d', $secondResult->id))
         ->assertSeeText('Ayesha Rahman')
+        ->assertSeeText('Abdul Rahman')
+        ->assertSeeText('Salma Begum')
+        ->assertSeeText('101')
         ->assertSeeText('BNYTI-2026-001')
+        ->assertSeeText('Titas Technical Training Center')
         ->assertSeeText('Computer Science and Technology')
+        ->assertSeeText('1 Year')
+        ->assertSeeText('2025-2026')
+        ->assertSeeText('2026-2027')
         ->assertSeeTextInOrder(['First Semester', 'Second Semester'])
         ->assertSeeText('Computer Fundamentals')
         ->assertSeeText('Database Management')
-        ->assertSeeText('Marks')
-        ->assertSeeText('Grade Point')
-        ->assertSeeText('Total Credits')
-        ->assertSeeText('Credits Earned')
-        ->assertSeeText('CGPA')
+        ->assertSeeText('A-')
         ->assertSeeText('3.50')
+        ->assertSeeText('First Semester GPA')
+        ->assertSeeText('Second Semester GPA')
+        ->assertSeeText('Passed')
+        ->assertSeeText('FIRST-VERIFY-TOKEN')
         ->assertSeeText('LATEST-VERIFY-TOKEN')
+        ->assertSee(route('results.show', 'FIRST-VERIFY-TOKEN'))
         ->assertSee(route('results.show', 'LATEST-VERIFY-TOKEN'))
         ->assertSee('data:image/png;base64,', false)
+        ->assertDontSeeText('Marks')
+        ->assertDontSeeText('Total Credits')
+        ->assertDontSeeText('Credits Earned')
         ->assertDontSeeText('Draft Semester')
         ->assertDontSeeText('Unpublished Subject');
 });
 
-test('academic transcripts paginate semesters after twelve subjects', function () {
+test('transcript letter grades follow the published grading scale', function () {
+    $grading = app(ResultGradingService::class);
+
+    expect($grading->letterGradeForGpa(4.00))->toBe('A+')
+        ->and($grading->letterGradeForGpa(3.50))->toBe('A-')
+        ->and($grading->letterGradeForGpa(2.25))->toBe('C')
+        ->and($grading->letterGradeForGpa(2.00))->toBe('D')
+        ->and($grading->letterGradeForGpa(1.99))->toBe('F')
+        ->and($grading->letterGradeForGpa(null))->toBeNull();
+});
+
+test('academic transcripts paginate semesters after seven subjects', function () {
     $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
     $course = Course::factory()->create();
     $student = Student::factory()->for($course)->create();
@@ -314,11 +390,11 @@ test('academic transcripts paginate semesters after twelve subjects', function (
     $result = StudentResult::factory()->for($student)->create([
         'semester_id' => $semester->id,
         'semester' => 'First Semester',
-        'total_credit' => 39,
-        'credit_earned' => 39,
+        'total_credit' => 24,
+        'credit_earned' => 24,
     ]);
 
-    foreach (range(1, 13) as $subjectNumber) {
+    foreach (range(1, 8) as $subjectNumber) {
         StudentResultSubject::factory()->for($result, 'result')->create([
             'code' => sprintf('CST-%03d', $subjectNumber),
             'title' => sprintf('Transcript Subject %02d', $subjectNumber),
@@ -329,17 +405,25 @@ test('academic transcripts paginate semesters after twelve subjects', function (
     $response = $this->actingAs($superAdmin)
         ->get(route('super-admin.students.documents.show', [$student, 'transcript']))
         ->assertSuccessful()
-        ->assertSeeText('Page 1 of 2')
-        ->assertSeeText('Page 2 of 2')
-        ->assertSeeText('Continuation')
-        ->assertSeeText('Transcript Subject 13');
+        ->assertSeeText('First Semester (Cont.)')
+        ->assertSeeText('Transcript Subject 08');
 
-    expect(substr_count($response->getContent(), 'data-transcript-page'))->toBe(2);
+    expect(substr_count($response->getContent(), 'data-transcript-page'))->toBe(2)
+        ->and(substr_count($response->getContent(), 'First Semester GPA'))->toBe(1);
 });
 
 test('academic transcripts safely display students without published results', function () {
     $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
-    $student = Student::factory()->create(['name' => 'Nusrat Jahan']);
+    $course = Course::factory()->create();
+    $student = Student::factory()->for($course)->create([
+        'name' => 'Nusrat Jahan',
+        'registration_number' => null,
+        'roll_number' => null,
+        'father_name' => null,
+        'mother_name' => null,
+        'duration' => null,
+        'session' => null,
+    ]);
 
     StudentResult::factory()->for($student)->create([
         'status' => 'draft',
@@ -351,7 +435,9 @@ test('academic transcripts safely display students without published results', f
         ->get(route('super-admin.students.documents.show', [$student, 'transcript']))
         ->assertSuccessful()
         ->assertSeeText('Nusrat Jahan')
+        ->assertSeeText('—')
         ->assertSeeText('No published results available')
+        ->assertDontSeeText(now()->format('d M Y'))
         ->assertDontSeeText('DRAFT-VERIFY-TOKEN')
         ->assertDontSee('data:image/png;base64,', false);
 });

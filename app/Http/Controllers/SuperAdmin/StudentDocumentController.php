@@ -61,12 +61,13 @@ class StudentDocumentController extends Controller
             ->latest('id')
             ->first();
 
+        $cumulativeGpa = $grading->cumulativeGpa($student);
         $documentData = [
             'student' => $student,
             'document' => $document,
             'documentTitle' => self::DOCUMENTS[$document],
             'latestResult' => $latestResult,
-            'cumulativeGpa' => $grading->cumulativeGpa($student),
+            'cumulativeGpa' => $cumulativeGpa,
             'certificateSerial' => $latestResult ? sprintf('CERT-%06d', $latestResult->id) : null,
         ];
 
@@ -79,7 +80,11 @@ class StudentDocumentController extends Controller
         }
 
         if ($document === 'transcript') {
-            $documentData = [...$documentData, ...$this->transcriptData($student, $latestResult, $resultQrCode)];
+            $documentData = [
+                ...$documentData,
+                ...$this->transcriptData($student, $resultQrCode),
+                'transcriptLetterGrade' => $grading->letterGradeForGpa($cumulativeGpa),
+            ];
         }
 
         return view('super-admin.students.document', $documentData);
@@ -135,15 +140,21 @@ class StudentDocumentController extends Controller
 
     /**
      * @return array{
-     *     transcriptPages: Collection<int, array{result: StudentResult|null, subjects: Collection<int, mixed>, isContinuation: bool, isSemesterFinal: bool}>,
-     *     transcriptTotalCredit: float,
-     *     transcriptCreditEarned: float,
-     *     transcriptVerificationQrCode: string|null,
-     *     transcriptVerificationUrl: string|null,
-     *     transcriptVerificationReference: string|null
+     *     transcriptPages: Collection<int, array{
+     *         result: StudentResult|null,
+     *         subjects: Collection<int, mixed>,
+     *         isContinuation: bool,
+     *         isSemesterFinal: bool,
+     *         serial: string|null,
+     *         outcome: string|null,
+     *         verificationQrCode: string|null,
+     *         verificationUrl: string|null,
+     *         verificationReference: string|null
+     *     }>,
+     *     transcriptInstituteName: string
      * }
      */
-    private function transcriptData(Student $student, ?StudentResult $latestResult, ResultQrCodeService $qrCode): array
+    private function transcriptData(Student $student, ResultQrCodeService $qrCode): array
     {
         $publishedResults = $student->results()
             ->where('status', 'published')
@@ -161,8 +172,12 @@ class StudentDocumentController extends Controller
             ])
             ->values();
 
-        $transcriptPages = $publishedResults->flatMap(function (StudentResult $result): Collection {
-            $subjectChunks = $result->subjects->chunk(12);
+        $transcriptPages = $publishedResults->flatMap(function (StudentResult $result) use ($qrCode): Collection {
+            $subjectChunks = $result->subjects->chunk(7);
+            $verificationUrl = $result->verification_token
+                ? route('results.show', $result->verification_token)
+                : null;
+            $verificationQrCode = $verificationUrl ? $qrCode->dataUri($result) : null;
 
             if ($subjectChunks->isEmpty()) {
                 $subjectChunks = collect([collect()]);
@@ -173,6 +188,13 @@ class StudentDocumentController extends Controller
                 'subjects' => $subjects,
                 'isContinuation' => $chunkIndex > 0,
                 'isSemesterFinal' => $chunkIndex === $subjectChunks->count() - 1,
+                'serial' => sprintf('TRANS-%06d', $result->id),
+                'outcome' => $result->overall_grade === null
+                    ? null
+                    : ($result->overall_grade === 'F' ? 'Failed' : 'Passed'),
+                'verificationQrCode' => $verificationQrCode,
+                'verificationUrl' => $verificationUrl,
+                'verificationReference' => $result->verification_token,
             ]);
         })->values();
 
@@ -182,16 +204,17 @@ class StudentDocumentController extends Controller
                 'subjects' => collect(),
                 'isContinuation' => false,
                 'isSemesterFinal' => true,
+                'serial' => null,
+                'outcome' => null,
+                'verificationQrCode' => null,
+                'verificationUrl' => null,
+                'verificationReference' => null,
             ]);
         }
 
         return [
             'transcriptPages' => $transcriptPages,
-            'transcriptTotalCredit' => (float) $publishedResults->sum('total_credit'),
-            'transcriptCreditEarned' => (float) $publishedResults->sum('credit_earned'),
-            'transcriptVerificationQrCode' => $latestResult ? $qrCode->dataUri($latestResult) : null,
-            'transcriptVerificationUrl' => $latestResult ? route('results.show', $latestResult->verification_token) : null,
-            'transcriptVerificationReference' => $latestResult?->verification_token,
+            'transcriptInstituteName' => self::DOCUMENT_INSTITUTE_NAME,
         ];
     }
 }

@@ -105,8 +105,6 @@ Route::get('/', function () {
 
 Route::get('/branch-application', [BranchApplicationController::class, 'create'])->name('branch-applications.create');
 Route::post('/branch-application', [BranchApplicationController::class, 'store'])->name('branch-applications.store');
-Route::get('/student-registration', [StudentRegistrationController::class, 'create'])->name('student-registrations.create');
-Route::post('/student-registration', [StudentRegistrationController::class, 'store'])->name('student-registrations.store');
 Route::get('/results', [PublicResultController::class, 'index'])->name('results.index');
 Route::get('/results/{verificationToken}', [PublicResultController::class, 'show'])->name('results.show');
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
@@ -122,6 +120,8 @@ Route::middleware('guest')->group(function (): void {
 Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/student-registration', [StudentRegistrationController::class, 'create'])->name('student-registrations.create');
+    Route::post('/student-registration', [StudentRegistrationController::class, 'store'])->name('student-registrations.store');
 
     Route::get('/dashboard/super-admin', [DashboardController::class, 'superAdmin'])
         ->middleware('role:'.UserRole::SuperAdmin->value)

@@ -119,7 +119,8 @@
     display: block;
     width: 100%;
     aspect-ratio: 4 / 5;
-    border: max(1px, 0.12cqw) solid #8a8a8a;
+    border: max(1px, 0.16cqw) solid #183463;
+    border-radius: 1.35cqw;
     box-sizing: border-box;
     background: white;
     object-fit: cover;
@@ -154,12 +155,37 @@
     top: 43.8%;
     left: 77.15%;
     width: 12.2%;
+    overflow: hidden;
+    border: max(1px, 0.12cqw) solid #183463;
+    border-radius: 0.65cqw;
+    box-sizing: border-box;
+    background: white;
+    color: white;
+    text-decoration: none;
 }
 
 .registration-card__qr img {
     display: block;
-    width: 100%;
+    width: calc(100% - 1cqw);
+    margin: 0.5cqw;
+    margin-bottom: 0.25cqw;
     aspect-ratio: 1;
+}
+
+.registration-card__qr span {
+    display: block;
+    overflow: hidden;
+    background: #183463;
+    padding: 0.22cqw 0.12cqw 0.18cqw;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.72cqw;
+    font-weight: 700;
+    letter-spacing: 0.025em;
+    line-height: 1;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .registration-card-actions {

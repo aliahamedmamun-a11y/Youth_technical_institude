@@ -50,6 +50,7 @@
 
             <a class="registration-card__qr" href="{{ $qrUrl }}" aria-label="Open institute website">
                 <img src="{{ $qrCode }}" alt="QR code for {{ $qrUrl }}">
+                <span>Scan to Verify</span>
             </a>
         </article>
     </div>

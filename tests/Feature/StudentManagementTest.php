@@ -468,6 +468,7 @@ test('super admins can print registration cards with student information', funct
         ->assertSee(asset('storage/students/ayesha.png'))
         ->assertSee(route('home'))
         ->assertSee('data:image/png;base64,', false)
+        ->assertSeeText('Scan to Verify')
         ->assertSee(asset('images/registration-card-template.png'));
 });
 

@@ -4,13 +4,24 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Models\StudentResult;
+use App\Services\QrCodeService;
 use App\Services\ResultGradingService;
+use App\Services\ResultQrCodeService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class StudentDocumentController extends Controller
 {
+    private const ADMIT_CARD_EXAMINEE_TYPE = 'Regular';
+
+    private const DOCUMENT_INSTITUTE_CODE = 'BR-5667655';
+
+    private const DOCUMENT_INSTITUTE_NAME = 'Titas Technical Training Center';
+
     /** @var array<string, string> */
     private const DOCUMENTS = [
         'admit-card' => 'Admit Card',
@@ -23,8 +34,13 @@ class StudentDocumentController extends Controller
         'results' => 'Results',
     ];
 
-    public function show(Student $student, string $document, ResultGradingService $grading): View|RedirectResponse
-    {
+    public function show(
+        Student $student,
+        string $document,
+        ResultGradingService $grading,
+        ResultQrCodeService $resultQrCode,
+        QrCodeService $qrCode,
+    ): View|RedirectResponse {
         Gate::authorize('view', $student);
 
         abort_unless(array_key_exists($document, self::DOCUMENTS), 404);
@@ -45,13 +61,137 @@ class StudentDocumentController extends Controller
             ->latest('id')
             ->first();
 
-        return view('super-admin.students.document', [
+        $documentData = [
             'student' => $student,
             'document' => $document,
             'documentTitle' => self::DOCUMENTS[$document],
             'latestResult' => $latestResult,
             'cumulativeGpa' => $grading->cumulativeGpa($student),
             'certificateSerial' => $latestResult ? sprintf('CERT-%06d', $latestResult->id) : null,
-        ]);
+        ];
+
+        if ($document === 'admit-card') {
+            $documentData = [...$documentData, ...$this->admitCardData($student, $qrCode)];
+        }
+
+        if ($document === 'registration-card') {
+            $documentData = [...$documentData, ...$this->registrationCardData($student, $qrCode)];
+        }
+
+        if ($document === 'transcript') {
+            $documentData = [...$documentData, ...$this->transcriptData($student, $latestResult, $resultQrCode)];
+        }
+
+        return view('super-admin.students.document', $documentData);
+    }
+
+    /**
+     * @return array{
+     *     admitCardSerial: string,
+     *     admitCardInstituteCode: string,
+     *     admitCardInstituteName: string,
+     *     admitCardExamineeType: string,
+     *     admitCardQrCode: string,
+     *     admitCardQrUrl: string,
+     *     admitCardPrintedAt: Carbon
+     * }
+     */
+    private function admitCardData(Student $student, QrCodeService $qrCode): array
+    {
+        $admitCardQrUrl = route('home');
+
+        return [
+            'admitCardSerial' => sprintf('STU-%06d', $student->id),
+            'admitCardInstituteCode' => self::DOCUMENT_INSTITUTE_CODE,
+            'admitCardInstituteName' => self::DOCUMENT_INSTITUTE_NAME,
+            'admitCardExamineeType' => self::ADMIT_CARD_EXAMINEE_TYPE,
+            'admitCardQrCode' => $qrCode->dataUri($admitCardQrUrl),
+            'admitCardQrUrl' => $admitCardQrUrl,
+            'admitCardPrintedAt' => now(),
+        ];
+    }
+
+    /**
+     * @return array{
+     *     registrationCardSerial: string,
+     *     registrationCardInstituteCode: string,
+     *     registrationCardInstituteName: string,
+     *     registrationCardQrCode: string,
+     *     registrationCardQrUrl: string
+     * }
+     */
+    private function registrationCardData(Student $student, QrCodeService $qrCode): array
+    {
+        $registrationCardQrUrl = route('home');
+
+        return [
+            'registrationCardSerial' => sprintf('STU-%06d', $student->id),
+            'registrationCardInstituteCode' => self::DOCUMENT_INSTITUTE_CODE,
+            'registrationCardInstituteName' => self::DOCUMENT_INSTITUTE_NAME,
+            'registrationCardQrCode' => $qrCode->dataUri($registrationCardQrUrl),
+            'registrationCardQrUrl' => $registrationCardQrUrl,
+        ];
+    }
+
+    /**
+     * @return array{
+     *     transcriptPages: Collection<int, array{result: StudentResult|null, subjects: Collection<int, mixed>, isContinuation: bool, isSemesterFinal: bool}>,
+     *     transcriptTotalCredit: float,
+     *     transcriptCreditEarned: float,
+     *     transcriptVerificationQrCode: string|null,
+     *     transcriptVerificationUrl: string|null,
+     *     transcriptVerificationReference: string|null
+     * }
+     */
+    private function transcriptData(Student $student, ?StudentResult $latestResult, ResultQrCodeService $qrCode): array
+    {
+        $publishedResults = $student->results()
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->with(['subjects', 'semesterDefinition'])
+            ->get()
+            ->sort(fn (StudentResult $first, StudentResult $second): int => [
+                $first->semesterDefinition?->sort_order ?? PHP_INT_MAX,
+                $first->semester,
+                $first->id,
+            ] <=> [
+                $second->semesterDefinition?->sort_order ?? PHP_INT_MAX,
+                $second->semester,
+                $second->id,
+            ])
+            ->values();
+
+        $transcriptPages = $publishedResults->flatMap(function (StudentResult $result): Collection {
+            $subjectChunks = $result->subjects->chunk(12);
+
+            if ($subjectChunks->isEmpty()) {
+                $subjectChunks = collect([collect()]);
+            }
+
+            return $subjectChunks->values()->map(fn (Collection $subjects, int $chunkIndex): array => [
+                'result' => $result,
+                'subjects' => $subjects,
+                'isContinuation' => $chunkIndex > 0,
+                'isSemesterFinal' => $chunkIndex === $subjectChunks->count() - 1,
+            ]);
+        })->values();
+
+        if ($transcriptPages->isEmpty()) {
+            $transcriptPages->push([
+                'result' => null,
+                'subjects' => collect(),
+                'isContinuation' => false,
+                'isSemesterFinal' => true,
+            ]);
+        }
+
+        return [
+            'transcriptPages' => $transcriptPages,
+            'transcriptTotalCredit' => (float) $publishedResults->sum('total_credit'),
+            'transcriptCreditEarned' => (float) $publishedResults->sum('credit_earned'),
+            'transcriptVerificationQrCode' => $latestResult ? $qrCode->dataUri($latestResult) : null,
+            'transcriptVerificationUrl' => $latestResult ? route('results.show', $latestResult->verification_token) : null,
+            'transcriptVerificationReference' => $latestResult?->verification_token,
+        ];
     }
 }

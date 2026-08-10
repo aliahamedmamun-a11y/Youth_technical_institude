@@ -3,6 +3,14 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+@font-face {
+    font-family: 'Document Corsiva';
+    src: url('./fonts/document-monotype-corsiva-bold-italic.ttf') format('truetype');
+    font-display: block;
+    font-style: italic;
+    font-weight: 700;
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -32,6 +40,12 @@
 }
 
 @layer components {
+    .document-dynamic-value {
+        font-family: 'Document Corsiva', Georgia, 'Times New Roman', serif;
+        font-style: italic;
+        font-weight: 700;
+    }
+
     .brand-mark {
         color: white;
         background:

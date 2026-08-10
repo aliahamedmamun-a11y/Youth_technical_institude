@@ -53,13 +53,13 @@ class AcademicDataSeeder extends Seeder
         ];
     }
 
-    /** @return list<array{course_code: string, name: string, registration_number: string, roll_number: string, father_name: string, mother_name: string, phone: string, email: string, gender: string, date_of_birth: string, address: string, admitted_at: string, result_status: string, grade: string, score: int}> */
+    /** @return list<array{course_code: string, name: string, registration_number: string, roll_number: string, father_name: string, mother_name: string, phone: string, email: string, gender: string, date_of_birth: string, address: string, session: string, admitted_at: string, result_status: string, grade: string, score: int}> */
     private function students(): array
     {
         return [
-            ['course_code' => 'COA-101', 'name' => 'Ayesha Rahman', 'registration_number' => 'BNYTI-2026-001', 'roll_number' => '101', 'father_name' => 'Abdul Rahman', 'mother_name' => 'Salma Begum', 'phone' => '01720000001', 'email' => 'ayesha@bnyti.test', 'gender' => 'Female', 'date_of_birth' => '2005-06-14', 'address' => 'Mirpur, Dhaka', 'admitted_at' => '2026-01-05', 'result_status' => 'Passed', 'grade' => 'A+', 'score' => 91],
-            ['course_code' => 'GDM-201', 'name' => 'Tanvir Hasan', 'registration_number' => 'BNYTI-2026-002', 'roll_number' => '202', 'father_name' => 'Jamal Hasan', 'mother_name' => 'Rina Akter', 'phone' => '01720000002', 'email' => 'tanvir@bnyti.test', 'gender' => 'Male', 'date_of_birth' => '2004-11-20', 'address' => 'Uttara, Dhaka', 'admitted_at' => '2026-01-07', 'result_status' => 'Passed', 'grade' => 'A', 'score' => 86],
-            ['course_code' => 'EIM-301', 'name' => 'Nusrat Jahan', 'registration_number' => 'BNYTI-2026-003', 'roll_number' => '303', 'father_name' => 'Nurul Islam', 'mother_name' => 'Shirin Akter', 'phone' => '01720000003', 'email' => 'nusrat@bnyti.test', 'gender' => 'Female', 'date_of_birth' => '2005-02-08', 'address' => 'Savar, Dhaka', 'admitted_at' => '2026-01-10', 'result_status' => 'Pending', 'grade' => '', 'score' => 0],
+            ['course_code' => 'COA-101', 'name' => 'Ayesha Rahman', 'registration_number' => 'BNYTI-2026-001', 'roll_number' => '101', 'father_name' => 'Abdul Rahman', 'mother_name' => 'Salma Begum', 'phone' => '01720000001', 'email' => 'ayesha@bnyti.test', 'gender' => 'Female', 'date_of_birth' => '2005-06-14', 'address' => 'Mirpur, Dhaka', 'session' => 'July 2025 - December 2025', 'admitted_at' => '2026-01-05', 'result_status' => 'Passed', 'grade' => 'A+', 'score' => 91],
+            ['course_code' => 'GDM-201', 'name' => 'Tanvir Hasan', 'registration_number' => 'BNYTI-2026-002', 'roll_number' => '202', 'father_name' => 'Jamal Hasan', 'mother_name' => 'Rina Akter', 'phone' => '01720000002', 'email' => 'tanvir@bnyti.test', 'gender' => 'Male', 'date_of_birth' => '2004-11-20', 'address' => 'Uttara, Dhaka', 'session' => 'July 2025 - December 2025', 'admitted_at' => '2026-01-07', 'result_status' => 'Passed', 'grade' => 'A', 'score' => 86],
+            ['course_code' => 'EIM-301', 'name' => 'Nusrat Jahan', 'registration_number' => 'BNYTI-2026-003', 'roll_number' => '303', 'father_name' => 'Nurul Islam', 'mother_name' => 'Shirin Akter', 'phone' => '01720000003', 'email' => 'nusrat@bnyti.test', 'gender' => 'Female', 'date_of_birth' => '2005-02-08', 'address' => 'Savar, Dhaka', 'session' => 'July 2025 - December 2025', 'admitted_at' => '2026-01-10', 'result_status' => 'Pending', 'grade' => '', 'score' => 0],
         ];
     }
 }

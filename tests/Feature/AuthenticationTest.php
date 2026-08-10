@@ -86,6 +86,10 @@ test('super admin dashboard shows academic management navigation', function () {
     $this->actingAs($superAdmin)
         ->get(route('dashboards.super-admin'))
         ->assertSuccessful()
+        ->assertSee('action="'.route('logout').'"', false)
+        ->assertSee('method="POST"', false)
+        ->assertSee('name="_token"', false)
+        ->assertSee('Log out of the super admin dashboard', false)
         ->assertSee('Course Management')
         ->assertSee('Student Management')
         ->assertSee('Teacher Management');

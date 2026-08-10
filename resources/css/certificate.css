@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'Certificate Shelley';
+    src: url('./fonts/certificate-shelle.ttf') format('truetype');
+    font-display: block;
+    font-style: normal;
+    font-weight: 400;
+}
+
 .certificate-screen {
     min-height: 100vh;
     padding: 1.5rem;
@@ -35,14 +43,15 @@
     z-index: 1;
     overflow: hidden;
     color: #111;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: 'Certificate Shelley', Georgia, 'Times New Roman', serif;
     font-size: clamp(0.45rem, 1.08vw, 1.02rem);
-    font-style: italic;
-    font-weight: 700;
+    font-style: normal;
+    font-weight: 400;
     line-height: 1.15;
     text-align: center;
     text-overflow: ellipsis;
     text-shadow: 0 1px 0 rgb(255 255 238 / 0.85);
+    transform: translateY(-50%);
     white-space: nowrap;
 }
 
@@ -118,8 +127,6 @@
     left: 8%;
     width: 17%;
     font-size: clamp(0.42rem, 0.9vw, 0.86rem);
-    font-style: normal;
-    font-weight: 800;
 }
 
 .certificate-actions {

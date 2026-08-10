@@ -6,7 +6,7 @@
 }
 
 .admit-card-frame {
-    width: min(100%, 62rem);
+    width: min(100%, 75rem);
     margin-inline: auto;
     overflow: hidden;
     background: white;
@@ -16,10 +16,11 @@
 .admit-card {
     position: relative;
     width: 100%;
-    aspect-ratio: 210 / 148;
+    aspect-ratio: 297 / 210;
     overflow: hidden;
-    color: #111827;
-    background-color: white;
+    color: #191919;
+    background: white;
+    font-family: Georgia, 'Times New Roman', serif;
 }
 
 .admit-card__template {
@@ -30,113 +31,94 @@
     object-fit: fill;
 }
 
-.admit-card__identity {
+.admit-card__serial,
+.admit-card__student-details,
+.admit-card__photo,
+.admit-card__exam-details,
+.admit-card__qr,
+.admit-card__printing-date {
     position: absolute;
-    top: 37.5%;
-    left: 18.5%;
-    display: grid;
-    width: 66%;
-    min-width: 0;
-    grid-template-columns: minmax(0, 1fr) 17.5%;
-    gap: 2.5%;
-    border: 1px solid rgb(30 64 175 / 0.4);
-    border-radius: 0.45rem;
-    background: rgb(255 255 255 / 0.56);
-    padding: 0 1.45% 1.4%;
-    box-shadow: 0 0.35rem 1rem rgb(15 23 42 / 0.06);
     z-index: 1;
 }
 
-.admit-card__watermark {
-    position: absolute;
-    top: 17%;
-    left: 39%;
-    width: 24%;
-    opacity: 0.16;
-    pointer-events: none;
-}
-
-.admit-card__section-title {
-    position: relative;
-    z-index: 1;
-    grid-column: 1 / -1;
-    margin: 0 -1.55% clamp(0.25rem, 0.65vw, 0.65rem);
-    border-radius: 0.35rem 0.35rem 0 0;
-    background: linear-gradient(90deg, #1e3a8a, #293f94 68%, #1e3a8a);
-    padding: clamp(0.2rem, 0.48vw, 0.45rem) clamp(0.45rem, 1vw, 0.9rem);
-    color: white;
-    font-size: clamp(0.42rem, 0.75vw, 0.72rem);
-    font-weight: 900;
-    letter-spacing: 0.12em;
-    line-height: 1.15;
-    text-align: center;
-    text-transform: uppercase;
-}
-
-.admit-card__details {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    min-width: 0;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(0.2rem, 0.65vw, 0.55rem) clamp(0.45rem, 1.25vw, 1.2rem);
+.admit-card__serial {
+    top: 33.9%;
+    left: 10.7%;
+    width: 31%;
     margin: 0;
-}
-
-.admit-card__details > div {
-    min-width: 0;
-    border-bottom: 1px solid rgb(30 64 175 / 0.35);
-    background: rgb(255 255 255 / 0.3);
-    padding-bottom: clamp(0.12rem, 0.3vw, 0.3rem);
-}
-
-.admit-card__details .admit-card__name,
-.admit-card__details .admit-card__wide-detail {
-    grid-column: 1 / -1;
-}
-
-.admit-card__details dt {
-    color: #1e3a8a;
-    font-size: clamp(0.4rem, 0.72vw, 0.68rem);
-    font-weight: 800;
-    letter-spacing: 0.045em;
-    line-height: 1.2;
-    text-transform: uppercase;
-}
-
-.admit-card__details dd {
-    min-width: 0;
-    margin: clamp(0.05rem, 0.15vw, 0.14rem) 0 0;
     overflow: hidden;
-    color: #0f172a;
-    font-size: clamp(0.48rem, 0.95vw, 0.92rem);
-    font-weight: 750;
-    line-height: 1.22;
+    font-size: clamp(0.48rem, 1.15vw, 1.08rem);
+    font-weight: 700;
+    line-height: 1.15;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.admit-card__name dd {
-    color: #111827;
-    font-size: clamp(0.58rem, 1.18vw, 1.16rem);
-    font-weight: 900;
+.admit-card__serial span {
+    margin-right: 0.35em;
+}
+
+.admit-card__student-details {
+    top: 38.7%;
+    left: 10.7%;
+    display: grid;
+    width: 51%;
+    gap: clamp(0.34rem, 1.12vw, 1.05rem);
+    margin: 0;
+    font-size: clamp(0.46rem, 1.08vw, 1.02rem);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.admit-card__student-details > div {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: 42% minmax(0, 1fr);
+    align-items: baseline;
+}
+
+.admit-card__student-details dt,
+.admit-card__student-details dd,
+.admit-card__exam-details dt,
+.admit-card__exam-details dd {
+    min-width: 0;
+    margin: 0;
+}
+
+.admit-card__student-details dd {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admit-card__student-details dd::before {
+    content: ':';
+    margin-right: 0.35em;
+}
+
+.admit-card__exam-details dt::after {
+    content: ':';
+    margin-left: 0.15em;
+}
+
+.admit-card__exam-details > div:not(.admit-card__exam-number) dd {
+    margin-left: 0.35em;
 }
 
 .admit-card__photo {
-    position: relative;
-    z-index: 1;
-    align-self: start;
+    top: 32.5%;
+    left: 80.1%;
+    width: 10.1%;
     margin: 0;
-    text-align: center;
 }
 
 .admit-card__photo > img,
 .admit-card__photo-placeholder {
+    display: block;
     width: 100%;
-    aspect-ratio: 3 / 4;
-    border: clamp(1px, 0.18vw, 2px) solid #1e3a8a;
-    border-radius: 0.22rem;
-    background: #f8fafc;
+    aspect-ratio: 4 / 5;
+    border: clamp(1px, 0.12vw, 2px) solid #737373;
+    background: white;
     object-fit: cover;
     object-position: center;
 }
@@ -145,12 +127,12 @@
     display: grid;
     place-content: center;
     justify-items: center;
-    gap: clamp(0.08rem, 0.3vw, 0.3rem);
-    color: #64748b;
+    gap: clamp(0.08rem, 0.25vw, 0.24rem);
+    color: #737373;
 }
 
 .admit-card__photo-placeholder svg {
-    width: 46%;
+    width: 42%;
     fill: none;
     stroke: currentColor;
     stroke-linecap: round;
@@ -158,17 +140,72 @@
     stroke-width: 1.5;
 }
 
-.admit-card__photo-placeholder span,
-.admit-card__photo figcaption {
-    font-size: clamp(0.34rem, 0.58vw, 0.58rem);
-    font-weight: 800;
-    letter-spacing: 0.04em;
+.admit-card__photo-placeholder span {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(0.3rem, 0.48vw, 0.46rem);
+    font-weight: 700;
     text-transform: uppercase;
 }
 
-.admit-card__photo figcaption {
-    margin-top: clamp(0.08rem, 0.25vw, 0.25rem);
-    color: #1e3a8a;
+.admit-card__exam-details {
+    top: 51.6%;
+    right: 9.8%;
+    display: grid;
+    width: 21%;
+    gap: clamp(0.22rem, 0.74vw, 0.7rem);
+    margin: 0;
+    font-size: clamp(0.44rem, 1vw, 0.94rem);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.admit-card__exam-details > div {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: flex-end;
+    white-space: nowrap;
+}
+
+.admit-card__exam-number dd {
+    display: grid;
+    width: 48%;
+    min-height: clamp(1rem, 3.8vw, 2.8rem);
+    margin-left: 0.55em;
+    place-items: center;
+    overflow: hidden;
+    border: clamp(1px, 0.1vw, 2px) solid #737373;
+    font-size: clamp(0.38rem, 0.82vw, 0.78rem);
+    text-overflow: ellipsis;
+}
+
+.admit-card__examinee-type {
+    margin-top: clamp(0.02rem, 0.16vw, 0.15rem);
+}
+
+.admit-card__qr {
+    top: 79.1%;
+    left: 57.4%;
+    width: 7.6%;
+}
+
+.admit-card__qr img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+.admit-card__printing-date {
+    bottom: 5.7%;
+    left: 11.8%;
+    width: 24%;
+    margin: 0;
+    overflow: hidden;
+    font-size: clamp(0.38rem, 0.82vw, 0.78rem);
+    font-weight: 700;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .admit-card-actions {
@@ -180,15 +217,15 @@
 }
 
 @page {
-    size: 210mm 148mm;
+    size: A4 landscape;
     margin: 0;
 }
 
 @media print {
     html,
     body {
-        width: 210mm;
-        height: 148mm;
+        width: 297mm;
+        height: 210mm;
         margin: 0;
         background: white;
     }
@@ -201,8 +238,8 @@
     .admit-card-screen,
     .admit-card-frame,
     .admit-card {
-        width: 210mm;
-        height: 148mm;
+        width: 297mm;
+        height: 210mm;
         margin: 0;
         padding: 0;
     }

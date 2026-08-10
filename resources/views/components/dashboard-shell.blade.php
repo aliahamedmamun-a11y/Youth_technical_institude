@@ -13,8 +13,8 @@
     </head>
     <body class="min-h-screen bg-slate-50 text-slate-900 antialiased">
         @if ($isSuperAdmin)
-            <aside class="border-b border-slate-200 bg-white lg:fixed lg:inset-y-0 lg:left-0 lg:z-20 lg:w-72 lg:border-b-0 lg:border-r">
-                <div class="flex items-center justify-between border-b border-slate-100 px-5 py-5 lg:px-6">
+            <aside class="border-b border-slate-200 bg-white lg:fixed lg:inset-y-0 lg:left-0 lg:z-20 lg:flex lg:w-72 lg:flex-col lg:border-b-0 lg:border-r">
+                <div class="flex items-center justify-between border-b border-slate-100 px-5 py-5 lg:shrink-0 lg:px-6">
                     <a href="{{ route('dashboards.super-admin') }}" class="flex items-center gap-3">
                         <span class="grid size-11 place-items-center rounded-xl bg-blue-50"><img src="{{ asset('images/bnyti-logo.svg') }}" alt="BNYTI logo" class="brand-logo size-8"></span>
                         <span><span class="block text-sm font-black text-blue-700">BNYTI Academy</span><span class="block text-[11px] font-bold text-slate-400">SUPER ADMIN PANEL</span></span>
@@ -22,7 +22,7 @@
                     <span class="rounded-lg bg-blue-50 px-2 py-1 text-xs font-black text-blue-600">SA</span>
                 </div>
 
-                <nav aria-label="Super Admin navigation" class="max-h-[calc(100vh-5.5rem)] overflow-y-auto px-3 py-4 lg:px-4">
+                <nav aria-label="Super Admin navigation" class="max-h-[calc(100vh-5.5rem)] overflow-y-auto px-3 py-4 lg:min-h-0 lg:max-h-none lg:flex-1 lg:px-4">
                     <a href="{{ route('dashboards.super-admin') }}" @class(['mb-1 flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition', 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' => request()->routeIs('dashboards.super-admin'), 'text-slate-600 hover:bg-blue-50 hover:text-blue-700' => ! request()->routeIs('dashboards.super-admin')])>
                         <svg viewBox="0 0 24 24" class="size-5 fill-none stroke-current" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Dashboard
                     </a>
@@ -54,7 +54,15 @@
                         <div class="ml-6 grid border-l border-blue-100 py-1 pl-4 text-sm"><a href="{{ route('super-admin.students.index') }}" class="py-2 text-slate-500 hover:text-blue-700">Student documents</a><a href="{{ route('results.index') }}" class="py-2 text-slate-500 hover:text-blue-700">Public result lookup</a></div>
                     </details>
                 </nav>
-                <form method="POST" action="{{ route('logout') }}" class="hidden border-t border-slate-100 p-4 lg:block">@csrf<button class="flex w-full items-center justify-center rounded-xl border border-slate-200 px-4 py-3 text-sm font-black text-slate-600 transition hover:border-rose-200 hover:bg-rose-50 hover:text-rose-700">Logout</button></form>
+                <form method="POST" action="{{ route('logout') }}" class="hidden shrink-0 border-t border-slate-100 p-4 lg:block">
+                    @csrf
+                    <button type="submit" aria-label="Log out of the super admin dashboard" class="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-black text-slate-600 transition hover:border-rose-200 hover:bg-rose-50 hover:text-rose-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5 fill-none stroke-current" stroke-width="1.8">
+                            <path d="M10 5H5v14h5M14 8l4 4-4 4M8 12h10" />
+                        </svg>
+                        Log out
+                    </button>
+                </form>
             </aside>
         @endif
 
@@ -62,7 +70,10 @@
             <header class="sticky top-0 z-10 border-b border-slate-200 bg-white/90 backdrop-blur">
                 <div class="flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
                     <div class="min-w-0"><p class="truncate text-sm font-black text-slate-900">{{ $title }}</p><p class="hidden text-xs font-bold text-slate-400 sm:block">{{ auth()->user()->role->label() }}</p></div>
-                    <form method="POST" action="{{ route('logout') }}" @class(['lg:hidden' => $isSuperAdmin])>@csrf<button class="rounded-full border border-slate-300 px-4 py-2 text-sm font-black text-slate-700">Logout</button></form>
+                    <form method="POST" action="{{ route('logout') }}" @class(['lg:hidden' => $isSuperAdmin])>
+                        @csrf
+                        <button type="submit" aria-label="Log out of the super admin dashboard" class="rounded-full border border-slate-300 px-4 py-2 text-sm font-black text-slate-700 transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">Log out</button>
+                    </form>
                 </div>
             </header>
             <main class="px-4 py-8 sm:px-6 lg:px-8">

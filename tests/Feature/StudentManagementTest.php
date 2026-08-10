@@ -394,6 +394,7 @@ test('super admins can print admit cards with student information', function () 
         ->assertSee(asset('storage/students/ayesha.png'))
         ->assertSee(route('home'))
         ->assertSee('data:image/png;base64,', false)
+        ->assertSeeText('Scan to Verify')
         ->assertSee(asset('images/admit-card-template.png'));
 });
 

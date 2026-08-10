@@ -117,7 +117,9 @@
     display: block;
     width: 100%;
     aspect-ratio: 4 / 5;
-    border: clamp(1px, 0.12vw, 2px) solid #737373;
+    border: clamp(1px, 0.14vw, 2px) solid #183463;
+    border-radius: clamp(0.3rem, 0.75vw, 0.75rem);
+    box-sizing: border-box;
     background: white;
     object-fit: cover;
     object-position: center;
@@ -187,12 +189,37 @@
     top: 79.1%;
     left: 57.4%;
     width: 7.6%;
+    overflow: hidden;
+    border: clamp(1px, 0.1vw, 2px) solid #183463;
+    border-radius: clamp(0.2rem, 0.42vw, 0.45rem);
+    box-sizing: border-box;
+    background: white;
+    color: white;
+    text-decoration: none;
 }
 
 .admit-card__qr img {
     display: block;
-    width: 100%;
+    width: calc(100% - clamp(0.35rem, 0.65vw, 0.65rem));
+    margin: clamp(0.18rem, 0.33vw, 0.33rem);
+    margin-bottom: clamp(0.08rem, 0.16vw, 0.16rem);
     aspect-ratio: 1;
+}
+
+.admit-card__qr span {
+    display: block;
+    overflow: hidden;
+    background: #183463;
+    padding: clamp(0.08rem, 0.13vw, 0.13rem) 0.08rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(0.25rem, 0.44vw, 0.44rem);
+    font-weight: 700;
+    letter-spacing: 0.025em;
+    line-height: 1;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .admit-card__printing-date {

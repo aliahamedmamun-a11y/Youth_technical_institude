@@ -53,6 +53,7 @@
 
             <a class="admit-card__qr" href="{{ $qrUrl }}" aria-label="Open institute website">
                 <img src="{{ $qrCode }}" alt="QR code for {{ $qrUrl }}">
+                <span>Scan to Verify</span>
             </a>
 
             <p class="admit-card__printing-date">Printing Date: {{ $printedAt->format('j M Y') }}</p>

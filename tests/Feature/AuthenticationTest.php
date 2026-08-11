@@ -104,6 +104,8 @@ test('super admin dashboard shows academic management navigation', function () {
         ->assertSee('method="POST"', false)
         ->assertSee('name="_token"', false)
         ->assertSee('Log out of the super admin dashboard', false)
+        ->assertSee('class="sidebar-icon', false)
+        ->assertSee('bg-blue-50', false)
         ->assertSee('Course Management')
         ->assertSee('Student Management')
         ->assertSee('Teacher Management');

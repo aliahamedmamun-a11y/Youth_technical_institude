@@ -64,6 +64,40 @@
             0 0 0 1px rgb(15 23 42 / 0.08);
     }
 
+    .sidebar-icon {
+        display: inline-grid;
+        width: 2rem;
+        height: 2rem;
+        flex: none;
+        place-items: center;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.65rem;
+        background: #f8fafc;
+        color: #64748b;
+        transition: 180ms ease;
+    }
+
+    a:hover .sidebar-icon,
+    summary:hover .sidebar-icon,
+    button:hover .sidebar-icon {
+        border-color: #bfdbfe;
+        background: #eff6ff;
+        color: #2563eb;
+    }
+
+    a.bg-blue-600 .sidebar-icon {
+        border-color: rgb(255 255 255 / 0.35);
+        background: white;
+        color: #2563eb;
+    }
+
+    a.bg-blue-50 .sidebar-icon,
+    summary.bg-blue-50 .sidebar-icon {
+        border-color: #bfdbfe;
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
     .icon-button {
         display: inline-grid;
         width: 2.75rem;

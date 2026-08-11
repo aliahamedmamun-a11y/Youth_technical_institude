@@ -34,6 +34,7 @@
 
 .transcript-serial,
 .transcript-semester,
+.transcript-grading-scale,
 .transcript-student-values,
 .transcript-subject-values,
 .transcript-semester-summary,
@@ -44,30 +45,36 @@
 }
 
 .transcript-serial {
-    top: 17.05%;
-    left: 18%;
-    width: 20%;
+    top: 18.9%;
+    left: 10.5%;
+    width: 25%;
     margin: 0;
     overflow: hidden;
     color: #444;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.45cqw;
+    font-size: 1.12cqw;
     line-height: 1.15;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
+.transcript-serial span {
+    margin-right: 0.45cqw;
+}
+
 .transcript-semester {
-    top: 16.35%;
-    left: 43.05%;
+    top: 18.15%;
+    left: 42%;
     display: grid;
-    width: 17.25%;
-    height: 2.45%;
+    width: 20%;
+    min-height: 2.7%;
     margin: 0;
+    padding: 0.38cqw 0.7cqw;
     place-items: center;
     overflow: hidden;
     color: white;
-    font-size: 1.72cqw;
+    background: #49380d;
+    font-size: 1.55cqw;
     font-weight: 500;
     line-height: 1;
     text-align: center;
@@ -75,18 +82,60 @@
     white-space: nowrap;
 }
 
+.transcript-grading-scale {
+    top: 18.6%;
+    right: 10.4%;
+    width: 15.8%;
+    border: 0.08cqw solid #222;
+    border-collapse: collapse;
+    background: rgb(255 255 255 / 0.88);
+    font-size: 0.62cqw;
+    line-height: 1;
+    text-align: center;
+}
+
+.transcript-grading-scale caption {
+    border: 0.08cqw solid #222;
+    border-bottom: 0;
+    padding: 0.2cqw;
+    background: rgb(255 255 255 / 0.9);
+    font-size: 0.7cqw;
+    font-weight: 600;
+}
+
+.transcript-grading-scale td {
+    border: 0.06cqw solid #333;
+    padding: 0.12cqw 0.18cqw;
+    white-space: nowrap;
+}
+
+.transcript-grading-scale td:first-child {
+    width: 62%;
+}
+
+.transcript-grading-scale td:nth-child(2) {
+    width: 18%;
+}
+
 .transcript-student-values {
-    top: 20.15%;
-    left: 30.65%;
+    top: 23%;
+    left: 10.6%;
     display: grid;
-    width: 59%;
+    width: 59.5%;
     margin: 0;
-    grid-template-rows: repeat(11, 3.03cqw);
-    font-size: 2.08cqw;
+    grid-template-rows: repeat(11, 2.75cqw);
+    font-size: 1.55cqw;
     line-height: 1;
 }
 
-.transcript-student-values > div,
+.transcript-student-values > div {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: 37% minmax(0, 1fr);
+    align-items: center;
+}
+
+.transcript-student-values dt,
 .transcript-student-values dd {
     min-width: 0;
     margin: 0;
@@ -95,60 +144,103 @@
     white-space: nowrap;
 }
 
-.transcript-student-values > div {
+.transcript-student-values dt {
     display: flex;
-    align-items: center;
+    padding-right: 0.75cqw;
+    justify-content: space-between;
+}
+
+.transcript-student-values dt::after {
+    content: ':';
+}
+
+.transcript-student-values dd {
+    font-weight: 500;
 }
 
 .transcript-subject-values {
-    top: 49.8%;
-    left: 10.35%;
+    top: 44.3%;
+    left: 10.4%;
     display: block;
-    width: 82.45%;
-    height: 23.6%;
+    width: 79.2%;
+    height: 26.4%;
+    border: 0.08cqw solid #222;
     border-collapse: collapse;
+    background: rgb(255 255 255 / 0.34);
     table-layout: fixed;
-    font-size: 1.78cqw;
+    font-size: 1.25cqw;
+}
+
+.transcript-subject-values thead,
+.transcript-subject-values tbody {
+    display: block;
+    width: 100%;
+}
+
+.transcript-subject-values thead {
+    height: 17%;
 }
 
 .transcript-subject-values tbody {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    width: 100%;
-    height: 100%;
-    grid-template-rows: repeat(7, minmax(0, 1fr));
+    height: 83%;
 }
 
 .transcript-subject-values tr {
     display: grid;
     min-width: 0;
+    height: 100%;
     grid-template-columns: 16.2% 48.9% 12.2% 11.5% 11.2%;
 }
 
+.transcript-subject-values tbody tr {
+    height: 14.2857%;
+}
+
+.transcript-subject-values th,
 .transcript-subject-values td {
     display: flex;
     min-width: 0;
     align-items: center;
     justify-content: center;
-    height: 100%;
     overflow: hidden;
+    border-right: 0.07cqw solid #333;
+    border-bottom: 0.07cqw solid #333;
     padding: 0 0.35cqw;
-    line-height: 1.05;
+    line-height: 1.08;
     text-align: center;
     text-overflow: ellipsis;
+}
+
+.transcript-subject-values th:last-child,
+.transcript-subject-values td:last-child {
+    border-right: 0;
+}
+
+.transcript-subject-values tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.transcript-subject-values th {
+    font-size: 1.24cqw;
+    font-weight: 500;
+}
+
+.transcript-subject-values td {
+    font-size: 1.17cqw;
     white-space: nowrap;
 }
 
 .transcript-semester-summary {
-    top: 73.95%;
-    left: 64.15%;
+    top: 71.05%;
+    right: 10.4%;
     display: grid;
-    width: 28.65%;
-    height: 6.15%;
+    width: 29.5%;
+    height: 6.2%;
     margin: 0;
+    border: 0.08cqw solid #222;
+    background: rgb(255 255 255 / 0.5);
     grid-template-rows: repeat(2, minmax(0, 1fr));
-    font-size: 1.52cqw;
+    font-size: 1.14cqw;
 }
 
 .transcript-semester-summary > div {
@@ -158,22 +250,34 @@
     align-items: center;
 }
 
+.transcript-semester-summary > div + div {
+    border-top: 0.07cqw solid #333;
+}
+
 .transcript-semester-summary dt,
 .transcript-semester-summary dd {
+    display: flex;
     min-width: 0;
+    height: 100%;
     margin: 0;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
-    padding-inline: 0.5cqw;
+    padding-inline: 0.4cqw;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
+.transcript-semester-summary dd {
+    border-left: 0.07cqw solid #333;
+}
+
 .transcript-verification {
-    top: 84.4%;
-    left: 12.2%;
+    top: 80.5%;
+    left: 11.5%;
     display: grid;
-    width: 13.5%;
+    width: 12.5%;
     justify-items: center;
     color: #111;
     font-family: Arial, Helvetica, sans-serif;
@@ -183,9 +287,9 @@
 
 .transcript-verification img {
     display: block;
-    width: 9.8cqw;
-    height: 9.8cqw;
-    border: 0.12cqw solid #111;
+    width: 8.7cqw;
+    height: 8.7cqw;
+    border: 0.1cqw solid #111;
     background: white;
 }
 
@@ -198,18 +302,18 @@
 }
 
 .transcript-verification span {
-    margin-top: 0.35cqw;
-    font-size: 0.62cqw;
+    margin-top: 0.3cqw;
+    font-size: 0.52cqw;
 }
 
 .transcript-verification small {
-    margin-top: 0.12cqw;
-    font-size: 0.52cqw;
+    margin-top: 0.1cqw;
+    font-size: 0.46cqw;
     white-space: nowrap;
 }
 
 .transcript-no-results {
-    top: 48%;
+    top: 50%;
     left: 25%;
     width: 50%;
     color: #6b5b18;

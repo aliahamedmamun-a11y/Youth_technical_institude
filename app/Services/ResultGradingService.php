@@ -7,6 +7,20 @@ use App\Models\StudentResult;
 
 class ResultGradingService
 {
+    /** @var list<array{range: string, minimum_mark: int, grade: string, grade_point: float}> */
+    private const GRADING_SCALE = [
+        ['range' => '80 or Above', 'minimum_mark' => 80, 'grade' => 'A+', 'grade_point' => 4.0],
+        ['range' => '75 - Below 80', 'minimum_mark' => 75, 'grade' => 'A', 'grade_point' => 3.75],
+        ['range' => '70 - Below 75', 'minimum_mark' => 70, 'grade' => 'A-', 'grade_point' => 3.5],
+        ['range' => '65 - Below 70', 'minimum_mark' => 65, 'grade' => 'B+', 'grade_point' => 3.25],
+        ['range' => '60 - Below 65', 'minimum_mark' => 60, 'grade' => 'B', 'grade_point' => 3.0],
+        ['range' => '55 - Below 60', 'minimum_mark' => 55, 'grade' => 'B-', 'grade_point' => 2.75],
+        ['range' => '50 - Below 55', 'minimum_mark' => 50, 'grade' => 'C+', 'grade_point' => 2.5],
+        ['range' => '45 - Below 50', 'minimum_mark' => 45, 'grade' => 'C', 'grade_point' => 2.25],
+        ['range' => '40 - Below 45', 'minimum_mark' => 40, 'grade' => 'D', 'grade_point' => 2.0],
+        ['range' => 'Below 40', 'minimum_mark' => 0, 'grade' => 'F', 'grade_point' => 0.0],
+    ];
+
     /**
      * @return array{grade: string|null, grade_point: float|null}
      */
@@ -16,18 +30,24 @@ class ResultGradingService
             return ['grade' => null, 'grade_point' => null];
         }
 
-        return match (true) {
-            $marks >= 80 => ['grade' => 'A+', 'grade_point' => 4.0],
-            $marks >= 75 => ['grade' => 'A', 'grade_point' => 3.75],
-            $marks >= 70 => ['grade' => 'A-', 'grade_point' => 3.5],
-            $marks >= 65 => ['grade' => 'B+', 'grade_point' => 3.25],
-            $marks >= 60 => ['grade' => 'B', 'grade_point' => 3.0],
-            $marks >= 55 => ['grade' => 'B-', 'grade_point' => 2.75],
-            $marks >= 50 => ['grade' => 'C+', 'grade_point' => 2.5],
-            $marks >= 45 => ['grade' => 'C', 'grade_point' => 2.25],
-            $marks >= 40 => ['grade' => 'D', 'grade_point' => 2.0],
-            default => ['grade' => 'F', 'grade_point' => 0.0],
-        };
+        foreach (self::GRADING_SCALE as $gradeBand) {
+            if ($marks >= $gradeBand['minimum_mark']) {
+                return [
+                    'grade' => $gradeBand['grade'],
+                    'grade_point' => $gradeBand['grade_point'],
+                ];
+            }
+        }
+
+        return ['grade' => 'F', 'grade_point' => 0.0];
+    }
+
+    /**
+     * @return list<array{range: string, minimum_mark: int, grade: string, grade_point: float}>
+     */
+    public function gradingScale(): array
+    {
+        return self::GRADING_SCALE;
     }
 
     /**

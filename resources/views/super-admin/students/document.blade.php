@@ -38,6 +38,7 @@
         :cumulative-gpa="$cumulativeGpa"
         :letter-grade="$transcriptLetterGrade"
         :institute-name="$transcriptInstituteName"
+        :grading-scale="$transcriptGradingScale"
     />
 @else
     <x-dashboard-shell :title="$documentTitle" eyebrow="Student document" :description="$student->name.' · '.$student->registration_number">

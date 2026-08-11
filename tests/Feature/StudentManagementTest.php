@@ -341,10 +341,24 @@ test('super admins can print a verified academic transcript with published resul
     ]);
     StudentResultSubject::factory()->for($draftResult, 'result')->create(['title' => 'Unpublished Subject']);
 
-    $this->actingAs($superAdmin)
+    $response = $this->actingAs($superAdmin)
         ->get(route('super-admin.students.documents.show', [$student, 'transcript']))
         ->assertSuccessful()
         ->assertSee(asset('images/academic-transcript-template.png'))
+        ->assertSeeText('Serial No:')
+        ->assertSeeText('Grading System')
+        ->assertSeeText('80 or Above')
+        ->assertSeeText('75 - Below 80')
+        ->assertSeeText('Name of Student')
+        ->assertSeeText("Father's Name")
+        ->assertSeeText("Mother's Name")
+        ->assertSeeText('Registration No')
+        ->assertSeeText('Course Duration')
+        ->assertSee('Subjects<br>Code', false)
+        ->assertSeeText('Subjects Name')
+        ->assertSee('Credit<br>Hours', false)
+        ->assertSee('Letter<br>Grade', false)
+        ->assertSee('Grade<br>Points', false)
         ->assertSeeText(sprintf('TRANS-%06d', $firstResult->id))
         ->assertSeeText(sprintf('TRANS-%06d', $secondResult->id))
         ->assertSeeText('Ayesha Rahman')
@@ -375,6 +389,8 @@ test('super admins can print a verified academic transcript with published resul
         ->assertDontSeeText('Credits Earned')
         ->assertDontSeeText('Draft Semester')
         ->assertDontSeeText('Unpublished Subject');
+
+    expect(substr_count($response->getContent(), 'data-transcript-subject-row'))->toBe(14);
 });
 
 test('transcript letter grades follow the published grading scale', function () {
@@ -385,7 +401,20 @@ test('transcript letter grades follow the published grading scale', function () 
         ->and($grading->letterGradeForGpa(2.25))->toBe('C')
         ->and($grading->letterGradeForGpa(2.00))->toBe('D')
         ->and($grading->letterGradeForGpa(1.99))->toBe('F')
-        ->and($grading->letterGradeForGpa(null))->toBeNull();
+        ->and($grading->letterGradeForGpa(null))->toBeNull()
+        ->and($grading->gradingScale())->toHaveCount(10)
+        ->and($grading->gradingScale()[0])->toMatchArray([
+            'range' => '80 or Above',
+            'minimum_mark' => 80,
+            'grade' => 'A+',
+            'grade_point' => 4.0,
+        ])
+        ->and($grading->gradingScale()[9])->toMatchArray([
+            'range' => 'Below 40',
+            'minimum_mark' => 0,
+            'grade' => 'F',
+            'grade_point' => 0.0,
+        ]);
 });
 
 test('academic transcripts paginate semesters after seven subjects', function () {
@@ -415,6 +444,7 @@ test('academic transcripts paginate semesters after seven subjects', function ()
         ->assertSeeText('Transcript Subject 08');
 
     expect(substr_count($response->getContent(), 'data-transcript-page'))->toBe(2)
+        ->and(substr_count($response->getContent(), 'data-transcript-subject-row'))->toBe(14)
         ->and(substr_count($response->getContent(), 'First Semester GPA'))->toBe(1);
 });
 

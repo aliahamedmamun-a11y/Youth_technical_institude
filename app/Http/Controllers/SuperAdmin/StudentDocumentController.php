@@ -83,6 +83,7 @@ class StudentDocumentController extends Controller
             $documentData = [
                 ...$documentData,
                 ...$this->transcriptData($student, $resultQrCode),
+                'transcriptGradingScale' => $grading->gradingScale(),
                 'transcriptLetterGrade' => $grading->letterGradeForGpa($cumulativeGpa),
             ];
         }
@@ -185,7 +186,7 @@ class StudentDocumentController extends Controller
 
             return $subjectChunks->values()->map(fn (Collection $subjects, int $chunkIndex): array => [
                 'result' => $result,
-                'subjects' => $subjects,
+                'subjects' => $subjects->values(),
                 'isContinuation' => $chunkIndex > 0,
                 'isSemesterFinal' => $chunkIndex === $subjectChunks->count() - 1,
                 'serial' => sprintf('TRANS-%06d', $result->id),

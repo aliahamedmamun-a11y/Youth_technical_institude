@@ -65,37 +65,52 @@
     }
 
     .sidebar-icon {
+        --sidebar-icon-background: #f8fafc;
+        --sidebar-icon-border: #e2e8f0;
+        --sidebar-icon-color: #64748b;
         display: inline-grid;
         width: 2rem;
         height: 2rem;
         flex: none;
         place-items: center;
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--sidebar-icon-border);
         border-radius: 0.65rem;
-        background: #f8fafc;
-        color: #64748b;
+        background: var(--sidebar-icon-background);
+        color: var(--sidebar-icon-color);
         transition: 180ms ease;
     }
+
+    .sidebar-icon--blue { --sidebar-icon-background: #dbeafe; --sidebar-icon-border: #bfdbfe; --sidebar-icon-color: #1d4ed8; }
+    .sidebar-icon--violet { --sidebar-icon-background: #ede9fe; --sidebar-icon-border: #ddd6fe; --sidebar-icon-color: #6d28d9; }
+    .sidebar-icon--emerald { --sidebar-icon-background: #d1fae5; --sidebar-icon-border: #a7f3d0; --sidebar-icon-color: #047857; }
+    .sidebar-icon--rose { --sidebar-icon-background: #ffe4e6; --sidebar-icon-border: #fecdd3; --sidebar-icon-color: #be123c; }
+    .sidebar-icon--amber { --sidebar-icon-background: #fef3c7; --sidebar-icon-border: #fde68a; --sidebar-icon-color: #b45309; }
+    .sidebar-icon--cyan { --sidebar-icon-background: #cffafe; --sidebar-icon-border: #a5f3fc; --sidebar-icon-color: #0e7490; }
+    .sidebar-icon--orange { --sidebar-icon-background: #ffedd5; --sidebar-icon-border: #fed7aa; --sidebar-icon-color: #c2410c; }
+    .sidebar-icon--pink { --sidebar-icon-background: #fce7f3; --sidebar-icon-border: #fbcfe8; --sidebar-icon-color: #be185d; }
+    .sidebar-icon--sky { --sidebar-icon-background: #e0f2fe; --sidebar-icon-border: #bae6fd; --sidebar-icon-color: #0369a1; }
+    .sidebar-icon--teal { --sidebar-icon-background: #ccfbf1; --sidebar-icon-border: #99f6e4; --sidebar-icon-color: #0f766e; }
+    .sidebar-icon--indigo { --sidebar-icon-background: #e0e7ff; --sidebar-icon-border: #c7d2fe; --sidebar-icon-color: #4338ca; }
 
     a:hover .sidebar-icon,
     summary:hover .sidebar-icon,
     button:hover .sidebar-icon {
-        border-color: #bfdbfe;
-        background: #eff6ff;
-        color: #2563eb;
+        border-color: var(--sidebar-icon-border);
+        background: color-mix(in srgb, var(--sidebar-icon-background) 78%, white);
+        color: var(--sidebar-icon-color);
     }
 
     a.bg-blue-600 .sidebar-icon {
         border-color: rgb(255 255 255 / 0.35);
         background: white;
-        color: #2563eb;
+        color: var(--sidebar-icon-color);
     }
 
     a.bg-blue-50 .sidebar-icon,
     summary.bg-blue-50 .sidebar-icon {
-        border-color: #bfdbfe;
-        background: #dbeafe;
-        color: #1d4ed8;
+        border-color: var(--sidebar-icon-border);
+        background: var(--sidebar-icon-background);
+        color: var(--sidebar-icon-color);
     }
 
     .icon-button {

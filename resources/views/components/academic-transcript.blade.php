@@ -6,6 +6,8 @@
     'instituteName',
 ])
 
+@php($transcriptTemplateUrl = asset('images/academic-transcript-template.png').'?v='.filemtime(public_path('images/academic-transcript-template.png')))
+
 @vite(['resources/css/app.css', 'resources/css/academic-transcript.css', 'resources/js/app.js'])
 
 <main class="transcript-screen">
@@ -16,7 +18,7 @@
             @php($result = $page['result'])
 
             <article class="transcript-page" data-transcript-page aria-label="Academic transcript page {{ $loop->iteration }} of {{ $loop->count }} for {{ $student->name }}">
-                <img class="transcript-template" src="{{ asset('images/academic-transcript-template.png') }}" alt="">
+                <img class="transcript-template" src="{{ $transcriptTemplateUrl }}" alt="">
 
                 <p class="transcript-serial">{{ $page['serial'] ?? '—' }}</p>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
+use App\Actions\ApproveBranchApplication;
 use App\Enums\BranchApplicationStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateBranchApplicationStatusRequest;
@@ -26,16 +27,17 @@ class BranchApplicationController extends Controller
         return view('super-admin.branch-applications.show', compact('branchApplication'));
     }
 
-    public function update(UpdateBranchApplicationStatusRequest $request, BranchApplication $branchApplication): RedirectResponse
+    public function update(UpdateBranchApplicationStatusRequest $request, BranchApplication $branchApplication, ApproveBranchApplication $approve): RedirectResponse
     {
         Gate::authorize('update', $branchApplication);
 
-        $branchApplication->update([
-            ...$request->validated(),
-            'reviewed_at' => now(),
-        ]);
-
         $status = $request->enum('status', BranchApplicationStatus::class);
+
+        if ($status === BranchApplicationStatus::Approved) {
+            $approve->handle($branchApplication);
+        } else {
+            $branchApplication->update([...$request->validated(), 'reviewed_at' => now()]);
+        }
 
         return redirect()->route('super-admin.branch-applications.show', $branchApplication)
             ->with('status', 'Application '.$status->label().' successfully.');

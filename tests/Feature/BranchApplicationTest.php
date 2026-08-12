@@ -6,6 +6,7 @@ use App\Models\BranchApplication;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
@@ -43,6 +44,48 @@ test('super admins can approve branch registrations', function () {
 
     $this->actingAs($superAdmin)->patch(route('super-admin.branch-applications.update', $application), ['status' => 'approved'])->assertRedirect(route('super-admin.branch-applications.show', $application));
     expect($application->refresh()->status)->toBe(BranchApplicationStatus::Approved);
+    expect($application->password)->toBeNull();
+    $branchUser = User::query()->where('email', $application->email)->firstOrFail();
+    expect($branchUser->role)->toBe(UserRole::Branch)
+        ->and($branchUser->name)->toBe($application->director_name);
+
+    Auth::logout();
+    $this->post(route('login'), ['email' => $application->email, 'password' => 'password'])->assertRedirect(route('dashboards.branch', absolute: false));
+});
+
+test('approval is blocked when the application email already has an account', function () {
+    $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
+    $existingUser = User::factory()->create();
+    $application = BranchApplication::factory()->create(['email' => $existingUser->email]);
+
+    $this->actingAs($superAdmin)
+        ->patch(route('super-admin.branch-applications.update', $application), ['status' => 'approved'])
+        ->assertSessionHasErrors('email');
+
+    expect($application->refresh()->status)->toBe(BranchApplicationStatus::Pending);
+});
+
+test('already reviewed applications cannot be approved again', function () {
+    $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
+    $application = BranchApplication::factory()->approved()->create();
+
+    $this->actingAs($superAdmin)
+        ->patch(route('super-admin.branch-applications.update', $application), ['status' => 'approved'])
+        ->assertSessionHasErrors('status');
+
+    expect(User::query()->where('email', $application->email)->exists())->toBeFalse();
+});
+
+test('rejection does not create a branch account', function () {
+    $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
+    $application = BranchApplication::factory()->create();
+
+    $this->actingAs($superAdmin)
+        ->patch(route('super-admin.branch-applications.update', $application), ['status' => 'rejected', 'rejection_reason' => 'Documents require review.'])
+        ->assertRedirect(route('super-admin.branch-applications.show', $application));
+
+    expect($application->refresh()->status)->toBe(BranchApplicationStatus::Rejected)
+        ->and(User::query()->where('email', $application->email)->exists())->toBeFalse();
 });
 
 test('non-super-admins cannot review branch registrations', function () {

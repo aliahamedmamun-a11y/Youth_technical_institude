@@ -13,6 +13,7 @@ use App\Models\StudentSemesterEnrollment;
 use App\Services\ResultGradingService;
 use App\Services\ResultQrCodeService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
@@ -20,11 +21,13 @@ use Illuminate\View\View;
 
 class StudentResultController extends Controller
 {
-    public function index(Student $student): View
+    public function index(Request $request, Student $student): View
     {
         Gate::authorize('view', $student);
 
-        return view('super-admin.student-results.index', ['student' => $student->load('course'), 'results' => $student->results()->latest()->get()]);
+        $status = $request->string('status')->toString();
+
+        return view('super-admin.student-results.index', ['student' => $student->load('course'), 'selectedStatus' => $status, 'results' => $student->results()->when(in_array($status, ['published', 'draft'], true), fn ($query) => $query->where('status', $status))->with('subjects')->latest()->get()]);
     }
 
     public function create(Student $student): View

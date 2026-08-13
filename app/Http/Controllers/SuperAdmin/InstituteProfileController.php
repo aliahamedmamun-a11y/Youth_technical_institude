@@ -7,6 +7,7 @@ use App\Http\Requests\StoreInstituteProfileRequest;
 use App\Http\Requests\UpdateInstituteProfileEntryRequest;
 use App\Models\InstituteProfile;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -14,11 +15,18 @@ use Illuminate\View\View;
 
 class InstituteProfileController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('viewAny', InstituteProfile::class);
 
-        return view('super-admin.about.index', ['abouts' => InstituteProfile::query()->ordered()->paginate(15)]);
+        $search = $request->string('search')->trim()->toString();
+        $status = $request->string('status')->toString();
+
+        return view('super-admin.about.index', [
+            'abouts' => InstituteProfile::query()->when($search, fn ($query) => $query->where('about_heading', 'like', "%{$search}%"))->when(in_array($status, ['published', 'draft'], true), fn ($query) => $query->where('is_published', $status === 'published'))->ordered()->paginate(15)->withQueryString(),
+            'search' => $search,
+            'selectedStatus' => $status,
+        ]);
     }
 
     public function create(): View

@@ -223,13 +223,21 @@ const root = document.documentElement;
 const themeToggles = document.querySelectorAll('[data-theme-toggle]');
 const localeToggles = document.querySelectorAll('[data-locale-toggle]');
 const mobileMenu = document.querySelector('[data-mobile-menu]');
+const mobileMenuOverlay = document.querySelector('[data-menu-overlay]');
+const mobileMenuDismiss = document.querySelector('[data-menu-dismiss]');
 const menuToggle = document.querySelector('[data-menu-toggle]');
 const menuOpenIcon = document.querySelector('[data-menu-open]');
 const menuCloseIcon = document.querySelector('[data-menu-close]');
 const heroCarousel = document.querySelector('[data-hero-carousel]');
 const aboutCarousels = document.querySelectorAll('[data-about-carousel]');
+const teacherCarousels = document.querySelectorAll('[data-teacher-carousel]');
+const studentCarousels = document.querySelectorAll('[data-student-carousel]');
+const galleryCarousels = document.querySelectorAll('[data-gallery-carousel]');
+const courseCarousels = document.querySelectorAll('[data-course-carousel]');
+const newsCarousels = document.querySelectorAll('[data-news-carousel]');
 
 let locale = localStorage.locale === 'bn' ? 'bn' : 'en';
+let isMobileMenuOpen = false;
 
 function updateThemeControls() {
     const isDark = root.classList.contains('dark');
@@ -275,12 +283,21 @@ function setMenuState(isOpen) {
         return;
     }
 
-    mobileMenu.hidden = !isOpen;
+    isMobileMenuOpen = isOpen;
+    mobileMenu.classList.toggle('is-open', isOpen);
+    mobileMenuOverlay?.classList.toggle('is-open', isOpen);
+    mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+    mobileMenuOverlay?.setAttribute('aria-hidden', String(!isOpen));
+    mobileMenu.inert = !isOpen;
     menuToggle.setAttribute('aria-expanded', String(isOpen));
     menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
     menuOpenIcon?.classList.toggle('hidden', isOpen);
     menuCloseIcon?.classList.toggle('hidden', !isOpen);
     document.body.classList.toggle('overflow-hidden', isOpen);
+
+    if (isOpen) {
+        window.requestAnimationFrame(() => mobileMenuDismiss?.focus());
+    }
 }
 
 themeToggles.forEach((button) => {
@@ -298,16 +315,48 @@ localeToggles.forEach((button) => {
 });
 
 menuToggle?.addEventListener('click', () => {
-    setMenuState(mobileMenu.hidden);
+    setMenuState(!isMobileMenuOpen);
+});
+
+mobileMenuOverlay?.addEventListener('click', () => {
+    setMenuState(false);
+    menuToggle?.focus();
+});
+
+mobileMenuDismiss?.addEventListener('click', () => {
+    setMenuState(false);
+    menuToggle?.focus();
 });
 
 mobileMenu?.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => setMenuState(false));
 });
 
+mobileMenu?.querySelectorAll('[data-mobile-nav-link]').forEach((link) => {
+    link.addEventListener('click', () => {
+        mobileMenu.querySelectorAll('[data-mobile-nav-link]').forEach((item) => item.classList.remove('active'));
+        link.classList.add('active');
+    });
+});
+
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         setMenuState(false);
+        menuToggle?.focus();
+    }
+
+    if (event.key === 'Tab' && isMobileMenuOpen) {
+        const focusableElements = [...mobileMenu.querySelectorAll('a[href], button:not([disabled])')];
+        const firstFocusable = focusableElements[0];
+        const lastFocusable = focusableElements.at(-1);
+
+        if (event.shiftKey && document.activeElement === firstFocusable) {
+            event.preventDefault();
+            lastFocusable?.focus();
+        } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+            event.preventDefault();
+            firstFocusable?.focus();
+        }
     }
 });
 
@@ -507,8 +556,536 @@ aboutCarousels.forEach((carousel) => {
     start();
 });
 
+teacherCarousels.forEach((carousel) => {
+    const track = carousel.querySelector('[data-teacher-track]');
+    const slides = [...carousel.querySelectorAll('[data-teacher-slide]')];
+    const controls = carousel.querySelector('.teacher-carousel-controls');
+    const previous = carousel.querySelector('[data-teacher-prev]');
+    const next = carousel.querySelector('[data-teacher-next]');
+    const currentLabel = carousel.querySelector('[data-teacher-current]');
+    const totalLabel = carousel.querySelector('[data-teacher-total]');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const autoplayInterval = Number(carousel.dataset.teacherInterval || 5000);
+    let activePage = 0;
+    let autoplayTimer;
+    let scrollFrame;
+
+    if (!track || slides.length < 2) {
+        return;
+    }
+
+    const cardsPerPage = () => {
+        if (window.innerWidth >= 1024) {
+            return 4;
+        }
+
+        return window.innerWidth >= 768 ? 2 : 1;
+    };
+
+    const totalPages = () => Math.ceil(slides.length / cardsPerPage());
+
+    const render = (nextPage) => {
+        const pageCount = totalPages();
+        activePage = Math.max(0, Math.min(nextPage, pageCount - 1));
+        currentLabel.textContent = String(activePage + 1);
+        totalLabel.textContent = String(pageCount);
+        previous.disabled = activePage === 0;
+        next.disabled = activePage === pageCount - 1;
+        controls.classList.toggle('is-unavailable', pageCount < 2);
+    };
+
+    const showPage = (nextPage, animate = true) => {
+        const pageCount = totalPages();
+        const boundedPage = Math.max(0, Math.min(nextPage, pageCount - 1));
+        const maximumScroll = track.scrollWidth - track.clientWidth;
+
+        track.scrollTo({
+            left: pageCount > 1 ? (boundedPage / (pageCount - 1)) * maximumScroll : 0,
+            behavior: animate && !prefersReducedMotion ? 'smooth' : 'auto',
+        });
+        render(boundedPage);
+    };
+
+    const stopAutoplay = () => {
+        window.clearInterval(autoplayTimer);
+        autoplayTimer = undefined;
+    };
+
+    const startAutoplay = () => {
+        stopAutoplay();
+
+        if (prefersReducedMotion || totalPages() < 2 || document.hidden || carousel.contains(document.activeElement)) {
+            return;
+        }
+
+        autoplayTimer = window.setInterval(() => {
+            showPage((activePage + 1) % totalPages());
+        }, autoplayInterval);
+    };
+
+    previous.addEventListener('click', () => showPage(activePage - 1));
+    next.addEventListener('click', () => showPage(activePage + 1));
+
+    track.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault();
+            showPage(activePage + (event.key === 'ArrowRight' ? 1 : -1));
+        }
+    });
+
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+    carousel.addEventListener('focusin', stopAutoplay);
+    carousel.addEventListener('focusout', (event) => {
+        if (!carousel.contains(event.relatedTarget)) {
+            startAutoplay();
+        }
+    });
+    carousel.addEventListener('pointerdown', stopAutoplay);
+    carousel.addEventListener('pointerup', startAutoplay);
+    carousel.addEventListener('pointercancel', startAutoplay);
+    window.addEventListener('resize', () => {
+        showPage(Math.min(activePage, totalPages() - 1), false);
+        startAutoplay();
+    });
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopAutoplay();
+        } else {
+            startAutoplay();
+        }
+    });
+
+    track.addEventListener('scroll', () => {
+        window.cancelAnimationFrame(scrollFrame);
+        scrollFrame = window.requestAnimationFrame(() => {
+            const maximumScroll = track.scrollWidth - track.clientWidth;
+            const pageCount = totalPages();
+            const closestPage = maximumScroll > 0 ? Math.round((track.scrollLeft / maximumScroll) * (pageCount - 1)) : 0;
+
+            render(closestPage);
+        });
+    }, { passive: true });
+
+    render(0);
+    startAutoplay();
+});
+
+studentCarousels.forEach((carousel) => {
+    const track = carousel.querySelector('[data-student-track]');
+    const slides = [...carousel.querySelectorAll('[data-student-slide]')];
+    const controls = carousel.querySelector('.student-carousel-controls');
+    const previous = carousel.querySelector('[data-student-prev]');
+    const next = carousel.querySelector('[data-student-next]');
+    const currentLabel = carousel.querySelector('[data-student-current]');
+    const totalLabel = carousel.querySelector('[data-student-total]');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const autoplayInterval = Number(carousel.dataset.studentInterval || 5000);
+    let activePage = 0;
+    let autoplayTimer;
+    let scrollFrame;
+
+    if (!track || slides.length < 2 || !controls || !previous || !next || !currentLabel || !totalLabel) {
+        return;
+    }
+
+    const cardsPerPage = () => (window.innerWidth >= 1024 ? 4 : window.innerWidth >= 768 ? 2 : 1);
+    const totalPages = () => Math.ceil(slides.length / cardsPerPage());
+    const render = (nextPage) => {
+        const pageCount = totalPages();
+        activePage = Math.max(0, Math.min(nextPage, pageCount - 1));
+        currentLabel.textContent = String(activePage + 1);
+        totalLabel.textContent = String(pageCount);
+        previous.disabled = activePage === 0;
+        next.disabled = activePage === pageCount - 1;
+        controls.classList.toggle('is-unavailable', pageCount < 2);
+    };
+    const showPage = (nextPage, animate = true) => {
+        const pageCount = totalPages();
+        const boundedPage = Math.max(0, Math.min(nextPage, pageCount - 1));
+        const maximumScroll = track.scrollWidth - track.clientWidth;
+        track.scrollTo({
+            left: pageCount > 1 ? (boundedPage / (pageCount - 1)) * maximumScroll : 0,
+            behavior: animate && !prefersReducedMotion ? 'smooth' : 'auto',
+        });
+        render(boundedPage);
+    };
+    const stopAutoplay = () => {
+        window.clearInterval(autoplayTimer);
+        autoplayTimer = undefined;
+    };
+    const startAutoplay = () => {
+        stopAutoplay();
+        if (prefersReducedMotion || totalPages() < 2 || document.hidden || carousel.contains(document.activeElement)) {
+            return;
+        }
+        autoplayTimer = window.setInterval(() => showPage((activePage + 1) % totalPages()), autoplayInterval);
+    };
+
+    previous.addEventListener('click', () => showPage(activePage - 1));
+    next.addEventListener('click', () => showPage(activePage + 1));
+    track.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault();
+            showPage(activePage + (event.key === 'ArrowRight' ? 1 : -1));
+        }
+    });
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+    carousel.addEventListener('focusin', stopAutoplay);
+    carousel.addEventListener('focusout', (event) => {
+        if (!carousel.contains(event.relatedTarget)) {
+            startAutoplay();
+        }
+    });
+    carousel.addEventListener('pointerdown', stopAutoplay);
+    carousel.addEventListener('pointerup', startAutoplay);
+    carousel.addEventListener('pointercancel', startAutoplay);
+    window.addEventListener('resize', () => {
+        showPage(Math.min(activePage, totalPages() - 1), false);
+        startAutoplay();
+    });
+    document.addEventListener('visibilitychange', () => (document.hidden ? stopAutoplay() : startAutoplay()));
+    track.addEventListener('scroll', () => {
+        window.cancelAnimationFrame(scrollFrame);
+        scrollFrame = window.requestAnimationFrame(() => {
+            const maximumScroll = track.scrollWidth - track.clientWidth;
+            const pageCount = totalPages();
+            render(maximumScroll > 0 ? Math.round((track.scrollLeft / maximumScroll) * (pageCount - 1)) : 0);
+        });
+    }, { passive: true });
+    render(0);
+    startAutoplay();
+});
+
+galleryCarousels.forEach((carousel) => {
+    const track = carousel.querySelector('[data-gallery-track]');
+    const slides = [...carousel.querySelectorAll('[data-gallery-slide]')];
+    const controls = carousel.querySelector('.gallery-carousel-controls');
+    const previous = carousel.querySelector('[data-gallery-prev]');
+    const next = carousel.querySelector('[data-gallery-next]');
+    const currentLabel = carousel.querySelector('[data-gallery-current]');
+    const totalLabel = carousel.querySelector('[data-gallery-total]');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const autoplayInterval = Number(carousel.dataset.galleryInterval || 5000);
+    let activePage = 0;
+    let autoplayTimer;
+    let scrollFrame;
+
+    if (!track || slides.length < 2 || !controls || !previous || !next || !currentLabel || !totalLabel) {
+        return;
+    }
+
+    const cardsPerPage = () => (window.innerWidth >= 1024 ? 4 : window.innerWidth >= 768 ? 2 : 1);
+    const totalPages = () => Math.ceil(slides.length / cardsPerPage());
+    const render = (nextPage) => {
+        const pageCount = totalPages();
+        activePage = Math.max(0, Math.min(nextPage, pageCount - 1));
+        currentLabel.textContent = String(activePage + 1);
+        totalLabel.textContent = String(pageCount);
+        previous.disabled = activePage === 0;
+        next.disabled = activePage === pageCount - 1;
+        controls.classList.toggle('is-unavailable', pageCount < 2);
+    };
+    const showPage = (nextPage, animate = true) => {
+        const pageCount = totalPages();
+        const boundedPage = Math.max(0, Math.min(nextPage, pageCount - 1));
+        const maximumScroll = track.scrollWidth - track.clientWidth;
+        track.scrollTo({
+            left: pageCount > 1 ? (boundedPage / (pageCount - 1)) * maximumScroll : 0,
+            behavior: animate && !prefersReducedMotion ? 'smooth' : 'auto',
+        });
+        render(boundedPage);
+    };
+    const stopAutoplay = () => {
+        window.clearInterval(autoplayTimer);
+        autoplayTimer = undefined;
+    };
+    const startAutoplay = () => {
+        stopAutoplay();
+        if (prefersReducedMotion || totalPages() < 2 || document.hidden || carousel.contains(document.activeElement)) {
+            return;
+        }
+        autoplayTimer = window.setInterval(() => showPage((activePage + 1) % totalPages()), autoplayInterval);
+    };
+
+    previous.addEventListener('click', () => showPage(activePage - 1));
+    next.addEventListener('click', () => showPage(activePage + 1));
+    track.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault();
+            showPage(activePage + (event.key === 'ArrowRight' ? 1 : -1));
+        }
+    });
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+    carousel.addEventListener('focusin', stopAutoplay);
+    carousel.addEventListener('focusout', (event) => {
+        if (!carousel.contains(event.relatedTarget)) {
+            startAutoplay();
+        }
+    });
+    carousel.addEventListener('pointerdown', stopAutoplay);
+    carousel.addEventListener('pointerup', startAutoplay);
+    carousel.addEventListener('pointercancel', startAutoplay);
+    window.addEventListener('resize', () => {
+        showPage(Math.min(activePage, totalPages() - 1), false);
+        startAutoplay();
+    });
+    document.addEventListener('visibilitychange', () => (document.hidden ? stopAutoplay() : startAutoplay()));
+    track.addEventListener('scroll', () => {
+        window.cancelAnimationFrame(scrollFrame);
+        scrollFrame = window.requestAnimationFrame(() => {
+            const maximumScroll = track.scrollWidth - track.clientWidth;
+            const pageCount = totalPages();
+            render(maximumScroll > 0 ? Math.round((track.scrollLeft / maximumScroll) * (pageCount - 1)) : 0);
+        });
+    }, { passive: true });
+    render(0);
+    startAutoplay();
+});
+
+courseCarousels.forEach((carousel) => {
+    const track = carousel.querySelector('[data-course-track]');
+    const slides = [...carousel.querySelectorAll('[data-course-slide]')];
+    const controls = carousel.querySelector('.course-carousel-controls');
+    const previous = carousel.querySelector('[data-course-prev]');
+    const next = carousel.querySelector('[data-course-next]');
+    const currentLabel = carousel.querySelector('[data-course-current]');
+    const totalLabel = carousel.querySelector('[data-course-total]');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const autoplayInterval = Number(carousel.dataset.courseInterval || 5000);
+    let activePage = 0;
+    let autoplayTimer;
+    let scrollFrame;
+
+    if (!track || slides.length < 2 || !controls || !previous || !next || !currentLabel || !totalLabel) {
+        return;
+    }
+
+    const cardsPerPage = () => (window.innerWidth >= 1024 ? 4 : window.innerWidth >= 768 ? 2 : 1);
+    const totalPages = () => Math.ceil(slides.length / cardsPerPage());
+    const render = (nextPage) => {
+        const pageCount = totalPages();
+        activePage = Math.max(0, Math.min(nextPage, pageCount - 1));
+        currentLabel.textContent = String(activePage + 1);
+        totalLabel.textContent = String(pageCount);
+        previous.disabled = activePage === 0;
+        next.disabled = activePage === pageCount - 1;
+        controls.classList.toggle('is-unavailable', pageCount < 2);
+    };
+    const showPage = (nextPage, animate = true) => {
+        const pageCount = totalPages();
+        const boundedPage = Math.max(0, Math.min(nextPage, pageCount - 1));
+        const maximumScroll = track.scrollWidth - track.clientWidth;
+        track.scrollTo({
+            left: pageCount > 1 ? (boundedPage / (pageCount - 1)) * maximumScroll : 0,
+            behavior: animate && !prefersReducedMotion ? 'smooth' : 'auto',
+        });
+        render(boundedPage);
+    };
+    const stopAutoplay = () => {
+        window.clearInterval(autoplayTimer);
+        autoplayTimer = undefined;
+    };
+    const startAutoplay = () => {
+        stopAutoplay();
+        if (prefersReducedMotion || totalPages() < 2 || document.hidden || carousel.contains(document.activeElement)) {
+            return;
+        }
+        autoplayTimer = window.setInterval(() => showPage((activePage + 1) % totalPages()), autoplayInterval);
+    };
+
+    previous.addEventListener('click', () => showPage(activePage - 1));
+    next.addEventListener('click', () => showPage(activePage + 1));
+    track.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault();
+            showPage(activePage + (event.key === 'ArrowRight' ? 1 : -1));
+        }
+    });
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+    carousel.addEventListener('focusin', stopAutoplay);
+    carousel.addEventListener('focusout', (event) => {
+        if (!carousel.contains(event.relatedTarget)) {
+            startAutoplay();
+        }
+    });
+    carousel.addEventListener('pointerdown', stopAutoplay);
+    carousel.addEventListener('pointerup', startAutoplay);
+    carousel.addEventListener('pointercancel', startAutoplay);
+    window.addEventListener('resize', () => {
+        showPage(Math.min(activePage, totalPages() - 1), false);
+        startAutoplay();
+    });
+    document.addEventListener('visibilitychange', () => (document.hidden ? stopAutoplay() : startAutoplay()));
+    track.addEventListener('scroll', () => {
+        window.cancelAnimationFrame(scrollFrame);
+        scrollFrame = window.requestAnimationFrame(() => {
+            const maximumScroll = track.scrollWidth - track.clientWidth;
+            const pageCount = totalPages();
+            render(maximumScroll > 0 ? Math.round((track.scrollLeft / maximumScroll) * (pageCount - 1)) : 0);
+        });
+    }, { passive: true });
+    render(0);
+    startAutoplay();
+});
+
+newsCarousels.forEach((carousel) => {
+    const track = carousel.querySelector('[data-news-track]');
+    const slides = [...carousel.querySelectorAll('[data-news-slide]')];
+    const controls = carousel.querySelector('.news-carousel-controls');
+    const previous = carousel.querySelector('[data-news-prev]');
+    const next = carousel.querySelector('[data-news-next]');
+    const currentLabel = carousel.querySelector('[data-news-current]');
+    const totalLabel = carousel.querySelector('[data-news-total]');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const autoplayInterval = Number(carousel.dataset.newsInterval || 5000);
+    let activePage = 0;
+    let autoplayTimer;
+
+    if (!track || slides.length < 2 || !controls || !previous || !next || !currentLabel || !totalLabel) {
+        return;
+    }
+
+    const cardsPerPage = () => (window.innerWidth >= 1024 ? 4 : window.innerWidth >= 768 ? 2 : 1);
+    const totalPages = () => Math.ceil(slides.length / cardsPerPage());
+    const render = (nextPage) => {
+        const pageCount = totalPages();
+        activePage = Math.max(0, Math.min(nextPage, pageCount - 1));
+        currentLabel.textContent = String(activePage + 1);
+        totalLabel.textContent = String(pageCount);
+        previous.disabled = activePage === 0;
+        next.disabled = activePage === pageCount - 1;
+        controls.classList.toggle('is-unavailable', pageCount < 2);
+    };
+    const showPage = (nextPage, animate = true) => {
+        const pageCount = totalPages();
+        const boundedPage = Math.max(0, Math.min(nextPage, pageCount - 1));
+        const maximumScroll = track.scrollWidth - track.clientWidth;
+        const targetScroll = pageCount > 1 ? (boundedPage / (pageCount - 1)) * maximumScroll : 0;
+
+        track.style.transitionDuration = animate && !prefersReducedMotion ? '' : '0ms';
+        track.style.transform = `translate3d(${-targetScroll}px, 0, 0)`;
+        render(boundedPage);
+    };
+    const stopAutoplay = () => {
+        window.clearInterval(autoplayTimer);
+        autoplayTimer = undefined;
+    };
+    const startAutoplay = () => {
+        stopAutoplay();
+        if (prefersReducedMotion || totalPages() < 2 || document.hidden || carousel.contains(document.activeElement)) {
+            return;
+        }
+        autoplayTimer = window.setInterval(() => showPage((activePage + 1) % totalPages()), autoplayInterval);
+    };
+
+    const showPreviousPage = () => showPage(activePage - 1);
+    const showNextPage = () => showPage(activePage + 1);
+
+    previous.addEventListener('click', showPreviousPage);
+    next.addEventListener('click', showNextPage);
+    carousel.addEventListener('news:previous', showPreviousPage);
+    carousel.addEventListener('news:next', showNextPage);
+    track.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault();
+            showPage(activePage + (event.key === 'ArrowRight' ? 1 : -1));
+        }
+    });
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+    carousel.addEventListener('focusin', stopAutoplay);
+    carousel.addEventListener('focusout', (event) => {
+        if (!carousel.contains(event.relatedTarget)) {
+            startAutoplay();
+        }
+    });
+    carousel.addEventListener('pointerdown', stopAutoplay);
+    carousel.addEventListener('pointerup', startAutoplay);
+    carousel.addEventListener('pointercancel', startAutoplay);
+    window.addEventListener('resize', () => {
+        showPage(Math.min(activePage, totalPages() - 1), false);
+        startAutoplay();
+    });
+    document.addEventListener('visibilitychange', () => (document.hidden ? stopAutoplay() : startAutoplay()));
+    render(0);
+    startAutoplay();
+});
+
 document.querySelectorAll('[data-print-document]').forEach((button) => {
     button.addEventListener('click', () => window.print());
+});
+
+const adminSidebar = document.querySelector('[data-admin-sidebar]');
+const adminOverlay = document.querySelector('[data-admin-overlay]');
+const adminMenuOpen = document.querySelector('[data-admin-menu-open]');
+const adminMenuClose = document.querySelector('[data-admin-menu-close]');
+
+const setAdminMenu = (isOpen) => {
+    adminSidebar?.classList.toggle('is-open', isOpen);
+    adminOverlay?.classList.toggle('hidden', !isOpen);
+    adminMenuOpen?.setAttribute('aria-expanded', String(isOpen));
+    document.body.classList.toggle('overflow-hidden', isOpen);
+};
+
+adminMenuOpen?.addEventListener('click', () => setAdminMenu(true));
+adminMenuClose?.addEventListener('click', () => setAdminMenu(false));
+adminOverlay?.addEventListener('click', () => setAdminMenu(false));
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        setAdminMenu(false);
+    }
+});
+
+const confirmDialog = document.querySelector('[data-admin-confirm-dialog]');
+const confirmTitle = confirmDialog?.querySelector('[data-confirm-title]');
+const confirmMessage = confirmDialog?.querySelector('[data-confirm-message]');
+const confirmCancel = confirmDialog?.querySelector('[data-confirm-cancel]');
+const confirmProceed = confirmDialog?.querySelector('[data-confirm-proceed]');
+let pendingConfirmationForm;
+
+document.querySelectorAll('form[data-confirm], form:has(input[name="_method"][value="DELETE"])').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+        if (form.dataset.confirmed === 'true') {
+            return;
+        }
+
+        event.preventDefault();
+        pendingConfirmationForm = form;
+        confirmTitle.textContent = form.dataset.confirmTitle || 'Please confirm';
+        confirmMessage.textContent = form.dataset.confirm || 'Delete this record? This action cannot be undone.';
+        confirmDialog.showModal();
+        confirmCancel.focus();
+    });
+});
+
+confirmCancel?.addEventListener('click', () => confirmDialog.close());
+confirmProceed?.addEventListener('click', () => {
+    if (pendingConfirmationForm) {
+        pendingConfirmationForm.dataset.confirmed = 'true';
+        confirmDialog.close();
+        pendingConfirmationForm.requestSubmit();
+    }
+});
+
+const editableAdminForms = [...document.querySelectorAll('[data-admin-workspace] form:not([method="GET"]):not([data-no-dirty-check])')]
+    .filter((form) => !form.querySelector('input[name="_method"][value="DELETE"]'));
+let hasUnsavedAdminChanges = false;
+
+editableAdminForms.forEach((form) => {
+    form.addEventListener('input', () => { hasUnsavedAdminChanges = true; });
+    form.addEventListener('change', () => { hasUnsavedAdminChanges = true; });
+    form.addEventListener('submit', () => { hasUnsavedAdminChanges = false; });
+});
+
+window.addEventListener('beforeunload', (event) => {
+    if (hasUnsavedAdminChanges) {
+        event.preventDefault();
+        event.returnValue = '';
+    }
 });
 
 applyLocale(locale);

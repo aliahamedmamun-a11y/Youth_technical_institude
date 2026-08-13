@@ -7,17 +7,27 @@ use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Models\Teacher;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class TeacherController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('viewAny', Teacher::class);
 
-        return view('super-admin.teachers.index', ['teachers' => Teacher::query()->latest()->paginate(12)]);
+        $search = $request->string('search')->trim()->toString();
+
+        return view('super-admin.teachers.index', [
+            'teachers' => Teacher::query()
+                ->when($search, fn ($query) => $query->where(fn ($nested) => $nested->where('name', 'like', "%{$search}%")->orWhere('employee_number', 'like', "%{$search}%")->orWhere('designation', 'like', "%{$search}%")))
+                ->latest()
+                ->paginate(12)
+                ->withQueryString(),
+            'search' => $search,
+        ]);
     }
 
     public function create(): View

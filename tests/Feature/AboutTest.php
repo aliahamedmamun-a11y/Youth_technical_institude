@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('published about entries appear on the homepage and resolve by slug', function () {
+test('published about entries show their complete content on the homepage and resolve by slug', function () {
     $about = InstituteProfile::factory()->create([
         'about_heading' => 'Industry-ready education',
         'summary' => 'Skills that connect learners to opportunity.',
@@ -18,7 +18,8 @@ test('published about entries appear on the homepage and resolve by slug', funct
     $this->get(route('home'))
         ->assertSuccessful()
         ->assertSee($about->about_heading)
-        ->assertSee(route('about.show', $about), false)
+        ->assertSee($about->content)
+        ->assertDontSee(route('about.show', $about), false)
         ->assertSee('data-about-interval="10000"', false)
         ->assertSee('data-about-next', false);
 

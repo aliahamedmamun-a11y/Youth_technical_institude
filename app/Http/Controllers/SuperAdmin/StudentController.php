@@ -9,18 +9,25 @@ use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class StudentController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('viewAny', Student::class);
 
         return view('super-admin.students.index', [
-            'students' => Student::query()->with('course')->latest()->paginate(12),
+            'students' => Student::query()
+                ->with('course:id,name')
+                ->when($request->string('search')->trim()->toString(), fn ($query, string $search) => $query->where(fn ($nested) => $nested->where('name', 'like', "%{$search}%")->orWhere('registration_number', 'like', "%{$search}%")->orWhere('roll_number', 'like', "%{$search}%")))
+                ->latest()
+                ->paginate(12)
+                ->withQueryString(),
+            'search' => $request->string('search')->trim()->toString(),
         ]);
     }
 

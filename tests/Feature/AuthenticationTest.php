@@ -2,6 +2,9 @@
 
 use App\Enums\UserRole;
 use App\Models\BranchApplication;
+use App\Models\Course;
+use App\Models\Student;
+use App\Models\Teacher;
 use App\Models\User;
 use Database\Seeders\RoleUserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -96,6 +99,10 @@ test('users can log out from the branch dashboard', function () {
 
 test('super admin dashboard shows academic management navigation', function () {
     $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
+    Student::factory()->count(2)->create();
+    Teacher::factory()->create();
+    Course::factory()->create(['is_active' => true]);
+    BranchApplication::factory()->count(3)->create();
 
     $this->actingAs($superAdmin)
         ->get(route('dashboards.super-admin'))
@@ -104,11 +111,18 @@ test('super admin dashboard shows academic management navigation', function () {
         ->assertSee('method="POST"', false)
         ->assertSee('name="_token"', false)
         ->assertSee('Log out of the super admin dashboard', false)
-        ->assertSee('class="sidebar-icon', false)
+        ->assertSee('class="admin-nav-icon', false)
         ->assertSee('bg-blue-50', false)
-        ->assertSee('Course Management')
-        ->assertSee('Student Management')
-        ->assertSee('Teacher Management');
+        ->assertSee('Administration Overview')
+        ->assertSee('People &amp; Branches', false)
+        ->assertSee('Academic Management')
+        ->assertSee('Website Content')
+        ->assertSee('Departments &amp; Courses', false)
+        ->assertSee('Branch Approvals')
+        ->assertSee('Needs your attention')
+        ->assertSee('Register a student')
+        ->assertSee('2')
+        ->assertSee('3');
 });
 
 test('role user seeder creates one user for every dashboard role', function () {

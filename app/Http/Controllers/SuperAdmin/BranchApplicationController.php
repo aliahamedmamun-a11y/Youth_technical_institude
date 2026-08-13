@@ -8,16 +8,33 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateBranchApplicationStatusRequest;
 use App\Models\BranchApplication;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class BranchApplicationController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('viewAny', BranchApplication::class);
 
-        return view('super-admin.branch-applications.index', ['applications' => BranchApplication::query()->whereNotNull('username')->latest()->paginate(15)]);
+        $status = $request->string('status')->toString();
+        $search = $request->string('search')->trim()->toString();
+
+        return view('super-admin.branch-applications.index', [
+            'applications' => BranchApplication::query()
+                ->whereNotNull('username')
+                ->when(in_array($status, array_column(BranchApplicationStatus::cases(), 'value'), true), fn ($query) => $query->where('status', $status))
+                ->when($search, fn ($query) => $query->where(fn ($nested) => $nested
+                    ->where('institute_name', 'like', "%{$search}%")
+                    ->orWhere('director_name', 'like', "%{$search}%")
+                    ->orWhere('district', 'like', "%{$search}%")))
+                ->latest()
+                ->paginate(15)
+                ->withQueryString(),
+            'selectedStatus' => $status,
+            'search' => $search,
+        ]);
     }
 
     public function show(BranchApplication $branchApplication): View

@@ -44,13 +44,13 @@ Route::get('/', function () {
     $popularCourses = Course::query()
         ->where('is_active', true)
         ->orderBy('name')
-        ->limit(4)
+        ->limit(8)
         ->get(['id', 'name', 'duration', 'description', 'image_path']);
 
     $teacherCards = Teacher::query()
         ->where('is_active', true)
         ->orderBy('name')
-        ->limit(4)
+        ->limit(8)
         ->get(['id', 'name', 'designation', 'department', 'description', 'image_path', 'joined_at'])
         ->map(fn (Teacher $teacher): array => [
             'id' => $teacher->id,
@@ -70,7 +70,7 @@ Route::get('/', function () {
             ['id' => null, 'name' => 'Mr. Mahmud Karim', 'designation' => 'Technical Instructor', 'department' => 'Office Application', 'description' => 'Builds confident office professionals with practical productivity and documentation skills.', 'image_path' => null, 'experience' => 6],
         ])
         ->unique('name')
-        ->take(4)
+        ->take(8)
         ->values();
 
     $publishedNews = News::query()

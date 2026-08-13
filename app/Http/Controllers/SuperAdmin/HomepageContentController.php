@@ -7,6 +7,7 @@ use App\Http\Requests\StoreHomepageItemRequest;
 use App\Http\Requests\UpdateHomepageItemRequest;
 use App\Models\HomepageItem;
 use App\Models\HomepageSection;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -30,12 +31,21 @@ class HomepageContentController extends Controller
         return back()->with('status', 'Homepage section settings updated.');
     }
 
-    public function index(string $section): View
+    public function index(Request $request, string $section): View
     {
         Gate::authorize('viewAny', HomepageItem::class);
         $homepageSection = HomepageSection::query()->where('key', $section)->firstOrFail();
 
-        return view('super-admin.homepage.index', ['section' => $homepageSection, 'items' => $homepageSection->items()->paginate(15)]);
+        $search = $request->string('search')->trim()->toString();
+        $status = $request->string('status')->toString();
+
+        return view('super-admin.homepage.index', [
+            'section' => $homepageSection,
+            'sections' => $this->sections(),
+            'items' => $homepageSection->items()->when($search, fn ($query) => $query->where(fn ($nested) => $nested->where('title', 'like', "%{$search}%")->orWhere('body', 'like', "%{$search}%")))->when(in_array($status, ['published', 'draft'], true), fn ($query) => $query->where('is_published', $status === 'published'))->paginate(15)->withQueryString(),
+            'search' => $search,
+            'selectedStatus' => $status,
+        ]);
     }
 
     public function create(string $section): View
@@ -43,7 +53,7 @@ class HomepageContentController extends Controller
         Gate::authorize('create', HomepageItem::class);
         $homepageSection = HomepageSection::query()->where('key', $section)->firstOrFail();
 
-        return view('super-admin.homepage.create', ['section' => $homepageSection, 'item' => new HomepageItem(['sort_order' => 0, 'is_published' => true])]);
+        return view('super-admin.homepage.create', ['section' => $homepageSection, 'sections' => $this->sections(), 'item' => new HomepageItem(['sort_order' => 0, 'is_published' => true])]);
     }
 
     public function store(StoreHomepageItemRequest $request): RedirectResponse
@@ -66,7 +76,7 @@ class HomepageContentController extends Controller
     {
         Gate::authorize('update', $item);
 
-        return view('super-admin.homepage.edit', ['item' => $item, 'section' => $item->section]);
+        return view('super-admin.homepage.edit', ['item' => $item, 'section' => $item->section, 'sections' => $this->sections()]);
     }
 
     public function update(UpdateHomepageItemRequest $request, HomepageItem $item): RedirectResponse
@@ -99,5 +109,11 @@ class HomepageContentController extends Controller
         $item->delete();
 
         return redirect()->route('super-admin.homepage.items.index', $section->key)->with('status', 'Homepage content deleted successfully.');
+    }
+
+    /** @return Collection<int, HomepageSection> */
+    private function sections(): Collection
+    {
+        return HomepageSection::query()->orderBy('sort_order')->get(['id', 'key', 'label', 'is_visible']);
     }
 }

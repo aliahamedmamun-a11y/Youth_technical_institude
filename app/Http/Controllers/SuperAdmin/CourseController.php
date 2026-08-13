@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -16,12 +17,17 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('viewAny', Course::class);
 
         return view('super-admin.courses.index', [
-            'courses' => Course::query()->latest()->paginate(12),
+            'courses' => Course::query()
+                ->when($request->string('search')->trim()->toString(), fn ($query, string $search) => $query->where('name', 'like', "%{$search}%"))
+                ->when(in_array($request->string('status')->toString(), ['active', 'inactive'], true), fn ($query) => $query->where('is_active', $request->string('status')->toString() === 'active'))
+                ->latest()->paginate(12)->withQueryString(),
+            'search' => $request->string('search')->trim()->toString(),
+            'selectedStatus' => $request->string('status')->toString(),
         ]);
     }
 

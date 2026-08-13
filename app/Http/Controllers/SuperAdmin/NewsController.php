@@ -7,6 +7,7 @@ use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
 use App\Models\News;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -14,11 +15,21 @@ use Illuminate\View\View;
 
 class NewsController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('viewAny', News::class);
 
-        return view('super-admin.news.index', ['news' => News::query()->with('author')->latest()->paginate(15)]);
+        $search = $request->string('search')->trim()->toString();
+        $status = $request->string('status')->toString();
+
+        return view('super-admin.news.index', [
+            'news' => News::query()->with('author:id,name')
+                ->when($search, fn ($query) => $query->where(fn ($nested) => $nested->where('title', 'like', "%{$search}%")->orWhere('excerpt', 'like', "%{$search}%")))
+                ->when(in_array($status, ['published', 'draft'], true), fn ($query) => $query->where('is_published', $status === 'published'))
+                ->latest()->paginate(15)->withQueryString(),
+            'search' => $search,
+            'selectedStatus' => $status,
+        ]);
     }
 
     public function create(): View

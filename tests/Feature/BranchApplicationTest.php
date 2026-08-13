@@ -93,3 +93,16 @@ test('non-super-admins cannot review branch registrations', function () {
     $application = BranchApplication::factory()->create();
     $this->actingAs($branchUser)->get(route('super-admin.branch-applications.index'))->assertForbidden();
 });
+
+test('super admins can filter pending branch approvals', function () {
+    $superAdmin = User::factory()->role(UserRole::SuperAdmin)->create();
+    BranchApplication::factory()->create(['institute_name' => 'Pending Institute']);
+    BranchApplication::factory()->approved()->create(['institute_name' => 'Approved Institute']);
+
+    $this->actingAs($superAdmin)
+        ->get(route('super-admin.branch-applications.index', ['status' => 'pending']))
+        ->assertSuccessful()
+        ->assertSee('Pending Institute')
+        ->assertDontSee('Approved Institute')
+        ->assertSee('Review application');
+});

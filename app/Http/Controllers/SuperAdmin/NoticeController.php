@@ -7,6 +7,7 @@ use App\Http\Requests\StoreNoticeRequest;
 use App\Http\Requests\UpdateNoticeRequest;
 use App\Models\Notice;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
@@ -15,11 +16,21 @@ class NoticeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('viewAny', Notice::class);
 
-        return view('super-admin.notices.index', ['notices' => Notice::query()->with('author')->latest('published_at')->paginate(15)]);
+        $search = $request->string('search')->trim()->toString();
+        $status = $request->string('status')->toString();
+
+        return view('super-admin.notices.index', [
+            'notices' => Notice::query()->with('author:id,name')
+                ->when($search, fn ($query) => $query->where(fn ($nested) => $nested->where('title', 'like', "%{$search}%")->orWhere('message', 'like', "%{$search}%")))
+                ->when(in_array($status, ['published', 'draft'], true), fn ($query) => $query->where('is_published', $status === 'published'))
+                ->latest('published_at')->paginate(15)->withQueryString(),
+            'search' => $search,
+            'selectedStatus' => $status,
+        ]);
     }
 
     /**

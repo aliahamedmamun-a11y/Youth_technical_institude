@@ -8,16 +8,19 @@ use App\Http\Requests\UpdateSemesterRequest;
 use App\Models\Course;
 use App\Models\Semester;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class SemesterController extends Controller
 {
-    public function index(Course $course): View
+    public function index(Request $request, Course $course): View
     {
         Gate::authorize('view', $course);
 
-        return view('super-admin.semesters.index', ['course' => $course, 'semesters' => $course->semesters()->withCount('subjects')->get()]);
+        $status = $request->string('status')->toString();
+
+        return view('super-admin.semesters.index', ['course' => $course, 'selectedStatus' => $status, 'semesters' => $course->semesters()->when(in_array($status, ['active', 'inactive'], true), fn ($query) => $query->where('is_active', $status === 'active'))->withCount('subjects')->get()]);
     }
 
     public function create(Course $course): View

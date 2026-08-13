@@ -29,7 +29,14 @@ test('super admin can manage homepage items', function (): void {
     $this->actingAs($admin)
         ->get(route('super-admin.homepage.items.index', $section->key))
         ->assertSuccessful()
-        ->assertSee('Trust Indicators');
+        ->assertSee('Trust Indicators')
+        ->assertSee('Hero Slides')
+        ->assertSee('Achievement Statistics')
+        ->assertSee('Branch Promotion')
+        ->assertSee('Institute Gallery')
+        ->assertSee('Student Testimonials')
+        ->assertSee('Contact Information')
+        ->assertSee('Footer Settings');
 
     $this->actingAs($admin)
         ->post(route('super-admin.homepage.items.store'), [

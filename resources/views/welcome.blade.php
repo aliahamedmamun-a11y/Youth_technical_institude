@@ -275,35 +275,35 @@
             @endif
 
             @if ($isSectionVisible('about'))
-            <section id="about" class="overflow-hidden bg-white py-6 dark:bg-deep sm:py-7 lg:py-8" data-about-carousel data-about-interval="10000">
+            <section id="about" class="overflow-hidden bg-white py-4 dark:bg-deep sm:py-5 lg:py-6" data-about-carousel data-about-interval="10000">
                 @if ($aboutEntries->isNotEmpty())
-                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" data-about-layout="profile">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" data-about-layout="profile" data-about-size="compact">
                         <div class="relative">
                             @foreach ($aboutEntries as $about)
                                 @php
                                     $aboutImage = $about->image_path ?: $about->principal_image_path;
                                 @endphp
-                                <article class="grid items-start gap-6 md:grid-cols-[minmax(260px,0.72fr)_minmax(0,1.45fr)] md:gap-8 lg:grid-cols-[minmax(300px,0.72fr)_minmax(0,1.5fr)] lg:gap-10 {{ $loop->first ? '' : 'hidden' }}" data-about-slide>
-                                    <div class="mx-auto w-full max-w-[340px] overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white shadow-[0_12px_28px_rgba(15,23,42,.14)] dark:border-white/10 dark:bg-ink lg:max-w-[360px]">
+                                <article class="grid items-start gap-5 md:grid-cols-[minmax(230px,0.62fr)_minmax(0,1.55fr)] md:gap-7 lg:grid-cols-[minmax(260px,0.62fr)_minmax(0,1.6fr)] lg:gap-8 {{ $loop->first ? '' : 'hidden' }}" data-about-slide>
+                                    <div class="mx-auto w-full max-w-[300px] overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white shadow-[0_10px_24px_rgba(15,23,42,.12)] dark:border-white/10 dark:bg-ink lg:max-w-[320px]">
                                         <img src="{{ $aboutImage ? (str_starts_with($aboutImage, 'images/') ? asset($aboutImage) : Storage::disk('public')->url($aboutImage)) : asset('images/principal-portrait.webp') }}" alt="{{ $about->about_heading }}" class="aspect-[4/5.15] w-full object-cover object-top" loading="lazy">
                                         @if ($about->principal_name)
-                                            <div class="bg-[#0b2447] px-5 py-5 text-center text-white"><h3 class="text-xl font-black tracking-tight sm:text-2xl">{{ $about->principal_name }}</h3><p class="mt-1 text-sm text-slate-200">{{ $about->principal_title }}</p></div>
+                                            <div class="bg-[#0b2447] px-4 py-3.5 text-center text-white"><h3 class="text-lg font-black tracking-tight sm:text-xl">{{ $about->principal_name }}</h3><p class="mt-0.5 text-xs text-slate-200">{{ $about->principal_title }}</p></div>
                                         @endif
                                     </div>
                                     <div class="min-w-0 pt-1 md:pt-0">
                                         <div class="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-5">
-                                            <h2 class="min-w-0 max-w-full text-3xl font-black tracking-tight text-slate-950 sm:text-4xl dark:text-white" aria-label="About Us" data-about-heading>
+                                            <h2 class="min-w-0 max-w-full text-2xl font-black tracking-tight text-slate-950 sm:text-3xl dark:text-white" aria-label="About Us" data-about-heading>
                                                 About <span class="text-emerald-600 dark:text-emerald-400">Us</span>
                                             </h2>
                                             <span class="h-[3px] min-w-16 flex-1 rounded-full bg-emerald-600 sm:max-w-32" aria-hidden="true"></span>
                                         </div>
                                         <div class="mt-3 h-px w-full bg-slate-200 dark:bg-white/10"></div>
-                                        <h3 class="mt-7 text-sm font-semibold text-slate-900 dark:text-white">About the Institution</h3>
+                                        <h3 class="mt-4 text-sm font-semibold text-slate-900 dark:text-white">About the Institution</h3>
                                         @if ($about->summary)
-                                            <p class="mt-2 text-sm leading-6 text-slate-700 sm:text-[15px] dark:text-slate-200">{{ $about->summary }}</p>
+                                            <p class="mt-1.5 text-sm leading-5.5 text-slate-700 lg:text-[13px] lg:leading-5 dark:text-slate-200">{{ $about->summary }}</p>
                                         @endif
                                         @if ($about->content)
-                                            <div class="mt-2 whitespace-pre-line text-sm leading-6 text-slate-600 sm:text-[15px] dark:text-slate-300">{{ $about->content }}</div>
+                                            <div class="mt-1.5 whitespace-pre-line text-sm leading-5.5 text-slate-600 lg:text-[13px] lg:leading-5 dark:text-slate-300">{{ $about->content }}</div>
                                         @endif
                                     </div>
                                 </article>

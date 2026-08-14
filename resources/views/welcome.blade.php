@@ -275,36 +275,48 @@
             @endif
 
             @if ($isSectionVisible('about'))
-            <section id="about" class="overflow-hidden bg-white py-12 dark:bg-deep sm:py-16" data-about-carousel data-about-interval="10000">
+            <section id="about" class="overflow-hidden bg-white py-14 dark:bg-deep sm:py-16 lg:py-20" data-about-carousel data-about-interval="10000">
                 @if ($aboutEntries->isNotEmpty())
-                    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                        <div class="relative overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white shadow-[0_18px_45px_rgba(15,23,42,.14)] dark:border-white/10 dark:bg-ink">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" data-about-layout="profile">
+                        <div class="relative">
                             @foreach ($aboutEntries as $about)
                                 @php
                                     $aboutImage = $about->image_path ?: $about->principal_image_path;
+                                    $aboutHeading = trim($about->about_heading ?: 'About Us');
+                                    $aboutHeadingWords = preg_split('/\s+/', $aboutHeading) ?: [$aboutHeading];
+                                    $aboutHeadingAccent = array_pop($aboutHeadingWords);
+                                    $aboutHeadingPrefix = implode(' ', $aboutHeadingWords);
                                 @endphp
-                                <article class="grid items-center gap-6 p-4 sm:gap-8 sm:p-8 lg:grid-cols-[0.82fr_1.35fr] lg:gap-10 {{ $loop->first ? '' : 'hidden' }}" data-about-slide>
-                                    <div class="mx-auto w-full max-w-md overflow-hidden rounded-[1.1rem] bg-stone-100 lg:max-w-none">
-                                        <img src="{{ $aboutImage ? (str_starts_with($aboutImage, 'images/') ? asset($aboutImage) : Storage::disk('public')->url($aboutImage)) : asset('images/principal-portrait.webp') }}" alt="{{ $about->about_heading }}" class="aspect-[4/4.2] w-full object-cover object-top sm:aspect-[4/4.6]" loading="lazy">
+                                <article class="grid items-start gap-8 md:grid-cols-[minmax(260px,0.82fr)_minmax(0,1.45fr)] md:gap-10 lg:grid-cols-[minmax(340px,0.82fr)_minmax(0,1.45fr)] lg:gap-16 {{ $loop->first ? '' : 'hidden' }}" data-about-slide>
+                                    <div class="mx-auto w-full max-w-[400px] overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white shadow-[0_12px_28px_rgba(15,23,42,.14)] dark:border-white/10 dark:bg-ink md:max-w-none">
+                                        <img src="{{ $aboutImage ? (str_starts_with($aboutImage, 'images/') ? asset($aboutImage) : Storage::disk('public')->url($aboutImage)) : asset('images/principal-portrait.webp') }}" alt="{{ $about->about_heading }}" class="aspect-[4/5.15] w-full object-cover object-top" loading="lazy">
                                         @if ($about->principal_name)
-                                            <div class="bg-[#0b2447] px-5 py-4 text-center text-white"><h3 class="text-lg font-black">{{ $about->principal_name }}</h3><p class="mt-1 text-xs text-slate-200">{{ $about->principal_title }}</p></div>
+                                            <div class="bg-[#0b2447] px-5 py-5 text-center text-white"><h3 class="text-xl font-black tracking-tight sm:text-2xl">{{ $about->principal_name }}</h3><p class="mt-1 text-sm text-slate-200">{{ $about->principal_title }}</p></div>
                                         @endif
                                     </div>
-                                    <div class="min-w-0">
-                                        <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">About the institute</p>
-                                        <h2 class="mt-3 text-2xl font-black tracking-tight break-words text-slate-950 sm:text-4xl dark:text-white">{{ $about->about_heading }}</h2>
-                                        <span class="mt-4 block h-1 w-24 rounded-full bg-emerald-600"></span>
+                                    <div class="min-w-0 pt-1 md:pt-0">
+                                        <div class="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-5">
+                                            <h2 class="min-w-0 max-w-full break-words text-3xl font-black tracking-tight text-slate-950 sm:text-4xl dark:text-white" aria-label="{{ $aboutHeading }}">
+                                                @if ($aboutHeadingPrefix !== '')
+                                                    {{ $aboutHeadingPrefix }}
+                                                @endif
+                                                <span class="text-emerald-600 dark:text-emerald-400">{{ $aboutHeadingAccent }}</span>
+                                            </h2>
+                                            <span class="h-[3px] min-w-16 flex-1 rounded-full bg-emerald-600 sm:max-w-32" aria-hidden="true"></span>
+                                        </div>
+                                        <div class="mt-3 h-px w-full bg-slate-200 dark:bg-white/10"></div>
+                                        <h3 class="mt-7 text-sm font-semibold text-slate-900 dark:text-white">About the Institution</h3>
                                         @if ($about->summary)
-                                            <p class="mt-5 text-sm font-semibold leading-7 text-slate-700 dark:text-slate-200">{{ $about->summary }}</p>
+                                            <p class="mt-2 text-sm leading-6 text-slate-700 sm:text-[15px] sm:leading-7 dark:text-slate-200">{{ $about->summary }}</p>
                                         @endif
                                         @if ($about->content)
-                                            <div class="mt-4 whitespace-pre-line text-sm leading-7 text-slate-600 dark:text-slate-300">{{ $about->content }}</div>
+                                            <div class="mt-2 whitespace-pre-line text-sm leading-6 text-slate-600 sm:text-[15px] sm:leading-7 dark:text-slate-300">{{ $about->content }}</div>
                                         @endif
                                     </div>
                                 </article>
                             @endforeach
                             @if ($aboutEntries->count() > 1)
-                                <div class="flex items-center justify-between border-t border-slate-200 px-5 py-3 dark:border-white/10">
+                                <div class="mt-8 flex items-center justify-between border-t border-slate-200 pt-4 dark:border-white/10">
                                     <span class="text-xs font-bold text-slate-500" aria-live="polite"><span data-about-current>1</span> / {{ $aboutEntries->count() }}</span>
                                     <div class="flex items-center gap-2"><button type="button" data-about-prev class="grid size-9 place-items-center rounded-full border border-slate-200 font-black hover:bg-emerald-50" aria-label="Previous About entry">←</button><div class="flex gap-1.5" role="tablist" aria-label="About entries">@foreach ($aboutEntries as $about)<button type="button" data-about-dot="{{ $loop->index }}" class="size-2.5 rounded-full bg-slate-300 data-[active=true]:bg-emerald-600" aria-label="Show About entry {{ $loop->iteration }}" role="tab"></button>@endforeach</div><button type="button" data-about-next class="grid size-9 place-items-center rounded-full border border-slate-200 font-black hover:bg-emerald-50" aria-label="Next About entry">→</button></div>
                                 </div>
@@ -371,9 +383,6 @@
                             @endif
                         </div>
 
-                        <a href="#latest-news-contact" class="mt-6 inline-flex min-h-11 items-center justify-center bg-slate-950 px-6 text-sm font-black tracking-wide text-white uppercase transition hover:bg-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-200 dark:bg-emerald-500 dark:text-ink dark:hover:bg-emerald-400">
-                            Read more
-                        </a>
                     </div>
                 </div>
             </section>
@@ -1011,9 +1020,6 @@
                             </p>
                         </div>
 
-                        <a href="#latest-news-contact" class="mt-7 inline-flex min-h-11 items-center justify-center bg-slate-950 px-6 text-sm font-black tracking-wide text-white uppercase transition hover:bg-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-200 dark:bg-emerald-500 dark:text-ink dark:hover:bg-emerald-400">
-                            Read more
-                        </a>
                     </div>
                 </div>
             </section>

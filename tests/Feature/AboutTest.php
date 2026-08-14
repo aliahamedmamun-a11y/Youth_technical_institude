@@ -22,6 +22,8 @@ test('published about entries show their complete content on the homepage and re
         ->assertDontSee(route('about.show', $about), false)
         ->assertDontSeeText('Read more')
         ->assertSee('data-about-layout="profile"', false)
+        ->assertSee('aria-label="About Us"', false)
+        ->assertSee('data-about-heading', false)
         ->assertSee('data-about-interval="10000"', false)
         ->assertSee('data-about-next', false);
 

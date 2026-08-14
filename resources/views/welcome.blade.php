@@ -282,10 +282,6 @@
                             @foreach ($aboutEntries as $about)
                                 @php
                                     $aboutImage = $about->image_path ?: $about->principal_image_path;
-                                    $aboutHeading = trim($about->about_heading ?: 'About Us');
-                                    $aboutHeadingWords = preg_split('/\s+/', $aboutHeading) ?: [$aboutHeading];
-                                    $aboutHeadingAccent = array_pop($aboutHeadingWords);
-                                    $aboutHeadingPrefix = implode(' ', $aboutHeadingWords);
                                 @endphp
                                 <article class="grid items-start gap-8 md:grid-cols-[minmax(260px,0.82fr)_minmax(0,1.45fr)] md:gap-10 lg:grid-cols-[minmax(340px,0.82fr)_minmax(0,1.45fr)] lg:gap-16 {{ $loop->first ? '' : 'hidden' }}" data-about-slide>
                                     <div class="mx-auto w-full max-w-[400px] overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white shadow-[0_12px_28px_rgba(15,23,42,.14)] dark:border-white/10 dark:bg-ink md:max-w-none">
@@ -296,11 +292,8 @@
                                     </div>
                                     <div class="min-w-0 pt-1 md:pt-0">
                                         <div class="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-5">
-                                            <h2 class="min-w-0 max-w-full break-words text-3xl font-black tracking-tight text-slate-950 sm:text-4xl dark:text-white" aria-label="{{ $aboutHeading }}">
-                                                @if ($aboutHeadingPrefix !== '')
-                                                    {{ $aboutHeadingPrefix }}
-                                                @endif
-                                                <span class="text-emerald-600 dark:text-emerald-400">{{ $aboutHeadingAccent }}</span>
+                                            <h2 class="min-w-0 max-w-full text-3xl font-black tracking-tight text-slate-950 sm:text-4xl dark:text-white" aria-label="About Us" data-about-heading>
+                                                About <span class="text-emerald-600 dark:text-emerald-400">Us</span>
                                             </h2>
                                             <span class="h-[3px] min-w-16 flex-1 rounded-full bg-emerald-600 sm:max-w-32" aria-hidden="true"></span>
                                         </div>

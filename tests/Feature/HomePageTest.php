@@ -19,6 +19,7 @@ test('the homepage presents the institute and its primary sections', function ()
         'name' => 'Engr. Md. Rasel',
         'designation' => 'Head of Electrical Department',
         'department' => 'Electrical Technology',
+        'image_path' => 'teachers/engr-md-rasel.png',
     ]);
     $course = Course::factory()->create([
         'name' => 'Advanced Web Engineering',
@@ -53,6 +54,7 @@ test('the homepage presents the institute and its primary sections', function ()
         ->assertSee('data-teacher-track', false)
         ->assertSee('data-teacher-slide', false)
         ->assertSee('data-teacher-image-background="white"', false)
+        ->assertSee('?v=white-background', false)
         ->assertSee('data-teacher-total', false)
         ->assertSee('data-student-carousel', false)
         ->assertSee('data-student-track', false)

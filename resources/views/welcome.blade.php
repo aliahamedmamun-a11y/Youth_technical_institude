@@ -515,7 +515,7 @@
                                 <div class="relative aspect-[4/4.6] shrink-0 overflow-hidden bg-white" data-teacher-image-background="white">
                                     @if ($teacher['image_path'])
                                         <img
-                                            src="{{ Storage::url($teacher['image_path']) }}"
+                                            src="{{ Storage::url($teacher['image_path']) }}?v=white-background"
                                             alt="{{ $teacher['name'] }}"
                                             class="size-full object-cover object-top transition duration-500 group-hover:scale-105"
                                             loading="lazy"

@@ -23,6 +23,7 @@ test('published about entries show their complete content on the homepage and re
         ->assertDontSeeText('Read more')
         ->assertSee('data-about-layout="profile"', false)
         ->assertSee('data-about-size="compact"', false)
+        ->assertSee('data-about-viewport-fit', false)
         ->assertSee('aria-label="About Us"', false)
         ->assertSee('data-about-heading', false)
         ->assertSee('data-about-interval="10000"', false)

@@ -34,7 +34,7 @@
     </div>
 
     <label class="grid gap-2 text-sm font-bold text-slate-700">
-        Teacher photo <span class="font-medium text-slate-400">(JPG, PNG, or WebP, up to 2 MB)</span>
+        Teacher photo <span class="font-medium text-slate-400">(white background required; JPG, PNG, or WebP, up to 2 MB)</span>
         <input type="file" name="image" accept="image/jpeg,image/png,image/webp" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm file:mr-4 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:font-bold file:text-blue-700">
         @error('image')<span class="text-rose-600">{{ $message }}</span>@enderror
         @if ($teacher?->image_path)

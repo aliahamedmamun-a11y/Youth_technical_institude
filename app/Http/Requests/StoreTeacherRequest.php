@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\WhiteImageBackground;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,7 +24,7 @@ class StoreTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'], 'employee_number' => ['required', 'string', 'max:50', Rule::unique('teachers', 'employee_number')], 'email' => ['nullable', 'email', 'max:255', Rule::unique('teachers', 'email')], 'phone' => ['required', 'string', 'max:30'], 'designation' => ['required', 'string', 'max:255'], 'department' => ['nullable', 'string', 'max:255'], 'qualification' => ['nullable', 'string', 'max:255'], 'description' => ['nullable', 'string', 'max:2000'], 'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'], 'joined_at' => ['nullable', 'date'], 'is_active' => ['required', 'boolean'],
+            'name' => ['required', 'string', 'max:255'], 'employee_number' => ['required', 'string', 'max:50', Rule::unique('teachers', 'employee_number')], 'email' => ['nullable', 'email', 'max:255', Rule::unique('teachers', 'email')], 'phone' => ['required', 'string', 'max:30'], 'designation' => ['required', 'string', 'max:255'], 'department' => ['nullable', 'string', 'max:255'], 'qualification' => ['nullable', 'string', 'max:255'], 'description' => ['nullable', 'string', 'max:2000'], 'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048', new WhiteImageBackground], 'joined_at' => ['nullable', 'date'], 'is_active' => ['required', 'boolean'],
         ];
     }
 }

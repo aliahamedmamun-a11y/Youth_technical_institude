@@ -512,7 +512,7 @@
                     <div class="teacher-carousel-track flex gap-5 overflow-x-auto scroll-smooth" data-teacher-track tabindex="0" aria-label="Teacher profiles">
                         @foreach ($teacherCards as $teacher)
                             <article class="teacher-carousel-slide group flex h-full w-full shrink-0 snap-start flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-deep" data-teacher-slide>
-                                <div class="relative aspect-[4/4.6] shrink-0 overflow-hidden bg-[#2699e8]">
+                                <div class="relative aspect-[4/4.6] shrink-0 overflow-hidden bg-white" data-teacher-image-background="white">
                                     @if ($teacher['image_path'])
                                         <img
                                             src="{{ Storage::url($teacher['image_path']) }}"

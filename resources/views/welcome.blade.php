@@ -275,7 +275,7 @@
             @endif
 
             @if ($isSectionVisible('about'))
-            <section id="about" class="overflow-hidden bg-white pt-8 pb-4 dark:bg-deep sm:pt-10 sm:pb-5 lg:pt-12 lg:pb-6" data-about-carousel data-about-interval="10000">
+            <section id="about" class="overflow-hidden bg-white py-12 dark:bg-deep sm:py-14 lg:py-16" data-about-carousel data-about-interval="10000">
                 @if ($aboutEntries->isNotEmpty())
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" data-about-layout="profile" data-about-size="compact">
                         <div class="relative">

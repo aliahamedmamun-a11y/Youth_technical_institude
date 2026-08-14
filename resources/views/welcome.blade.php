@@ -275,7 +275,7 @@
             @endif
 
             @if ($isSectionVisible('about'))
-            <section id="about" class="overflow-hidden bg-white py-9 dark:bg-deep sm:py-11 lg:py-12" data-about-carousel data-about-interval="10000">
+            <section id="about" class="overflow-hidden bg-white py-6 dark:bg-deep sm:py-7 lg:py-8" data-about-carousel data-about-interval="10000">
                 @if ($aboutEntries->isNotEmpty())
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" data-about-layout="profile">
                         <div class="relative">
@@ -283,8 +283,8 @@
                                 @php
                                     $aboutImage = $about->image_path ?: $about->principal_image_path;
                                 @endphp
-                                <article class="grid items-start gap-8 md:grid-cols-[minmax(260px,0.82fr)_minmax(0,1.45fr)] md:gap-10 lg:grid-cols-[minmax(340px,0.82fr)_minmax(0,1.45fr)] lg:gap-16 {{ $loop->first ? '' : 'hidden' }}" data-about-slide>
-                                    <div class="mx-auto w-full max-w-[400px] overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white shadow-[0_12px_28px_rgba(15,23,42,.14)] dark:border-white/10 dark:bg-ink md:max-w-none">
+                                <article class="grid items-start gap-6 md:grid-cols-[minmax(260px,0.72fr)_minmax(0,1.45fr)] md:gap-8 lg:grid-cols-[minmax(300px,0.72fr)_minmax(0,1.5fr)] lg:gap-10 {{ $loop->first ? '' : 'hidden' }}" data-about-slide>
+                                    <div class="mx-auto w-full max-w-[340px] overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white shadow-[0_12px_28px_rgba(15,23,42,.14)] dark:border-white/10 dark:bg-ink lg:max-w-[360px]">
                                         <img src="{{ $aboutImage ? (str_starts_with($aboutImage, 'images/') ? asset($aboutImage) : Storage::disk('public')->url($aboutImage)) : asset('images/principal-portrait.webp') }}" alt="{{ $about->about_heading }}" class="aspect-[4/5.15] w-full object-cover object-top" loading="lazy">
                                         @if ($about->principal_name)
                                             <div class="bg-[#0b2447] px-5 py-5 text-center text-white"><h3 class="text-xl font-black tracking-tight sm:text-2xl">{{ $about->principal_name }}</h3><p class="mt-1 text-sm text-slate-200">{{ $about->principal_title }}</p></div>
@@ -300,10 +300,10 @@
                                         <div class="mt-3 h-px w-full bg-slate-200 dark:bg-white/10"></div>
                                         <h3 class="mt-7 text-sm font-semibold text-slate-900 dark:text-white">About the Institution</h3>
                                         @if ($about->summary)
-                                            <p class="mt-2 text-sm leading-6 text-slate-700 sm:text-[15px] sm:leading-7 dark:text-slate-200">{{ $about->summary }}</p>
+                                            <p class="mt-2 text-sm leading-6 text-slate-700 sm:text-[15px] dark:text-slate-200">{{ $about->summary }}</p>
                                         @endif
                                         @if ($about->content)
-                                            <div class="mt-2 whitespace-pre-line text-sm leading-6 text-slate-600 sm:text-[15px] sm:leading-7 dark:text-slate-300">{{ $about->content }}</div>
+                                            <div class="mt-2 whitespace-pre-line text-sm leading-6 text-slate-600 sm:text-[15px] dark:text-slate-300">{{ $about->content }}</div>
                                         @endif
                                     </div>
                                 </article>

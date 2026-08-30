@@ -31,6 +31,7 @@ use App\Models\Notice;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use App\Http\Controllers\BranchStudentController;
 
 Route::get('/', function () {
     $aboutEntries = InstituteProfile::query()->published()->ordered()->get();
@@ -122,6 +123,9 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/student-registration', [StudentRegistrationController::class, 'create'])->name('student-registrations.create');
     Route::post('/student-registration', [StudentRegistrationController::class, 'store'])->name('student-registrations.store');
+    Route::get('/student-registration', [StudentRegistrationController::class, 'create'])->name('student-registrations.create');
+
+Route::post('/student-registration', [StudentRegistrationController::class, 'store'])->name('student-registrations.store');
 
     Route::get('/dashboard/super-admin', [DashboardController::class, 'superAdmin'])
         ->middleware('role:'.UserRole::SuperAdmin->value)
@@ -148,6 +152,28 @@ Route::middleware('auth')->group(function (): void {
     Route::resource('/super-admin/students', StudentController::class)
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->names('super-admin.students');
+        
+        //  student list
+        Route::get('/students', [BranchStudentController::class, 'index'])
+                ->middleware('role:'.UserRole::Branch->value)
+                ->name('students.index');
+
+            Route::get('/students/{student}', [BranchStudentController::class, 'show'])
+                ->middleware('role:'.UserRole::Branch->value)
+                ->name('students.show');
+
+            Route::get('/students/{student}/edit', [BranchStudentController::class, 'edit'])
+                ->middleware('role:'.UserRole::Branch->value)
+                ->name('students.edit');
+
+            Route::put('/students/{student}', [BranchStudentController::class, 'update'])
+                ->middleware('role:'.UserRole::Branch->value)
+                ->name('students.update');
+
+            Route::get('/students/{student}/{document}',
+                [BranchStudentController::class, 'document'])
+                ->middleware('role:'.UserRole::Branch->value)
+                ->name('students.document');
 
     Route::resource('/super-admin/students/{student}/semester-enrollments', StudentSemesterEnrollmentController::class)
         ->except(['show'])

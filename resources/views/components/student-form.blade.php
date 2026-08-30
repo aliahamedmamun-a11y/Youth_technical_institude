@@ -184,14 +184,93 @@
                         <span class="mt-1 block text-rose-600">{{ $message }}</span>
                     @enderror
                 </label>
-                <label class="block min-w-0 text-sm font-bold text-slate-700">Duration <span
-                        class="text-rose-600">*</span><input name="duration"
-                        value="{{ old('duration', $student?->duration) }}" required placeholder="Select duration"
-                        class="{{ $inputClass }} mt-2">
-                    @error('duration')
+
+                <label class="block min-w-0 text-sm font-bold text-slate-700">Start Month <span
+                        class="text-rose-600">*</span>
+                    <select name="start_month" required class="{{ $selectClass }} mt-2">
+                        <option value="">Select start month</option>
+                        @foreach ([
+                            1 => 'January',
+                            2 => 'February',
+                            3 => 'March',
+                            4 => 'April',
+                            5 => 'May',
+                            6 => 'June',
+                            7 => 'July',
+                            8 => 'August',
+                            9 => 'September',
+                            10 => 'October',
+                            11 => 'November',
+                            12 => 'December',
+                        ] as $monthNumber => $monthName)
+                            <option value="{{ $monthNumber }}" @selected(old('start_month', $student?->start_month) == $monthNumber)>
+                                {{ $monthName }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('start_month')
                         <span class="mt-1 block text-rose-600">{{ $message }}</span>
                     @enderror
                 </label>
+
+                <label class="block min-w-0 text-sm font-bold text-slate-700">Start Year <span
+                        class="text-rose-600">*</span>
+                    <select name="start_year" required class="{{ $selectClass }} mt-2">
+                        <option value="">Select start year</option>
+                        @foreach (range(now()->year - 20, now()->year + 10) as $year)
+                            <option value="{{ $year }}" @selected(old('start_year', $student?->start_year) == $year)>
+                                {{ $year }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('start_year')
+                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
+                    @enderror
+                </label>
+
+                <label class="block min-w-0 text-sm font-bold text-slate-700">End Month <span
+                        class="text-rose-600">*</span>
+                    <select name="end_month" required class="{{ $selectClass }} mt-2">
+                        <option value="">Select end month</option>
+                        @foreach ([
+                            1 => 'January',
+                            2 => 'February',
+                            3 => 'March',
+                            4 => 'April',
+                            5 => 'May',
+                            6 => 'June',
+                            7 => 'July',
+                            8 => 'August',
+                            9 => 'September',
+                            10 => 'October',
+                            11 => 'November',
+                            12 => 'December',
+                        ] as $monthNumber => $monthName)
+                            <option value="{{ $monthNumber }}" @selected(old('end_month', $student?->end_month) == $monthNumber)>
+                                {{ $monthName }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('end_month')
+                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
+                    @enderror
+                </label>
+
+                <label class="block min-w-0 text-sm font-bold text-slate-700">End Year <span
+                        class="text-rose-600">*</span>
+                    <select name="end_year" required class="{{ $selectClass }} mt-2">
+                        <option value="">Select end year</option>
+                        @foreach (range(now()->year - 20, now()->year + 10) as $year)
+                            <option value="{{ $year }}" @selected(old('end_year', $student?->end_year) == $year)>
+                                {{ $year }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('end_year')
+                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
+                    @enderror
+                </label>
+
                 <label class="block min-w-0 text-sm font-bold text-slate-700">Expire Date <span
                         class="text-rose-600">*</span><input type="date" name="expire_date" required
                         value="{{ old('expire_date', $student?->expire_date?->format('Y-m-d')) }}"
@@ -225,8 +304,8 @@
             @error('image')
                 <span class="block text-sm text-rose-600">{{ $message }}</span>
                 @enderror @if ($student?->image_path)
-                    <img src="{{ Storage::disk('public')->url($student->image_path) }}"
-                        alt="Current photo for {{ $student->name }}" class="mx-auto size-32 rounded-xl object-cover">
+                    <img src="{{ Storage::disk('public')->url($students->image_path) }}"
+                        alt="Current photo for {{ $students->name }}" class="mx-auto size-32 rounded-xl object-cover">
                 @endif
                 <div class="rounded-2xl bg-gradient-to-br from-emerald-800 to-green-700 p-5 text-white shadow-lg">
                     <h2 class="flex items-center gap-2 text-sm font-black uppercase tracking-wide"><svg

@@ -16,32 +16,84 @@ class StudentRegistrationController extends Controller
     {
         Gate::authorize('create', Student::class);
 
-        return view('student-registrations.create', ['courses' => $this->courses()]);
+        return view('student-registrations.create', [
+            'courses' => $this->courses(),
+        ]);
     }
+
 
     public function store(StoreStudentRequest $request): RedirectResponse
     {
         $studentData = $request->safe()->except('image');
-        $studentData['registration_number'] = $this->registrationNumber();
+
+
+        $studentData['registration_number'] =
+            $this->registrationNumber();
+
+
         $studentData['result_status'] = 'Pending';
-        $studentData['image_path'] = $request->file('image')->store('students', 'public');
+
+
+        if ($request->hasFile('image')) {
+
+            $studentData['image_path'] =
+                $request->file('image')
+                ->store('students', 'public');
+
+        }
+
 
         Student::query()->create($studentData);
 
-        return redirect()->route('student-registrations.create')->with('status', 'Your student registration has been submitted successfully.');
+
+        return redirect()
+            ->route('student-registrations.create')
+            ->with(
+                'status',
+                'Your student registration has been submitted successfully.'
+            );
     }
 
-    /** @return Collection<int, Course> */
+
+
+    /**
+     * Get active courses.
+     *
+     * @return Collection<int, Course>
+     */
     private function courses(): Collection
     {
-        return Course::query()->where('is_active', true)->orderBy('name')->get();
+        return Course::query()
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
     }
 
+
+
+    /**
+     * Generate unique registration number.
+     */
     private function registrationNumber(): string
     {
         do {
-            $registrationNumber = 'BNYTI-'.now()->format('YmdHis').'-'.random_int(100, 999);
-        } while (Student::query()->where('registration_number', $registrationNumber)->exists());
+
+            $registrationNumber =
+                'BNYTI-'
+                . now()->format('YmdHis')
+                . '-'
+                . random_int(100, 999);
+
+
+        } while (
+            Student::query()
+                ->where(
+                    'registration_number',
+                    $registrationNumber
+                )
+                ->exists()
+        );
+
 
         return $registrationNumber;
     }

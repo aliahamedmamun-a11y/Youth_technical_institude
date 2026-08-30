@@ -1,12 +1,11 @@
 @php
     $homeUrl = route('home');
     $canRegisterStudents = auth()->user()?->can('create', \App\Models\Student::class) ?? false;
-    $studentTileUrl = $canRegisterStudents ? route('student-registrations.create') : route('dashboards.branch');
+    $studentTileUrl = route('students.index');
 
     $quickMenus = [
         ...($canRegisterStudents ? [['title' => 'ADMISSION', 'subtitle' => 'New Admission', 'href' => route('student-registrations.create'), 'tone' => 'green', 'icon' => 'admission']] : []),
-        ['title' => 'STUDENTS', 'subtitle' => 'All Students', 'href' => $studentTileUrl, 'tone' => 'red', 'icon' => 'students'],
-        ['title' => 'CERTIFICATES', 'subtitle' => 'Verification', 'href' => route('results.index'), 'tone' => 'green', 'icon' => 'certificate'],
+        ['title' => 'STUDENTS', 'subtitle' => 'All Students', 'href' => $studentTileUrl, 'tone' => 'red', 'icon' => 'students'],        ['title' => 'CERTIFICATES', 'subtitle' => 'Verification', 'href' => route('results.index'), 'tone' => 'green', 'icon' => 'certificate'],
         ['title' => 'BRANCHES', 'subtitle' => 'All Branches', 'href' => route('branch-applications.create'), 'tone' => 'red', 'icon' => 'branch'],
         ['title' => 'NEWS & NOTICE', 'subtitle' => 'Latest Updates', 'href' => $homeUrl.'#latest-news-contact', 'tone' => 'green', 'icon' => 'notice'],
         ['title' => 'SUPPORT', 'subtitle' => 'Help Desk', 'href' => $homeUrl.'#latest-news-contact', 'tone' => 'red', 'icon' => 'support'],

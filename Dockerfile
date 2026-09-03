@@ -1,4 +1,4 @@
-FROM php:8.3-apache
+FROM php:8.4-apache
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -10,8 +10,10 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     libzip-dev \
+    libonig-dev \
+    libxml2-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql zip
+    && docker-php-ext-install gd pdo pdo_mysql zip mbstring exif pcntl bcmath opcache
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite

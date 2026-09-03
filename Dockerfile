@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql zip mbstring exif pcntl bcmath opcache
+    && docker-php-ext-install gd pdo pdo_mysql pdo_pgsql zip mbstring exif pcntl bcmath opcache
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
@@ -39,4 +39,5 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.
 # Expose port 80
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+# The CMD will run migrations and then start apache
+CMD php artisan migrate --force && apache2-foreground

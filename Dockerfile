@@ -37,8 +37,9 @@ RUN composer install --no-dev --optimize-autoloader
 RUN npm install
 RUN npm run build
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Set permissions for storage, cache, AND public assets
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public
+RUN chmod -R 755 /var/www/html/public
 
 # Change Apache root to public/
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public

@@ -16,6 +16,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql pdo_pgsql zip mbstring exif pcntl bcmath opcache
 
+# Install Node.js (needed for Vite build)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
+
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
@@ -25,9 +29,13 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . .
 
-# Install Composer
+# Install Composer dependencies
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --optimize-autoloader
+
+# Install NPM dependencies and build assets
+RUN npm install
+RUN npm run build
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
@@ -40,5 +48,5 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.
 # Expose port 80
 EXPOSE 80
 
-# The CMD will run migrations and then start apache
-CMD php artisan migrate --force && apache2-foreground
+# The CMD will first run migrations and then start apache
+CMD php artisan config:clear && php artisan migrate --force && apache2-foreground

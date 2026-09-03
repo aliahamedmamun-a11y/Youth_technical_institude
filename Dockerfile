@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql pdo_pgsql zip mbstring exif pcntl bcmath opcache
 
-# Install Node.js (needed for Vite build)
+# Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
@@ -48,5 +48,5 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.
 # Expose port 80
 EXPOSE 80
 
-# The CMD will first run migrations and then start apache
-CMD php artisan config:clear && php artisan migrate --force && apache2-foreground
+# The CMD will link storage, run migrations and start apache
+CMD php artisan storage:link && php artisan config:clear && php artisan migrate --force && apache2-foreground

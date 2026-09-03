@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql pdo_pgsql zip mbstring exif pcntl bcmath opcache
 
-# Install Node.js & NPM
+# Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
@@ -33,14 +33,13 @@ COPY . .
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --optimize-autoloader
 
-# Install NPM and Build Assets (Vite)
+# Install NPM dependencies and Build Assets
 RUN npm install && npm run build
 
-# Set permissions for the entire project
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache \
-    && chmod -R 755 /var/www/html/public
+# Create necessary directories and set permissions
+RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
+    && chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 storage bootstrap/cache public
 
 # Change Apache root to public/
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
@@ -50,9 +49,10 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.
 # Expose port 80
 EXPOSE 80
 
-# Final startup command: link storage, clear cache, migrate, and start apache
+# Link storage, clear cache, and start
 CMD php artisan storage:link --force && \
-    php artisan config:clear && \
-    php artisan view:clear && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache && \
     php artisan migrate --force && \
     apache2-foreground

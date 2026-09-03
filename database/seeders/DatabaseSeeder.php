@@ -2,30 +2,26 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use App\Enums\UserRole;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        $this->call([
-            RoleUserSeeder::class,
-            AcademicDataSeeder::class,
-            InstituteProfileSeeder::class,
-            NoticeSeeder::class,
-            NewsSeeder::class,
-            HomepageSectionSeeder::class,
-            HomepageItemSeeder::class,
-            AcademicStructureSeeder::class,
-            StudentSemesterEnrollmentSeeder::class,
-            StudentResultSeeder::class,
-            BranchApplicationSeeder::class,
-        ]);
+        // অ্যাডমিন ইউজার তৈরি করা
+        User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => Hash::make('admin123'),
+                'role' => UserRole::SuperAdmin->value,
+            ]
+        );
     }
 }

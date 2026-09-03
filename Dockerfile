@@ -37,9 +37,10 @@ RUN composer install --no-dev --optimize-autoloader
 RUN npm install
 RUN npm run build
 
-# Set permissions for storage, cache, AND public assets
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public
-RUN chmod -R 755 /var/www/html/public
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache
 
 # Change Apache root to public/
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
@@ -49,5 +50,5 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.
 # Expose port 80
 EXPOSE 80
 
-# The CMD will link storage, run migrations and start apache
-CMD php artisan storage:link && php artisan config:clear && php artisan migrate --force && apache2-foreground
+# The CMD will link storage, clear cache, and start
+CMD php artisan storage:link --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan migrate --force && apache2-foreground

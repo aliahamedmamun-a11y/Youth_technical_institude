@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql pdo_pgsql zip mbstring exif pcntl bcmath opcache
 
-# Install Node.js & NPM
+# Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
@@ -29,14 +29,14 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . .
 
-# Install Composer dependencies
+# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --optimize-autoloader
 
-# Install NPM and Build Assets (Vite)
+# Install NPM and Build Assets
 RUN npm install && npm run build
 
-# Change Apache root to /var/www/html/public
+# Change Apache root
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/apache2.conf
 
@@ -48,9 +48,8 @@ RUN chown -R www-data:www-data /var/www/html \
 # Expose port 80
 EXPOSE 80
 
-# Final startup command: DO NOT cache config in docker (it causes URL issues)
+# The CMD will run migrations, seed the database, and start apache
 CMD php artisan storage:link --force && \
     php artisan migrate --force && \
-    php artisan view:clear && \
-    php artisan route:clear && \
+    php artisan db:seed --force && \
     apache2-foreground

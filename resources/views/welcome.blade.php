@@ -227,14 +227,14 @@
             @endif
 
             @if ($isSectionVisible('about'))
-            <section id="about" class="bg-[#dce9f2] py-16 dark:bg-slate-900/50 sm:py-20 lg:py-24">
+            <section id="about" class="bg-[#e3eff2] py-16 dark:bg-slate-900/50 sm:py-20 lg:py-24">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <h2 class="mb-12 text-center text-3xl font-black tracking-tight text-[#03224c] uppercase dark:text-white sm:text-4xl lg:text-5xl">
+                    <h2 class="mb-12 text-center text-3xl font-black tracking-tight text-[#0f172a] uppercase dark:text-white sm:text-4xl lg:text-5xl">
                         About South Asia National Technical Institute
                     </h2>
 
-                    <div class="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-                        <div class="relative overflow-hidden rounded-2xl shadow-xl">
+                    <div class="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
+                        <div class="relative overflow-hidden rounded-[2rem] shadow-sm">
                             <img
                                 src="{{ asset('images/institute-building.jpg') }}"
                                 alt="South Asia National Technical Institute Building"
@@ -244,38 +244,39 @@
                             >
                         </div>
 
-                        <div class="flex flex-col gap-8">
+                        <div class="flex flex-col gap-6 pt-2">
                             <div class="space-y-5">
-                                <p class="text-[15px] leading-relaxed font-medium text-slate-700 dark:text-slate-300 sm:text-lg">
-                                    Lorem Ipsum south asisik nabeviitechnical institute are ongoooorement ened hanszon nunhen in podarmett cacta cenen sormetinchned oco corolas adevasos eres cronock. Dòis uanfhes diseixtrót aslesa tes vaomoce eoastuna. Bt enminant is to it inectieenleers.
+                                <p class="text-[15px] leading-relaxed font-semibold text-slate-800 dark:text-slate-300 sm:text-base">
+                                    Lorem Ipsum south asisik nabeviitechnical instiitute are ongoooorement ened hanszon nunhen in podarmett cacta cenen sormetinchned oco corolas adevasos eres cronock. Dòis uanfhes diseixtrót aslesa tes vaomoce eoastuna. Bt enminant is to it inectieenleers.
                                 </p>
                             </div>
 
-                            <div class="flex flex-col gap-8 sm:flex-row sm:items-start lg:flex-col xl:flex-row">
-                                <div class="flex-1 space-y-5">
-                                    <h3 class="text-2xl font-black text-[#03224c] dark:text-white">MFU Team or SO?</h3>
-                                    <ul class="space-y-3.5">
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-black text-[#0f172a] dark:text-white">MFU Team or SO?</h3>
+
+                                <div class="flex flex-col gap-8 sm:flex-row sm:items-start lg:flex-row">
+                                    <ul class="flex-1 space-y-3">
                                         @foreach ([
                                             'MF Student for Features',
                                             'M& Commercial Institutes',
                                             'MP Coeistment Assistont',
                                             'WFIS and & Accobers Program'
                                         ] as $item)
-                                            <li class="flex items-center gap-3.5 text-base font-bold text-slate-800 dark:text-slate-200">
-                                                <span class="size-3.5 shrink-0 rounded-full bg-[#03224c] dark:bg-emerald-500"></span>
+                                            <li class="flex items-center gap-3.5 text-sm font-bold text-slate-800 dark:text-slate-200">
+                                                <span class="size-3.5 shrink-0 rounded-full bg-[#334155] dark:bg-emerald-500"></span>
                                                 {{ $item }}
                                             </li>
                                         @endforeach
                                     </ul>
-                                </div>
 
-                                <div class="shrink-0 rounded-xl border-2 border-slate-400 bg-white/40 p-6 text-center shadow-md backdrop-blur-sm dark:border-white/20 dark:bg-white/5 sm:max-w-[220px]">
-                                    <h4 class="inline-block border-b-2 border-[#03224c] pb-1.5 text-xl font-black tracking-tight text-[#03224c] uppercase dark:border-white dark:text-white">
-                                        On-line Value
-                                    </h4>
-                                    <p class="mt-4 text-[11px] leading-relaxed font-black text-slate-600 dark:text-slate-400 uppercase">
-                                        Dernorats pase nist aodaized cart of dultaaan tremp ava tradition huxbet
-                                    </p>
+                                    <div class="w-full shrink-0 rounded-xl border border-slate-400 bg-transparent p-5 text-center sm:max-w-[210px]">
+                                        <h4 class="inline-block border-b-2 border-slate-600 pb-1 text-base font-black tracking-tight text-[#0f172a] uppercase dark:border-white dark:text-white">
+                                            On-line Value
+                                        </h4>
+                                        <p class="mt-3 text-[11px] leading-relaxed font-bold text-slate-600 dark:text-slate-400">
+                                            Dernorats pase nist aodaized oarl of dultaaan tremp ava tradition huxbet
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

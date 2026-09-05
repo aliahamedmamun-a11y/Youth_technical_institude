@@ -176,69 +176,68 @@
                 </div>
             </section>
 
-            <section id="notice-bar" class="border-b border-emerald-900/10 bg-white dark:border-white/10 dark:bg-deep" aria-label="Institute notices">
-                <div class="flex min-h-12 items-stretch overflow-hidden">
-                    <div class="notice-label relative flex shrink-0 items-center gap-2 bg-emerald-700 py-3 pr-7 pl-4 text-[11px] font-black tracking-[0.2em] text-white sm:pl-8" aria-hidden="true">
-                        <span class="size-2 rounded-full bg-white"></span>
-                        <span class="relative flex size-2"><span class="absolute inline-flex size-full animate-ping rounded-full bg-amber-300 opacity-75 motion-reduce:animate-none"></span><span class="relative inline-flex size-2 rounded-full bg-amber-300"></span></span>
-                        <span>NOTICE</span>
-                    </div>
-                    <div class="min-w-0 flex-1 overflow-hidden py-3" aria-live="polite">
-                        <div class="notice-track flex gap-12 whitespace-nowrap px-8 text-xs font-bold text-slate-700 motion-reduce:transform-none dark:text-slate-200">
-                            @forelse ($noticeItems as $notice)
-                                <a href="{{ $notice['link'] ?: '#notice-bar' }}" class="transition hover:text-emerald-700 dark:hover:text-emerald-400">{{ $notice['title'] }} <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> {{ $notice['message'] }}</a>
-                            @empty
-                                <span>Admission for the July 2026 session is now open <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> Branch applications are being accepted nationwide <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> Contact us for course counselling</span>
-                            @endforelse
+            <section class="relative z-10 -mt-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 lg:grid-cols-4 overflow-hidden rounded-xl shadow-2xl">
+                    @foreach([
+                        ['INDUSTRY RELEVANT CURRICULUM', 'bg-[#0b2447]'],
+                        ['EXPERT TEACHERS', 'bg-[#159b63]'],
+                        ['FP PROCESSES LEARNING', 'bg-[#f59e0b]'],
+                        ['100% PLACEMENT SCHOOL', 'bg-[#13728f]']
+                    ] as [$label, $bg])
+                    <div class="{{ $bg }} flex flex-col items-center justify-center gap-3 p-6 text-center text-white">
+                        <div class="size-10 rounded-full bg-white/20 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-6"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                         </div>
+                        <span class="text-[11px] font-black tracking-wider uppercase leading-tight">{{ $label }}</span>
                     </div>
+                    @endforeach
                 </div>
             </section>
-
 
             @if ($isSectionVisible('about'))
             <section id="about" class="overflow-hidden bg-[#e0f2fe]/30 py-16 dark:bg-deep sm:py-20 lg:py-24">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <h2 class="text-2xl font-black tracking-tight text-slate-900 uppercase sm:text-3xl dark:text-white">
+                    <h2 class="text-center text-2xl font-black tracking-tight text-slate-900 uppercase sm:text-4xl dark:text-white">
                         About South Asia National Technical Institute
                     </h2>
 
-                    <div class="mt-10 grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-                        <div class="relative overflow-hidden rounded-2xl border border-slate-200 shadow-2xl dark:border-white/10">
+                    <div class="mt-12 grid gap-10 lg:grid-cols-[0.85fr_1.15fr] items-start">
+                        <div class="relative overflow-hidden rounded-2xl border-4 border-white shadow-2xl">
                             <img
                                 src="{{ $instituteProfile?->image_path ? (str_starts_with($instituteProfile->image_path, 'images/') ? asset($instituteProfile->image_path) : Storage::disk('public')->url($instituteProfile->image_path)) : asset('images/institute-gallery-1.png') }}"
                                 alt="Institute Building"
-                                class="aspect-[4/3] w-full object-cover sm:aspect-video lg:aspect-[4/3.2]"
+                                class="aspect-[4/3] w-full object-cover"
                                 loading="lazy"
                             >
                         </div>
 
-                        <div class="flex flex-col gap-8">
-                            <div class="space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                                @if ($instituteProfile)
-                                    <p>{{ $instituteProfile->summary }}</p>
-                                    <div class="whitespace-pre-line">{{ Str::limit($instituteProfile->content, 450) }}</div>
-                                @else
-                                    <p>Bangladesh National Youth Technical Institute (BNYTI) is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation's youth with industry-relevant knowledge and practical expertise.</p>
-                                @endif
+                        <div class="grid lg:grid-cols-[1fr_0.45fr] gap-8">
+                            <div class="flex flex-col gap-6">
+                                <div class="space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                                    @if ($instituteProfile)
+                                        <div class="whitespace-pre-line">{{ Str::limit($instituteProfile->content, 600) }}</div>
+                                    @else
+                                        <p>Bangladesh National Youth Technical Institute (BNYTI) is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation's youth with industry-relevant knowledge and practical expertise.</p>
+                                    @endif
+                                </div>
+
+                                <div>
+                                    <h3 class="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Our Core Strength</h3>
+                                    <ul class="mt-4 space-y-3">
+                                        @foreach(['Modern Practical Lab Facilities', 'Expert Professional Trainers', 'Job Placement Assistant Program', 'Web and IT Solutions Curriculum'] as $feature)
+                                        <li class="flex items-center gap-3 text-sm font-bold text-slate-700 dark:text-slate-200">
+                                            <span class="size-2.5 shrink-0 rounded-full bg-[#03224c]"></span>
+                                            {{ $feature }}
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
 
-                            <div>
-                                <h3 class="text-lg font-black text-slate-900 dark:text-white">Our Core Strength</h3>
-                                <ul class="mt-5 grid gap-4 sm:grid-cols-2">
-                                    @foreach(['Industry Focused Features', 'Modern Lab Facilities', 'Expert Placement Assistant', 'Web and IT Solutions Program'] as $feature)
-                                    <li class="flex items-center gap-3 text-sm font-bold text-slate-700 dark:text-slate-200">
-                                        <span class="size-2.5 shrink-0 rounded-full bg-[#03224c] dark:bg-emerald-500"></span>
-                                        {{ $feature }}
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-
-                            <div class="rounded-2xl border-2 border-slate-200 bg-white p-6 shadow-sm dark:border-white/5 dark:bg-ink">
-                                <h4 class="text-xs font-black tracking-widest text-[#03224c] uppercase dark:text-emerald-400">ONLINE VALUE</h4>
-                                <p class="mt-2 text-[11px] font-semibold leading-relaxed text-slate-500 dark:text-slate-400">
-                                    We provide digital-first learning experiences and online certificate verification to ensure transparency and accessibility for all our students.
+                            <div class="rounded-2xl border-2 border-[#03224c]/10 bg-white p-6 shadow-sm self-start">
+                                <h4 class="text-sm font-black tracking-tight text-[#03224c] border-b-2 border-[#03224c] pb-2 uppercase">ONLINE VALUE</h4>
+                                <p class="mt-4 text-[11px] font-semibold leading-relaxed text-slate-500 italic">
+                                    "We provide digital-first learning experiences and online certificate verification to ensure transparency and accessibility for all our students."
                                 </p>
                             </div>
                         </div>
@@ -343,6 +342,11 @@
 
                                 <div class="flex min-h-[174px] flex-1 flex-col px-4 pt-7 pb-4">
                                     <h3 class="line-clamp-2 min-h-10 text-sm leading-5 font-extrabold text-[#0b2447] dark:text-white">{{ $course->name }}</h3>
+                                    <div class="mt-1 flex gap-0.5 text-amber-400">
+                                        @for ($i = 0; $i < 5; $i++)
+                                            <svg viewBox="0 0 20 20" fill="currentColor" class="size-3.5"><path d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" /></svg>
+                                        @endfor
+                                    </div>
                                     <p class="mt-2 line-clamp-2 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{{ $course->description }}</p>
                                     <dl class="mt-3 grid gap-1.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
                                         <div class="flex items-center gap-1.5">
@@ -353,12 +357,8 @@
                                             </svg>
                                             <dd>{{ $course->duration }}</dd>
                                         </div>
-                                        <div class="flex items-center gap-1.5">
-                                            <dt class="sr-only">Course overview</dt>
-                                            <span class="w-3.5 text-center font-black">৳</span>
-                                            <dd class="line-clamp-1">{{ Str::limit($course->description, 48) }}</dd>
-                                        </div>
                                     </dl>
+                                    <a href="#latest-news-contact" class="mt-4 rounded bg-amber-500 py-2 text-center text-[10px] font-black text-[#03224c] uppercase transition hover:bg-amber-400">Learn More</a>
                                 </div>
                             </article>
                         @empty
@@ -382,7 +382,30 @@
                 </div>
             </section>
 
-            <section id="expert-teachers" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16">
+            @if ($isSectionVisible('statistics'))
+            <section class="bg-[#03224c] py-16 text-white" aria-label="BNYTI achievements">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+                    <h2 class="text-xs font-black uppercase tracking-[0.3em] text-amber-500">Training Input</h2>
+                    <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-8">
+                        @foreach ($homepageItems('statistics') as $item)
+                            @php
+                                $value = $item->title;
+                                $label = $item->subtitle ?: $item->body;
+                            @endphp
+                            <div class="flex flex-col items-center">
+                                <div class="relative size-32 sm:size-40 flex items-center justify-center border-4 border-white/10 rounded-full">
+                                    <div class="absolute inset-0 rounded-full border-t-4 border-amber-500 animate-[spin_3s_linear_infinite]"></div>
+                                    <span class="text-2xl sm:text-3xl font-black">{{ $value }}</span>
+                                </div>
+                                <span class="mt-5 block text-xs sm:text-sm font-bold tracking-widest text-slate-300 uppercase">{{ $label }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+            @endif
+
+            <section id="expert-teachers" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16 pt-16">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="section-heading-row flex items-start justify-between gap-4 sm:items-center">
                         <div>

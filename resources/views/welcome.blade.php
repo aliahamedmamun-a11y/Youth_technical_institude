@@ -225,7 +225,6 @@
                 </div>
             </section>
             @endif
-            @endif
 
             @if ($isSectionVisible('about'))
             <section id="about" class="bg-[#e3eff2] py-16 dark:bg-slate-900/50 sm:py-20 lg:py-24">
@@ -237,10 +236,9 @@
                     <div class="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
                         <div class="relative overflow-hidden rounded-[2rem] shadow-sm">
                             <img
-                                src="{{ asset('images/institute-building.jpg') }}"
+                                src="https://images.unsplash.com/photo-1541339907198-e08756ebafe3?q=80&w=1600&auto=format&fit=crop"
                                 alt="South Asia National Technical Institute Building"
                                 class="aspect-[4/3] w-full object-cover sm:aspect-video lg:aspect-[4/3]"
-                                onerror="this.src='https://placehold.co/800x600/03224c/white?text=Institute+Building'"
                                 loading="lazy"
                             >
                         </div>

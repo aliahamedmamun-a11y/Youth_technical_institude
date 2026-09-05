@@ -42,11 +42,11 @@
                         class="h-10 w-auto sm:h-12"
                     >
                     <div class="hidden sm:block">
-                        <span class="block text-lg font-black tracking-tight text-[#03224c] dark:text-white uppercase leading-none">Bangladesh National</span>
-                        <span class="block text-[9px] font-bold tracking-[0.18em] text-slate-500 uppercase dark:text-slate-400 mt-0.5">Youth Technical Institute</span>
+                        <span class="block text-2xl font-black tracking-tight text-[#03224c] dark:text-white uppercase leading-none">South Asia</span>
+                        <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400 mt-1">National Technical Institute</span>
                     </div>
                     <div class="sm:hidden">
-                        <span class="block text-xl font-black tracking-tighter text-[#03224c] dark:text-white">BNYTI</span>
+                        <span class="block text-xl font-black tracking-tighter text-[#03224c] dark:text-white">SOUTH ASIA</span>
                     </div>
                 </a>
                 <div class="flex items-center gap-4">
@@ -151,11 +151,11 @@
                 <div class="hero-content-frame relative mx-auto flex min-h-[552px] max-w-7xl items-center px-4 pt-8 pb-24 sm:min-h-[492px] sm:px-6 sm:py-12 lg:min-h-[504px] lg:px-8">
                     <div class="hero-content reveal is-visible flex w-full max-w-[820px] flex-col items-start gap-6 sm:gap-10">
                         <h1 class="text-4xl font-black leading-[1.1] text-white uppercase sm:text-6xl lg:text-7xl">
-                            {{ $heroLead?->title ?? 'Empowering Technical Leaders. Building a Secure Future.' }}
+                            {{ $heroLead?->title ?? 'Empowering South Asia\'s Tech Leaders. Building a Secure Future.' }}
                         </h1>
 
                         <p class="max-w-2xl text-lg font-medium leading-relaxed text-slate-200" data-i18n="heroBody">
-                            {{ $heroLead?->body ?? 'Join BNYTI for industry-focused technical education and practical expertise for a skilled future.' }}
+                            {{ $heroLead?->body ?? 'Join South Asia National Technical Institute for industry-focused technical education and practical expertise for a skilled future.' }}
                         </p>
 
                         <div class="hero-actions flex w-full flex-wrap items-center gap-4 sm:w-auto">

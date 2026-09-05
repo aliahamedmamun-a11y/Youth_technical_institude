@@ -195,8 +195,8 @@
             </section>
 
             @if ($isSectionVisible('trust'))
-            <section class="relative z-20 mt-6 px-3 pb-6 sm:mt-8 sm:px-5 lg:px-8" aria-label="Why choose BNYTI">
-                <div class="mx-auto grid max-w-[1460px] grid-cols-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_4px_15px_rgba(15,23,42,.12)] dark:border-white/10 dark:bg-deep sm:grid-cols-3 lg:grid-cols-6">
+            <section class="relative z-20 -mt-10 px-3 pb-8 sm:px-5 lg:px-8" aria-label="Why choose BNYTI">
+                <div class="mx-auto grid max-w-7xl grid-cols-2 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] dark:border-white/10 dark:bg-deep sm:grid-cols-3 lg:grid-cols-6">
                     @foreach ($homepageItems('trust') as $item)
                         @php
                             $title = $item->title;
@@ -210,20 +210,21 @@
                             default => 'M4 7.5 12 3l8 4.5-8 4.5-8-4.5Zm3 2.2V15c3 2.3 7 2.3 10 0V9.7M20 8v6m-1 2h2',
                             };
                         @endphp
-                        <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-emerald-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-emerald-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0">
-                            <span class="grid h-8 place-items-center text-[#159b63] transition-transform duration-200 group-hover:-translate-y-0.5 dark:text-emerald-400">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55">
+                        <article class="group flex min-h-[140px] flex-col items-center justify-center gap-3 border-r border-b border-slate-100 px-3 py-6 text-center transition-colors hover:bg-emerald-50/30 dark:border-white/10 dark:hover:bg-emerald-400/5 sm:min-h-[160px] sm:border-r lg:min-h-[140px] lg:border-b-0 lg:border-r lg:last:border-r-0">
+                            <span class="grid size-10 place-items-center text-[#159b63] transition-transform duration-300 group-hover:-translate-y-1 dark:text-emerald-400">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-9" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4">
                                     <path d="{{ $icon }}" />
                                 </svg>
                             </span>
-                            <div class="grid gap-0.5">
-                                <h2 class="text-[10px] leading-4 font-extrabold text-slate-800 dark:text-white">{{ $title }}</h2>
-                                <p class="mx-auto max-w-[150px] text-[8px] leading-[1.35] font-medium text-slate-500 sm:text-[8.5px] dark:text-slate-300">{{ $description }}</p>
+                            <div class="grid gap-1">
+                                <h2 class="text-[11px] leading-tight font-black text-slate-800 dark:text-white uppercase">{{ $title }}</h2>
+                                <p class="mx-auto max-w-[150px] text-[9px] leading-relaxed font-bold text-slate-500 sm:text-[9.5px] dark:text-slate-300">{{ $description }}</p>
                             </div>
                         </article>
                     @endforeach
                 </div>
             </section>
+            @endif
             @endif
 
             @if ($isSectionVisible('about'))
@@ -339,7 +340,7 @@
 
             @if ($isSectionVisible('statistics'))
             <section class="bg-white px-3 pb-7 dark:bg-deep sm:px-5 lg:px-8" aria-label="BNYTI achievements">
-                <div class="mx-auto grid max-w-[1460px] grid-cols-2 overflow-hidden rounded-xl bg-[#071f3f] px-2 py-2.5 shadow-[0_5px_18px_rgba(7,31,63,.2)] sm:grid-cols-3 sm:px-3 lg:grid-cols-6 lg:px-4">
+                <div class="mx-auto grid max-w-[1460px] grid-cols-2 overflow-hidden rounded-xl bg-[#03224c] px-2 py-3 shadow-[0_5px_20px_rgba(3,34,76,.2)] sm:grid-cols-3 sm:px-3 lg:grid-cols-6 lg:px-6">
                     @foreach ($homepageItems('statistics') as $item)
                         @php
                             $value = $item->title;
@@ -352,20 +353,21 @@
                                 default => 'M12 21s7-3.8 7-10V5.5L12 3 5 5.5V11c0 6.2 7 10 7 10Zm-3-10 2 2 4-4',
                             };
                         @endphp
-                        <article class="flex min-h-[66px] items-center justify-center gap-2.5 px-2 py-2 sm:min-h-[70px] lg:justify-start lg:px-3">
-                            <span class="grid size-8 shrink-0 place-items-center text-[#16a467]">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65">
+                        <article class="flex min-h-[66px] items-center justify-center gap-3 px-2 py-2 sm:min-h-[70px] lg:justify-start lg:px-2">
+                            <span class="grid size-8 shrink-0 place-items-center text-lime-400">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
                                     <path d="{{ $icon }}" />
                                 </svg>
                             </span>
                             <div class="min-w-0">
-                                <strong class="block text-[13px] leading-4 font-black text-white sm:text-sm">{{ $value }}</strong>
-                                <span class="block text-[8px] leading-3 font-semibold text-slate-300 sm:text-[9px]">{{ $label }}</span>
+                                <strong class="block text-sm font-black text-lime-400 sm:text-base">{{ $value }}</strong>
+                                <span class="block text-[9px] font-bold text-white uppercase tracking-wider sm:text-[10px]">{{ $label }}</span>
                             </div>
                         </article>
                     @endforeach
                 </div>
             </section>
+            @endif
             @endif
 
             <section id="courses" class="bg-stone-50 py-12 dark:bg-ink sm:py-16">

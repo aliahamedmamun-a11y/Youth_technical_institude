@@ -42,8 +42,11 @@
                         class="h-10 w-auto sm:h-12"
                     >
                     <div class="hidden sm:block">
-                        <span class="block text-xl font-black tracking-tighter text-slate-900 dark:text-white">BNYTI</span>
-                        <span class="block text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase dark:text-slate-400">Technical Institute</span>
+                        <span class="block text-lg font-black tracking-tight text-[#03224c] dark:text-white uppercase leading-none">Bangladesh National</span>
+                        <span class="block text-[9px] font-bold tracking-[0.18em] text-slate-500 uppercase dark:text-slate-400 mt-0.5">Youth Technical Institute</span>
+                    </div>
+                    <div class="sm:hidden">
+                        <span class="block text-xl font-black tracking-tighter text-[#03224c] dark:text-white">BNYTI</span>
                     </div>
                 </a>
                 <div class="flex items-center gap-4">

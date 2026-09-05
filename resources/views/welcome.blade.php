@@ -33,96 +33,22 @@
             Skip to content
         </a>
 
-        <header class="fixed inset-x-0 top-0 z-50 border-b border-slate-900/5 bg-stone-50/85 backdrop-blur-xl dark:border-white/10 dark:bg-ink/80">
-            @php
-                $topBanner = $homepageItems('top-banner')->first();
-                $showTopBanner = $isSectionVisible('top-banner') && $topBanner;
-            @endphp
-            @if ($showTopBanner)
-                <div class="relative z-[60] border-b border-emerald-500/20 bg-gradient-to-r from-[#06192e] via-[#0b2447] to-[#06192e] py-2 text-white shadow-lg">
-                    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-                        <div class="flex min-w-0 flex-1 items-center gap-3">
-                            <div class="hidden items-center gap-2 sm:flex">
-                                <span class="relative flex size-2">
-                                    <span class="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                                    <span class="relative inline-flex size-2 rounded-full bg-emerald-400"></span>
-                                </span>
-                                <span class="text-[10px] font-black tracking-widest text-emerald-400 uppercase">NOTICE</span>
-                            </div>
-                            <p class="truncate text-[11px] font-bold tracking-wide sm:text-xs">
-                                {{ $topBanner->title }}
-                            </p>
-                            @if ($topBanner->link_url)
-                            <a href="{{ $topBanner->link_url }}" class="group flex shrink-0 items-center gap-1 text-[11px] font-black text-emerald-400 hover:text-emerald-300">
-                                <span class="hidden sm:inline">{{ $topBanner->link_label ?: 'Click here' }}</span>
-                                <span class="sm:hidden">Details</span>
-                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-3.5 transition group-hover:translate-x-0.5"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd" /></svg>
-                            </a>
-                            @endif
-                        </div>
-                        <div class="hidden items-center gap-6 text-[11px] font-bold sm:flex">
-                            <a href="tel:+8809696481628" class="flex items-center gap-1.5 transition hover:text-emerald-400">
-                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-3.5 opacity-70"><path d="M2 3a1 1 0 0 1 1-1h2.153a1 1 0 0 1 .986.836l.74 4.435a1 1 0 0 1-.54 1.06l-1.548.773a11.037 11.037 0 0 0 4.529 4.53l.774-1.548a1 1 0 0 1 1.059-.54l4.435.74a1 1 0 0 1 .836.986V17a1 1 0 0 1-1 1h-2C7.82 18 2 12.18 2 5V3Z" /></svg>
-                                +880 9696-481628
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-            <nav class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8" aria-label="Primary navigation">
-                <a href="#home" class="group flex min-w-0 items-center gap-3" aria-label="BNYTI home">
+        <header class="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-ink">
+            <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+                <a href="#home" class="group flex items-center gap-3">
                     <img
                         src="{{ asset('images/bnyti-logo.svg') }}"
-                        alt="Bangladesh National Youth Technical Institute logo"
-                        class="size-12 shrink-0 object-contain transition duration-300 group-hover:-rotate-3 sm:size-14"
+                        alt="Logo"
+                        class="h-10 w-auto sm:h-12"
                     >
-                    <span class="min-w-0 sm:hidden">
-                        <span class="block text-base font-black tracking-tight text-slate-950 dark:text-white">BNYTI</span>
-                        <span class="block text-[9px] font-bold tracking-[0.14em] text-slate-500 dark:text-slate-300">TECHNICAL INSTITUTE</span>
-                    </span>
-                    <span class="hidden min-w-0 sm:block">
-                        <span class="block truncate text-sm font-black tracking-tight text-slate-950 dark:text-white sm:text-[15px]">
-                            <span class="text-emerald-600 dark:text-emerald-400">BANGLADESH</span>
-                            <span class="text-red-600 dark:text-red-400"> NATIONAL</span>
-                        </span>
-                        <span class="block truncate text-[10px] font-bold tracking-[0.17em] text-slate-600 dark:text-slate-300 sm:text-[11px]">
-                            YOUTH TECHNICAL INSTITUTE
-                        </span>
-                    </span>
+                    <div class="hidden sm:block">
+                        <span class="block text-xl font-black tracking-tighter text-slate-900 dark:text-white">BNYTI</span>
+                        <span class="block text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase dark:text-slate-400">Technical Institute</span>
+                    </div>
                 </a>
-
-                <div class="hidden items-center gap-7 lg:flex">
-                    <a href="#home" class="nav-link active" data-i18n="navHome">Home</a>
-                    <a href="#courses" class="nav-link" data-i18n="navCourses">Courses</a>
-                    <a href="#about" class="nav-link" data-i18n="navAbout">About</a>
-                    <a href="#branch-application-promo" class="nav-link" data-i18n="navBranches">Branches</a>
-                    <a href="{{ route('results.index') }}" class="nav-link">Results</a>
-                    <details class="group relative">
-                        <summary class="nav-link flex cursor-pointer list-none items-center gap-1">Apply Now <svg viewBox="0 0 24 24" class="size-4 transition group-open:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg></summary>
-                        <div class="absolute right-0 top-full z-30 mt-3 w-52 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-white/10 dark:bg-ink">
-                            <a href="{{ route('branch-applications.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-200 dark:hover:bg-emerald-500/10">Branch Registration</a>
-                        </div>
-                    </details>
-                    <a href="{{ route('login') }}" class="nav-link">Staff Login</a>
-                    <a href="#latest-news-contact" class="nav-link" data-i18n="navContact">Contact</a>
-                </div>
-
-                <div class="flex shrink-0 items-center gap-2">
-                    <button type="button" class="icon-button hidden lg:inline-grid" data-locale-toggle aria-label="Switch language">
-                        <span class="text-xs font-black" data-locale-label>বাং</span>
-                    </button>
-                    <button type="button" class="icon-button hidden lg:inline-grid" data-theme-toggle aria-label="Toggle color theme">
-                        <svg data-theme-sun viewBox="0 0 24 24" aria-hidden="true" class="size-5">
-                            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
-                            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/>
-                        </svg>
-                        <svg data-theme-moon viewBox="0 0 24 24" aria-hidden="true" class="hidden size-5">
-                            <path d="M20 15.1A8.5 8.5 0 0 1 8.9 4a8.5 8.5 0 1 0 11.1 11.1Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/>
-                        </svg>
-                    </button>
-                    <a href="#latest-news-contact" class="hidden rounded-full bg-emerald-500 px-5 py-3 text-sm font-black text-ink shadow-lg shadow-emerald-500/20 transition hover:-translate-y-0.5 hover:bg-emerald-400 xl:inline-flex" data-i18n="getStarted">
-                        Get Started
+                <div class="flex items-center gap-4">
+                    <a href="{{ route('branch-applications.create') }}" class="rounded-lg bg-[#03224c] px-5 py-2 text-xs font-black text-white uppercase tracking-widest transition hover:bg-slate-800 sm:text-sm">
+                        Admission 2026
                     </a>
                     <button
                         type="button"
@@ -139,6 +65,21 @@
                             <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
                         </svg>
                     </button>
+                </div>
+            </div>
+            <nav class="hidden border-t border-slate-100 bg-[#03224c] lg:block dark:border-white/5">
+                <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+                    <div class="flex items-center gap-8">
+                        <a href="#home" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Home</a>
+                        <a href="#courses" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Courses</a>
+                        <a href="#about" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">About</a>
+                        <a href="#branch-application-promo" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Branches</a>
+                        <a href="{{ route('results.index') }}" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Results</a>
+                        <a href="#latest-news-contact" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Contact</a>
+                    </div>
+                    <a href="{{ route('login') }}" class="rounded bg-amber-500 px-6 py-1.5 text-xs font-black text-[#03224c] uppercase transition hover:bg-amber-400">
+                        Student Login
+                    </a>
                 </div>
             </nav>
         </header>
@@ -190,51 +131,36 @@
                 $heroItems = $homepageItems('hero');
                 $heroLead = $heroItems->first();
             @endphp
-            <section id="home" @class([
-                'hero-slide relative min-h-[620px] overflow-hidden bg-ink text-white sm:min-h-[600px] lg:min-h-[620px]',
-                'pt-[108px] sm:pt-[108px] lg:pt-[116px]' => $showTopBanner,
-                'pt-[76px]' => !$showTopBanner,
-            ]) data-hero-carousel>
+            <section id="home" class="hero-slide relative min-h-[620px] overflow-hidden bg-ink pt-[120px] text-white sm:min-h-[600px] lg:min-h-[650px] lg:pt-[120px]" data-hero-carousel>
                 @foreach ($heroItems as $hero)
                     <img
                         src="{{ str_starts_with($hero->image_path, 'images/') ? asset($hero->image_path) : Storage::disk('public')->url($hero->image_path) }}"
                         alt="{{ $hero->title }}"
-                        class="hero-carousel-image absolute inset-0 size-full object-cover object-[68%_center] opacity-0 sm:object-[58%_center]"
+                        class="hero-carousel-image absolute inset-0 size-full object-cover object-center opacity-0"
                         data-hero-image
                         @if ($loop->first) fetchpriority="high" @else loading="lazy" @endif
                     >
                 @endforeach
-                <div class="hero-mobile-overlay absolute inset-0 bg-[linear-gradient(90deg,rgba(3,7,18,.88)_0%,rgba(3,7,18,.62)_42%,rgba(3,7,18,.38)_76%,rgba(3,7,18,.72)_100%)]"></div>
-                <div class="absolute inset-0 bg-[radial-gradient(circle_at_18%_68%,rgba(251,191,36,.24),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(59,130,246,.2),transparent_28%)]"></div>
-                <div class="absolute inset-x-0 bottom-0 h-1 bg-emerald-500"></div>
+                <div class="hero-mobile-overlay absolute inset-0 bg-[#03224c]/75"></div>
+                <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,34,76,.9)_0%,rgba(3,34,76,.6)_40%,transparent_100%)]"></div>
+                <div class="absolute inset-x-0 bottom-0 h-1 bg-amber-500"></div>
 
                 <div class="hero-content-frame relative mx-auto flex min-h-[552px] max-w-7xl items-center px-4 pt-8 pb-24 sm:min-h-[492px] sm:px-6 sm:py-12 lg:min-h-[504px] lg:px-8">
-                    <div class="hero-content reveal is-visible flex w-full max-w-[620px] flex-col items-start gap-5 sm:gap-8 lg:ml-12">
-                        <h1 class="sr-only">{{ $heroLead?->title ?? 'Practical skills for a future without limits.' }}</h1>
+                    <div class="hero-content reveal is-visible flex w-full max-w-[820px] flex-col items-start gap-6 sm:gap-10">
+                        <h1 class="text-4xl font-black leading-[1.1] text-white uppercase sm:text-6xl lg:text-7xl">
+                            {{ $heroLead?->title ?? 'Empowering Technical Leaders. Building a Secure Future.' }}
+                        </h1>
 
-                        <div class="hero-badge">
-                            <span class="size-2.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_16px_#34d399]"></span>
-                            <span>{{ $heroLead?->subtitle ?? 'Bangladesh National Youth Technical Institute' }}</span>
-                        </div>
-
-                        <div class="h-1 w-28 rounded-full bg-emerald-500 shadow-[0_0_24px_rgba(16,185,129,.65)]"></div>
-
-                        <p class="sr-only" data-i18n="heroBody">
-                            {{ $heroLead?->body }}
+                        <p class="max-w-2xl text-lg font-medium leading-relaxed text-slate-200" data-i18n="heroBody">
+                            {{ $heroLead?->body ?? 'Join BNYTI for industry-focused technical education and practical expertise for a skilled future.' }}
                         </p>
 
-                        <div class="hero-actions flex w-full flex-wrap items-center gap-3 sm:w-auto sm:gap-4">
-                            <a href="{{ $heroLead?->link_url ?? '#courses' }}" class="hero-primary-button group">
-                                <span>{{ $heroLead?->link_label ?? 'Get Started' }}</span>
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5 transition group-hover:translate-x-1">
-                                    <path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                </svg>
+                        <div class="hero-actions flex w-full flex-wrap items-center gap-4 sm:w-auto">
+                            <a href="{{ $heroLead?->link_url ?? '#courses' }}" class="rounded-lg bg-amber-500 px-8 py-4 text-sm font-black text-[#03224c] uppercase shadow-xl transition hover:bg-amber-400">
+                                <span>{{ $heroLead?->link_label ?? 'Join Course' }}</span>
                             </a>
-                            <a href="#latest-news-contact" class="hero-outline-button">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5">
-                                    <path d="M7.2 3h3l1.5 4.2-2 1.7c1.3 2.8 2.8 4.3 5.5 5.5l1.7-2 4.1 1.5v3c0 2.2-1.8 4-4 4C9.3 20.9 3 14.7 3 7a4 4 0 0 1 4.2-4Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"/>
-                                </svg>
-                                <span>Contact Us</span>
+                            <a href="#courses" class="rounded-lg border-2 border-amber-500 px-8 py-4 text-sm font-black text-amber-500 uppercase transition hover:bg-amber-500 hover:text-[#03224c]">
+                                <span>Programs</span>
                             </a>
                         </div>
                     </div>

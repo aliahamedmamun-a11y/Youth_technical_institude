@@ -69,7 +69,6 @@
                     </div>
                 </div>
                 @endif
-            @endif
 
             <nav class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8" aria-label="Primary navigation">
                 <a href="#home" class="group flex min-w-0 items-center gap-3" aria-label="BNYTI home">

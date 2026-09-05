@@ -144,8 +144,8 @@
                         @if ($loop->first) fetchpriority="high" @else loading="lazy" @endif
                     >
                 @endforeach
-                <div class="hero-mobile-overlay absolute inset-0 bg-[#03224c]/75"></div>
-                <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,34,76,.9)_0%,rgba(3,34,76,.6)_40%,transparent_100%)]"></div>
+                <div class="hero-mobile-overlay absolute inset-0 bg-[#03224c]/40"></div>
+                <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,34,76,.6)_0%,rgba(3,34,76,.2)_50%,transparent_100%)]"></div>
                 <div class="absolute inset-x-0 bottom-0 h-1 bg-amber-500"></div>
 
                 <div class="hero-content-frame relative mx-auto flex min-h-[552px] max-w-7xl items-center px-4 pt-8 pb-24 sm:min-h-[492px] sm:px-6 sm:py-12 lg:min-h-[504px] lg:px-8">
@@ -154,13 +154,7 @@
                             {{ $heroLead?->title ?? 'Empowering South Asia\'s Tech Leaders. Building a Secure Future.' }}
                         </h1>
 
-                        <div class="h-1.5 w-24 bg-amber-500"></div>
-
-                        <p class="max-w-xl text-base font-medium leading-relaxed text-slate-100 sm:text-lg" data-i18n="heroBody">
-                            {{ $heroLead?->body ?? 'Join South Asia National Technical Institute for industry-focused technical education and practical expertise for a skilled future.' }}
-                        </p>
-
-                        <div class="hero-actions mt-2 flex w-full flex-wrap items-center gap-4 sm:w-auto">
+                        <div class="hero-actions mt-4 flex w-full flex-wrap items-center gap-4 sm:w-auto">
                             <a href="{{ $heroLead?->link_url ?? '#courses' }}" class="rounded-md bg-amber-500 px-10 py-4 text-sm font-black text-[#03224c] uppercase tracking-wider shadow-2xl transition hover:bg-amber-400">
                                 <span>{{ $heroLead?->link_label ?? 'Join Course' }}</span>
                             </a>

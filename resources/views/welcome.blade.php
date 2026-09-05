@@ -144,9 +144,8 @@
                         @if ($loop->first) fetchpriority="high" @else loading="lazy" @endif
                     >
                 @endforeach
-                <div class="hero-mobile-overlay absolute inset-0 bg-[#03224c]/10"></div>
-                <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,34,76,0.95)_0%,rgba(3,34,76,0.5)_50%,rgba(255,255,255,0.1)_100%)]"></div>
-                <div class="absolute inset-0 bg-[linear-gradient(to_left,rgba(255,255,255,0.2)_0%,transparent_40%)]"></div>
+                <div class="hero-mobile-overlay absolute inset-0 bg-[#03224c]/40"></div>
+                <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,34,76,.6)_0%,rgba(3,34,76,.2)_50%,transparent_100%)]"></div>
                 <div class="absolute inset-x-0 bottom-0 h-1 bg-amber-500"></div>
 
                 <div class="hero-content-frame relative mx-auto flex min-h-[552px] max-w-7xl items-center px-4 pt-8 pb-24 sm:min-h-[492px] sm:px-6 sm:py-12 lg:min-h-[504px] lg:px-8">
@@ -176,73 +175,108 @@
                 </div>
             </section>
 
-            <section class="relative z-10 -mt-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-2 lg:grid-cols-4 overflow-hidden rounded-xl shadow-2xl">
-                    @foreach([
-                        ['INDUSTRY RELEVANT CURRICULUM', 'bg-[#0b2447]'],
-                        ['EXPERT TEACHERS', 'bg-[#159b63]'],
-                        ['FP PROCESSES LEARNING', 'bg-[#f59e0b]'],
-                        ['100% PLACEMENT SCHOOL', 'bg-[#13728f]']
-                    ] as [$label, $bg])
-                    <div class="{{ $bg }} flex flex-col items-center justify-center gap-3 p-6 text-center text-white">
-                        <div class="size-10 rounded-full bg-white/20 flex items-center justify-center">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-6"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                        </div>
-                        <span class="text-[11px] font-black tracking-wider uppercase leading-tight">{{ $label }}</span>
+            <section id="notice-bar" class="border-b border-emerald-900/10 bg-white dark:border-white/10 dark:bg-deep" aria-label="Institute notices">
+                <div class="flex min-h-12 items-stretch overflow-hidden">
+                    <div class="notice-label relative flex shrink-0 items-center gap-2 bg-emerald-700 py-3 pr-7 pl-4 text-[11px] font-black tracking-[0.2em] text-white sm:pl-8" aria-hidden="true">
+                        <span class="size-2 rounded-full bg-white"></span>
+                        <span class="relative flex size-2"><span class="absolute inline-flex size-full animate-ping rounded-full bg-amber-300 opacity-75 motion-reduce:animate-none"></span><span class="relative inline-flex size-2 rounded-full bg-amber-300"></span></span>
+                        <span>NOTICE</span>
                     </div>
-                    @endforeach
+                    <div class="min-w-0 flex-1 overflow-hidden py-3" aria-live="polite">
+                        <div class="notice-track flex gap-12 whitespace-nowrap px-8 text-xs font-bold text-slate-700 motion-reduce:transform-none dark:text-slate-200">
+                            @forelse ($noticeItems as $notice)
+                                <a href="{{ $notice['link'] ?: '#notice-bar' }}" class="transition hover:text-emerald-700 dark:hover:text-emerald-400">{{ $notice['title'] }} <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> {{ $notice['message'] }}</a>
+                            @empty
+                                <span>Admission for the July 2026 session is now open <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> Branch applications are being accepted nationwide <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> Contact us for course counselling</span>
+                            @endforelse
+                        </div>
+                    </div>
                 </div>
             </section>
 
+            @if ($isSectionVisible('trust'))
+            <section class="relative z-20 mt-6 px-3 pb-6 sm:mt-8 sm:px-5 lg:px-8" aria-label="Why choose BNYTI">
+                <div class="mx-auto grid max-w-[1460px] grid-cols-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_4px_15px_rgba(15,23,42,.12)] dark:border-white/10 dark:bg-deep sm:grid-cols-3 lg:grid-cols-6">
+                    @foreach ($homepageItems('trust') as $item)
+                        @php
+                            $title = $item->title;
+                            $description = $item->body;
+                            $icon = match ($item->icon) {
+                            'shield' => 'M12 2.5v4m0 11v4m9.5-9.5h-4m-11 0h-4m16.2-6.2-2.8 2.8m-7.8 7.8-2.8 2.8m13.4 0-2.8-2.8M8.1 6.6 5.3 3.8M16.5 10a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm-6.4 9.5h3.8',
+                            'lab' => 'M9.5 3h5v5.2l4.9 8.5A2.9 2.9 0 0 1 16.9 21H7.1a2.9 2.9 0 0 1-2.5-4.3l4.9-8.5V3Zm-2 11h9M8 17h8m-4-14v5',
+                            'users' => 'M9.5 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm5.5 1a2.5 2.5 0 1 0 0-5m-11 12a5.5 5.5 0 0 1 11 0v2H4v-2Zm11-4a4.5 4.5 0 0 1 5 4v2h-3',
+                            'handshake' => 'M8.5 13.5 12 17l3.5-3.5m-9-4 3-3a2 2 0 0 1 2.8 0l.7.7.7-.7a2 2 0 0 1 2.8 0l3 3-7 7a2 2 0 0 1-2.8 0l-7-7 3-3m1 3 2 2m7-2 2 2',
+                            'verification' => 'M7 2.5h7l4 4V21H7a2 2 0 0 1-2-2V4.5a2 2 0 0 1 2-2Zm7 0v4h4M8.5 12l2 2 4-4m-6 7h6',
+                            default => 'M4 7.5 12 3l8 4.5-8 4.5-8-4.5Zm3 2.2V15c3 2.3 7 2.3 10 0V9.7M20 8v6m-1 2h2',
+                            };
+                        @endphp
+                        <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-emerald-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-emerald-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0">
+                            <span class="grid h-8 place-items-center text-[#159b63] transition-transform duration-200 group-hover:-translate-y-0.5 dark:text-emerald-400">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55">
+                                    <path d="{{ $icon }}" />
+                                </svg>
+                            </span>
+                            <div class="grid gap-0.5">
+                                <h2 class="text-[10px] leading-4 font-extrabold text-slate-800 dark:text-white">{{ $title }}</h2>
+                                <p class="mx-auto max-w-[150px] text-[8px] leading-[1.35] font-medium text-slate-500 sm:text-[8.5px] dark:text-slate-300">{{ $description }}</p>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
+            @endif
+
             @if ($isSectionVisible('about'))
-            <section id="about" class="overflow-hidden bg-[#e0f2fe]/30 py-16 dark:bg-deep sm:py-20 lg:py-24">
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <h2 class="text-center text-2xl font-black tracking-tight text-slate-900 uppercase sm:text-4xl dark:text-white">
-                        About South Asia National Technical Institute
-                    </h2>
-
-                    <div class="mt-12 grid gap-10 lg:grid-cols-[0.85fr_1.15fr] items-start">
-                        <div class="relative overflow-hidden rounded-2xl border-4 border-white shadow-2xl">
-                            <img
-                                src="{{ $instituteProfile?->image_path ? (str_starts_with($instituteProfile->image_path, 'images/') ? asset($instituteProfile->image_path) : Storage::disk('public')->url($instituteProfile->image_path)) : asset('images/institute-gallery-1.png') }}"
-                                alt="Institute Building"
-                                class="aspect-[4/3] w-full object-cover"
-                                loading="lazy"
-                            >
-                        </div>
-
-                        <div class="grid lg:grid-cols-[1fr_0.45fr] gap-8">
-                            <div class="flex flex-col gap-6">
-                                <div class="space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                                    @if ($instituteProfile)
-                                        <div class="whitespace-pre-line">{{ Str::limit($instituteProfile->content, 600) }}</div>
-                                    @else
-                                        <p>Bangladesh National Youth Technical Institute (BNYTI) is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation's youth with industry-relevant knowledge and practical expertise.</p>
-                                    @endif
+            <section id="about" class="overflow-hidden bg-white py-14 dark:bg-deep sm:py-16 lg:py-[clamp(56px,8vh,88px)]" data-about-carousel data-about-interval="10000" data-about-viewport-fit>
+                @if ($aboutEntries->isNotEmpty())
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" data-about-layout="profile" data-about-size="balanced">
+                        <div class="relative">
+                            @foreach ($aboutEntries as $about)
+                                @php
+                                    $aboutImage = $about->image_path ?: $about->principal_image_path;
+                                @endphp
+                                <article class="grid items-start gap-5 md:grid-cols-[minmax(230px,0.62fr)_minmax(0,1.55fr)] md:gap-7 lg:grid-cols-[minmax(260px,0.62fr)_minmax(0,1.6fr)] lg:gap-8 {{ $loop->first ? '' : 'hidden' }}" data-about-slide>
+                                    <div class="mx-auto w-full max-w-[340px] overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white shadow-[0_10px_24px_rgba(15,23,42,.12)] dark:border-white/10 dark:bg-ink lg:max-w-[360px]">
+                                        <img src="{{ $aboutImage ? (str_starts_with($aboutImage, 'images/') ? asset($aboutImage) : Storage::disk('public')->url($aboutImage)) : asset('images/principal-portrait.webp') }}" alt="{{ $about->about_heading }}" class="aspect-[4/5.15] w-full object-cover object-top lg:h-[clamp(340px,50vh,430px)] lg:aspect-auto" loading="lazy">
+                                        @if ($about->principal_name)
+                                            <div class="bg-[#0b2447] px-4 py-3.5 text-center text-white"><h3 class="text-lg font-black tracking-tight sm:text-xl">{{ $about->principal_name }}</h3><p class="mt-0.5 text-xs text-slate-200">{{ $about->principal_title }}</p></div>
+                                        @endif
+                                    </div>
+                                    <div class="min-w-0 pt-1 md:pt-0">
+                                        <div class="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-5">
+                                            <h2 class="min-w-0 max-w-full text-2xl font-black tracking-tight text-slate-950 sm:text-3xl dark:text-white" aria-label="About Us" data-about-heading>
+                                                About <span class="text-emerald-600 dark:text-emerald-400">Us</span>
+                                            </h2>
+                                            <span class="h-[3px] min-w-16 flex-1 rounded-full bg-emerald-600 sm:max-w-32" aria-hidden="true"></span>
+                                        </div>
+                                        <div class="mt-3 h-px w-full bg-slate-200 dark:bg-white/10"></div>
+                                        <h3 class="mt-4 text-sm font-semibold text-slate-900 dark:text-white">About the Institution</h3>
+                                        @if ($about->summary)
+                                            <p class="mt-1.5 text-sm leading-5.5 text-slate-700 lg:text-[clamp(13px,1.55vh,14px)] lg:leading-[clamp(18px,2.2vh,21px)] dark:text-slate-200">{{ $about->summary }}</p>
+                                        @endif
+                                        @if ($about->content)
+                                            <div class="mt-1.5 whitespace-pre-line text-sm leading-5.5 text-slate-600 lg:text-[clamp(13px,1.55vh,14px)] lg:leading-[clamp(18px,2.2vh,21px)] dark:text-slate-300">{{ $about->content }}</div>
+                                        @endif
+                                    </div>
+                                </article>
+                            @endforeach
+                            @if ($aboutEntries->count() > 1)
+                                <div class="mt-8 flex items-center justify-between border-t border-slate-200 pt-4 dark:border-white/10">
+                                    <span class="text-xs font-bold text-slate-500" aria-live="polite"><span data-about-current>1</span> / {{ $aboutEntries->count() }}</span>
+                                    <div class="flex items-center gap-2"><button type="button" data-about-prev class="grid size-9 place-items-center rounded-full border border-slate-200 font-black hover:bg-emerald-50" aria-label="Previous About entry">←</button><div class="flex gap-1.5" role="tablist" aria-label="About entries">@foreach ($aboutEntries as $about)<button type="button" data-about-dot="{{ $loop->index }}" class="size-2.5 rounded-full bg-slate-300 data-[active=true]:bg-emerald-600" aria-label="Show About entry {{ $loop->iteration }}" role="tab"></button>@endforeach</div><button type="button" data-about-next class="grid size-9 place-items-center rounded-full border border-slate-200 font-black hover:bg-emerald-50" aria-label="Next About entry">→</button></div>
                                 </div>
-
-                                <div>
-                                    <h3 class="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Our Core Strength</h3>
-                                    <ul class="mt-4 space-y-3">
-                                        @foreach(['Modern Practical Lab Facilities', 'Expert Professional Trainers', 'Job Placement Assistant Program', 'Web and IT Solutions Curriculum'] as $feature)
-                                        <li class="flex items-center gap-3 text-sm font-bold text-slate-700 dark:text-slate-200">
-                                            <span class="size-2.5 shrink-0 rounded-full bg-[#03224c]"></span>
-                                            {{ $feature }}
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="rounded-2xl border-2 border-[#03224c]/10 bg-white p-6 shadow-sm self-start">
-                                <h4 class="text-sm font-black tracking-tight text-[#03224c] border-b-2 border-[#03224c] pb-2 uppercase">ONLINE VALUE</h4>
-                                <p class="mt-4 text-[11px] font-semibold leading-relaxed text-slate-500 italic">
-                                    "We provide digital-first learning experiences and online certificate verification to ensure transparency and accessibility for all our students."
-                                </p>
-                            </div>
+                            @endif
                         </div>
                     </div>
-                </div>
+                  @else
+                     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                         <div class="rounded-[1.35rem] border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-white/10 dark:bg-ink">
+                             <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">About the institute</p>
+                             <h2 class="mt-3 text-3xl font-black tracking-tight">Education that moves beyond the classroom.</h2>
+                             <p class="mx-auto mt-4 max-w-3xl whitespace-pre-line text-slate-600 dark:text-slate-300">Bangladesh National Youth Technical Institute (BNYTI) is committed to empowering young people with industry-relevant knowledge, practical expertise, and modern technological skills.</p>
+                         </div>
+                     </div>
+                  @endif
             </section>
             @endif
 
@@ -298,6 +332,36 @@
                 </div>
             </section>
 
+            @if ($isSectionVisible('statistics'))
+            <section class="bg-white px-3 pb-7 dark:bg-deep sm:px-5 lg:px-8" aria-label="BNYTI achievements">
+                <div class="mx-auto grid max-w-[1460px] grid-cols-2 overflow-hidden rounded-xl bg-[#071f3f] px-2 py-2.5 shadow-[0_5px_18px_rgba(7,31,63,.2)] sm:grid-cols-3 sm:px-3 lg:grid-cols-6 lg:px-4">
+                    @foreach ($homepageItems('statistics') as $item)
+                        @php
+                            $value = $item->title;
+                            $label = $item->subtitle ?: $item->body;
+                            $icon = match ($item->icon) {
+                                'students' => 'M8.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7-1a2.75 2.75 0 1 0 0-5.5M2.5 20v-2.5a5.5 5.5 0 0 1 11 0V20h-11Zm11.5-6a4.75 4.75 0 0 1 7.5 3.9V20H17',
+                                'branches' => 'M4 21V10l8-7 8 7v11M8 21v-7h8v7M6.5 8.5V4H9v2.3M3 21h18',
+                                'courses' => 'M3.5 5.5c2.8-.8 5.6-.4 8.5 1.3v14c-2.9-1.7-5.7-2.1-8.5-1.3v-14Zm17 0c-2.8-.8-5.6-.4-8.5 1.3v14c2.9-1.7 5.7-2.1 8.5-1.3v-14ZM12 6.8V21',
+                                'trainers' => 'M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 21v-2a7 7 0 0 1 14 0v2M18 8.5h3m-1.5-1.5v3',
+                                default => 'M12 21s7-3.8 7-10V5.5L12 3 5 5.5V11c0 6.2 7 10 7 10Zm-3-10 2 2 4-4',
+                            };
+                        @endphp
+                        <article class="flex min-h-[66px] items-center justify-center gap-2.5 px-2 py-2 sm:min-h-[70px] lg:justify-start lg:px-3">
+                            <span class="grid size-8 shrink-0 place-items-center text-[#16a467]">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65">
+                                    <path d="{{ $icon }}" />
+                                </svg>
+                            </span>
+                            <div class="min-w-0">
+                                <strong class="block text-[13px] leading-4 font-black text-white sm:text-sm">{{ $value }}</strong>
+                                <span class="block text-[8px] leading-3 font-semibold text-slate-300 sm:text-[9px]">{{ $label }}</span>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
+            @endif
 
             <section id="courses" class="bg-stone-50 py-12 dark:bg-ink sm:py-16">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -342,11 +406,6 @@
 
                                 <div class="flex min-h-[174px] flex-1 flex-col px-4 pt-7 pb-4">
                                     <h3 class="line-clamp-2 min-h-10 text-sm leading-5 font-extrabold text-[#0b2447] dark:text-white">{{ $course->name }}</h3>
-                                    <div class="mt-1 flex gap-0.5 text-amber-400">
-                                        @for ($i = 0; $i < 5; $i++)
-                                            <svg viewBox="0 0 20 20" fill="currentColor" class="size-3.5"><path d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" /></svg>
-                                        @endfor
-                                    </div>
                                     <p class="mt-2 line-clamp-2 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{{ $course->description }}</p>
                                     <dl class="mt-3 grid gap-1.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
                                         <div class="flex items-center gap-1.5">
@@ -357,8 +416,12 @@
                                             </svg>
                                             <dd>{{ $course->duration }}</dd>
                                         </div>
+                                        <div class="flex items-center gap-1.5">
+                                            <dt class="sr-only">Course overview</dt>
+                                            <span class="w-3.5 text-center font-black">৳</span>
+                                            <dd class="line-clamp-1">{{ Str::limit($course->description, 48) }}</dd>
+                                        </div>
                                     </dl>
-                                    <a href="#latest-news-contact" class="mt-4 rounded bg-amber-500 py-2 text-center text-[10px] font-black text-[#03224c] uppercase transition hover:bg-amber-400">Learn More</a>
                                 </div>
                             </article>
                         @empty
@@ -382,30 +445,7 @@
                 </div>
             </section>
 
-            @if ($isSectionVisible('statistics'))
-            <section class="bg-[#03224c] py-16 text-white" aria-label="BNYTI achievements">
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 class="text-xs font-black uppercase tracking-[0.3em] text-amber-500">Training Input</h2>
-                    <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-8">
-                        @foreach ($homepageItems('statistics') as $item)
-                            @php
-                                $value = $item->title;
-                                $label = $item->subtitle ?: $item->body;
-                            @endphp
-                            <div class="flex flex-col items-center">
-                                <div class="relative size-32 sm:size-40 flex items-center justify-center border-4 border-white/10 rounded-full">
-                                    <div class="absolute inset-0 rounded-full border-t-4 border-amber-500 animate-[spin_3s_linear_infinite]"></div>
-                                    <span class="text-2xl sm:text-3xl font-black">{{ $value }}</span>
-                                </div>
-                                <span class="mt-5 block text-xs sm:text-sm font-bold tracking-widest text-slate-300 uppercase">{{ $label }}</span>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-            @endif
-
-            <section id="expert-teachers" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16 pt-16">
+            <section id="expert-teachers" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="section-heading-row flex items-start justify-between gap-4 sm:items-center">
                         <div>

@@ -16,6 +16,14 @@ class HomepageItemSeeder extends Seeder
         $sections = HomepageSection::query()->pluck('id', 'key');
 
         $items = [
+            'top-banner' => [[
+                'key' => 'main',
+                'title' => 'Admission is going on for July-December 2026 Session',
+                'subtitle' => 'Apply Now',
+                'link_label' => 'Register Now',
+                'link_url' => '/branch-application',
+                'image' => 'images/top-banner-bg.png', // Default image or just a color
+            ]],
             'hero' => [
                 ['key' => 'hero-lab', 'title' => 'Practical skills for a future without limits.', 'subtitle' => 'Bangladesh National Youth Technical Institute', 'body' => 'Industry-focused technical training, experienced mentors, and nationwide opportunity—designed to turn ambition into employable expertise.', 'image' => 'images/bnyti-hero-premium-1.png', 'link_label' => 'Get Started', 'link_url' => '#courses'],
                 ['key' => 'hero-workshop', 'title' => 'Build confidence through hands-on learning.', 'subtitle' => 'Bangladesh National Youth Technical Institute', 'body' => 'Modern laboratories and project-based classes help learners build skills they can use from day one.', 'image' => 'images/bnyti-hero-premium-2.png', 'link_label' => 'Explore Courses', 'link_url' => '#courses'],

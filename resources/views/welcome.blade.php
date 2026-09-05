@@ -149,20 +149,22 @@
                 <div class="absolute inset-x-0 bottom-0 h-1 bg-amber-500"></div>
 
                 <div class="hero-content-frame relative mx-auto flex min-h-[552px] max-w-7xl items-center px-4 pt-8 pb-24 sm:min-h-[492px] sm:px-6 sm:py-12 lg:min-h-[504px] lg:px-8">
-                    <div class="hero-content reveal is-visible flex w-full max-w-[820px] flex-col items-start gap-6 sm:gap-10">
-                        <h1 class="text-4xl font-black leading-[1.1] text-white uppercase sm:text-6xl lg:text-7xl">
+                    <div class="hero-content reveal is-visible flex w-full max-w-[720px] flex-col items-start gap-6 sm:gap-8">
+                        <h1 class="text-3xl font-black leading-[1.1] text-white uppercase sm:text-5xl lg:text-6xl">
                             {{ $heroLead?->title ?? 'Empowering South Asia\'s Tech Leaders. Building a Secure Future.' }}
                         </h1>
 
-                        <p class="max-w-2xl text-lg font-medium leading-relaxed text-slate-200" data-i18n="heroBody">
+                        <div class="h-1.5 w-24 bg-amber-500"></div>
+
+                        <p class="max-w-xl text-base font-medium leading-relaxed text-slate-100 sm:text-lg" data-i18n="heroBody">
                             {{ $heroLead?->body ?? 'Join South Asia National Technical Institute for industry-focused technical education and practical expertise for a skilled future.' }}
                         </p>
 
-                        <div class="hero-actions flex w-full flex-wrap items-center gap-4 sm:w-auto">
-                            <a href="{{ $heroLead?->link_url ?? '#courses' }}" class="rounded-lg bg-amber-500 px-8 py-4 text-sm font-black text-[#03224c] uppercase shadow-xl transition hover:bg-amber-400">
+                        <div class="hero-actions mt-2 flex w-full flex-wrap items-center gap-4 sm:w-auto">
+                            <a href="{{ $heroLead?->link_url ?? '#courses' }}" class="rounded-md bg-amber-500 px-10 py-4 text-sm font-black text-[#03224c] uppercase tracking-wider shadow-2xl transition hover:bg-amber-400">
                                 <span>{{ $heroLead?->link_label ?? 'Join Course' }}</span>
                             </a>
-                            <a href="#courses" class="rounded-lg border-2 border-amber-500 px-8 py-4 text-sm font-black text-amber-500 uppercase transition hover:bg-amber-500 hover:text-[#03224c]">
+                            <a href="#courses" class="rounded-md border-2 border-white px-10 py-4 text-sm font-black text-white uppercase tracking-wider transition hover:bg-white hover:text-[#03224c]">
                                 <span>Programs</span>
                             </a>
                         </div>

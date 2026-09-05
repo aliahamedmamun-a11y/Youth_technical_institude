@@ -246,7 +246,6 @@
                 </div>
             </section>
             @endif
-            @endif
 
             <section id="about-legacy" class="hidden" aria-hidden="true">
                 @php

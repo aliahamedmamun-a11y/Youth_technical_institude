@@ -366,7 +366,6 @@
                 </div>
             </section>
             @endif
-            @endif
 
             <section id="courses" class="bg-stone-50 py-12 dark:bg-ink sm:py-16">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

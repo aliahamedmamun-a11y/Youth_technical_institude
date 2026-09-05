@@ -23,5 +23,10 @@ class DatabaseSeeder extends Seeder
                 'role' => UserRole::SuperAdmin->value,
             ]
         );
+
+        $this->call([
+            HomepageSectionSeeder::class,
+            HomepageItemSeeder::class,
+        ]);
     }
 }

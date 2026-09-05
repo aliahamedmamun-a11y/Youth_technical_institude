@@ -34,18 +34,42 @@
         </a>
 
         <header class="fixed inset-x-0 top-0 z-50 border-b border-slate-900/5 bg-stone-50/85 backdrop-blur-xl dark:border-white/10 dark:bg-ink/80">
-            <div class="border-b border-slate-900/5 bg-ink text-white dark:border-white/10">
-                <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 text-[11px] font-semibold tracking-wide sm:px-6 lg:px-8">
-                    <p class="flex min-w-0 items-center gap-2">
-                        <span class="size-1.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_12px_#34d399]"></span>
-                        <span class="truncate" data-i18n="topMessage">Admissions are open for the July 2026 session</span>
-                    </p>
-                    <div class="hidden items-center gap-5 sm:flex">
-                        <a href="tel:+8809696481628" class="transition hover:text-emerald-300">+880 9696-481628</a>
-                        <a href="mailto:bnyti-edubd@gmail.com" class="transition hover:text-emerald-300">bnyti-edubd@gmail.com</a>
+            @php
+                $topBanner = $homepageItems('top-banner')->first();
+                $showTopBanner = $isSectionVisible('top-banner') && $topBanner;
+            @endphp
+            @if ($showTopBanner)
+                <div class="relative z-[60] border-b border-emerald-500/20 bg-gradient-to-r from-[#06192e] via-[#0b2447] to-[#06192e] py-2 text-white shadow-lg">
+                    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+                        <div class="flex min-w-0 flex-1 items-center gap-3">
+                            <div class="hidden items-center gap-2 sm:flex">
+                                <span class="relative flex size-2">
+                                    <span class="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span class="relative inline-flex size-2 rounded-full bg-emerald-400"></span>
+                                </span>
+                                <span class="text-[10px] font-black tracking-widest text-emerald-400 uppercase">NOTICE</span>
+                            </div>
+                            <p class="truncate text-[11px] font-bold tracking-wide sm:text-xs">
+                                {{ $topBanner->title }}
+                            </p>
+                            @if ($topBanner->link_url)
+                            <a href="{{ $topBanner->link_url }}" class="group flex shrink-0 items-center gap-1 text-[11px] font-black text-emerald-400 hover:text-emerald-300">
+                                <span class="hidden sm:inline">{{ $topBanner->link_label ?: 'Click here' }}</span>
+                                <span class="sm:hidden">Details</span>
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-3.5 transition group-hover:translate-x-0.5"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd" /></svg>
+                            </a>
+                            @endif
+                        </div>
+                        <div class="hidden items-center gap-6 text-[11px] font-bold sm:flex">
+                            <a href="tel:+8809696481628" class="flex items-center gap-1.5 transition hover:text-emerald-400">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-3.5 opacity-70"><path d="M2 3a1 1 0 0 1 1-1h2.153a1 1 0 0 1 .986.836l.74 4.435a1 1 0 0 1-.54 1.06l-1.548.773a11.037 11.037 0 0 0 4.529 4.53l.774-1.548a1 1 0 0 1 1.059-.54l4.435.74a1 1 0 0 1 .836.986V17a1 1 0 0 1-1 1h-2C7.82 18 2 12.18 2 5V3Z" /></svg>
+                                +880 9696-481628
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+                @endif
+            @endif
 
             <nav class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8" aria-label="Primary navigation">
                 <a href="#home" class="group flex min-w-0 items-center gap-3" aria-label="BNYTI home">
@@ -167,7 +191,11 @@
                 $heroItems = $homepageItems('hero');
                 $heroLead = $heroItems->first();
             @endphp
-            <section id="home" class="hero-slide relative min-h-[620px] overflow-hidden bg-ink pt-[108px] text-white sm:min-h-[600px] lg:min-h-[620px] lg:pt-[116px]" data-hero-carousel>
+            <section id="home" @class([
+                'hero-slide relative min-h-[620px] overflow-hidden bg-ink text-white sm:min-h-[600px] lg:min-h-[620px]',
+                'pt-[108px] sm:pt-[108px] lg:pt-[116px]' => $showTopBanner,
+                'pt-[76px]' => !$showTopBanner,
+            ]) data-hero-carousel>
                 @foreach ($heroItems as $hero)
                     <img
                         src="{{ str_starts_with($hero->image_path, 'images/') ? asset($hero->image_path) : Storage::disk('public')->url($hero->image_path) }}"

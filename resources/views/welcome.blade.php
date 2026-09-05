@@ -227,57 +227,62 @@
             @endif
 
             @if ($isSectionVisible('about'))
-            <section id="about" class="overflow-hidden bg-white py-14 dark:bg-deep sm:py-16 lg:py-[clamp(56px,8vh,88px)]" data-about-carousel data-about-interval="10000" data-about-viewport-fit>
-                @if ($aboutEntries->isNotEmpty())
-                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" data-about-layout="profile" data-about-size="balanced">
-                        <div class="relative">
-                            @foreach ($aboutEntries as $about)
-                                @php
-                                    $aboutImage = $about->image_path ?: $about->principal_image_path;
-                                @endphp
-                                <article class="grid items-start gap-5 md:grid-cols-[minmax(230px,0.62fr)_minmax(0,1.55fr)] md:gap-7 lg:grid-cols-[minmax(260px,0.62fr)_minmax(0,1.6fr)] lg:gap-8 {{ $loop->first ? '' : 'hidden' }}" data-about-slide>
-                                    <div class="mx-auto w-full max-w-[340px] overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white shadow-[0_10px_24px_rgba(15,23,42,.12)] dark:border-white/10 dark:bg-ink lg:max-w-[360px]">
-                                        <img src="{{ $aboutImage ? (str_starts_with($aboutImage, 'images/') ? asset($aboutImage) : Storage::disk('public')->url($aboutImage)) : asset('images/principal-portrait.webp') }}" alt="{{ $about->about_heading }}" class="aspect-[4/5.15] w-full object-cover object-top lg:h-[clamp(340px,50vh,430px)] lg:aspect-auto" loading="lazy">
-                                        @if ($about->principal_name)
-                                            <div class="bg-[#0b2447] px-4 py-3.5 text-center text-white"><h3 class="text-lg font-black tracking-tight sm:text-xl">{{ $about->principal_name }}</h3><p class="mt-0.5 text-xs text-slate-200">{{ $about->principal_title }}</p></div>
-                                        @endif
-                                    </div>
-                                    <div class="min-w-0 pt-1 md:pt-0">
-                                        <div class="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-5">
-                                            <h2 class="min-w-0 max-w-full text-2xl font-black tracking-tight text-slate-950 sm:text-3xl dark:text-white" aria-label="About Us" data-about-heading>
-                                                About <span class="text-emerald-600 dark:text-emerald-400">Us</span>
-                                            </h2>
-                                            <span class="h-[3px] min-w-16 flex-1 rounded-full bg-emerald-600 sm:max-w-32" aria-hidden="true"></span>
-                                        </div>
-                                        <div class="mt-3 h-px w-full bg-slate-200 dark:bg-white/10"></div>
-                                        <h3 class="mt-4 text-sm font-semibold text-slate-900 dark:text-white">About the Institution</h3>
-                                        @if ($about->summary)
-                                            <p class="mt-1.5 text-sm leading-5.5 text-slate-700 lg:text-[clamp(13px,1.55vh,14px)] lg:leading-[clamp(18px,2.2vh,21px)] dark:text-slate-200">{{ $about->summary }}</p>
-                                        @endif
-                                        @if ($about->content)
-                                            <div class="mt-1.5 whitespace-pre-line text-sm leading-5.5 text-slate-600 lg:text-[clamp(13px,1.55vh,14px)] lg:leading-[clamp(18px,2.2vh,21px)] dark:text-slate-300">{{ $about->content }}</div>
-                                        @endif
-                                    </div>
-                                </article>
-                            @endforeach
-                            @if ($aboutEntries->count() > 1)
-                                <div class="mt-8 flex items-center justify-between border-t border-slate-200 pt-4 dark:border-white/10">
-                                    <span class="text-xs font-bold text-slate-500" aria-live="polite"><span data-about-current>1</span> / {{ $aboutEntries->count() }}</span>
-                                    <div class="flex items-center gap-2"><button type="button" data-about-prev class="grid size-9 place-items-center rounded-full border border-slate-200 font-black hover:bg-emerald-50" aria-label="Previous About entry">←</button><div class="flex gap-1.5" role="tablist" aria-label="About entries">@foreach ($aboutEntries as $about)<button type="button" data-about-dot="{{ $loop->index }}" class="size-2.5 rounded-full bg-slate-300 data-[active=true]:bg-emerald-600" aria-label="Show About entry {{ $loop->iteration }}" role="tab"></button>@endforeach</div><button type="button" data-about-next class="grid size-9 place-items-center rounded-full border border-slate-200 font-black hover:bg-emerald-50" aria-label="Next About entry">→</button></div>
+            <section id="about" class="bg-[#dce9f2] py-16 dark:bg-slate-900/50 sm:py-20 lg:py-24">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <h2 class="mb-12 text-center text-3xl font-black tracking-tight text-[#03224c] uppercase dark:text-white sm:text-4xl lg:text-5xl">
+                        About South Asia National Technical Institute
+                    </h2>
+
+                    <div class="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+                        <div class="relative overflow-hidden rounded-2xl shadow-xl">
+                            <img
+                                src="{{ asset('images/institute-building.jpg') }}"
+                                alt="South Asia National Technical Institute Building"
+                                class="aspect-[4/3] w-full object-cover sm:aspect-video lg:aspect-[4/3]"
+                                onerror="this.src='https://placehold.co/800x600/03224c/white?text=Institute+Building'"
+                                loading="lazy"
+                            >
+                        </div>
+
+                        <div class="flex flex-col gap-8">
+                            <div class="space-y-5">
+                                <p class="text-[15px] leading-relaxed font-medium text-slate-700 dark:text-slate-300 sm:text-lg">
+                                    Lorem Ipsum south asisik nabeviitechnical institute are ongoooorement ened hanszon nunhen in podarmett cacta cenen sormetinchned oco corolas adevasos eres cronock. Dòis uanfhes diseixtrót aslesa tes vaomoce eoastuna. Bt enminant is to it inectieenleers.
+                                </p>
+                            </div>
+
+                            <div class="flex flex-col gap-8 sm:flex-row sm:items-start lg:flex-col xl:flex-row">
+                                <div class="flex-1 space-y-5">
+                                    <h3 class="text-2xl font-black text-[#03224c] dark:text-white">MFU Team or SO?</h3>
+                                    <ul class="space-y-3.5">
+                                        @foreach ([
+                                            'MF Student for Features',
+                                            'M& Commercial Institutes',
+                                            'MP Coeistment Assistont',
+                                            'WFIS and & Accobers Program'
+                                        ] as $item)
+                                            <li class="flex items-center gap-3.5 text-base font-bold text-slate-800 dark:text-slate-200">
+                                                <span class="size-3.5 shrink-0 rounded-full bg-[#03224c] dark:bg-emerald-500"></span>
+                                                {{ $item }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-                            @endif
+
+                                <div class="shrink-0 rounded-xl border-2 border-slate-400 bg-white/40 p-6 text-center shadow-md backdrop-blur-sm dark:border-white/20 dark:bg-white/5 sm:max-w-[220px]">
+                                    <h4 class="inline-block border-b-2 border-[#03224c] pb-1.5 text-xl font-black tracking-tight text-[#03224c] uppercase dark:border-white dark:text-white">
+                                        On-line Value
+                                    </h4>
+                                    <p class="mt-4 text-[11px] leading-relaxed font-black text-slate-600 dark:text-slate-400 uppercase">
+                                        Dernorats pase nist aodaized cart of dultaaan tremp ava tradition huxbet
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                  @else
-                     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                         <div class="rounded-[1.35rem] border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-white/10 dark:bg-ink">
-                             <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">About the institute</p>
-                             <h2 class="mt-3 text-3xl font-black tracking-tight">Education that moves beyond the classroom.</h2>
-                             <p class="mx-auto mt-4 max-w-3xl whitespace-pre-line text-slate-600 dark:text-slate-300">Bangladesh National Youth Technical Institute (BNYTI) is committed to empowering young people with industry-relevant knowledge, practical expertise, and modern technological skills.</p>
-                         </div>
-                     </div>
-                  @endif
+                </div>
             </section>
+            @endif
             @endif
 
             <section id="about-legacy" class="hidden" aria-hidden="true">

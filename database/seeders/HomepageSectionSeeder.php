@@ -13,6 +13,7 @@ class HomepageSectionSeeder extends Seeder
     public function run(): void
     {
         foreach ([
+            ['key' => 'top-banner', 'label' => 'Top Banner', 'sort_order' => 0],
             ['key' => 'hero', 'label' => 'Hero Slides', 'sort_order' => 1],
             ['key' => 'notice-bar', 'label' => 'Notices', 'sort_order' => 2],
             ['key' => 'trust', 'label' => 'Trust Indicators', 'sort_order' => 3],

@@ -289,35 +289,39 @@
 
 
             @if ($isSectionVisible('statistics'))
-            <section class="bg-white px-3 pb-7 dark:bg-deep sm:px-5 lg:px-8" aria-label="BNYTI achievements">
-                <div class="mx-auto grid max-w-[1460px] grid-cols-2 overflow-hidden rounded-xl bg-[#071f3f] px-2 py-2.5 shadow-[0_5px_18px_rgba(7,31,63,.2)] sm:grid-cols-3 sm:px-3 lg:grid-cols-6 lg:px-4">
-                    @foreach ($homepageItems('statistics') as $item)
-                        @php
-                            $value = $item->title;
-                            $label = $item->subtitle ?: $item->body;
-                            $icon = match ($item->icon) {
-                                'students' => 'M8.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7-1a2.75 2.75 0 1 0 0-5.5M2.5 20v-2.5a5.5 5.5 0 0 1 11 0V20h-11Zm11.5-6a4.75 4.75 0 0 1 7.5 3.9V20H17',
-                                'branches' => 'M4 21V10l8-7 8 7v11M8 21v-7h8v7M6.5 8.5V4H9v2.3M3 21h18',
-                                'courses' => 'M3.5 5.5c2.8-.8 5.6-.4 8.5 1.3v14c-2.9-1.7-5.7-2.1-8.5-1.3v-14Zm17 0c-2.8-.8-5.6-.4-8.5 1.3v14c2.9-1.7 5.7-2.1 8.5-1.3v-14ZM12 6.8V21',
-                                'trainers' => 'M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 21v-2a7 7 0 0 1 14 0v2M18 8.5h3m-1.5-1.5v3',
-                                default => 'M12 21s7-3.8 7-10V5.5L12 3 5 5.5V11c0 6.2 7 10 7 10Zm-3-10 2 2 4-4',
-                            };
-                        @endphp
-                        <article class="flex min-h-[66px] items-center justify-center gap-2.5 px-2 py-2 sm:min-h-[70px] lg:justify-start lg:px-3">
-                            <span class="grid size-8 shrink-0 place-items-center text-[#16a467]">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65">
-                                    <path d="{{ $icon }}" />
-                                </svg>
-                            </span>
-                            <div class="min-w-0">
-                                <strong class="block text-[13px] leading-4 font-black text-white sm:text-sm">{{ $value }}</strong>
-                                <span class="block text-[8px] leading-3 font-semibold text-slate-300 sm:text-[9px]">{{ $label }}</span>
+            <section class="bg-[#03224c] py-20 dark:bg-deep" aria-label="BNYTI achievements">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="mb-16 text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-[0.25em] text-white sm:text-4xl">Training Input</h2>
+                    </div>
+
+                    <div class="grid grid-cols-2 justify-center gap-y-12 gap-x-8 md:grid-cols-4 lg:gap-16">
+                        @foreach ($homepageItems('statistics')->take(4) as $item)
+                            @php
+                                $borderColors = ['border-sky-400', 'border-amber-400', 'border-sky-400', 'border-amber-400'];
+                                $borderColor = $borderColors[$loop->index % 4];
+                            @endphp
+                            <div class="flex flex-col items-center">
+                                <div class="relative flex size-40 items-center justify-center rounded-full border-[6px] {{ $borderColor }} p-6 text-center transition-transform duration-300 hover:scale-105 sm:size-48 lg:size-52">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <span class="text-3xl font-black text-white sm:text-4xl">{{ $item->title }}</span>
+                                        <span class="mt-2 max-w-[130px] text-[10px] font-extrabold leading-tight text-slate-200 uppercase tracking-widest sm:text-11px">{{ $item->subtitle ?: $item->body }}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </article>
-                    @endforeach
+                        @endforeach
+                    </div>
+
+                    <div class="mt-16 flex justify-center gap-3">
+                        <span class="size-2 rounded-full bg-white/20"></span>
+                        <span class="size-2 rounded-full bg-white"></span>
+                        <span class="size-2 rounded-full bg-white/20"></span>
+                        <span class="size-2 rounded-full bg-white/20"></span>
+                    </div>
                 </div>
             </section>
             @endif
+
 
             <section id="courses" class="bg-[#f0f8f7] py-16 dark:bg-ink sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -395,78 +399,73 @@
                 </div>
             </section>
 
-            <section id="expert-teachers" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16">
+            <section id="expert-teachers" class="bg-[#f0f8f7] py-16 dark:bg-ink sm:py-24">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="section-heading-row flex items-start justify-between gap-4 sm:items-center">
-                        <div>
-                            <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Our Expert Teachers</h2>
-                            <span class="mt-1 block h-0.5 w-6 rounded-full bg-emerald-500"></span>
+                    <div class="mb-16 text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white sm:text-4xl">Expert Teachers Gallery</h2>
+                    </div>
+
+                    <div class="relative group" data-teacher-carousel data-teacher-interval="5000">
+                        <!-- Navigation Arrows -->
+                        <div class="hidden lg:block">
+                            <button type="button" class="absolute -left-8 top-[calc(50%-2rem)] z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-xl border border-slate-100 transition hover:bg-emerald-500 hover:text-white focus:outline-none dark:bg-deep dark:border-white/10 dark:text-white/60" data-teacher-prev aria-label="Previous teachers">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                            </button>
+                            <button type="button" class="absolute -right-8 top-[calc(50%-2rem)] z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-xl border border-slate-100 transition hover:bg-emerald-500 hover:text-white focus:outline-none dark:bg-deep dark:border-white/10 dark:text-white/60" data-teacher-next aria-label="Next teachers">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                            </button>
                         </div>
-                        <a href="#latest-news-contact" class="section-heading-link group inline-flex shrink-0 items-center gap-1.5 text-[10px] font-bold text-slate-700 transition hover:text-emerald-600 dark:text-slate-300 dark:hover:text-emerald-400">
-                            View All Teachers
-                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-3.5 text-emerald-500 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                <path d="M4 10h12m-4-4 4 4-4 4" />
-                            </svg>
-                        </a>
-                    </div>
 
-                    <div class="mt-5" data-teacher-carousel data-teacher-interval="5000">
-                    <div class="teacher-carousel-track flex gap-5 overflow-x-auto scroll-smooth" data-teacher-track tabindex="0" aria-label="Teacher profiles">
-                        @foreach ($teacherCards as $teacher)
-                            <article class="teacher-carousel-slide group flex h-full w-full shrink-0 snap-start flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-deep" data-teacher-slide>
-                                <div class="relative aspect-[4/4.6] shrink-0 overflow-hidden bg-white" data-teacher-image-background="white">
-                                    @if ($teacher['image_path'])
-                                        <img
-                                            src="{{ Storage::url($teacher['image_path']) }}?v=white-background"
-                                            alt="{{ $teacher['name'] }}"
-                                            class="size-full object-cover object-top transition duration-500 group-hover:scale-105"
-                                            loading="lazy"
-                                        >
-                                    @else
-                                        <div
-                                            role="img"
-                                            aria-label="{{ $teacher['name'] }}"
-                                            class="size-full bg-no-repeat transition duration-500 group-hover:scale-105"
-                                            style="background-image: url('{{ asset('images/expert-teachers-sprite-v2.png') }}'); background-size: 600% auto; background-position: {{ $loop->index * 20 }}% 52%;"
-                                        ></div>
-                                    @endif
-                                </div>
+                        <div class="teacher-carousel-track flex gap-8 overflow-x-auto scroll-smooth pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-teacher-track tabindex="0" aria-label="Teacher profiles">
+                            @foreach ($teacherCards as $teacher)
+                                <article class="teacher-carousel-slide group flex w-[280px] shrink-0 snap-start flex-col rounded-[2rem] bg-white p-4 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl dark:bg-deep sm:w-[300px]" data-teacher-slide>
+                                    <div class="relative aspect-square shrink-0 overflow-hidden rounded-2xl bg-slate-50">
+                                        @if ($teacher['image_path'])
+                                            <img
+                                                src="{{ Storage::url($teacher['image_path']) }}"
+                                                alt="{{ $teacher['name'] }}"
+                                                class="size-full object-cover transition duration-500 group-hover:scale-105"
+                                                loading="lazy"
+                                            >
+                                        @else
+                                            <div
+                                                role="img"
+                                                aria-label="{{ $teacher['name'] }}"
+                                                class="size-full bg-no-repeat transition duration-500 group-hover:scale-105"
+                                                style="background-image: url('{{ asset('images/expert-teachers-sprite-v2.png') }}'); background-size: 600% auto; background-position: {{ $loop->index * 20 }}% 52%;"
+                                            ></div>
+                                        @endif
+                                    </div>
 
-                                <div class="flex flex-1 flex-col items-center px-4 py-4 text-center">
-                                    <h3 class="line-clamp-2 text-sm leading-5 font-black text-slate-950 dark:text-white">{{ $teacher['name'] }}</h3>
-                                    <p class="mt-1 truncate text-[11px] font-bold text-emerald-700 dark:text-emerald-400">{{ $teacher['department'] }}</p>
-                                    <span class="mt-3 inline-flex max-w-full rounded-full bg-emerald-600 px-3 py-1.5 text-[9px] leading-none font-bold text-white shadow-sm">
-                                        {{ $teacher['designation'] }}
-                                    </span>
-                                    @if ($teacher['id'])
-                                        <a href="{{ route('teachers.show', $teacher['id']) }}" class="mt-3 inline-flex items-center justify-center gap-1 rounded-full border border-emerald-200 px-3 py-2 text-[11px] font-black text-emerald-700 transition hover:border-emerald-400 hover:bg-emerald-50 dark:border-emerald-400/30 dark:text-emerald-300 dark:hover:bg-emerald-400/10">
-                                            আরও পড়ুন... <span aria-hidden="true" class="text-sm">→</span>
-                                        </a>
-                                    @else
-                                        <details class="mt-3 w-full text-left">
-                                            <summary class="flex cursor-pointer list-none items-center justify-center gap-1 rounded-full border border-emerald-200 px-3 py-2 text-[11px] font-black text-emerald-700 transition hover:border-emerald-400 hover:bg-emerald-50 dark:border-emerald-400/30 dark:text-emerald-300 dark:hover:bg-emerald-400/10">
-                                                আরও পড়ুন... <span aria-hidden="true" class="text-sm">→</span>
-                                            </summary>
-                                            <p class="mt-3 rounded-xl bg-slate-50 px-3 py-3 text-left text-[11px] leading-5 text-slate-600 dark:bg-white/5 dark:text-slate-300">
-                                                {{ $teacher['description'] ?: 'Our instructor brings practical guidance and industry-focused experience to every class.' }}
-                                            </p>
-                                        </details>
-                                    @endif
-                                </div>
-                            </article>
-                        @endforeach
-                    </div>
-                    @if ($teacherCards->count() > 1)
-                        <div class="teacher-carousel-controls mt-5 items-center justify-center gap-4" aria-label="Teacher carousel controls">
-                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-teacher-prev aria-label="Previous teacher page">
+                                    <div class="flex flex-1 flex-col px-1 py-5">
+                                        <h3 class="text-xl font-black leading-tight text-slate-900 dark:text-white">{{ $teacher['name'] }}</h3>
+                                        <p class="mt-1 text-[11px] font-extrabold text-slate-500 dark:text-slate-400">{{ $teacher['department'] }}</p>
+                                        <p class="mt-3 line-clamp-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                            {{ $teacher['description'] ?: 'Our instructor brings practical guidance and industry-focused experience to every class.' }}
+                                        </p>
+
+                                        <!-- Star Rating -->
+                                        <div class="mt-5 flex gap-1 text-amber-400" aria-label="5 out of 5 stars">
+                                            @for ($star = 0; $star < 5; $star++)
+                                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="currentColor">
+                                                    <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
+                                                </svg>
+                                            @endfor
+                                        </div>
+                                    </div>
+                                </article>
+                            @endforeach
+                        </div>
+
+                        <!-- Mobile controls -->
+                        <div class="mt-4 flex items-center justify-center gap-4 lg:hidden">
+                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-teacher-prev aria-label="Previous teachers">
                                 <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
                             </button>
-                            <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-teacher-current>1</span> of <span data-teacher-total>1</span></p>
-                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-teacher-next aria-label="Next teacher page">
+                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-teacher-next aria-label="Next teachers">
                                 <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
                             </button>
                         </div>
-                    @endif
                     </div>
                 </div>
             </section>

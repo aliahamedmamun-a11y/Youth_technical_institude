@@ -654,43 +654,50 @@
                 </div>
             </section>
 
-            <section id="student-success-stories" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16">
+            <section id="student-success-stories" class="bg-[#f8fafc] py-16 dark:bg-ink sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div>
-                        <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Student Success Stories</h2>
-                        <span class="mt-1.5 block h-0.5 w-8 rounded-full bg-emerald-500"></span>
+                    <div class="mb-12 text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Student Success Stories</h2>
+                        <div class="mx-auto mt-2 h-1 w-16 rounded-full bg-emerald-500"></div>
                     </div>
 
                     @php
                         $studentStories = $homepageItems('testimonials');
                     @endphp
-                    <div class="mt-5" data-student-carousel data-student-interval="5000">
-                        <div class="student-carousel-track flex gap-5 overflow-x-auto scroll-smooth" data-student-track tabindex="0" aria-label="Student success stories">
+                    <div class="relative group" data-student-carousel data-student-interval="5000">
+                        <div class="student-carousel-track flex gap-6 overflow-x-auto scroll-smooth pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-student-track tabindex="0" aria-label="Student success stories">
                         @foreach ($studentStories as $item)
                             @php
                                 $quote = $item->body;
                                 $name = $item->title;
                                 $position = $item->subtitle;
                             @endphp
-                            <article class="student-carousel-slide relative flex h-full w-full shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white px-5 py-5 shadow-[0_7px_24px_rgba(15,23,42,.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(15,23,42,.12)] dark:border-white/10 dark:bg-deep" data-student-slide>
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7 text-emerald-600 dark:text-emerald-400" fill="currentColor">
-                                    <path d="M9.2 6.4C6.2 7.8 4.5 10 4.2 13H8v5H3.1v-3.3c0-4.3 2-7.5 6.1-9.5v1.2Zm10 0c-3 1.4-4.7 3.6-5 6.6H18v5h-4.9v-3.3c0-4.3 2-7.5 6.1-9.5v1.2Z" />
-                                </svg>
-
-                                <div class="mt-1 flex flex-1 items-start gap-3">
+                            <article class="student-carousel-slide group flex w-[320px] shrink-0 snap-start items-center gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-deep sm:w-[350px]" data-student-slide>
+                                <div class="relative size-24 shrink-0 overflow-hidden rounded-xl bg-slate-50 sm:size-28">
                                     <div
                                         role="img"
                                         aria-label="{{ $name }}"
-                                        class="size-14 shrink-0 rounded-full bg-slate-100 bg-no-repeat ring-2 ring-white shadow-md dark:bg-slate-800 dark:ring-deep"
+                                        class="size-full bg-no-repeat transition duration-500 group-hover:scale-105"
                                         style="background-image: url('{{ asset('images/student-success-sprite.png') }}'); background-size: 400% auto; background-position: {{ $loop->index * 33.333 }}% 30%;"
                                     ></div>
-                                    <p class="text-[11px] leading-5 font-medium text-slate-700 dark:text-slate-300">{{ $quote }}</p>
                                 </div>
 
-                                <div class="mt-4 border-t border-slate-100 pt-3 dark:border-white/10">
-                                    <p class="text-[11px] font-black text-[#0b2447] dark:text-white">— {{ $name }}</p>
-                                    <p class="mt-0.5 truncate text-[9px] font-medium text-slate-500 dark:text-slate-400">{{ $position }}</p>
-                                    <div class="mt-2 flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
+                                <div class="flex flex-1 flex-col py-1">
+                                    <h3 class="text-base font-black text-[#0b2447] dark:text-white">{{ $name }}</h3>
+                                    <p class="text-[11px] font-extrabold text-emerald-600 dark:text-emerald-400">{{ $position }}</p>
+
+                                    <div class="mt-3 space-y-1">
+                                        <p class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">
+                                            <span class="font-bold text-slate-700 dark:text-slate-200">Course:</span>
+                                            {{ $item->metadata['course'] ?? 'Technical Training' }}
+                                        </p>
+                                        <p class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">
+                                            <span class="font-bold text-slate-700 dark:text-slate-200">Success:</span>
+                                            {{ Str::limit($quote, 45) }}
+                                        </p>
+                                    </div>
+
+                                    <div class="mt-3 flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
                                         @for ($star = 0; $star < 5; $star++)
                                             <svg viewBox="0 0 20 20" aria-hidden="true" class="size-3.5" fill="currentColor">
                                                 <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
@@ -701,13 +708,15 @@
                             </article>
                         @endforeach
                         </div>
+
+                        <!-- Navigation Controls -->
                         @if ($studentStories->count() > 1)
-                            <div class="student-carousel-controls mt-5 items-center justify-center gap-4" aria-label="Student story carousel controls">
-                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-student-prev aria-label="Previous student stories">
+                            <div class="mt-4 flex items-center justify-center gap-4 lg:hidden">
+                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-student-prev aria-label="Previous stories">
                                     <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
                                 </button>
                                 <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-student-current>1</span> of <span data-student-total>1</span></p>
-                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-student-next aria-label="Next student stories">
+                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-student-next aria-label="Next stories">
                                     <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
                                 </button>
                             </div>

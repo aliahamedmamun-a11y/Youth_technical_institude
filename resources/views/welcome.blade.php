@@ -418,39 +418,46 @@
 
                         <div class="teacher-carousel-track flex gap-8 overflow-x-auto scroll-smooth pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-teacher-track tabindex="0" aria-label="Teacher profiles">
                             @foreach ($teacherCards as $teacher)
-                                <article class="teacher-carousel-slide group flex w-[280px] shrink-0 snap-start flex-col rounded-[2rem] bg-white p-4 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl dark:bg-deep sm:w-[300px]" data-teacher-slide>
-                                    <div class="relative aspect-square shrink-0 overflow-hidden rounded-2xl bg-slate-50">
+                                <article class="teacher-carousel-slide group flex w-[320px] shrink-0 snap-start overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-deep sm:w-[380px]" data-teacher-slide>
+                                    <div class="relative w-32 shrink-0 p-3 sm:w-40 sm:p-4">
                                         @if ($teacher['image_path'])
                                             <img
                                                 src="{{ Storage::url($teacher['image_path']) }}"
                                                 alt="{{ $teacher['name'] }}"
-                                                class="size-full object-cover transition duration-500 group-hover:scale-105"
+                                                class="aspect-[4/5] w-full overflow-hidden rounded-t-2xl rounded-b-[3.5rem] bg-slate-100 object-cover ring-1 ring-slate-900/5 transition duration-500 group-hover:scale-105 dark:ring-white/10 sm:rounded-b-[4.5rem]"
                                                 loading="lazy"
                                             >
                                         @else
                                             <div
                                                 role="img"
                                                 aria-label="{{ $teacher['name'] }}"
-                                                class="size-full bg-no-repeat transition duration-500 group-hover:scale-105"
+                                                class="aspect-[4/5] w-full overflow-hidden rounded-t-2xl rounded-b-[3.5rem] bg-slate-100 bg-no-repeat ring-1 ring-slate-900/5 transition duration-500 group-hover:scale-105 dark:ring-white/10 sm:rounded-b-[4.5rem]"
                                                 style="background-image: url('{{ asset('images/expert-teachers-sprite-v2.png') }}'); background-size: 600% auto; background-position: {{ $loop->index * 20 }}% 52%;"
                                             ></div>
                                         @endif
                                     </div>
 
-                                    <div class="flex flex-1 flex-col px-1 py-5">
+                                    <div class="flex flex-1 flex-col justify-center px-5 py-6">
                                         <h3 class="text-xl font-black leading-tight text-slate-900 dark:text-white">{{ $teacher['name'] }}</h3>
-                                        <p class="mt-1 text-[11px] font-extrabold text-slate-500 dark:text-slate-400">{{ $teacher['department'] }}</p>
-                                        <p class="mt-3 line-clamp-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                                            {{ $teacher['description'] ?: 'Our instructor brings practical guidance and industry-focused experience to every class.' }}
-                                        </p>
+                                        <p class="mt-0.5 text-[14px] font-bold text-[#16a34a] dark:text-emerald-400">{{ $teacher['designation'] ?? $teacher['department'] }}</p>
 
-                                        <!-- Star Rating -->
-                                        <div class="mt-5 flex gap-1 text-amber-400" aria-label="5 out of 5 stars">
-                                            @for ($star = 0; $star < 5; $star++)
-                                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="currentColor">
-                                                    <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
-                                                </svg>
-                                            @endfor
+                                        <div class="mt-4 space-y-2">
+                                            <div class="flex flex-col">
+                                                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tight">Teaches:</span>
+                                                <div class="flex items-center gap-2 mt-0.5">
+                                                    <span class="text-[14px] font-black text-slate-800 dark:text-slate-200 leading-none">{{ $teacher['department'] }}</span>
+                                                    @if (str_contains(strtolower($teacher['department']), 'graphic'))
+                                                        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-4 text-slate-700 dark:text-slate-300" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z" /><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" /><path d="M2 2l7.586 7.586" /><circle cx="11" cy="11" r="2" /></svg>
+                                                    @elseif (str_contains(strtolower($teacher['department']), 'web'))
+                                                        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-4 text-slate-700 dark:text-slate-300" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7 8-4 4 4 4M17 8l4 4-4 4M14 4l-4 16" /></svg>
+                                                    @elseif (str_contains(strtolower($teacher['department']), 'computer') || str_contains(strtolower($teacher['department']), 'it'))
+                                                        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-4 text-slate-700 dark:text-slate-300" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2" /><path d="M8 21h8M12 17v4" /></svg>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="text-[13px] font-bold text-slate-800 dark:text-slate-200">{{ $teacher['experience'] }}+ Years Exp.</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </article>
@@ -672,12 +679,12 @@
                                 $name = $item->title;
                                 $position = $item->subtitle;
                             @endphp
-                            <article class="student-carousel-slide group flex w-[320px] shrink-0 snap-start overflow-hidden rounded-[1.8rem] border border-slate-100 bg-white shadow-[0_4px_25px_rgba(0,0,0,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-deep sm:w-[380px]" data-student-slide>
-                                <div class="relative w-32 shrink-0 bg-slate-50 sm:w-40">
+                            <article class="student-carousel-slide group flex w-[320px] shrink-0 snap-start overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-deep sm:w-[380px]" data-student-slide>
+                                <div class="relative w-32 shrink-0 p-3 sm:w-40 sm:p-4">
                                     <div
                                         role="img"
                                         aria-label="{{ $name }}"
-                                        class="size-full bg-cover bg-center bg-no-repeat transition duration-500 group-hover:scale-105"
+                                        class="aspect-[4/5] w-full overflow-hidden rounded-t-2xl rounded-b-[3.5rem] bg-slate-100 bg-cover bg-center bg-no-repeat ring-1 ring-slate-900/5 transition duration-500 group-hover:scale-105 dark:ring-white/10 sm:rounded-b-[4.5rem]"
                                         style="background-image: url('{{ asset('images/student-success-sprite.png') }}'); background-position: {{ $loop->index * 33.333 }}% 30%;"
                                     ></div>
                                 </div>
@@ -725,116 +732,69 @@
                 </div>
             </section>
 
-            <section id="latest-news-contact" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16">
-                <div class="mx-auto grid max-w-7xl gap-5 px-4 sm:px-6 lg:grid-cols-[1.65fr_.85fr] lg:px-8">
-                    <div class="min-w-0 rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_7px_24px_rgba(15,23,42,.06)] dark:border-white/10 dark:bg-deep">
-                        <div class="section-heading-row flex items-start justify-between gap-4 sm:items-center">
-                            <div>
-                                <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Latest News &amp; Updates</h2>
-                                <span class="mt-1 block h-0.5 w-6 rounded-full bg-emerald-500"></span>
-                            </div>
-                            <a href="{{ route('news.index') }}" class="section-heading-link group inline-flex shrink-0 items-center gap-1.5 text-[10px] font-bold text-slate-700 transition hover:text-emerald-600 dark:text-slate-300 dark:hover:text-emerald-400">
-                                View All News
-                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-3.5 text-emerald-500 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                    <path d="M4 10h12m-4-4 4 4-4 4" />
-                                </svg>
-                            </a>
-                        </div>
-
-                        @php
-                            $newsCards = ($latestNews ?? collect())->isNotEmpty() ? $latestNews : collect([
-                                ['Admission Open', 'New batch admission is going on.', '26 May, 2026', 'emerald', 'megaphone', null, null],
-                                ['Exam Notice', 'Final exam routine has been published.', '24 May, 2026', 'blue', 'document', null, null],
-                                ['Result Published', 'Check your latest online result.', '23 May, 2026', 'rose', 'clipboard', null, null],
-                                ['Workshop', 'Web Development Workshop held.', '20 May, 2026', 'sky', 'workshop', null, null],
-                            ]);
-                        @endphp
-
-                        <div class="mt-4 min-w-0" data-news-carousel data-news-interval="5000">
-                            <div class="overflow-hidden" data-news-viewport>
-                            <div class="news-carousel-track flex w-full min-w-0 gap-3" data-news-track tabindex="0" aria-label="Latest news and updates">
-                            @foreach ($newsCards as [$title, $description, $date, $tone, $icon, $imagePath, $slug])
-                                <a href="{{ $slug ? route('news.show', $slug) : route('news.index') }}" class="news-carousel-slide group flex h-full w-full shrink-0 snap-start flex-col overflow-hidden rounded-xl bg-slate-50 ring-1 ring-slate-900/5 transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:bg-slate-900/40 dark:ring-white/10" data-news-slide>
-                                    @if ($imagePath)
-                                        <img src="{{ str_starts_with($imagePath, 'images/') ? asset($imagePath) : Storage::disk('public')->url($imagePath) }}" alt="" class="h-24 w-full object-cover">
-                                    @else
-                                    <span @class([
-                                        'grid size-9 shrink-0 place-items-center rounded-lg',
-                                        'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400' => $tone === 'emerald',
-                                        'bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400' => $tone === 'blue',
-                                        'bg-rose-100 text-rose-600 dark:bg-rose-500/15 dark:text-rose-400' => $tone === 'rose',
-                                        'bg-sky-100 text-sky-600 dark:bg-sky-500/15 dark:text-sky-400' => $tone === 'sky',
-                                    ])>
-                                        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                            @if ($icon === 'megaphone')
-                                                <path d="m4 13 13-5v8L4 11v2Zm4 1 2 6h3l-1.5-5M20 10v4" />
-                                            @elseif ($icon === 'document')
-                                                <path d="M6 3h8l4 4v14H6V3Zm8 0v5h5M9 12h6m-6 4h6" />
-                                            @elseif ($icon === 'clipboard')
-                                                <path d="M8 5H5v16h14V5h-3M9 3h6v4H9V3Zm0 9 2 2 4-4m-6 8h6" />
-                                            @else
-                                                <path d="M4 5h16v14H4V5Zm4-2v4m8-4v4M7 11h3v3H7v-3Zm7 0h3m-3 4h3" />
-                                            @endif
-                                        </svg>
-                                    </span>
-                                    @endif
-                                    <div class="min-w-0 flex-1 px-3 py-3">
-                                        <h3 class="truncate text-[10px] font-black text-[#0b2447] dark:text-white">{{ $title }} <span class="text-emerald-500">•</span></h3>
-                                        <p class="mt-1 line-clamp-2 text-[10px] leading-4 text-slate-500 dark:text-slate-400">{{ $description }}</p>
-                                        <time class="mt-2 block text-[10px] font-bold text-slate-400">{{ $date }}</time>
-                                    </div>
-                                </a>
-                            @endforeach
-                            </div>
-                            </div>
-                            @if ($newsCards->count() > 1)
-                                <div class="news-carousel-controls mt-5 items-center justify-center gap-4" aria-label="News carousel controls">
-                                    <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-news-prev aria-label="Previous news page">
-                                        <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
-                                    </button>
-                                    <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-news-current>1</span> of <span data-news-total>1</span></p>
-                                    <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-news-next aria-label="Next news page">
-                                        <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
-                                    </button>
-                                </div>
-                            @endif
-                        </div>
+            <section id="latest-news-contact" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-20">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="mb-12 text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Update Notice Board</h2>
+                        <p class="mt-2 text-sm font-bold text-slate-600 dark:text-slate-400">Latest official announcements and academic updates from the institute.</p>
                     </div>
 
-                    <aside class="contact-card grid min-w-0 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_7px_24px_rgba(15,23,42,.06)] sm:grid-cols-[1fr_1.1fr] lg:grid-cols-1 xl:grid-cols-[.95fr_1.05fr] dark:border-white/10 dark:bg-deep" data-contact-card>
-                        <div class="min-w-0 p-5 sm:p-6">
-                            <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Contact Us</h2>
-                            <p class="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-400">Call, email, or visit our institute for admission and course information.</p>
-                            <div class="mt-5 grid gap-2.5 text-xs font-semibold text-slate-600 dark:text-slate-300">
-                                <a href="tel:+8809696481628" class="contact-method">
-                                    <span class="contact-method-icon"><svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h3l1 4-2 1c1 2.5 2.5 4 5 5l1-2 4 1v3c0 1.1-.9 2-2 2C8.4 17 3 11.6 3 5a2 2 0 0 1 2-2Z" /></svg></span>
-                                    <span class="min-w-0 break-words">{{ $contactSettings?->metadata['phone'] ?? '+880 9696-481628' }}</span>
+                    @php
+                        $newsCards = ($latestNews ?? collect())->isNotEmpty() ? $latestNews : collect([
+                            ['Admission Open', 'New batch admission is going on for the next session.', '26 May, 2026', 'emerald', 'megaphone', null, null],
+                            ['Exam Notice', 'Final exam routine for 2026 has been published officially.', '24 May, 2026', 'blue', 'document', null, null],
+                            ['Result Published', 'Check your latest online result from student portal.', '23 May, 2026', 'rose', 'clipboard', null, null],
+                            ['Workshop', 'Special Web Development Workshop will be held soon.', '20 May, 2026', 'sky', 'workshop', null, null],
+                        ]);
+                    @endphp
+
+                    <div class="grid items-start gap-8 lg:grid-cols-[1.6fr_1fr]">
+                        <div class="grid gap-6 sm:grid-cols-2">
+                             @foreach ($newsCards->take(4) as [$title, $description, $date, $tone, $icon, $imagePath, $slug])
+                                <a href="{{ $slug ? route('news.show', $slug) : route('news.index') }}" class="group relative flex flex-col justify-between overflow-hidden rounded-[1.4rem] bg-white p-7 shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition hover:-translate-y-1 hover:shadow-xl dark:bg-slate-900/40">
+                                    <div class="absolute inset-y-0 right-0 w-1.5 bg-[#03224c] transition-all group-hover:w-2 dark:bg-emerald-500"></div>
+                                    <div>
+                                        <h3 class="text-[15px] font-black leading-tight text-[#0b2447] dark:text-white">{{ $title }}</h3>
+                                        <p class="mt-3 text-[13px] font-medium leading-relaxed text-slate-600 dark:text-slate-400">{{ $description }}</p>
+                                    </div>
+                                    <div class="mt-6 flex items-center justify-between border-t border-slate-50 pt-4 dark:border-white/5">
+                                        <span class="text-[12px] font-black text-emerald-600 dark:text-emerald-400">Learn more</span>
+                                        <time class="text-[11px] font-bold text-slate-400">{{ $date }}</time>
+                                    </div>
                                 </a>
-                                <a href="mailto:bnyti-edubd@gmail.com" class="contact-method">
-                                    <span class="contact-method-icon"><svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 5h14v10H3V5Zm0 1 7 5 7-5" /></svg></span>
-                                    <span class="min-w-0 [overflow-wrap:anywhere]">{{ $contactSettings?->metadata['email'] ?? 'bnyti-edubd@gmail.com' }}</span>
-                                </a>
-                                <p class="contact-method">
-                                    <span class="contact-method-icon"><svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 18s6-5 6-10A6 6 0 1 0 4 8c0 5 6 10 6 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /></svg></span>
-                                    <span class="min-w-0 break-words">{{ $contactSettings?->metadata['address'] ?? 'Haji Hossain Plaza, Demra Bazar Road, Dhaka-1360' }}</span>
-                                </p>
-                            </div>
+                             @endforeach
                         </div>
 
-                        <div class="relative min-h-52 overflow-hidden bg-[#e7eadf] sm:min-h-full lg:min-h-52 xl:min-h-full" aria-label="Institute location map">
-                            <svg viewBox="0 0 240 180" aria-hidden="true" class="absolute inset-0 size-full">
-                                <rect width="240" height="180" fill="#e4e8dd" />
-                                <path d="M-20 31 260 150M-10 132 180-15M50 195 250 32M-20 86 260 96" stroke="white" stroke-width="9" />
-                                <path d="M-20 31 260 150M-10 132 180-15M50 195 250 32M-20 86 260 96" stroke="#d1d8ca" stroke-width="1.5" />
-                                <path d="M146 48c-10 0-18 8-18 18 0 14 18 32 18 32s18-18 18-32c0-10-8-18-18-18Z" fill="#ef4444" />
-                                <circle cx="146" cy="66" r="6" fill="white" />
-                            </svg>
-                            <div class="absolute inset-x-3 bottom-3 grid grid-cols-2 gap-2 sm:inset-x-4 sm:bottom-4">
-                                <a href="tel:+8809696481628" class="contact-action bg-[#0b2447] hover:bg-slate-800">Call now</a>
-                                <a href="https://maps.google.com/?q=Haji+Hossain+Plaza+Demra+Dhaka" target="_blank" rel="noopener noreferrer" class="contact-action bg-emerald-600 hover:bg-emerald-500">Directions</a>
-                            </div>
-                        </div>
-                    </aside>
+                        <aside class="relative overflow-hidden rounded-[2rem] bg-white p-3 shadow-2xl dark:bg-slate-900/40">
+                             <div class="relative aspect-[4/3] w-full overflow-hidden rounded-[1.5rem] bg-[#e7eadf] lg:aspect-square">
+                                <svg viewBox="0 0 240 180" aria-hidden="true" class="size-full">
+                                    <rect width="240" height="180" fill="#e4e8dd" />
+                                    <path d="M-20 31 260 150M-10 132 180-15M50 195 250 32M-20 86 260 96" stroke="white" stroke-width="9" />
+                                    <path d="M-20 31 260 150M-10 132 180-15M50 195 250 32M-20 86 260 96" stroke="#d1d8ca" stroke-width="1.5" />
+                                    <path d="M146 48c-10 0-18 8-18 18 0 14 18 32 18 32s18-18 18-32c0-10-8-18-18-18Z" fill="#ef4444" />
+                                    <circle cx="146" cy="66" r="6" fill="white" />
+                                </svg>
+                                <div class="absolute inset-x-4 bottom-4">
+                                    <a href="https://maps.google.com/?q=Haji+Hossain+Plaza+Demra+Dhaka" target="_blank" rel="noopener noreferrer" class="flex w-full items-center justify-center rounded-xl bg-[#0b2447] py-3 text-xs font-black text-white shadow-lg transition hover:bg-slate-800">View Map</a>
+                                </div>
+                             </div>
+                             <div class="px-5 py-6">
+                                 <h3 class="text-lg font-black text-[#0b2447] dark:text-white">Visit Our Campus</h3>
+                                 <div class="mt-4 space-y-3">
+                                     <div class="flex items-start gap-3">
+                                         <svg viewBox="0 0 20 20" class="mt-0.5 size-4 shrink-0 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 18s6-5 6-10A6 6 0 1 0 4 8c0 5 6 10 6 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
+                                         <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['address'] ?? 'Haji Hossain Plaza, Demra Bazar Road, Dhaka-1360' }}</p>
+                                     </div>
+                                     <div class="flex items-center gap-3">
+                                         <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h3l1 4-2 1c1 2.5 2.5 4 5 5l1-2 4 1v3c0 1.1-.9 2-2 2C8.4 17 3 11.6 3 5a2 2 0 0 1 2-2Z"/></svg>
+                                         <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['phone'] ?? '+880 9696-481628' }}</p>
+                                     </div>
+                                 </div>
+                             </div>
+                        </aside>
+                    </div>
+                </div>
+            </section>
                 </div>
             </section>
 

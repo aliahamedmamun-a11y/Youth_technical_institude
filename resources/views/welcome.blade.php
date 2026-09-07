@@ -418,8 +418,8 @@
 
                         <div class="teacher-carousel-track flex gap-8 overflow-x-auto scroll-smooth pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-teacher-track tabindex="0" aria-label="Teacher profiles">
                             @foreach ($teacherCards as $teacher)
-                                <article class="teacher-carousel-slide group flex w-[280px] shrink-0 snap-start flex-col rounded-[2rem] bg-white p-4 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl dark:bg-deep sm:w-[300px]" data-teacher-slide>
-                                    <div class="relative aspect-square shrink-0 overflow-hidden rounded-2xl bg-slate-50">
+                                <article class="teacher-carousel-slide group flex w-[380px] shrink-0 snap-start rounded-[1.8rem] bg-white p-4 shadow-sm transition duration-300 hover:shadow-xl dark:bg-deep sm:w-[440px]" data-teacher-slide>
+                                    <div class="relative w-32 shrink-0 overflow-hidden rounded-2xl bg-slate-50 sm:w-40">
                                         @if ($teacher['image_path'])
                                             <img
                                                 src="{{ Storage::url($teacher['image_path']) }}"
@@ -437,20 +437,34 @@
                                         @endif
                                     </div>
 
-                                    <div class="flex flex-1 flex-col px-1 py-5">
-                                        <h3 class="text-xl font-black leading-tight text-slate-900 dark:text-white">{{ $teacher['name'] }}</h3>
-                                        <p class="mt-1 text-[11px] font-extrabold text-slate-500 dark:text-slate-400">{{ $teacher['department'] }}</p>
-                                        <p class="mt-3 line-clamp-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                                            {{ $teacher['description'] ?: 'Our instructor brings practical guidance and industry-focused experience to every class.' }}
-                                        </p>
+                                    <div class="flex flex-1 flex-col justify-between px-5 py-2">
+                                        <div>
+                                            <h3 class="text-xl font-black text-slate-900 dark:text-white sm:text-2xl">{{ $teacher['name'] }}</h3>
+                                            <p class="text-xs font-bold text-emerald-600 dark:text-emerald-400 sm:text-sm">{{ $teacher['designation'] }}</p>
+                                        </div>
 
-                                        <!-- Star Rating -->
-                                        <div class="mt-5 flex gap-1 text-amber-400" aria-label="5 out of 5 stars">
-                                            @for ($star = 0; $star < 5; $star++)
-                                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="currentColor">
-                                                    <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
-                                                </svg>
-                                            @endfor
+                                        <div class="mt-3">
+                                            <p class="flex flex-wrap items-baseline gap-2">
+                                                <span class="text-sm font-black text-slate-900 dark:text-white sm:text-lg">Teaches:</span>
+                                                <span class="flex items-center gap-1.5 text-sm font-black text-slate-900 dark:text-white sm:text-lg">
+                                                    {{ $teacher['department'] }}
+                                                    @php
+                                                        $deptIcon = match(Str::slug($teacher['department'])) {
+                                                            'graphic-design' => '🎨',
+                                                            'web-development' => '</>',
+                                                            'electrical-technology' => '⚡',
+                                                            'computer-it', 'office-application' => '💻',
+                                                            'hotel-management' => '🏨',
+                                                            default => '🎓'
+                                                        };
+                                                    @endphp
+                                                    <span class="text-base sm:text-xl" aria-hidden="true">{{ $deptIcon }}</span>
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                        <div class="mt-auto">
+                                            <p class="text-sm font-bold text-slate-700 dark:text-slate-300 sm:text-lg">{{ $teacher['experience'] }}+ Years Exp.</p>
                                         </div>
                                     </div>
                                 </article>
@@ -672,8 +686,8 @@
                                 $name = $item->title;
                                 $position = $item->subtitle;
                             @endphp
-                            <article class="student-carousel-slide group flex w-[320px] shrink-0 snap-start overflow-hidden rounded-[1.8rem] border border-slate-100 bg-white shadow-[0_4px_25px_rgba(0,0,0,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-deep sm:w-[380px]" data-student-slide>
-                                <div class="relative w-32 shrink-0 bg-slate-50 sm:w-40">
+                            <article class="student-carousel-slide group flex w-[380px] shrink-0 snap-start rounded-[1.8rem] bg-white p-4 shadow-sm transition duration-300 hover:shadow-xl dark:bg-deep sm:w-[440px]" data-student-slide>
+                                <div class="relative w-32 shrink-0 overflow-hidden rounded-2xl bg-slate-50 sm:w-40">
                                     <div
                                         role="img"
                                         aria-label="{{ $name }}"
@@ -682,27 +696,36 @@
                                     ></div>
                                 </div>
 
-                                <div class="flex flex-1 flex-col justify-center px-5 py-6">
-                                    <h3 class="text-lg font-black leading-tight text-[#0b2447] dark:text-white">{{ $name }}</h3>
-                                    <p class="mt-0.5 text-[11px] font-bold text-[#16a34a] dark:text-emerald-400">{{ $position }}</p>
-
-                                    <div class="mt-4 space-y-2">
-                                        <div class="flex flex-col">
-                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Course:</span>
-                                            <span class="text-[12px] font-black text-slate-800 dark:text-slate-200 leading-none">{{ $item->metadata['course'] ?? 'Technical Training' }}</span>
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Outcome:</span>
-                                            <span class="line-clamp-2 text-[11px] font-bold leading-snug text-slate-600 dark:text-slate-400">{{ Str::limit($quote, 55) }}</span>
-                                        </div>
+                                <div class="flex flex-1 flex-col justify-between px-5 py-2">
+                                    <div>
+                                        <h3 class="text-xl font-black text-slate-900 dark:text-white sm:text-2xl">{{ $name }}</h3>
+                                        <p class="text-xs font-bold text-emerald-600 dark:text-emerald-400 sm:text-sm">{{ $position }}</p>
                                     </div>
 
-                                    <div class="mt-5 flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
-                                        @for ($star = 0; $star < 5; $star++)
-                                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="currentColor">
-                                                <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
-                                            </svg>
-                                        @endfor
+                                    <div class="mt-3">
+                                        <p class="flex flex-wrap items-baseline gap-2">
+                                            <span class="text-sm font-black text-slate-900 dark:text-white sm:text-lg">Course:</span>
+                                            <span class="flex items-center gap-1.5 text-sm font-black text-slate-900 dark:text-white sm:text-lg">
+                                                {{ $item->metadata['course'] ?? 'Technical Training' }}
+                                                <span class="text-base sm:text-xl" aria-hidden="true">🎓</span>
+                                            </span>
+                                        </p>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <p class="line-clamp-2 text-sm font-bold text-slate-600 dark:text-slate-400">
+                                            {{ Str::limit($quote, 60) }}
+                                        </p>
+                                    </div>
+
+                                    <div class="mt-auto flex items-center justify-between">
+                                        <div class="flex gap-0.5 text-amber-400">
+                                            @for ($star = 0; $star < 5; $star++)
+                                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="currentColor">
+                                                    <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
+                                                </svg>
+                                            @endfor
+                                        </div>
                                     </div>
                                 </div>
                             </article>

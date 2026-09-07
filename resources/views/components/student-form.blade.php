@@ -10,16 +10,16 @@
 
 @php
     $inputClass =
-        'min-w-0 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-emerald-600 focus:ring-4 focus:ring-emerald-100';
+        'min-w-0 w-full rounded-lg border-0 bg-[#2d3d52] px-4 py-2.5 text-sm font-medium text-white shadow-inner outline-none transition placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500/50';
     $selectClass = $inputClass . ' appearance-none';
     $sectionClass =
-        'flex items-center gap-2 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-black uppercase tracking-wide text-white shadow-md shadow-emerald-700/15';
+        'flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-cyan-400';
 @endphp
 
 <form method="POST" action="{{ $action }}" enctype="multipart/form-data" data-location-form
     data-upazilas='@json(config('bangladesh.upazilas'))' data-old-upazila="{{ old('upazila', $student?->upazila) }}"
     @class([
-        'space-y-6 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_20px_70px_rgb(15_23_42/0.08)] sm:p-8',
+        'space-y-8 rounded-3xl bg-[#1a2533] p-6 shadow-2xl ring-1 ring-white/10 sm:p-10',
         'registration-form' => $declarationRequired,
     ])>
     @csrf
@@ -27,260 +27,289 @@
         @method($method)
     @endif
 
-    <div class="grid items-start gap-8 lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.2fr)_minmax(260px,.85fr)]">
-        <section class="min-w-0 space-y-5" aria-labelledby="personal-information-heading">
-            <h2 id="personal-information-heading" class="{{ $sectionClass }}"><svg viewBox="0 0 24 24"
-                    class="size-5 fill-none stroke-current" aria-hidden="true" stroke-width="1.8">
-                    <circle cx="12" cy="8" r="3" />
-                    <path d="M5 21c.5-4 2.8-6 7-6s6.5 2 7 6" />
-                </svg>Personal Information</h2>
-            <label class="block min-w-0 text-sm font-bold text-slate-700">Name <span
-                    class="text-rose-600">*</span><input name="name" value="{{ old('name', $student?->name) }}"
-                    required placeholder="Enter full name" class="{{ $inputClass }} mt-2">
-                @error('name')
-                    <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                @enderror
-            </label>
-            <label class="block min-w-0 text-sm font-bold text-slate-700 lg:mt-16">Father's Name <span
-                    class="text-rose-600">*</span><input name="father_name"
-                    value="{{ old('father_name', $student?->father_name) }}" required placeholder="Enter father's name"
-                    class="{{ $inputClass }} mt-2">
-                @error('father_name')
-                    <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                @enderror
-            </label>
-            <label class="block min-w-0 text-sm font-bold text-slate-700">Mother's Name <span
-                    class="text-rose-600">*</span><input name="mother_name"
-                    value="{{ old('mother_name', $student?->mother_name) }}" required placeholder="Enter mother's name"
-                    class="{{ $inputClass }} mt-2">
-                @error('mother_name')
-                    <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                @enderror
-            </label>
-            <label class="block min-w-0 text-sm font-bold text-slate-700">Roll Number
-                <input name="roll_number" value="{{ old('roll_number', $student?->roll_number) }}" maxlength="50"
-                    inputmode="numeric" placeholder="Enter roll number" class="{{ $inputClass }} mt-2">
-                @error('roll_number')
-                    <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                @enderror
-            </label>
-            <label class="block min-w-0 text-sm font-bold text-slate-700">Date of Birth <span
-                    class="text-rose-600">*</span><input type="date" name="date_of_birth"
-                    value="{{ old('date_of_birth', $student?->date_of_birth?->format('Y-m-d')) }}" required
-                    class="{{ $inputClass }} mt-2">
-                @error('date_of_birth')
-                    <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                @enderror
-            </label>
-            <fieldset class="grid gap-3 text-sm font-bold text-slate-700">
-                <legend>Sex <span class="text-rose-600">*</span></legend>
-                <div class="flex flex-wrap gap-5">
-                    @foreach (['Male', 'Female', 'Other'] as $sex)
-                        <label class="flex items-center gap-2 font-medium"><input type="radio" name="gender"
-                                value="{{ $sex }}" @checked(old('gender', $student?->gender) === $sex) required
-                                class="size-4 accent-emerald-600">{{ $sex }}</label>
-                    @endforeach
+    {{-- Auto-Scan Section --}}
+    <div class="space-y-4">
+        <div class="grid grid-cols-3 gap-3">
+            @foreach([
+                ['passport', 'Passport Scan', 'Scan Passport for Auto-Fill'],
+                ['nid', 'NID Scan', 'Scan National ID (NID) for Auto-Fill'],
+                ['birth', 'Birth Registration Scan', 'Scan Birth Registration (জন্ম নিবন্ধন) for Auto-Fill']
+            ] as [$key, $label, $desc])
+                <button type="button" class="group relative flex items-center gap-3 rounded-xl border border-white/10 bg-[#253447] p-3 text-left transition hover:border-amber-500/50 hover:bg-[#2d3d52]">
+                    <div class="grid size-10 shrink-0 place-items-center rounded-lg bg-[#1a2533] text-amber-500 shadow-lg group-hover:scale-110 transition-transform">
+                        @if($key === 'passport')
+                            <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5V5a2 2 0 0 1 2-2h11l3.5 3.5V19.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="11" r="3"/><path d="M7 17h10"/></svg>
+                        @elseif($key === 'nid')
+                            <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="12" x="3" y="6" rx="2"/><circle cx="9" cy="12" r="2"/><path d="M15 10h4M15 14h4"/></svg>
+                        @else
+                            <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+                        @endif
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-[10px] font-black text-white/90 uppercase tracking-wider">[{{ $label }}]</p>
+                        <p class="truncate text-[9px] font-bold text-slate-400">{{ $desc }}</p>
+                    </div>
+                    @if($key === 'birth')
+                        <div class="absolute -top-1 -right-1 size-3 animate-pulse rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]"></div>
+                    @endif
+                </button>
+            @endforeach
+        </div>
+
+        <div class="rounded-2xl bg-[#0f1721] p-6 shadow-inner ring-1 ring-white/5">
+             <div class="flex items-center gap-3 border-b border-white/5 pb-4 mb-6">
+                 <svg viewBox="0 0 24 24" class="size-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="12" x="3" y="6" rx="2"/><path d="M8 12h8"/></svg>
+                 <h2 class="text-xs font-black text-amber-500 uppercase tracking-widest">PASSPORT / NID AUTO-SCAN</h2>
+             </div>
+
+             <div class="grid items-center gap-8 lg:grid-cols-[1fr_auto_auto]">
+                 <div class="flex items-center gap-6">
+                     <div class="relative group cursor-pointer">
+                         <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 opacity-25 blur transition group-hover:opacity-50"></div>
+                         <div class="relative grid size-16 place-items-center rounded-full bg-[#1a2533] text-amber-500 shadow-2xl transition group-hover:scale-105">
+                             <svg viewBox="0 0 24 24" class="size-8" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                         </div>
+                     </div>
+                     <div>
+                         <h3 class="text-lg font-black text-white">Scan Document NOW</h3>
+                         <p class="text-xs font-bold text-slate-500 uppercase tracking-tighter mt-1">Select Document Type and Upload clear image or use webcam</p>
+                     </div>
+                 </div>
+
+                 <button type="button" class="group flex items-center gap-4 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 px-6 py-4 shadow-[0_10px_30px_rgba(245,158,11,0.2)] transition hover:scale-[1.02] active:scale-95">
+                     <div class="grid size-10 place-items-center rounded-lg bg-black/10 text-white">
+                         <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 16V4m0 0L8 8m4-4 4 4M5 14v5h14v-5"/></svg>
+                     </div>
+                     <div class="text-left">
+                         <p class="text-xs font-black text-white uppercase tracking-wider leading-none">SCAN DOCUMENT NOW</p>
+                         <p class="mt-1 text-[9px] font-bold text-white/70 uppercase">Upload clear Image or use webcam (JPG/PNG, Max 5MB)</p>
+                     </div>
+                 </button>
+
+                 <div class="min-w-40">
+                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Select Document Type *</label>
+                     <select class="w-full rounded-lg border-0 bg-[#2d3d52] px-4 py-3 text-sm font-black text-white outline-none ring-1 ring-white/10 transition focus:ring-2 focus:ring-amber-500">
+                         <option>Passport</option>
+                         <option selected>NID</option>
+                         <option>Birth Registration</option>
+                     </select>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+    <div class="grid items-start gap-8 lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.2fr)_minmax(260px,.85fr)] pt-4">
+        <section class="min-w-0 space-y-6" aria-labelledby="personal-information-heading">
+            <h2 id="personal-information-heading" class="{{ $sectionClass }}">
+                <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="3"/><path d="M5 21c.5-4 2.8-6 7-6s6.5 2 7 6"/></svg>
+                PERSONAL INFORMATION
+            </h2>
+            <div class="space-y-4">
+                <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Name *
+                    <input name="name" value="{{ old('name', $student?->name) }}"
+                        required placeholder="Enter full name" class="{{ $inputClass }} mt-1.5">
+                    @error('name')
+                        <span class="mt-1 block text-[10px] font-bold text-rose-500">{{ $message }}</span>
+                    @enderror
+                </label>
+                <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Father's Name *
+                    <input name="father_name"
+                        value="{{ old('father_name', $student?->father_name) }}" required placeholder="Enter father's name"
+                        class="{{ $inputClass }} mt-1.5">
+                    @error('father_name')
+                        <span class="mt-1 block text-[10px] font-bold text-rose-500">{{ $message }}</span>
+                    @enderror
+                </label>
+                <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Mother's Name *
+                    <input name="mother_name"
+                        value="{{ old('mother_name', $student?->mother_name) }}" required placeholder="Enter mother's name"
+                        class="{{ $inputClass }} mt-1.5">
+                    @error('mother_name')
+                        <span class="mt-1 block text-[10px] font-bold text-rose-500">{{ $message }}</span>
+                    @enderror
+                </label>
+                <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Date of Birth *
+                    <input type="date" name="date_of_birth"
+                        value="{{ old('date_of_birth', $student?->date_of_birth?->format('Y-m-d')) }}" required
+                        class="{{ $inputClass }} mt-1.5 text-slate-400">
+                    @error('date_of_birth')
+                        <span class="mt-1 block text-[10px] font-bold text-rose-500">{{ $message }}</span>
+                    @enderror
+                </label>
+                <fieldset class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                    <legend class="mb-2">Sex *</legend>
+                    <div class="flex flex-wrap gap-6">
+                        @foreach (['Male', 'Female', 'Other'] as $sex)
+                            <label class="flex items-center gap-2 cursor-pointer text-white lowercase first-letter:uppercase tracking-normal font-medium">
+                                <input type="radio" name="gender"
+                                    value="{{ $sex }}" @checked(old('gender', $student?->gender) === $sex) required
+                                    class="size-4 bg-[#2d3d52] border-0 text-amber-500 focus:ring-offset-[#1a2533] focus:ring-amber-500">
+                                {{ $sex }}
+                            </label>
+                        @endforeach
+                    </div>
+                </fieldset>
+                <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider pt-2">Passport / NID Number *
+                    <input name="passport_nid_number"
+                        value="{{ old('passport_nid_number', $student?->passport_nid_number) }}" required
+                        placeholder="Enter Passport or NID Number" class="{{ $inputClass }} mt-1.5">
+                    @error('passport_nid_number')
+                        <span class="mt-1 block text-[10px] font-bold text-rose-500">{{ $message }}</span>
+                    @enderror
+                </label>
+                <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Phone Number *
+                    <input type="tel" name="phone"
+                        value="{{ old('phone', $student?->phone) }}" required placeholder="Enter phone number"
+                        class="{{ $inputClass }} mt-1.5">
+                    @error('phone')
+                        <span class="mt-1 block text-[10px] font-bold text-rose-500">{{ $message }}</span>
+                    @enderror
+                </label>
+            </div>
+        </section>
+
+        <div class="space-y-8">
+            <section class="min-w-0 space-y-6" aria-labelledby="address-information-heading">
+                <h2 id="address-information-heading" class="{{ $sectionClass }}">
+                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z"/><circle cx="12" cy="9" r="2.2"/></svg>
+                    ADDRESS INFORMATION
+                </h2>
+                <div class="space-y-4">
+                    <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Full Address *
+                        <textarea name="address" rows="3" required placeholder="Enter full address" class="{{ $inputClass }} mt-1.5">{{ old('address', $student?->address) }}</textarea>
+                        @error('address')
+                            <span class="mt-1 block text-[10px] font-bold text-rose-500">{{ $message }}</span>
+                        @enderror
+                    </label>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">District *
+                            <select name="district" data-district-select required class="{{ $selectClass }} mt-1.5">
+                                <option value="">Select district</option>
+                                @foreach (config('bangladesh.districts') as $district)
+                                    <option value="{{ $district }}" @selected(old('district', $student?->district) === $district)>{{ $district }}</option>
+                                @endforeach
+                            </select>
+                        </label>
+                        <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Upazila *
+                            <select name="upazila" data-upazila-select required disabled class="{{ $selectClass }} mt-1.5">
+                                <option value="">No upazilas found</option>
+                            </select>
+                        </label>
+                    </div>
                 </div>
-                @error('gender')
-                    <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                @enderror
-            </fieldset>
-            <label class="block min-w-0 text-sm font-bold text-slate-700 pt-7">Passport / NID Number <span
-                    class="text-rose-600">*</span><input name="passport_nid_number"
-                    value="{{ old('passport_nid_number', $student?->passport_nid_number) }}" required
-                    placeholder="Enter Passport or NID Number" class="{{ $inputClass }} mt-2">
-                @error('passport_nid_number')
-                    <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                @enderror
-            </label>
-            <label class="block min-w-0 text-sm font-bold text-slate-700">Phone Number <span
-                    class="text-rose-600">*</span><input type="tel" name="phone"
-                    value="{{ old('phone', $student?->phone) }}" required placeholder="Enter phone number"
-                    class="{{ $inputClass }} mt-2">
-                @error('phone')
-                    <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                @enderror
-            </label>
-        </section>
+            </section>
 
-        <section class="min-w-0 space-y-5" aria-labelledby="address-information-heading">
-            <h2 id="address-information-heading" class="{{ $sectionClass }}"><svg viewBox="0 0 24 24"
-                    class="size-5 fill-none stroke-current" aria-hidden="true" stroke-width="1.8">
-                    <path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
-                    <circle cx="12" cy="9" r="2.2" />
-                </svg>Address Information</h2>
-            <label class="block min-w-0 text-sm font-bold text-slate-700">Full Address <span
-                    class="text-rose-600">*</span>
-                <textarea name="address" rows="3" required placeholder="Enter full address" class="{{ $inputClass }} mt-2">{{ old('address', $student?->address) }}</textarea>
-                @error('address')
-                    <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                @enderror
-            </label>
-            <div class="grid gap-4 sm:grid-cols-2"><label
-                    class="block min-w-0 text-sm font-bold text-slate-700">District <span
-                        class="text-rose-600">*</span><select name="district" data-district-select required
-                        class="{{ $selectClass }}">
-                        <option value="">Select district</option>
-                        @foreach (config('bangladesh.districts') as $district)
-                            <option value="{{ $district }}" @selected(old('district', $student?->district) === $district)>{{ $district }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('district')
-                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                    @enderror
+            <section class="min-w-0 space-y-6" aria-labelledby="academic-information-heading">
+                <h2 id="academic-information-heading" class="{{ $sectionClass }}">
+                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9 12 4l9 5-9 5zM6 11v5c2.8 2.3 9.2 2.3 12 0v-5M21 9v7"/></svg>
+                    ACADEMIC INFORMATION
+                </h2>
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Education Qualification *
+                        <select name="education_qualification" required class="{{ $selectClass }} mt-1.5">
+                            <option selected>জানুয়ারি (January)</option>
+                        </select>
+                    </label>
+                    <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Session Details *
+                        <select name="session" required class="{{ $selectClass }} mt-1.5">
+                            <option selected>২০২১, ২০২২, ২০২৩,</option>
+                        </select>
+                    </label>
+                    <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">কোর্স শুরুর মাস *
+                        <select name="start_month" required class="{{ $selectClass }} mt-1.5">
+                            <option selected>ফেব্রুয়ারি (February)</option>
+                        </select>
+                    </label>
+                    <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">কোর্স শুরুর বছর *
+                        <select name="start_year" required class="{{ $selectClass }} mt-1.5">
+                            <option selected>২০২১, ২০২৪, ২০২৭,</option>
+                        </select>
+                    </label>
+                    <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Department *
+                        <select name="course_id" required class="{{ $selectClass }} mt-1.5">
+                            <option value="">Select department</option>
+                            @foreach ($courses as $course)
+                                <option value="{{ $course->id }}" @selected(old('course_id', $student?->course_id) == $course->id)>{{ $course->name }}</option>
+                            @endforeach
+                        </select>
+                    </label>
+                    <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Join Date *
+                        <input type="date" name="admitted_at" required value="2028-02-08" class="{{ $inputClass }} mt-1.5 text-slate-400">
+                    </label>
+                    <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Duration *
+                        <select name="duration" required class="{{ $selectClass }} mt-1.5">
+                            <option>Select duration</option>
+                        </select>
+                    </label>
+                    <label class="block min-w-0 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Expire Date *
+                        <input type="date" name="expire_date" required class="{{ $inputClass }} mt-1.5 text-slate-400">
+                    </label>
+                </div>
+            </section>
+        </div>
+
+        <aside class="space-y-6">
+            <section class="space-y-4">
+                <h2 class="{{ $sectionClass }}">
+                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 7h4l1.5-2h5L16 7h4v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+                    PHOTO UPLOAD
+                </h2>
+                <label for="student-photo" class="group flex min-h-48 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-white/10 bg-[#0f1721] p-5 text-center transition hover:border-amber-500/50 hover:bg-[#1a2533]">
+                    <span id="photo-placeholder" class="grid place-items-center">
+                        <div class="relative grid size-14 place-items-center rounded-full bg-[#2d3d52] text-amber-500 shadow-xl transition group-hover:scale-105">
+                             <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                        </div>
+                        <strong class="mt-4 block text-[10px] font-black text-white uppercase tracking-wider">Upload Passport Size Photo</strong>
+                        <span class="mt-1 block text-[9px] font-bold text-slate-500 uppercase">JPG / PNG / WebP, Max 5MB</span>
+                    </span>
+                    <img id="photo-preview" class="hidden size-32 rounded-xl object-cover shadow-2xl ring-2 ring-white/10">
                 </label>
-                <label class="block min-w-0 text-sm font-bold text-slate-700">Upazila <span
-                        class="text-rose-600">*</span><select name="upazila" data-upazila-select required disabled
-                        class="{{ $selectClass }}">
-                        <option value="">Select district first</option>
-                    </select>
-                    @error('upazila')
-                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                    @enderror
-                </label>
+                <input id="student-photo" type="file" name="image" accept="image/jpeg,image/png,image/webp" @required(!$student?->image_path) class="sr-only" data-photo-input>
+            </section>
+
+            <section class="rounded-2xl border border-white/10 bg-[#253447] p-6 shadow-xl ring-1 ring-white/5">
+                <h2 class="flex items-center gap-2 text-[11px] font-black text-cyan-400 uppercase tracking-widest">
+                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg>
+                    IMPORTANT NOTES
+                </h2>
+                <ul class="mt-5 space-y-3 text-[10px] font-bold text-slate-300">
+                    <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Fill all the fields carefully.</li>
+                    <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Ensure your information is correct.</li>
+                    <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> You can update information later.</li>
+                    <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Keep your documents ready.</li>
+                </ul>
+            </section>
+        </aside>
+    </div>
+
+    @if ($declarationRequired)
+        <label class="group flex cursor-pointer items-start gap-4 rounded-2xl border border-white/10 bg-[#0f1721] p-5 transition hover:bg-[#1a2533]">
+            <div class="grid size-10 shrink-0 place-items-center rounded-xl bg-cyan-950/50 text-cyan-400 group-hover:bg-cyan-900 group-hover:text-cyan-300 transition-colors">
+                <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-
-            <div class="border-t border-slate-200 pt-9">
-                <h2 id="academic-information-heading" class="{{ $sectionClass }}"><svg viewBox="0 0 24 24"
-                        class="size-5 fill-none stroke-current" aria-hidden="true" stroke-width="1.8">
-                        <path d="M3 9 12 4l9 5-9 5zM6 11v5c2.8 2.3 9.2 2.3 12 0v-5M21 9v7" />
-                    </svg>Academic Information</h2>
+            <div class="flex items-start gap-3 pt-1">
+                <input type="checkbox" name="declaration" value="1" @checked(old('declaration')) required class="mt-1 size-4 rounded border-0 bg-[#2d3d52] text-amber-500 focus:ring-offset-[#0f1721] focus:ring-amber-500">
+                <p class="text-[11px] font-bold leading-relaxed text-slate-400">
+                    I hereby declare that all the information provided above is true and correct. I agree to abide by the rules and regulations of <span class="text-white">South Asia Engineering & Technical Institute.</span>
+                </p>
             </div>
-            <div class="grid gap-4 sm:grid-cols-2"><label
-                    class="block min-w-0 text-sm font-bold text-slate-700 pt-3">Education Qualification <span
-                        class="text-rose-600">*</span><input name="education_qualification"
-                        value="{{ old('education_qualification', $student?->education_qualification) }}" required
-                        placeholder="Select qualification" class="{{ $inputClass }} mt-2">
-                    @error('education_qualification')
-                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                    @enderror
-                </label>
-                <label class="block min-w-0 text-sm font-bold text-slate-700 pt-3">Session <span
-                        class="text-rose-600">*</span><input name="session"
-                        value="{{ old('session', $student?->session) }}" required placeholder="Select session"
-                        class="{{ $inputClass }} mt-2">
-                    @error('session')
-                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                    @enderror
-                </label>
-                <label class="block min-w-0 text-sm font-bold text-slate-700">Department <span
-                        class="text-rose-600">*</span><select name="course_id" required class="{{ $selectClass }}">
-                        <option value="">Select department</option>
-                        @foreach ($courses as $course)
-                            <option value="{{ $course->id }}" @selected(old('course_id', $student?->course_id) == $course->id)>{{ $course->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('course_id')
-                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                    @enderror
-                </label>
-                <label class="block min-w-0 text-sm font-bold text-slate-700">Join Date <span
-                        class="text-rose-600">*</span><input type="date" name="admitted_at" required
-                        value="{{ old('admitted_at', $student?->admitted_at?->format('Y-m-d') ?? now()->format('Y-m-d')) }}"
-                        class="{{ $inputClass }} mt-2">
-                    @error('admitted_at')
-                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                    @enderror
-                </label>
+        </label>
+    @endif
 
-                <label class="block min-w-0 text-sm font-bold text-slate-700">Start Month <span
-                        class="text-rose-600">*</span>
-                    <select name="start_month" required class="{{ $selectClass }} mt-2">
-                        <option value="">Select start month</option>
-                        @foreach ([
-                            1 => 'January',
-                            2 => 'February',
-                            3 => 'March',
-                            4 => 'April',
-                            5 => 'May',
-                            6 => 'June',
-                            7 => 'July',
-                            8 => 'August',
-                            9 => 'September',
-                            10 => 'October',
-                            11 => 'November',
-                            12 => 'December',
-                        ] as $monthNumber => $monthName)
-                            <option value="{{ $monthNumber }}" @selected(old('start_month', $student?->start_month) == $monthNumber)>
-                                {{ $monthName }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('start_month')
-                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                    @enderror
-                </label>
-
-                <label class="block min-w-0 text-sm font-bold text-slate-700">Start Year <span
-                        class="text-rose-600">*</span>
-                    <select name="start_year" required class="{{ $selectClass }} mt-2">
-                        <option value="">Select start year</option>
-                        @foreach (range(now()->year - 20, now()->year + 10) as $year)
-                            <option value="{{ $year }}" @selected(old('start_year', $student?->start_year) == $year)>
-                                {{ $year }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('start_year')
-                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                    @enderror
-                </label>
-
-                <label class="block min-w-0 text-sm font-bold text-slate-700">End Month <span
-                        class="text-rose-600">*</span>
-                    <select name="end_month" required class="{{ $selectClass }} mt-2">
-                        <option value="">Select end month</option>
-                        @foreach ([
-                            1 => 'January',
-                            2 => 'February',
-                            3 => 'March',
-                            4 => 'April',
-                            5 => 'May',
-                            6 => 'June',
-                            7 => 'July',
-                            8 => 'August',
-                            9 => 'September',
-                            10 => 'October',
-                            11 => 'November',
-                            12 => 'December',
-                        ] as $monthNumber => $monthName)
-                            <option value="{{ $monthNumber }}" @selected(old('end_month', $student?->end_month) == $monthNumber)>
-                                {{ $monthName }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('end_month')
-                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                    @enderror
-                </label>
-
-                <label class="block min-w-0 text-sm font-bold text-slate-700">End Year <span
-                        class="text-rose-600">*</span>
-                    <select name="end_year" required class="{{ $selectClass }} mt-2">
-                        <option value="">Select end year</option>
-                        @foreach (range(now()->year - 20, now()->year + 10) as $year)
-                            <option value="{{ $year }}" @selected(old('end_year', $student?->end_year) == $year)>
-                                {{ $year }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('end_year')
-                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                    @enderror
-                </label>
-
-                <label class="block min-w-0 text-sm font-bold text-slate-700">Expire Date <span
-                        class="text-rose-600">*</span><input type="date" name="expire_date" required
-                        value="{{ old('expire_date', $student?->expire_date?->format('Y-m-d')) }}"
-                        class="{{ $inputClass }} mt-2">
-                    @error('expire_date')
-                        <span class="mt-1 block text-rose-600">{{ $message }}</span>
-                    @enderror
-                </label>
-            </div>
-        </section>
+    <div class="flex flex-col justify-center gap-4 pt-4 sm:flex-row">
+        <button class="inline-flex min-h-12 items-center justify-center gap-3 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 px-10 text-xs font-black text-white shadow-[0_10px_30px_rgba(245,158,11,0.2)] transition hover:scale-[1.02] active:scale-95 uppercase tracking-widest">
+            APPLICATION SUBMIT
+        </button>
+        <button type="reset" class="inline-flex min-h-12 items-center justify-center gap-3 rounded-lg bg-[#3d4d5e] px-10 text-xs font-black text-white transition hover:bg-[#4a5b6d] uppercase tracking-widest">
+            :: RESET FORM
+        </button>
+        @if ($cancelRoute)
+            <a href="{{ $cancelRoute }}" class="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/10 px-10 text-xs font-black text-slate-400 hover:text-white transition uppercase tracking-widest">
+                Cancel
+            </a>
+        @endif
+    </div>
+</form>
 
         <aside class="space-y-6" aria-labelledby="photo-upload-heading">
             <h2 id="photo-upload-heading" class="{{ $sectionClass }}"><svg viewBox="0 0 24 24"

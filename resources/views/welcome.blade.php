@@ -43,7 +43,7 @@
                     >
                     <div class="hidden sm:block">
                         <span class="block text-2xl font-black tracking-tight text-[#03224c] dark:text-white uppercase leading-none">South Asia</span>
-                        <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400 mt-1">National Technical Institute</span>
+                        <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400 mt-1">Engineering & Technical Institute</span>
                     </div>
                     <div class="sm:hidden">
                         <span class="block text-xl font-black tracking-tighter text-[#03224c] dark:text-white">SOUTH ASIA</span>
@@ -92,7 +92,7 @@
                 <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-white/10">
                     <a href="#home" class="flex min-w-0 items-center gap-3" aria-label="BNYTI home">
                         <img src="{{ asset('images/bnyti-logo.svg') }}" alt="" class="size-11 shrink-0 object-contain">
-                        <span><span class="block font-black text-slate-950 dark:text-white">BNYTI</span><span class="block text-[9px] font-bold tracking-[.14em] text-slate-500 dark:text-slate-300">TECHNICAL INSTITUTE</span></span>
+                        <span><span class="block font-black text-slate-950 dark:text-white">SOUTH ASIA</span><span class="block text-[9px] font-bold tracking-[.14em] text-slate-500 dark:text-slate-300">ENGINEERING & TECHNICAL INSTITUTE</span></span>
                     </a>
                     <button type="button" class="icon-button" data-menu-dismiss aria-label="Close navigation"><svg viewBox="0 0 24 24" aria-hidden="true" class="size-6"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg></button>
                 </div>
@@ -230,7 +230,7 @@
             <section id="about" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-20 lg:py-24">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <h2 class="reveal mb-12 text-center text-3xl font-black uppercase tracking-tight text-[#03224c] dark:text-white sm:text-4xl">
-                        ABOUT SOUTH ASIA NATIONAL TECHNICAL INSTITUTE
+                        ABOUT SOUTH ASIA ENGINEERING & TECHNICAL INSTITUTE
                     </h2>
 
                     @php $about = $aboutEntries->first(); @endphp
@@ -424,15 +424,15 @@
                                             <img
                                                 src="{{ Storage::url($teacher['image_path']) }}"
                                                 alt="{{ $teacher['name'] }}"
-                                                class="size-full object-cover transition duration-500 group-hover:scale-105"
+                                                class="size-full object-cover object-top transition duration-500 group-hover:scale-105"
                                                 loading="lazy"
                                             >
                                         @else
                                             <div
                                                 role="img"
                                                 aria-label="{{ $teacher['name'] }}"
-                                                class="size-full bg-cover bg-center bg-no-repeat transition duration-500 group-hover:scale-105"
-                                                style="background-image: url('{{ asset('images/expert-teachers-sprite-v2.png') }}'); background-size: 600% auto; background-position: {{ $loop->index * 20 }}% 52%;"
+                                                class="size-full bg-cover bg-no-repeat transition duration-500 group-hover:scale-105"
+                                                style="background-image: url('{{ asset('images/expert-teachers-sprite-v2.png') }}'); background-size: 600% auto; background-position: {{ $loop->index * 20 }}% 10%;"
                                             ></div>
                                         @endif
                                     </div>
@@ -710,7 +710,7 @@
                 </div>
             </section>
 
-            <section id="latest-news-contact" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-20">
+            <section id="contact-section" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="mb-12 text-center">
                         <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Contact Section</h2>
@@ -771,6 +771,68 @@
                     </div>
                 </div>
             </section>
+
+            <section id="update-notice-board" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-20">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="mb-12 text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Update Notice Board</h2>
+                        <p class="mt-2 text-sm font-bold text-slate-600 dark:text-slate-400">Latest official announcements and academic updates from the institute.</p>
+                    </div>
+
+                    @php
+                        $newsCards = ($latestNews ?? collect())->isNotEmpty() ? $latestNews : collect([
+                            ['Admission Open', 'New batch admission is going on for the next session.', '26 May, 2026', 'emerald', 'megaphone', null, null],
+                            ['Exam Notice', 'Final exam routine for 2026 has been published officially.', '24 May, 2026', 'blue', 'document', null, null],
+                            ['Result Published', 'Check your latest online result from student portal.', '23 May, 2026', 'rose', 'clipboard', null, null],
+                            ['Workshop', 'Special Web Development Workshop will be held soon.', '20 May, 2026', 'sky', 'workshop', null, null],
+                        ]);
+                    @endphp
+
+                    <div class="grid items-start gap-8 lg:grid-cols-[1.6fr_1fr]">
+                        <div class="grid gap-6 sm:grid-cols-2">
+                             @foreach ($newsCards->take(4) as [$title, $description, $date, $tone, $icon, $imagePath, $slug])
+                                <a href="{{ $slug ? route('news.show', $slug) : route('news.index') }}" class="group relative flex flex-col justify-between overflow-hidden rounded-[1.4rem] bg-white p-7 shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition hover:-translate-y-1 hover:shadow-xl dark:bg-slate-900/40">
+                                    <div class="absolute inset-y-0 right-0 w-1.5 bg-[#03224c] transition-all group-hover:w-2 dark:bg-emerald-500"></div>
+                                    <div>
+                                        <h3 class="text-[15px] font-black leading-tight text-[#0b2447] dark:text-white">{{ $title }}</h3>
+                                        <p class="mt-3 text-[13px] font-medium leading-relaxed text-slate-600 dark:text-slate-400">{{ $description }}</p>
+                                    </div>
+                                    <div class="mt-6 flex items-center justify-between border-t border-slate-50 pt-4 dark:border-white/5">
+                                        <span class="text-[12px] font-black text-emerald-600 dark:text-emerald-400">Learn more</span>
+                                        <time class="text-[11px] font-bold text-slate-400">{{ $date }}</time>
+                                    </div>
+                                </a>
+                             @endforeach
+                        </div>
+
+                        <aside class="relative overflow-hidden rounded-[2rem] bg-white p-3 shadow-2xl dark:bg-slate-900/40">
+                             <div class="relative aspect-[4/3] w-full overflow-hidden rounded-[1.5rem] bg-[#e7eadf] lg:aspect-square">
+                                <svg viewBox="0 0 240 180" aria-hidden="true" class="size-full">
+                                    <rect width="240" height="180" fill="#e4e8dd" />
+                                    <path d="M-20 31 260 150M-10 132 180-15M50 195 250 32M-20 86 260 96" stroke="white" stroke-width="9" />
+                                    <path d="M-20 31 260 150M-10 132 180-15M50 195 250 32M-20 86 260 96" stroke="#d1d8ca" stroke-width="1.5" />
+                                    <path d="M146 48c-10 0-18 8-18 18 0 14 18 32 18 32s18-18 18-32c0-10-8-18-18-18Z" fill="#ef4444" />
+                                    <circle cx="146" cy="66" r="6" fill="white" />
+                                </svg>
+                                <div class="absolute inset-x-4 bottom-4">
+                                    <a href="https://maps.google.com/?q=Haji+Hossain+Plaza+Demra+Dhaka" target="_blank" rel="noopener noreferrer" class="flex w-full items-center justify-center rounded-xl bg-[#0b2447] py-3 text-xs font-black text-white shadow-lg transition hover:bg-slate-800">View Map</a>
+                                </div>
+                             </div>
+                             <div class="px-5 py-6">
+                                 <h3 class="text-lg font-black text-[#0b2447] dark:text-white">Visit Our Campus</h3>
+                                 <div class="mt-4 space-y-3">
+                                     <div class="flex items-start gap-3">
+                                         <svg viewBox="0 0 20 20" class="mt-0.5 size-4 shrink-0 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 18s6-5 6-10A6 6 0 1 0 4 8c0 5 6 10 6 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
+                                         <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['address'] ?? 'Haji Hossain Plaza, Demra Bazar Road, Dhaka-1360' }}</p>
+                                     </div>
+                                     <div class="flex items-center gap-3">
+                                         <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h3l1 4-2 1c1 2.5 2.5 4 5 5l1-2 4 1v3c0 1.1-.9 2-2 2C8.4 17 3 11.6 3 5a2 2 0 0 1 2-2Z"/></svg>
+                                         <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['phone'] ?? '+880 9696-481628' }}</p>
+                                     </div>
+                                 </div>
+                             </div>
+                        </aside>
+                    </div>
                 </div>
             </section>
 
@@ -944,7 +1006,7 @@
                             </div>
                             <div>
                                 <span class="block text-2xl font-black tracking-tight text-white uppercase leading-none">South Asia</span>
-                                <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mt-1">National Technical Institute</span>
+                                <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mt-1">Engineering & Technical Institute</span>
                             </div>
                         </a>
                         <p class="text-sm leading-relaxed text-slate-300">
@@ -989,7 +1051,7 @@
             </div>
             <div class="border-t border-white/10 py-8 text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest">
                 <div class="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <p>© {{ date('Y') }} South Asia National Technical Institute. All rights reserved.</p>
+                    <p>© {{ date('Y') }} South Asia Engineering & Technical Institute. All rights reserved.</p>
                     <p>Managed by BNYTI Technical Solutions</p>
                 </div>
             </div>

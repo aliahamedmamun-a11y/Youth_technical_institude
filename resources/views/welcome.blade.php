@@ -34,7 +34,7 @@
         </a>
 
         <header class="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-ink">
-            <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+             <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
                 <a href="#home" class="group flex items-center gap-3">
                     <img
                         src="{{ asset('images/bnyti-logo.svg') }}"
@@ -210,7 +210,7 @@
                             default => 'M4 7.5 12 3l8 4.5-8 4.5-8-4.5Zm3 2.2V15c3 2.3 7 2.3 10 0V9.7M20 8v6m-1 2h2',
                             };
                         @endphp
-                        <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-emerald-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-emerald-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0">
+                        <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-emerald-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-emerald-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0 {{ $item->stable_key === 'practical-lab' ? 'bg-[#f0fcf9] dark:bg-emerald-400/5' : '' }}">
                             <span class="grid h-8 place-items-center text-[#159b63] transition-transform duration-200 group-hover:-translate-y-0.5 dark:text-emerald-400">
                                 <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55">
                                     <path d="{{ $icon }}" />
@@ -319,65 +319,59 @@
             </section>
             @endif
 
-            <section id="courses" class="bg-stone-50 py-12 dark:bg-ink sm:py-16">
+            <section id="courses" class="bg-[#f0f8f7] py-16 dark:bg-ink sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="section-heading-row flex items-start justify-between gap-4 sm:items-center">
-                        <div>
-                            <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Popular Courses</h2>
-                            <span class="mt-2 block h-0.5 w-8 rounded-full bg-emerald-500"></span>
-                        </div>
-                        <a href="#courses" class="section-heading-link group inline-flex shrink-0 items-center gap-1.5 text-[10px] font-bold text-slate-700 transition hover:text-emerald-600 sm:gap-2 sm:text-[11px] dark:text-slate-300 dark:hover:text-emerald-400">
-                            View All Courses
-                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4 text-emerald-500 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                <path d="M4 10h12m-4-4 4 4-4 4" />
-                            </svg>
-                        </a>
+                    <div class="mb-12 text-center">
+                        <h2 class="text-2xl font-black uppercase tracking-[0.2em] text-slate-800 dark:text-white sm:text-3xl">Popular Courses</h2>
                     </div>
 
-                    <div class="mt-7" data-course-carousel data-course-interval="5000">
-                        <div class="course-carousel-track flex gap-5 overflow-x-auto scroll-smooth" data-course-track tabindex="0" aria-label="Popular courses">
+                    <div class="relative group" data-course-carousel data-course-interval="5000">
+                        <!-- Navigation Arrows -->
+                        <div class="hidden lg:block">
+                            <button type="button" class="absolute -left-5 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-lg border border-slate-50 transition hover:bg-emerald-500 hover:text-white focus:outline-none dark:bg-deep dark:border-white/10 dark:text-white/60" data-course-prev aria-label="Previous courses">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                            </button>
+                            <button type="button" class="absolute -right-5 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-lg border border-slate-50 transition hover:bg-emerald-500 hover:text-white focus:outline-none dark:bg-deep dark:border-white/10 dark:text-white/60" data-course-next aria-label="Next courses">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                            </button>
+                        </div>
+
+                        <div class="course-carousel-track flex gap-6 overflow-x-auto scroll-smooth pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-course-track tabindex="0" aria-label="Popular courses">
                         @forelse ($popularCourses as $course)
                             @php
                                 $courseImages = ['images/bnyti-hero-premium-2.png', 'images/bnyti-hero-premium-1.png', 'images/bnyti-hero-premium-3.png', 'images/bnyti-hero-premium-1.png'];
-                                $coursePositions = ['object-[68%_center]', 'object-[58%_center]', 'object-[52%_center]', 'object-[78%_center]'];
-                                $courseBadges = ['bg-amber-400', 'bg-sky-500', 'bg-pink-500', 'bg-violet-600'];
-                                $courseIcons = ['M13 2 6 13h5l-1 9 8-12h-5V2Z', 'M4 4h16v12H4V4Zm4 16h8m-4-4v4', 'M4 20l4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10L4 20Zm10-13 3 3M4 20l1-4 3 3-4 1Z', 'M8 8 4 12l4 4m8-8 4 4-4 4m-2-11-4 18'];
+                                $coursePositions = ['object-center', 'object-center', 'object-center', 'object-center'];
                                 $courseIndex = $loop->index % 4;
                                 $courseImage = $course->image_path ? Storage::disk('public')->url($course->image_path) : asset($courseImages[$courseIndex]);
                             @endphp
-                            <article class="course-carousel-slide group flex h-full w-full shrink-0 snap-start flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_3px_12px_rgba(15,23,42,.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,.13)] dark:border-white/10 dark:bg-deep" data-course-slide>
-                                <div class="relative aspect-video shrink-0 overflow-hidden bg-slate-100">
+                            <article class="course-carousel-slide group flex w-[280px] shrink-0 snap-start flex-col rounded-[2rem] bg-white p-4 shadow-sm transition duration-300 hover:shadow-xl dark:bg-deep sm:w-[290px]" data-course-slide>
+                                <div class="relative aspect-square shrink-0 overflow-hidden rounded-2xl bg-slate-100">
                                     <img
                                         src="{{ $courseImage }}"
-                                        alt="{{ $course->name }} training"
-                                        class="size-full object-cover {{ $coursePositions[$courseIndex] }} transition duration-500 group-hover:scale-105"
+                                        alt="{{ $course->name }}"
+                                        class="size-full object-cover transition duration-500 group-hover:scale-105"
                                         loading="lazy"
                                     >
-                                    <span class="absolute bottom-0 left-4 grid size-9 translate-y-1/2 place-items-center rounded-lg {{ $courseBadges[$courseIndex] }} text-white shadow-lg ring-4 ring-white dark:ring-deep">
-                                        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                            <path d="{{ $courseIcons[$courseIndex] }}" />
-                                        </svg>
-                                    </span>
                                 </div>
 
-                                <div class="flex min-h-[174px] flex-1 flex-col px-4 pt-7 pb-4">
-                                    <h3 class="line-clamp-2 min-h-10 text-sm leading-5 font-extrabold text-[#0b2447] dark:text-white">{{ $course->name }}</h3>
-                                    <p class="mt-2 line-clamp-2 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{{ $course->description }}</p>
-                                    <dl class="mt-3 grid gap-1.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                                        <div class="flex items-center gap-1.5">
-                                            <dt class="sr-only">Duration</dt>
-                                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5">
-                                                <circle cx="10" cy="10" r="7" />
-                                                <path d="M10 6v4l2.5 1.5" />
+                                <div class="flex flex-1 flex-col px-1 py-5">
+                                    <h3 class="text-xl font-black leading-tight text-slate-900 dark:text-white">{{ $course->name }}</h3>
+                                    <p class="mt-2 line-clamp-2 text-xs font-medium leading-relaxed text-slate-500 dark:text-slate-400">{{ $course->description }}</p>
+
+                                    <!-- Star Rating -->
+                                    <div class="mt-4 flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
+                                        @for ($star = 0; $star < 5; $star++)
+                                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="currentColor">
+                                                <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
                                             </svg>
-                                            <dd>{{ $course->duration }}</dd>
-                                        </div>
-                                        <div class="flex items-center gap-1.5">
-                                            <dt class="sr-only">Course overview</dt>
-                                            <span class="w-3.5 text-center font-black">৳</span>
-                                            <dd class="line-clamp-1">{{ Str::limit($course->description, 48) }}</dd>
-                                        </div>
-                                    </dl>
+                                        @endfor
+                                    </div>
+
+                                    <div class="mt-6">
+                                        <a href="#latest-news-contact" class="block w-full rounded-xl bg-[#f5a623] py-3 text-center text-sm font-black text-white transition hover:bg-[#e69516]">
+                                            Learn More
+                                        </a>
+                                    </div>
                                 </div>
                             </article>
                         @empty
@@ -386,17 +380,17 @@
                             </div>
                         @endforelse
                         </div>
-                        @if ($popularCourses->count() > 1)
-                            <div class="course-carousel-controls mt-5 items-center justify-center gap-4" aria-label="Course carousel controls">
-                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-course-prev aria-label="Previous courses">
-                                    <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
-                                </button>
-                                <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-course-current>1</span> of <span data-course-total>1</span></p>
-                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-course-next aria-label="Next courses">
-                                    <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
-                                </button>
-                            </div>
-                        @endif
+
+                        <!-- Mobile controls & status -->
+                        <div class="mt-4 flex items-center justify-center gap-4 lg:hidden">
+                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-course-prev aria-label="Previous courses">
+                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
+                            </button>
+                            <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-course-current>1</span> of <span data-course-total>1</span></p>
+                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-course-next aria-label="Next courses">
+                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>

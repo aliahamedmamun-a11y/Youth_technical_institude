@@ -43,7 +43,7 @@
                     >
                     <div class="hidden sm:block">
                         <span class="block text-2xl font-black tracking-tight text-[#03224c] dark:text-white uppercase leading-none">South Asia</span>
-                        <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400 mt-1">Engineering & Technical Institute</span>
+                        <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400 mt-1">National Technical Institute</span>
                     </div>
                     <div class="sm:hidden">
                         <span class="block text-xl font-black tracking-tighter text-[#03224c] dark:text-white">SOUTH ASIA</span>
@@ -92,7 +92,7 @@
                 <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-white/10">
                     <a href="#home" class="flex min-w-0 items-center gap-3" aria-label="BNYTI home">
                         <img src="{{ asset('images/bnyti-logo.svg') }}" alt="" class="size-11 shrink-0 object-contain">
-                        <span><span class="block font-black text-slate-950 dark:text-white">SOUTH ASIA</span><span class="block text-[9px] font-bold tracking-[.14em] text-slate-500 dark:text-slate-300">ENGINEERING & TECHNICAL INSTITUTE</span></span>
+                        <span><span class="block font-black text-slate-950 dark:text-white">BNYTI</span><span class="block text-[9px] font-bold tracking-[.14em] text-slate-500 dark:text-slate-300">TECHNICAL INSTITUTE</span></span>
                     </a>
                     <button type="button" class="icon-button" data-menu-dismiss aria-label="Close navigation"><svg viewBox="0 0 24 24" aria-hidden="true" class="size-6"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg></button>
                 </div>
@@ -230,7 +230,7 @@
             <section id="about" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-20 lg:py-24">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <h2 class="reveal mb-12 text-center text-3xl font-black uppercase tracking-tight text-[#03224c] dark:text-white sm:text-4xl">
-                        ABOUT SOUTH ASIA ENGINEERING & TECHNICAL INSTITUTE
+                        ABOUT SOUTH ASIA NATIONAL TECHNICAL INSTITUTE
                     </h2>
 
                     @php $about = $aboutEntries->first(); @endphp
@@ -399,53 +399,53 @@
                 </div>
             </section>
 
-            <section id="expert-teachers" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-24">
+            <section id="expert-teachers" class="bg-[#e7f3f9] py-16 dark:bg-[#0f172a] sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="mb-16 text-center">
-                        <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Expert Teachers Gallery</h2>
+                    <div class="mb-12 text-center">
+                        <h2 class="text-2xl font-black uppercase tracking-wider text-slate-900 dark:text-white sm:text-3xl">Expert Teachers Gallery</h2>
                     </div>
 
                     <div class="relative group" data-teacher-carousel data-teacher-interval="5000">
                         <!-- Navigation Arrows -->
                         <div class="hidden lg:block">
-                            <button type="button" class="absolute -left-10 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-xl border border-slate-100 transition hover:bg-emerald-500 hover:text-white focus:outline-none dark:bg-slate-800 dark:border-white/10 dark:text-white/60" data-teacher-prev aria-label="Previous teachers">
-                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                            <button type="button" class="absolute -left-6 top-[40%] z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-slate-400 shadow-md backdrop-blur-sm transition hover:bg-white hover:text-slate-600 focus:outline-none dark:bg-slate-800 dark:text-white/60" data-teacher-prev aria-label="Previous teachers">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="size-5"><path d="m15 18-6-6 6-6" /></svg>
                             </button>
-                            <button type="button" class="absolute -right-10 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-xl border border-slate-100 transition hover:bg-emerald-500 hover:text-white focus:outline-none dark:bg-slate-800 dark:border-white/10 dark:text-white/60" data-teacher-next aria-label="Next teachers">
-                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                            <button type="button" class="absolute -right-6 top-[40%] z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-slate-400 shadow-md backdrop-blur-sm transition hover:bg-white hover:text-slate-600 focus:outline-none dark:bg-slate-800 dark:text-white/60" data-teacher-next aria-label="Next teachers">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="size-5"><path d="m9 18 6-6-6-6" /></svg>
                             </button>
                         </div>
 
-                        <div class="teacher-carousel-track flex gap-6 overflow-x-auto scroll-smooth pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-teacher-track tabindex="0" aria-label="Teacher profiles">
+                        <div class="teacher-carousel-track flex gap-5 overflow-x-auto scroll-smooth pb-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-teacher-track tabindex="0" aria-label="Teacher profiles">
                             @foreach ($teacherCards as $teacher)
-                                <article class="teacher-carousel-slide group flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-900/60 sm:w-[300px]" data-teacher-slide>
-                                    <div class="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+                                <article class="teacher-carousel-slide group flex w-[260px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-white p-3 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition duration-300 hover:shadow-xl dark:bg-slate-900 sm:w-[280px]" data-teacher-slide>
+                                    <div class="relative aspect-[1/1.1] w-full overflow-hidden rounded-xl bg-slate-100">
                                         @if ($teacher['image_path'])
                                             <img
                                                 src="{{ Storage::url($teacher['image_path']) }}"
                                                 alt="{{ $teacher['name'] }}"
-                                                class="size-full object-cover object-top transition duration-500 group-hover:scale-105"
+                                                class="size-full object-cover"
                                                 loading="lazy"
                                             >
                                         @else
                                             <div
                                                 role="img"
                                                 aria-label="{{ $teacher['name'] }}"
-                                                class="size-full bg-cover bg-no-repeat transition duration-500 group-hover:scale-105"
-                                                style="background-image: url('{{ asset('images/expert-teachers-sprite-v2.png') }}'); background-size: 600% auto; background-position: {{ $loop->index * 20 }}% 10%;"
+                                                class="size-full bg-cover bg-center bg-no-repeat"
+                                                style="background-image: url('{{ asset('images/expert-teachers-sprite-v2.png') }}'); background-size: 600% auto; background-position: {{ $loop->index * 20 }}% 52%;"
                                             ></div>
                                         @endif
                                     </div>
 
-                                    <div class="flex flex-1 flex-col p-5">
-                                        <h3 class="text-lg font-black leading-tight text-[#0b2447] dark:text-white">{{ $teacher['name'] }}</h3>
-                                        <p class="mt-1 text-[11px] font-bold text-slate-500 uppercase">{{ $teacher['designation'] ?? $teacher['department'] }}</p>
+                                    <div class="flex flex-1 flex-col px-1 pt-4 pb-2">
+                                        <h3 class="text-base font-black text-slate-900 dark:text-white">{{ $teacher['name'] }}</h3>
+                                        <p class="mt-0.5 text-[10px] font-bold text-slate-500 uppercase tracking-tight">{{ $teacher['designation'] ?? $teacher['department'] }}</p>
 
-                                        <p class="mt-3 line-clamp-3 text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-400">
+                                        <p class="mt-3 line-clamp-3 text-[11px] font-medium leading-relaxed text-slate-600 dark:text-slate-400">
                                             Expert in {{ $teacher['department'] }} with over {{ $teacher['experience'] }} years of practical industry experience and academic excellence.
                                         </p>
 
-                                        <div class="mt-auto flex gap-0.5 pt-5 text-amber-400" aria-label="5 out of 5 stars">
+                                        <div class="mt-4 flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
                                             @for ($star = 0; $star < 5; $star++)
                                                 <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="currentColor">
                                                     <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
@@ -457,12 +457,12 @@
                             @endforeach
                         </div>
 
-                        <!-- Mobile & Scroll Indicators -->
-                        <div class="mt-8 flex items-center justify-center gap-3">
-                            <span class="size-2 rounded-full bg-[#0b2447]/20 dark:bg-white/20"></span>
-                            <span class="size-2 rounded-full bg-[#0b2447] dark:bg-white"></span>
-                            <span class="size-2 rounded-full bg-[#0b2447]/20 dark:bg-white/20"></span>
-                            <span class="size-2 rounded-full bg-[#0b2447]/20 dark:bg-white/20"></span>
+                        <!-- Scroll Indicators -->
+                        <div class="mt-2 flex items-center justify-center gap-2">
+                            <span class="size-1.5 rounded-full bg-slate-300 dark:bg-white/10"></span>
+                            <span class="size-1.5 rounded-full bg-slate-800 dark:bg-white"></span>
+                            <span class="size-1.5 rounded-full bg-slate-300 dark:bg-white/10"></span>
+                            <span class="size-1.5 rounded-full bg-slate-300 dark:bg-white/10"></span>
                         </div>
                     </div>
                 </div>
@@ -1006,7 +1006,7 @@
                             </div>
                             <div>
                                 <span class="block text-2xl font-black tracking-tight text-white uppercase leading-none">South Asia</span>
-                                <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mt-1">Engineering & Technical Institute</span>
+                                <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mt-1">National Technical Institute</span>
                             </div>
                         </a>
                         <p class="text-sm leading-relaxed text-slate-300">
@@ -1051,7 +1051,7 @@
             </div>
             <div class="border-t border-white/10 py-8 text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest">
                 <div class="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <p>© {{ date('Y') }} South Asia Engineering & Technical Institute. All rights reserved.</p>
+                    <p>© {{ date('Y') }} South Asia National Technical Institute. All rights reserved.</p>
                     <p>Managed by BNYTI Technical Solutions</p>
                 </div>
             </div>

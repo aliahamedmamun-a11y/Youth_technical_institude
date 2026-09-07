@@ -672,34 +672,34 @@
                                 $name = $item->title;
                                 $position = $item->subtitle;
                             @endphp
-                            <article class="student-carousel-slide group flex w-[320px] shrink-0 snap-start items-center gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-deep sm:w-[350px]" data-student-slide>
-                                <div class="relative size-24 shrink-0 overflow-hidden rounded-xl bg-slate-50 sm:size-28">
+                            <article class="student-carousel-slide group flex w-[320px] shrink-0 snap-start overflow-hidden rounded-[1.8rem] border border-slate-100 bg-white shadow-[0_4px_25px_rgba(0,0,0,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-deep sm:w-[380px]" data-student-slide>
+                                <div class="relative w-32 shrink-0 bg-slate-50 sm:w-40">
                                     <div
                                         role="img"
                                         aria-label="{{ $name }}"
-                                        class="size-full bg-no-repeat transition duration-500 group-hover:scale-105"
-                                        style="background-image: url('{{ asset('images/student-success-sprite.png') }}'); background-size: 400% auto; background-position: {{ $loop->index * 33.333 }}% 30%;"
+                                        class="size-full bg-cover bg-center bg-no-repeat transition duration-500 group-hover:scale-105"
+                                        style="background-image: url('{{ asset('images/student-success-sprite.png') }}'); background-position: {{ $loop->index * 33.333 }}% 30%;"
                                     ></div>
                                 </div>
 
-                                <div class="flex flex-1 flex-col py-1">
-                                    <h3 class="text-base font-black text-[#0b2447] dark:text-white">{{ $name }}</h3>
-                                    <p class="text-[11px] font-extrabold text-emerald-600 dark:text-emerald-400">{{ $position }}</p>
+                                <div class="flex flex-1 flex-col justify-center px-5 py-6">
+                                    <h3 class="text-lg font-black leading-tight text-[#0b2447] dark:text-white">{{ $name }}</h3>
+                                    <p class="mt-0.5 text-[11px] font-bold text-[#16a34a] dark:text-emerald-400">{{ $position }}</p>
 
-                                    <div class="mt-3 space-y-1">
-                                        <p class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">
-                                            <span class="font-bold text-slate-700 dark:text-slate-200">Course:</span>
-                                            {{ $item->metadata['course'] ?? 'Technical Training' }}
-                                        </p>
-                                        <p class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">
-                                            <span class="font-bold text-slate-700 dark:text-slate-200">Success:</span>
-                                            {{ Str::limit($quote, 45) }}
-                                        </p>
+                                    <div class="mt-4 space-y-2">
+                                        <div class="flex flex-col">
+                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Course:</span>
+                                            <span class="text-[12px] font-black text-slate-800 dark:text-slate-200 leading-none">{{ $item->metadata['course'] ?? 'Technical Training' }}</span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Outcome:</span>
+                                            <span class="line-clamp-2 text-[11px] font-bold leading-snug text-slate-600 dark:text-slate-400">{{ Str::limit($quote, 55) }}</span>
+                                        </div>
                                     </div>
 
-                                    <div class="mt-3 flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
+                                    <div class="mt-5 flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
                                         @for ($star = 0; $star < 5; $star++)
-                                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-3.5" fill="currentColor">
+                                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="currentColor">
                                                 <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
                                             </svg>
                                         @endfor

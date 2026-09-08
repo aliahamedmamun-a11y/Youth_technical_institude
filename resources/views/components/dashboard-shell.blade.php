@@ -35,8 +35,8 @@
         <div class="flex">
             {{-- Sidebar Navigation --}}
             @if ($isSuperAdmin)
-                <aside class="sticky top-16 h-[calc(100vh-64px)] w-64 shrink-0 overflow-y-auto border-r border-slate-200 bg-white py-6 shadow-sm scrollbar-hide">
-                    <nav class="space-y-6 px-3">
+                <aside class="sticky top-16 h-[calc(100vh-64px)] w-64 shrink-0 flex flex-col border-r border-slate-200 bg-white shadow-sm">
+                    <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-6 scrollbar-hide">
                         @foreach ($adminNavigation as $group)
                             <div>
                                 <h2 class="px-3 pb-2 text-[10px] font-black uppercase tracking-[0.15em] text-slate-400">{{ $group['label'] }}</h2>
@@ -78,7 +78,20 @@
                             </div>
                         @endforeach
                     </nav>
+
+                    {{-- Logout Section --}}
+                    <div class="border-t border-slate-100 p-4 bg-slate-50/50">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="flex w-full items-center gap-3 rounded-xl bg-white px-4 py-2.5 text-[13px] font-black text-rose-600 shadow-sm ring-1 ring-slate-200 transition-all hover:bg-rose-50 hover:text-rose-700 hover:ring-rose-200">
+                                <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="3">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                                Log out
+                            </button>
+                        </form>
+                    </div>
                 </aside>
+            @endif
             @endif
 
             {{-- Main Content Area --}}

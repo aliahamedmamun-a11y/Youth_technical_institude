@@ -16,9 +16,9 @@ return [
         ['label' => 'Semester & Subjects', 'description' => 'Academic structure', 'route' => 'super-admin.semester-setup.index', 'active' => ['super-admin.semester-setup.*'], 'icon' => 'semesters'],
     ]],
     ['label' => 'Website & Gallery', 'items' => [
-        ['label' => 'Add Gallery', 'description' => 'Manage photo gallery', 'route' => 'super-admin.homepage.items.index', 'parameters' => ['type' => 'gallery'], 'active' => ['super-admin.homepage.items.*'], 'icon' => 'homepage'],
-        ['label' => 'Add Review', 'description' => 'Student testimonials', 'route' => 'super-admin.homepage.items.index', 'parameters' => ['type' => 'testimonials'], 'active' => ['super-admin.homepage.items.*'], 'icon' => 'homepage'],
-        ['label' => 'Add Slider', 'description' => 'Homepage hero slider', 'route' => 'super-admin.homepage.items.index', 'parameters' => ['type' => 'hero'], 'active' => ['super-admin.homepage.items.*'], 'icon' => 'homepage'],
+        ['label' => 'Add Gallery', 'description' => 'Manage photo gallery', 'route' => 'super-admin.homepage.items.index', 'parameters' => ['section' => 'gallery'], 'active' => ['super-admin.homepage.items.*'], 'icon' => 'homepage'],
+        ['label' => 'Add Review', 'description' => 'Student testimonials', 'route' => 'super-admin.homepage.items.index', 'parameters' => ['section' => 'testimonials'], 'active' => ['super-admin.homepage.items.*'], 'icon' => 'homepage'],
+        ['label' => 'Add Slider', 'description' => 'Homepage hero slider', 'route' => 'super-admin.homepage.items.index', 'parameters' => ['section' => 'hero'], 'active' => ['super-admin.homepage.items.*'], 'icon' => 'homepage'],
     ]],
     ['label' => 'Notifications', 'items' => [
         ['label' => 'Add Notice', 'description' => 'Create new notice', 'route' => 'super-admin.notices.create', 'active' => ['super-admin.notices.create'], 'icon' => 'notices'],

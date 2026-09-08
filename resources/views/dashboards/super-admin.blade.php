@@ -159,7 +159,7 @@
                 ['Add Teacher', route('super-admin.teachers.create'), 'emerald'],
                 ['New Course', route('super-admin.courses.create'), 'sky'],
                 ['Add Notice', route('super-admin.notices.create'), 'amber'],
-                ['Update Gallery', route('super-admin.homepage.items.index', ['type' => 'gallery']), 'rose'],
+                ['Update Gallery', route('super-admin.homepage.items.index', ['section' => 'gallery']), 'rose'],
                 ['Profile Info', route('super-admin.about.index'), 'slate']
             ] as [$label, $url, $tone])
                 <a href="{{ $url }}" class="group flex flex-col items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:-translate-y-1 hover:shadow-lg">

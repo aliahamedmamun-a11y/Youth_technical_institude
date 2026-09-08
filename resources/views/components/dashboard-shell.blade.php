@@ -92,7 +92,6 @@
                     </div>
                 </aside>
             @endif
-            @endif
 
             {{-- Main Content Area --}}
             <main class="min-w-0 flex-1 p-6 lg:p-10">

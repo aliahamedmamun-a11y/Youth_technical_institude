@@ -16,10 +16,11 @@ class BranchApplicationController extends Controller
 
     public function store(StoreBranchApplicationRequest $request): RedirectResponse
     {
-        $applicationData = $request->safe()->except(['director_signature', 'nid_photo', 'director_photo']);
+        $applicationData = $request->safe()->except(['director_signature', 'nid_photo', 'director_photo', 'institute_photo']);
         $applicationData['director_signature_path'] = $request->file('director_signature')->store('branch-applications/signatures', 'public');
         $applicationData['nid_photo_path'] = $request->file('nid_photo')->store('branch-applications/nid', 'public');
         $applicationData['director_photo_path'] = $request->file('director_photo')->store('branch-applications/directors', 'public');
+        $applicationData['institute_photo_path'] = $request->file('institute_photo')->store('branch-applications/institutes', 'public');
         BranchApplication::query()->create($applicationData);
 
         return redirect()->route('branch-applications.create')->with('status', 'Your branch application has been submitted successfully.');

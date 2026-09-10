@@ -25,7 +25,7 @@ class UpdateStudentRequest extends FormRequest
         return [
             'course_id' => ['required', 'integer', Rule::exists('courses', 'id')],
             'name' => ['required', 'string', 'max:255'],
-            'roll_number' => ['nullable', 'string', 'max:50', Rule::unique('students', 'roll_number')->ignore($this->route('student'))],
+            'roll_number' => ['nullable', 'string', 'digits:6', Rule::unique('students', 'roll_number')->ignore($this->route('student'))],
             'father_name' => ['required', 'string', 'max:255'],
             'mother_name' => ['required', 'string', 'max:255'],
             'address' => ['required', 'string', 'max:2000'],
@@ -35,6 +35,8 @@ class UpdateStudentRequest extends FormRequest
             'passport_nid_number' => ['required', 'string', 'max:50'],
             'phone' => ['required', 'string', 'max:30'],
             'gender' => ['required', Rule::in(['Male', 'Female', 'Other'])],
+            'end_month' => ['required', 'string', 'max:20'],
+            'end_year' => ['required', 'string', 'max:10'],
             'education_qualification' => ['required', 'string', 'max:255'],
             'duration' => ['required', 'string', 'max:100'],
             'session' => ['required', 'string', 'max:100'],

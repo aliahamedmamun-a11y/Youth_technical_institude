@@ -32,6 +32,7 @@ class ApproveBranchApplication
                 'name' => $application->director_name ?: $application->institute_name,
                 'email' => $application->email,
                 'role' => UserRole::Branch,
+                'is_active' => true,
                 'password' => 'temporary-password',
             ]);
 
@@ -41,8 +42,8 @@ class ApproveBranchApplication
 
             $application->update([
                 'status' => BranchApplicationStatus::Approved,
+                'is_active' => true,
                 'reviewed_at' => now(),
-                'password' => null,
             ]);
         });
     }

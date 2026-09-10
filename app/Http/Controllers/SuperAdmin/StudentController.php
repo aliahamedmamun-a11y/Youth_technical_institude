@@ -44,6 +44,7 @@ class StudentController extends Controller
 
         $studentData = $request->safe()->except('image');
         $studentData['registration_number'] = $this->registrationNumber();
+        $studentData['roll_number'] = $studentData['roll_number'] ?: $this->rollNumber();
         $studentData['result_status'] = 'Pending';
 
         if ($request->hasFile('image')) {
@@ -112,9 +113,18 @@ class StudentController extends Controller
     private function registrationNumber(): string
     {
         do {
-            $registrationNumber = 'BNYTI-'.now()->format('YmdHis').'-'.random_int(100, 999);
+            $registrationNumber = (string) random_int(10000000, 99999999);
         } while (Student::query()->where('registration_number', $registrationNumber)->exists());
 
         return $registrationNumber;
+    }
+
+    private function rollNumber(): string
+    {
+        do {
+            $rollNumber = (string) random_int(100000, 999999);
+        } while (Student::query()->where('roll_number', $rollNumber)->exists());
+
+        return $rollNumber;
     }
 }

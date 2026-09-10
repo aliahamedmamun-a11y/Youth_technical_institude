@@ -22,7 +22,16 @@ class AuthenticatedSessionController extends Controller
             'password' => ['required', 'string'],
         ]);
 
+        $credentials['is_active'] = true;
+
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
+            // Check if user exists but is blocked
+            if (\App\Models\User::query()->where('email', $request->email)->where('is_active', false)->exists()) {
+                return back()
+                    ->withErrors(['email' => 'Your account has been blocked. Please contact the administrator.'])
+                    ->onlyInput('email');
+            }
+
             return back()
                 ->withErrors(['email' => 'The provided credentials do not match our records.'])
                 ->onlyInput('email');

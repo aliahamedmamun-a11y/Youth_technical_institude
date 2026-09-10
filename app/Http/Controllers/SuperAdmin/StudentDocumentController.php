@@ -68,7 +68,7 @@ class StudentDocumentController extends Controller
             'documentTitle' => self::DOCUMENTS[$document],
             'latestResult' => $latestResult,
             'cumulativeGpa' => $cumulativeGpa,
-            'certificateSerial' => $latestResult ? sprintf('CERT-%06d', $latestResult->id) : null,
+            'certificateSerial' => $latestResult ? sprintf('%06d', $latestResult->id) : null,
         ];
 
         if ($document === 'admit-card') {
@@ -107,7 +107,7 @@ class StudentDocumentController extends Controller
         $admitCardQrUrl = route('home');
 
         return [
-            'admitCardSerial' => sprintf('STU-%06d', $student->id),
+            'admitCardSerial' => $student->roll_number ?: sprintf('%06d', $student->id),
             'admitCardInstituteCode' => self::DOCUMENT_INSTITUTE_CODE,
             'admitCardInstituteName' => self::DOCUMENT_INSTITUTE_NAME,
             'admitCardExamineeType' => self::ADMIT_CARD_EXAMINEE_TYPE,
@@ -131,7 +131,7 @@ class StudentDocumentController extends Controller
         $registrationCardQrUrl = route('home');
 
         return [
-            'registrationCardSerial' => sprintf('STU-%06d', $student->id),
+            'registrationCardSerial' => $student->registration_number ?: sprintf('%08d', $student->id),
             'registrationCardInstituteCode' => self::DOCUMENT_INSTITUTE_CODE,
             'registrationCardInstituteName' => self::DOCUMENT_INSTITUTE_NAME,
             'registrationCardQrCode' => $qrCode->dataUri($registrationCardQrUrl),

@@ -2,11 +2,15 @@
 # exit on error
 set -o errexit
 
+# Install PHP dependencies
 composer install --no-dev --optimize-autoloader
 
-# Install node dependencies and build assets
+# Install Node dependencies and build assets
 npm install
 npm run build
 
-# Run database migrations (Optional: use --force for production)
-# php artisan migrate --force
+# Clear any existing cache
+php artisan optimize:clear
+
+# Run migrations (only in production)
+php artisan migrate --force

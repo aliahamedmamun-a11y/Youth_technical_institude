@@ -8,6 +8,52 @@
     @if($applications->isEmpty())
         <div class="admin-panel"><x-admin-empty-state title="No branch applications found" description="Try clearing the filters, or return later when a new branch registration is submitted." /></div>
     @else
-        <div class="admin-table-wrap"><div class="overflow-x-auto"><table class="admin-table"><caption class="sr-only">Branch applications awaiting or completing review</caption><thead><tr><th>Institute</th><th>Director</th><th>District</th><th>Submitted</th><th>Status</th><th class="text-right">Next step</th></tr></thead><tbody>@foreach($applications as $application)<tr><td><p class="font-black text-slate-950">{{ $application->institute_name ?? $application->proposed_branch_name }}</p><p class="mt-1 text-xs text-slate-500">{{ $application->email }}</p></td><td class="text-sm font-semibold text-slate-700">{{ $application->director_name ?? $application->applicant_name }}</td><td class="text-sm text-slate-600">{{ $application->district }}</td><td class="text-sm text-slate-600">{{ $application->created_at->format('d M Y') }}</td><td><x-admin-status :status="$application->status" /></td><td class="text-right"><a href="{{ route('super-admin.branch-applications.show', $application) }}" class="admin-button admin-button--secondary">{{ $application->status->value === 'pending' ? 'Review application' : 'View decision' }}</a></td></tr>@endforeach</tbody></table></div></div><div class="mt-6">{{ $applications->links() }}</div>
+        <div class="admin-table-wrap">
+            <div class="overflow-x-auto">
+                <table class="admin-table">
+                    <caption class="sr-only">Branch applications awaiting or completing review</caption>
+                    <thead>
+                        <tr>
+                            <th>Institute</th>
+                            <th>Director</th>
+                            <th>District</th>
+                            <th>Submitted</th>
+                            <th>Status</th>
+                            <th class="text-right">Next step</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($applications as $application)
+                            <tr>
+                                <td>
+                                    <p class="font-black text-slate-950">{{ $application->institute_name ?? $application->proposed_branch_name }}</p>
+                                    <p class="mt-1 text-xs text-slate-500">{{ $application->email }}</p>
+                                </td>
+                                <td class="text-sm font-semibold text-slate-700">{{ $application->director_name ?? $application->applicant_name }}</td>
+                                <td class="text-sm text-slate-600">{{ $application->district }}</td>
+                                <td class="text-sm text-slate-600">{{ $application->created_at->format('d M Y') }}</td>
+                                <td><x-admin-status :status="$application->status" /></td>
+                                <td class="text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        @if($application->status->value === 'pending')
+                                            <form method="POST" action="{{ route('super-admin.branch-applications.update', $application) }}" onsubmit="return confirm('Approve this branch?')">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="approved">
+                                                <button class="admin-button admin-button--success py-1.5 px-3 text-xs">Approve</button>
+                                            </form>
+                                        @endif
+                                        <a href="{{ route('super-admin.branch-applications.show', $application) }}" class="admin-button admin-button--secondary">
+                                            {{ $application->status->value === 'pending' ? 'Review' : 'View' }}
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="mt-6">{{ $applications->links() }}</div>
     @endif
 </x-dashboard-shell>

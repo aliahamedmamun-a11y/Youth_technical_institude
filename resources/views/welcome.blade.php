@@ -710,68 +710,6 @@
                 </div>
             </section>
 
-            <section id="contact-section" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-20">
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="mb-12 text-center">
-                        <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Contact Section</h2>
-                    </div>
-
-                    <div class="grid items-start gap-10 lg:grid-cols-[1.2fr_1fr_.8fr]">
-                        <!-- Contact Form -->
-                        <div class="rounded-2xl border-4 border-[#155e75] bg-white p-6 shadow-xl dark:bg-slate-900/60">
-                            <form action="#" method="POST" class="space-y-4">
-                                <input type="text" placeholder="Name" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800">
-                                <input type="email" placeholder="Email" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800">
-                                <input type="text" placeholder="Your Address" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800">
-                                <textarea placeholder="Message" rows="4" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800"></textarea>
-                                <button type="submit" class="w-full rounded-md bg-[#f5a623] py-3 text-sm font-black text-white uppercase transition hover:bg-[#e69516]">Submit</button>
-                            </form>
-                        </div>
-
-                        <!-- Contact Details -->
-                        <div class="space-y-8 py-4">
-                            <div class="flex items-start gap-4">
-                                <div class="grid size-8 shrink-0 place-items-center rounded-full bg-[#0b2447] text-white">
-                                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Student Address</h3>
-                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">Haji Hossain Plaza, Demra,<br>Dhaka-1360, Bangladesh</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <div class="grid size-8 shrink-0 place-items-center rounded-full bg-[#0b2447] text-white">
-                                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Phone Number</h3>
-                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">+880 9696-481628</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <div class="grid size-8 shrink-0 place-items-center rounded-full bg-[#0b2447] text-white">
-                                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Mobile Number</h3>
-                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">+880 1675-870000<br>bnyti-edubd@gmail.com</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Map -->
-                        <div class="relative aspect-square w-full overflow-hidden rounded-2xl bg-white shadow-lg">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.887255866185!2d90.49969147589417!3d23.715694889785834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b719489f6b95%3A0xc6c4f8d55d144983!2sDemra%20Bazar%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1716800000000!5m2!1sen!2sbd"
-                                class="size-full border-0"
-                                allowfullscreen=""
-                                loading="lazy"
-                            ></iframe>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <section id="update-notice-board" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="mb-12 text-center">
@@ -832,6 +770,75 @@
                                  </div>
                              </div>
                         </aside>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact-section" class="bg-[#f8fafc] py-16 dark:bg-ink sm:py-20">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="mb-12 text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Contact Section</h2>
+                    </div>
+
+                    <div class="grid items-start gap-10 lg:grid-cols-[1.2fr_1fr_.8fr]">
+                        <!-- Contact Form -->
+                        <div class="rounded-2xl border-4 border-[#155e75] bg-white p-6 shadow-xl dark:bg-slate-900/60">
+                            <form action="#" method="POST" class="space-y-4">
+                                <input type="text" placeholder="Name" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800">
+                                <input type="email" placeholder="Email" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800">
+                                <input type="text" placeholder="Your Address" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800">
+                                <textarea placeholder="Message" rows="4" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800"></textarea>
+                                <button type="submit" class="w-full rounded-md bg-[#f5a623] py-3 text-sm font-black text-white uppercase transition hover:bg-[#e69516]">Submit</button>
+                            </form>
+                        </div>
+
+                        <!-- Contact Details -->
+                        <div class="space-y-8 py-4">
+                            <div class="flex items-center gap-4 pb-4 border-b border-slate-200 dark:border-white/10">
+                                <a href="#" class="grid size-8 place-items-center rounded-full bg-[#1877f2] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="M13.5 21v-8h2.8l.4-3.1h-3.2V8c0-.9.3-1.5 1.6-1.5h1.7V3.7c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2H7.3V13h2.8v8h3.4Z"/></svg></a>
+                                <a href="#" class="grid size-8 place-items-center rounded-full bg-[#1da1f2] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+                                <a href="#" class="grid size-8 place-items-center rounded-full bg-[#e4405f] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-none stroke-current" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                                <a href="#" class="grid size-8 place-items-center rounded-full bg-[#ff0000] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2C5.12 19.5 12 19.5 12 19.5s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33zM9.75 15.02V8.48l5.75 3.27-5.75 3.27z"/></svg></a>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="grid size-8 shrink-0 place-items-center rounded-full bg-[#0b2447] text-white">
+                                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Student Address</h3>
+                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">Haji Hossain Plaza, Demra,<br>Dhaka-1360, Bangladesh</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="grid size-8 shrink-0 place-items-center rounded-full bg-[#0b2447] text-white">
+                                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Phone Number</h3>
+                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">+880 9696-481628</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="grid size-8 shrink-0 place-items-center rounded-full bg-[#0b2447] text-white">
+                                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Mobile Number</h3>
+                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">+880 1675-870000<br>bnyti-edubd@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Map -->
+                        <div class="relative aspect-square w-full overflow-hidden rounded-2xl bg-white shadow-lg">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.887255866185!2d90.49969147589417!3d23.715694889785834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b719489f6b95%3A0xc6c4f8d55d144983!2sDemra%20Bazar%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1716800000000!5m2!1sen!2sbd"
+                                class="size-full border-0"
+                                allowfullscreen=""
+                                loading="lazy"
+                            ></iframe>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -998,7 +1005,7 @@
 
         <footer class="bg-[#031735] text-white">
             <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-                <div class="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+                <div class="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr]">
                     <div class="space-y-6">
                         <a href="#home" class="flex items-center gap-4">
                             <div class="grid size-14 place-items-center rounded-xl bg-white p-2">
@@ -1034,17 +1041,6 @@
                             <a href="#notice-bar" class="hover:text-emerald-400 transition">Notice</a>
                             <a href="#latest-news-contact" class="hover:text-emerald-400 transition">Contact Details</a>
                             <a href="#" class="hover:text-emerald-400 transition">Careers</a>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-lg font-black text-white">Quick Marks</h3>
-                        <p class="mt-6 text-sm font-bold text-slate-400">Take a look at your marks here.</p>
-                        <div class="mt-6 flex items-center gap-4">
-                            <a href="#" class="grid size-8 place-items-center rounded-full bg-[#1877f2] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="M13.5 21v-8h2.8l.4-3.1h-3.2V8c0-.9.3-1.5 1.6-1.5h1.7V3.7c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2H7.3V13h2.8v8h3.4Z"/></svg></a>
-                            <a href="#" class="grid size-8 place-items-center rounded-full bg-[#1da1f2] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
-                            <a href="#" class="grid size-8 place-items-center rounded-full bg-[#e4405f] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-none stroke-current" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-                            <a href="#" class="grid size-8 place-items-center rounded-full bg-[#ff0000] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2C5.12 19.5 12 19.5 12 19.5s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33zM9.75 15.02V8.48l5.75 3.27-5.75 3.27z"/></svg></a>
                         </div>
                     </div>
                 </div>

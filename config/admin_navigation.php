@@ -6,8 +6,8 @@ return [
     ]],
     ['label' => 'Registration Management', 'items' => [
         ['label' => 'Student List', 'description' => 'Records and documents', 'route' => 'super-admin.students.index', 'active' => ['super-admin.students.index'], 'icon' => 'students'],
-        ['label' => 'Branch List', 'description' => 'All registered branches', 'route' => 'super-admin.branch-applications.index', 'active' => ['super-admin.branch-applications.index'], 'icon' => 'branches'],
-        ['label' => 'Branch Approval', 'description' => 'Pending requests', 'route' => 'super-admin.branch-applications.index', 'parameters' => ['status' => 'pending'], 'active' => ['super-admin.branch-applications.*'], 'icon' => 'branches', 'badge' => 'pendingBranchApplications'],
+        ['label' => 'Branch List', 'description' => 'All registered branches', 'route' => 'super-admin.all-branches', 'active' => ['super-admin.all-branches'], 'icon' => 'branches'],
+        ['label' => 'Branch Approval', 'description' => 'Pending requests', 'route' => 'super-admin.branch-applications.index', 'parameters' => ['status' => 'pending'], 'active' => ['super-admin.branch-applications.index'], 'icon' => 'branches', 'badge' => 'pendingBranchApplications'],
         ['label' => 'Add New Student', 'description' => 'Register new student', 'route' => 'super-admin.students.create', 'active' => ['super-admin.students.create'], 'icon' => 'students'],
     ]],
     ['label' => 'Academic Setup', 'items' => [

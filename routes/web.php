@@ -152,7 +152,7 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
     Route::resource('/super-admin/students', StudentController::class)
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->names('super-admin.students');
-        
+
         //  student list
         Route::get('/students', [BranchStudentController::class, 'index'])
                 ->middleware('role:'.UserRole::Branch->value)
@@ -218,7 +218,12 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
         ->name('super-admin.about.publish');
 
     Route::get('/super-admin/branch-applications', [SuperAdminBranchApplicationController::class, 'index'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.index');
+    Route::get('/super-admin/all-branches', [SuperAdminBranchApplicationController::class, 'allBranches'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.all-branches');
+    Route::get('/super-admin/branch-applications/{branchApplication}/edit', [SuperAdminBranchApplicationController::class, 'edit'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.edit');
+    Route::put('/super-admin/branch-applications/{branchApplication}/update-data', [SuperAdminBranchApplicationController::class, 'updateData'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.update-data');
+    Route::patch('/super-admin/branch-applications/{branchApplication}/toggle', [SuperAdminBranchApplicationController::class, 'toggleStatus'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.toggle');
     Route::get('/super-admin/branch-applications/{branchApplication}', [SuperAdminBranchApplicationController::class, 'show'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.show');
+    Route::delete('/super-admin/branch-applications/{branchApplication}', [SuperAdminBranchApplicationController::class, 'destroy'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.destroy');
     Route::patch('/super-admin/branch-applications/{branchApplication}', [SuperAdminBranchApplicationController::class, 'update'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.update');
 
     Route::get('/super-admin/students/{student}/{document}', [StudentDocumentController::class, 'show'])

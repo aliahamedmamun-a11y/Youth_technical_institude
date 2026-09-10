@@ -243,3 +243,13 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
         ->middleware('role:'.UserRole::Student->value)
         ->name('dashboards.student');
 });
+
+Route::get('/clear-cache', function() {
+    Artisan::call('optimize:clear');
+    return "Cache is cleared successfully!";
+});
+
+Route::get('/run-migrate', function() {
+    Artisan::call('migrate', ['--force' => true]);
+    return "Migration completed successfully!";
+});

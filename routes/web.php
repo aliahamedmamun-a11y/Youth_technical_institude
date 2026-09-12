@@ -206,6 +206,65 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
         ->except(['show'])
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->names('super-admin.about');
+
+    Route::get('/super-admin/subject-suggestions', [\App\Http\Controllers\SuperAdmin\SubjectSuggestionController::class, 'index'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.subject-suggestions.index');
+    Route::post('/super-admin/subject-suggestions', [\App\Http\Controllers\SuperAdmin\SubjectSuggestionController::class, 'store'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.subject-suggestions.store');
+    Route::delete('/super-admin/subject-suggestions/{suggestion}', [\App\Http\Controllers\SuperAdmin\SubjectSuggestionController::class, 'destroy'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.subject-suggestions.destroy');
+
+    Route::get('/super-admin/admin-cards', [\App\Http\Controllers\SuperAdmin\AdminCardController::class, 'index'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.admin-cards.index');
+    Route::post('/super-admin/admin-cards', [\App\Http\Controllers\SuperAdmin\AdminCardController::class, 'store'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.admin-cards.store');
+    Route::get('/super-admin/admin-cards/{adminCard}/edit', [\App\Http\Controllers\SuperAdmin\AdminCardController::class, 'edit'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.admin-cards.edit');
+    Route::put('/super-admin/admin-cards/{adminCard}', [\App\Http\Controllers\SuperAdmin\AdminCardController::class, 'update'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.admin-cards.update');
+    Route::delete('/super-admin/admin-cards/{adminCard}', [\App\Http\Controllers\SuperAdmin\AdminCardController::class, 'destroy'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.admin-cards.destroy');
+
+    Route::get('/super-admin/branch-messages', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'index'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-messages.index');
+    Route::get('/super-admin/branch-message-board', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'board'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-messages.board');
+    Route::get('/super-admin/admin-messaging-add', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'messagingAdd'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-messages.messaging-add');
+    Route::get('/super-admin/all-table-admin-add', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'allTableAdd'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-messages.all-table-add');
+    Route::post('/super-admin/branch-message-board', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'store'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-messages.store');
+    Route::delete('/super-admin/branch-messages/{branchMessage}', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'destroy'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-messages.destroy');
+
+    Route::get('/super-admin/notice-board-suggestions', [\App\Http\Controllers\SuperAdmin\NoticeBoardSuggestionController::class, 'index'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.notice-board-suggestions.index');
+    Route::get('/super-admin/all-table-admin-post', [\App\Http\Controllers\SuperAdmin\NoticeBoardSuggestionController::class, 'allTablePost'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.notice-board-suggestions.all-table-post');
+    Route::get('/super-admin/notice-board-suggestions/create', [\App\Http\Controllers\SuperAdmin\NoticeBoardSuggestionController::class, 'create'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.notice-board-suggestions.create');
+    Route::post('/super-admin/notice-board-suggestions', [\App\Http\Controllers\SuperAdmin\NoticeBoardSuggestionController::class, 'store'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.notice-board-suggestions.store');
+
     Route::get('/super-admin/homepage/{section}/items', [HomepageContentController::class, 'index'])->name('super-admin.homepage.items.index');
     Route::patch('/super-admin/homepage/sections/{section}', [HomepageContentController::class, 'updateSection'])->name('super-admin.homepage.sections.update');
     Route::get('/super-admin/homepage/{section}/items/create', [HomepageContentController::class, 'create'])->name('super-admin.homepage.items.create');

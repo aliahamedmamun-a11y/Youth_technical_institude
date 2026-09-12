@@ -9,7 +9,7 @@
                     <div class="relative group">
                          <div class="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-blue-600 to-indigo-600 opacity-75 blur transition duration-500 group-hover:opacity-100"></div>
                          <div class="relative flex size-56 items-center justify-center rounded-3xl bg-[#071c2c] p-6 shadow-2xl">
-                            <img src="{{ asset('images/bnyti-logo.svg') }}" alt="BNTEI Logo" class="w-full brightness-0 invert">
+                            <img src="{{ asset('images/bnyti-logo.svg') }}" alt="SAETI Logo" class="w-full brightness-0 invert">
                          </div>
                     </div>
                     <div class="mt-6 flex items-center gap-2 text-2xl font-black text-[#4da6ff]">

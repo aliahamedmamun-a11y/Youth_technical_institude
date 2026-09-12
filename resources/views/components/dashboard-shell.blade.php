@@ -17,7 +17,7 @@
             <div class="flex items-center gap-4">
                 <a href="/" class="flex items-center gap-3">
                     <img src="{{ asset('images/bnyti-logo.svg') }}" alt="BNYTI logo" class="size-9 brightness-0 invert">
-                    <span class="text-sm font-black uppercase tracking-wider hidden sm:inline">BNTEI</span>
+                    <span class="text-sm font-black uppercase tracking-wider hidden sm:inline">SAETI</span>
                 </a>
             </div>
             <div class="flex items-center gap-4">

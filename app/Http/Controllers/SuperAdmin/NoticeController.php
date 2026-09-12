@@ -40,7 +40,12 @@ class NoticeController extends Controller
     {
         Gate::authorize('create', Notice::class);
 
-        return view('super-admin.notices.create', ['notice' => new Notice(['is_published' => true])]);
+        $notices = Notice::latest()->get();
+
+        return view('super-admin.notices.create', [
+            'notice' => new Notice(['is_published' => true]),
+            'notices' => $notices
+        ]);
     }
 
     /**
@@ -50,12 +55,18 @@ class NoticeController extends Controller
     {
         Gate::authorize('create', Notice::class);
         $data = $request->validated();
+
+        // If message is the default hidden one or missing, use title
+        if (!isset($data['message']) || $data['message'] === 'Default Notice Message') {
+            $data['message'] = $data['title'];
+        }
+
         $data['created_by'] = $request->user()->id;
         $data['is_published'] = $request->boolean('is_published');
         $data['published_at'] = $data['is_published'] ? now() : null;
         Notice::query()->create($data);
 
-        return redirect()->route('super-admin.notices.index')->with('status', 'Notice created successfully.');
+        return back()->with('status', 'Notice created successfully.');
     }
 
     /**

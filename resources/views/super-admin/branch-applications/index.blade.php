@@ -1,59 +1,86 @@
-<x-dashboard-shell title="Branch Approvals" eyebrow="People & Branches" description="Review applications and decide which branches may access the institute system.">
-    <form method="GET" class="admin-panel mb-5 flex flex-col gap-3 sm:flex-row" aria-label="Filter branch applications">
-        <label class="flex-1"><span class="sr-only">Search applications</span><input name="search" value="{{ $search }}" placeholder="Search institute, director, or district" class="min-h-11 w-full rounded-xl border border-slate-300 px-4 text-sm"></label>
-        <label><span class="sr-only">Application status</span><select name="status" class="min-h-11 w-full rounded-xl border border-slate-300 px-4 text-sm sm:w-44"><option value="">All statuses</option>@foreach(\App\Enums\BranchApplicationStatus::cases() as $status)<option value="{{ $status->value }}" @selected($selectedStatus === $status->value)>{{ $status->label() }}</option>@endforeach</select></label>
-        <button class="admin-button admin-button--primary">Apply filters</button>
-        @if($search || $selectedStatus)<a href="{{ route('super-admin.branch-applications.index') }}" class="admin-button admin-button--secondary">Clear</a>@endif
-    </form>
-    @if($applications->isEmpty())
-        <div class="admin-panel"><x-admin-empty-state title="No branch applications found" description="Try clearing the filters, or return later when a new branch registration is submitted." /></div>
-    @else
-        <div class="admin-table-wrap">
-            <div class="overflow-x-auto">
-                <table class="admin-table">
-                    <caption class="sr-only">Branch applications awaiting or completing review</caption>
-                    <thead>
-                        <tr>
-                            <th>Institute</th>
-                            <th>Director</th>
-                            <th>District</th>
-                            <th>Submitted</th>
-                            <th>Status</th>
-                            <th class="text-right">Next step</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($applications as $application)
-                            <tr>
-                                <td>
-                                    <p class="font-black text-slate-950">{{ $application->institute_name ?? $application->proposed_branch_name }}</p>
-                                    <p class="mt-1 text-xs text-slate-500">{{ $application->email }}</p>
-                                </td>
-                                <td class="text-sm font-semibold text-slate-700">{{ $application->director_name ?? $application->applicant_name }}</td>
-                                <td class="text-sm text-slate-600">{{ $application->district }}</td>
-                                <td class="text-sm text-slate-600">{{ $application->created_at->format('d M Y') }}</td>
-                                <td><x-admin-status :status="$application->status" /></td>
-                                <td class="text-right">
-                                    <div class="flex items-center justify-end gap-2">
-                                        @if($application->status->value === 'pending')
+<x-dashboard-shell title="User Approval Requests">
+    <div class="mx-auto max-w-7xl">
+        <div class="rounded-3xl border border-white/20 bg-[#03224c]/40 p-8 shadow-2xl backdrop-blur-sm lg:p-12">
+
+            <div class="mb-10 text-center">
+                <h1 class="text-3xl font-black tracking-tight text-[#4da6ff] uppercase lg:text-4xl">User Approval Requests</h1>
+            </div>
+
+            <div class="overflow-hidden rounded-2xl border border-white/5 bg-[#071c2c]/30">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-widest text-[#6cb2eb]">
+                                <th class="px-6 py-4">Photo</th>
+                                <th class="px-6 py-4">Institute Name</th>
+                                <th class="px-6 py-4">Director Name</th>
+                                <th class="px-6 py-4">Email</th>
+                                <th class="px-6 py-4">District</th>
+                                <th class="px-6 py-4 text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5">
+                            @forelse($applications as $application)
+                                <tr class="group transition-colors hover:bg-white/5">
+                                    <td class="px-6 py-4">
+                                        <div class="size-10 overflow-hidden rounded-full border border-white/10 bg-slate-800">
+                                            <img src="{{ $application->institute_photo_path ? asset('storage/' . $application->institute_photo_path) : asset('images/placeholder-avatar.png') }}"
+                                                class="size-full object-cover">
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-5 text-sm font-bold text-white">
+                                        {{ $application->institute_name }}
+                                    </td>
+                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
+                                        {{ $application->director_name }}
+                                    </td>
+                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
+                                        {{ $application->email }}
+                                    </td>
+                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
+                                        {{ $application->district }}
+                                    </td>
+                                    <td class="px-6 py-5">
+                                        <div class="flex items-center justify-center gap-4">
+                                            {{-- Approve Action --}}
                                             <form method="POST" action="{{ route('super-admin.branch-applications.update', $application) }}" onsubmit="return confirm('Approve this branch?')">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="approved">
-                                                <button class="admin-button admin-button--success py-1.5 px-3 text-xs">Approve</button>
+                                                <button type="submit" class="text-emerald-500 transition hover:scale-110 active:scale-95" title="Approve Request">
+                                                    <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="3">
+                                                        <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                                </button>
                                             </form>
-                                        @endif
-                                        <a href="{{ route('super-admin.branch-applications.show', $application) }}" class="admin-button admin-button--secondary">
-                                            {{ $application->status->value === 'pending' ? 'Review' : 'View' }}
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+
+                                            {{-- Reject/Delete Action --}}
+                                            <form action="{{ route('super-admin.branch-applications.destroy', $application) }}" method="POST" onsubmit="return confirm('Reject and delete this request?')">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="text-[#ff4d94] transition hover:scale-110 active:scale-95" title="Reject Request">
+                                                    <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="3">
+                                                        <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="px-6 py-20 text-center text-sm font-bold text-slate-500">
+                                        No pending approval requests found.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+            @if($applications->hasPages())
+                <div class="mt-8">
+                    {{ $applications->links() }}
+                </div>
+            @endif
         </div>
-        <div class="mt-6">{{ $applications->links() }}</div>
-    @endif
+    </div>
 </x-dashboard-shell>

@@ -1,114 +1,137 @@
-<x-dashboard-shell :title="$section->label" eyebrow="Website Management" description="Manage the visual media and content shown on the public homepage.">
-    <div class="min-h-screen bg-[#071c2c] p-4 sm:p-6 lg:p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
-        {{-- Decorative background glow --}}
-        <div class="absolute -right-20 -top-20 size-80 rounded-full bg-blue-600/10 blur-[100px]"></div>
-        <div class="absolute -left-20 bottom-0 size-80 rounded-full bg-amber-600/10 blur-[100px]"></div>
-
-        <div class="relative mx-auto max-w-[1600px] space-y-10">
-            {{-- Header Section --}}
-            <div class="flex flex-col items-center justify-between gap-6 lg:flex-row">
-                <div class="text-center lg:text-left">
-                    <h1 class="text-3xl font-black text-white uppercase tracking-[0.3em] drop-shadow-2xl">
-                        {{ $section->label }} <span class="text-blue-500">Manager</span>
-                    </h1>
-                    <p class="mt-2 text-xs font-bold uppercase tracking-widest text-slate-500">Website Content Management System</p>
-                </div>
-
-                <div class="flex flex-wrap justify-center gap-4">
-                    <div class="flex h-16 items-center gap-4 rounded-2xl bg-[#0f2d44]/50 px-6 border border-white/5 backdrop-blur-md shadow-xl">
-                        <div class="size-2 rounded-full bg-blue-500 animate-pulse"></div>
-                        <div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Current Section</p>
-                            <p class="text-sm font-black text-white">{{ $section->label }}</p>
-                        </div>
-                    </div>
-                    <a href="{{ route('super-admin.homepage.items.create', $section->key) }}"
-                        class="inline-flex h-16 items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 px-8 text-sm font-black uppercase tracking-widest text-white shadow-2xl shadow-blue-600/30 hover:from-blue-500 hover:to-indigo-600 hover:-translate-y-1 transition-all active:scale-95">
-                        <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
-                        Add New Item
-                    </a>
-                </div>
+<x-dashboard-shell :title="$section->label">
+    @if($section->key === 'testimonials')
+        <div class="mx-auto max-w-[1600px] space-y-10">
+            {{-- Header --}}
+            <div class="text-center">
+                <h1 class="text-4xl font-black text-[#4da6ff] uppercase tracking-tight">Manage Student Reviews</h1>
+                <div class="mx-auto mt-4 h-1.5 w-24 rounded-full bg-blue-600"></div>
             </div>
 
-            {{-- Section Controls --}}
-            <div class="rounded-[2rem] bg-[#0f2d44]/30 p-6 border border-white/5 backdrop-blur-sm shadow-inner">
-                <form class="flex flex-col md:flex-row items-center justify-between gap-8" method="POST" action="{{ route('super-admin.homepage.sections.update', $section) }}">
-                    @csrf @method('PATCH')
-                    <div class="flex flex-wrap items-center gap-6">
-                        <label class="group relative flex cursor-pointer items-center gap-4 rounded-2xl bg-[#071c2c]/50 px-6 py-4 transition hover:bg-[#071c2c] ring-1 ring-white/5">
-                            <div class="flex h-6 w-11 shrink-0 items-center rounded-full bg-slate-700 p-1 transition duration-300 peer-checked:bg-blue-600">
-                                <input type="hidden" name="is_visible" value="0">
-                                <input type="checkbox" name="is_visible" value="1" @checked($section->is_visible) class="peer sr-only" onchange="this.form.submit()">
-                                <div class="size-4 rounded-full bg-white shadow-sm transition duration-300 peer-checked:translate-x-5"></div>
+            {{-- Grid of Reviews --}}
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                @foreach($items as $item)
+                    <article class="group relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#0f2d44]/60 p-8 shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-blue-500/30">
+                        {{-- Delete Button (Top Right) --}}
+                        <form action="{{ route('super-admin.homepage.items.destroy', $item) }}" method="POST" class="absolute right-6 top-6 z-10" onsubmit="return confirm('Delete this review?')">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="grid size-10 place-items-center rounded-xl bg-red-600/10 text-red-500 transition-all hover:bg-red-600 hover:text-white active:scale-95 shadow-lg">
+                                <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            </button>
+                        </form>
+
+                        {{-- Card Header: User Info --}}
+                        <div class="flex items-center gap-5">
+                            <div class="relative">
+                                <div class="size-16 overflow-hidden rounded-xl border-2 border-white/5 bg-slate-800 shadow-xl">
+                                    <img src="{{ $item->image_path ? (str_starts_with($item->image_path, 'images/') ? asset($item->image_path) : Storage::disk('public')->url($item->image_path)) : asset('images/placeholder-avatar.png') }}"
+                                        class="size-full object-cover">
+                                </div>
+                                <div class="absolute -bottom-1 -right-1 size-3 rounded-full bg-emerald-500 ring-4 ring-[#0f2d44]"></div>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black uppercase tracking-widest text-white">Section Visibility</p>
-                                <p class="text-[9px] font-bold text-slate-500 uppercase tracking-tight">Show this section on homepage</p>
+                                <h2 class="text-lg font-black text-white uppercase tracking-tight line-clamp-1">{{ $item->title }}</h2>
+                                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                    <svg viewBox="0 0 24 24" class="mr-1 inline size-3" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="16" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                    {{ $item->created_at->format('m/d/Y') }}
+                                </p>
                             </div>
-                        </label>
-                        <div class="flex items-center gap-4">
-                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Order:</span>
-                            <input class="w-20 rounded-xl border border-white/5 bg-[#071c2c]/50 px-4 py-3 text-sm font-black text-white outline-none focus:border-blue-500 transition-all"
-                                type="number" name="sort_order" value="{{ $section->sort_order }}" min="0">
+                        </div>
+
+                        {{-- Card Body: Quote --}}
+                        <div class="mt-8 min-h-[160px] rounded-3xl bg-[#071c2c]/40 p-6 ring-1 ring-white/5">
+                            <p class="text-[13px] font-medium leading-relaxed text-slate-300">
+                                <span class="text-2xl font-black text-blue-500/50">"</span>
+                                {{ $item->body }}
+                                <span class="text-2xl font-black text-blue-500/50">"</span>
+                            </p>
+                        </div>
+
+                        {{-- Card Footer --}}
+                        <div class="mt-8 flex items-center justify-between border-t border-white/5 pt-6">
+                            <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase">
+                                <svg viewBox="0 0 24 24" class="size-3" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                {{ $item->created_at->format('h:i A') }}
+                            </div>
+                            <span class="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em]">Verified Review</span>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+
+            @if($items->hasPages())
+                <div class="mt-10"> {{ $items->links() }} </div>
+            @endif
+        </div>
+    @else
+        <div class="mx-auto max-w-4xl space-y-10">
+            {{-- Integrated Upload Form for Banners/Items --}}
+            <div class="rounded-3xl border border-white/20 bg-[#03224c]/40 p-8 shadow-2xl backdrop-blur-sm lg:p-10">
+                <h2 class="mb-8 flex items-center gap-3 text-xl font-black text-white uppercase tracking-widest">
+                    <svg viewBox="0 0 24 24" class="size-6 text-amber-500" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    Add {{ $section->label }}
+                </h2>
+
+                <form action="{{ route('super-admin.homepage.items.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                    @csrf
+                    <input type="hidden" name="section" value="{{ $section->key }}">
+                    <input type="hidden" name="stable_key" value="{{ $section->key . '-' . time() }}">
+                    <input type="hidden" name="is_published" value="1">
+
+                    <div class="rounded-xl bg-[#071c2c]/80 p-8 border border-white/10">
+                        <div class="flex flex-col items-center gap-6">
+                            <div class="flex items-center gap-4">
+                                <label class="cursor-pointer rounded-full bg-emerald-600 px-6 py-2 text-xs font-black text-white transition hover:bg-emerald-500 shadow-lg">
+                                    Choose File
+                                    <input type="file" name="image" class="hidden" required onchange="updateFileName(this)">
+                                </label>
+                                <span id="file-name-display" class="text-sm font-bold text-slate-400">No file chosen</span>
+                            </div>
+                            <button type="submit" class="w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-black text-white uppercase tracking-widest transition hover:bg-emerald-500 active:scale-95 shadow-lg">
+                                Upload Image
+                            </button>
                         </div>
                     </div>
-                    <button class="w-full md:w-auto rounded-xl bg-white/5 px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-300 hover:bg-white/10 transition-all border border-white/5">Update Settings</button>
                 </form>
             </div>
 
-            {{-- Grid of Items --}}
-            @if($items->isEmpty())
-                <div class="rounded-[2.5rem] border border-dashed border-slate-700 p-24 text-center backdrop-blur-md">
-                    <p class="text-sm font-black uppercase tracking-widest text-slate-500">No content found in this gallery yet.</p>
-                </div>
-            @else
-                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    @foreach($items as $item)
-                        <article class="group relative overflow-hidden rounded-[2rem] border border-white/5 bg-[#0f2d44]/40 p-4 shadow-2xl backdrop-blur-xl transition-all duration-500 hover:border-blue-500/30">
-                            <div class="relative aspect-square overflow-hidden rounded-[1.5rem] bg-slate-800 shadow-inner">
-                                @if($item->image_path)
-                                    <img src="{{ str_starts_with($item->image_path, 'images/') ? asset($item->image_path) : Storage::disk('public')->url($item->image_path) }}"
-                                        class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                @else
-                                    <div class="flex size-full items-center justify-center text-slate-700">
-                                        <svg viewBox="0 0 24 24" class="size-16" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                    </div>
-                                @endif
+            {{-- List View for Banners/Other Items --}}
+            <div class="rounded-3xl border border-white/20 bg-[#03224c]/40 p-8 shadow-2xl backdrop-blur-sm lg:p-10">
+                <h2 class="mb-8 flex items-center gap-3 text-lg font-black text-white uppercase tracking-widest">
+                    <span class="size-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)]"></span>
+                    All Live {{ $section->label }}
+                </h2>
 
-                                {{-- Overlay --}}
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#071c2c] via-[#071c2c]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-
-                                {{-- Actions floating --}}
-                                <div class="absolute top-4 right-4 flex flex-col gap-2 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
-                                    <a href="{{ route('super-admin.homepage.items.edit', $item) }}"
-                                        class="grid size-10 place-items-center rounded-xl bg-blue-600 text-white shadow-lg hover:bg-blue-500 transition-all">
-                                        <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                    </a>
-                                    <form action="{{ route('super-admin.homepage.items.destroy', $item) }}" method="POST" onsubmit="return confirm('Delete this gallery item?')">
-                                        @csrf @method('DELETE')
-                                        <button class="grid size-10 place-items-center rounded-xl bg-pink-600 text-white shadow-lg hover:bg-pink-500 transition-all">
-                                            <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                        </button>
-                                    </form>
+                <div class="space-y-4">
+                    @forelse($items as $item)
+                        <div class="flex items-center justify-between rounded-2xl border border-white/5 bg-[#071c2c]/30 p-4 transition-colors hover:bg-white/5">
+                            <div class="flex items-center gap-6">
+                                <div class="h-20 w-32 overflow-hidden rounded-xl border border-white/10 bg-slate-800 shadow-xl">
+                                    <img src="{{ $item->image_path ? (str_starts_with($item->image_path, 'images/') ? asset($item->image_path) : Storage::disk('public')->url($item->image_path)) : asset('images/placeholder-avatar.png') }}" class="size-full object-cover">
                                 </div>
-
-                                <div class="absolute bottom-4 left-4 right-4">
-                                    <h2 class="text-sm font-black text-white uppercase tracking-wider line-clamp-1 group-hover:text-blue-400 transition-colors">{{ $item->title ?: 'Untitled Gallery Item' }}</h2>
-                                    <div class="mt-2 flex items-center justify-between">
-                                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Order: {{ $item->sort_order }}</span>
-                                        @if($item->is_published)
-                                            <span class="size-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
-                                        @else
-                                            <span class="size-1.5 rounded-full bg-slate-600"></span>
-                                        @endif
-                                    </div>
-                                </div>
+                                <p class="text-sm font-black text-white uppercase tracking-widest">{{ $item->title ?: 'Untitled' }}</p>
                             </div>
-                        </article>
-                    @endforeach
+                            <div class="flex items-center gap-3">
+                                <a href="{{ route('super-admin.homepage.items.edit', $item) }}" class="rounded-lg bg-blue-600 px-6 py-2 text-xs font-black uppercase text-white shadow-lg transition hover:bg-blue-500">Edit</a>
+                                <form action="{{ route('super-admin.homepage.items.destroy', $item) }}" method="POST" onsubmit="return confirm('Delete this item?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="rounded-lg bg-[#ff4d94] px-6 py-2 text-xs font-black uppercase text-white shadow-lg transition hover:bg-[#ff1a75]">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="p-10 text-center text-sm font-bold text-slate-500"> No items found. </div>
+                    @endforelse
                 </div>
-                <div class="mt-10">{{ $items->links() }}</div>
-            @endif
+            </div>
         </div>
-    </div>
+    @endif
+
+    <script>
+        function updateFileName(input) {
+            const display = document.getElementById('file-name-display');
+            if (input.files && input.files[0]) { display.textContent = input.files[0].name; }
+            else { display.textContent = 'No file chosen'; }
+        }
+    </script>
 </x-dashboard-shell>

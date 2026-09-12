@@ -1,136 +1,87 @@
-<x-dashboard-shell title="Student Information Table" eyebrow="Management" description="View and manage all registered student records.">
-    <div class="min-h-screen bg-[#071c2c] p-4 sm:p-6 lg:p-8 rounded-[2.5rem] shadow-2xl">
-        <div class="mx-auto max-w-[1600px] space-y-8">
+<x-dashboard-shell title="Student Information Table">
+    <div class="mx-auto max-w-7xl">
+        <div class="rounded-3xl border border-white/20 bg-[#03224c]/40 p-8 shadow-2xl backdrop-blur-sm lg:p-12">
 
-            <div class="text-center space-y-6 pt-6">
-                <h1 class="text-2xl font-black text-white uppercase tracking-[0.25em] drop-shadow-lg">Student Information Table</h1>
-                <form method="GET" class="mx-auto max-w-xl">
-                    <div class="relative group">
-                        <input type="text" name="search" value="{{ $search }}"
-                            class="w-full rounded-2xl border border-white/10 bg-[#0f2d44] py-4 pl-7 pr-14 text-sm text-white placeholder-slate-500 shadow-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 focus:outline-none transition-all"
-                            placeholder="Search by Roll Number...">
-                        <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-5 text-slate-400 group-hover:text-blue-400 transition-colors">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        </button>
-                    </div>
-                </form>
+            <div class="mb-10 text-center">
+                <h1 class="text-3xl font-black tracking-tight text-white uppercase">Student Information Table</h1>
             </div>
 
-            <div class="overflow-hidden rounded-[2.5rem] border border-white/5 bg-[#0f2d44]/40 shadow-2xl backdrop-blur-2xl">
-                <div class="overflow-x-auto scrollbar-hide">
-                    <table class="w-full text-left text-[11px] font-black uppercase tracking-wider text-slate-300">
+            <div class="overflow-hidden rounded-2xl border border-white/5 bg-[#071c2c]/30">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
                         <thead>
-                            <tr class="bg-[#071c2c]/90 text-slate-400 border-b border-white/5">
-                                <th class="px-6 py-7 text-center">PICTURE</th>
-                                <th class="px-6 py-7 text-center">ACTIONS</th>
-                                <th class="px-6 py-7 text-center">ADMIT-CARD</th>
-                                <th class="px-6 py-7 text-center">REGISTRATION</th>
-                                <th class="px-6 py-7 text-center">CERTIFICATE</th>
-                                <th class="px-6 py-7 text-center">TRANSCRIPT</th>
-                                <th class="px-6 py-7 text-center">TRANSCRIPTONE</th>
-                                <th class="px-6 py-7 text-center">TRANSCRIPTTWO</th>
-                                <th class="px-6 py-7 text-center">MSCCARD</th>
-                                <th class="px-6 py-7 text-center">CERT STATUS</th>
-                                <th class="px-6 py-7 text-center">STUDENT ID</th>
+                            <tr class="border-b border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-widest text-[#6cb2eb]">
+                                <th class="px-6 py-4">Student Address</th>
+                                <th class="px-6 py-4">District</th>
+                                <th class="px-6 py-4">Thana</th>
+                                <th class="px-6 py-4">Search Course</th>
+                                <th class="px-6 py-4">Duration</th>
+                                <th class="px-6 py-4 text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-white/5">
                             @forelse($students as $student)
-                                <tr class="hover:bg-white/[0.03] transition-all duration-300 group">
-                                    <td class="px-4 py-4">
-                                        <div class="relative mx-auto size-14 overflow-hidden rounded-2xl border-2 border-slate-700 bg-slate-800 shadow-2xl group-hover:border-blue-500 transition-all duration-500">
-                                            <img src="{{ $student->image_path ? asset('storage/' . $student->image_path) : asset('images/placeholder-avatar.png') }}"
-                                                class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <tr class="group transition-colors hover:bg-white/5">
+                                    <td class="px-6 py-5 text-sm font-bold text-white">{{ $student->address }}</td>
+                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">{{ $student->district }}</td>
+                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">{{ $student->upazila }}</td>
+                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">{{ $student->course?->name ?: 'N/A' }}</td>
+                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">{{ $student->duration }}</td>
+                                    <td class="px-6 py-5">
+                                        <div class="flex items-center justify-center gap-6">
+                                            {{-- Admit Card (PDF Trigger) --}}
+                                            <a href="{{ route('super-admin.students.documents.show', [$student, 'admit-card']) }}"
+                                               onclick="downloadPdf(event, this.href)"
+                                               class="text-blue-400 transition hover:scale-110 active:scale-95"
+                                               title="Download Admit Card">
+                                                <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5">
+                                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                                            </a>
+
+                                            {{-- NID (PDF Trigger) --}}
+                                            <a href="{{ route('super-admin.students.documents.show', [$student, 'registration-card']) }}"
+                                               onclick="downloadPdf(event, this.href)"
+                                               class="text-emerald-400 transition hover:scale-110 active:scale-95"
+                                               title="Download NID/Registration">
+                                                <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5">
+                                                    <rect width="18" height="12" x="3" y="6" rx="2" /><circle cx="9" cy="12" r="2" /><path d="M15 10h4M15 14h4" /></svg>
+                                            </a>
+
+                                            {{-- Edit --}}
+                                            <a href="{{ route('super-admin.students.edit', $student) }}" class="text-[#ff4d94] transition hover:scale-110 active:scale-95" title="Edit Student">
+                                                <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5">
+                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                            </a>
                                         </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center justify-center gap-4 text-[10px] font-black">
-                                            <a href="{{ route('super-admin.students.edit', $student) }}" class="text-blue-500 hover:text-blue-400 transition-colors">EDIT</a>
-                                            <form action="{{ route('super-admin.students.destroy', $student) }}" method="POST" onsubmit="return confirm('Delete this student?')">
-                                                @csrf @method('DELETE')
-                                                <button type="submit" class="text-pink-600 hover:text-pink-500 transition-colors">DELETE</button>
-                                            </form>
-                                            <a href="{{ route('super-admin.students.show', $student) }}" class="text-emerald-500 hover:text-emerald-400 transition-colors">UPDATE</a>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'admit-card']) }}" class="inline-flex h-10 min-w-[120px] items-center justify-center rounded-xl bg-red-600 px-4 text-[10px] font-black text-white hover:bg-red-700 shadow-xl shadow-red-900/20 active:scale-95 transition-all">Admit Card</a>
-                                    </td>
-                                    <td class="px-4 py-4 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'registration-card']) }}" class="inline-flex h-10 min-w-[120px] items-center justify-center rounded-xl bg-blue-600 px-4 text-[10px] font-black text-white hover:bg-blue-700 shadow-xl shadow-blue-900/20 active:scale-95 transition-all">Registration Card</a>
-                                    </td>
-                                    <td class="px-4 py-4 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'certificate']) }}" class="inline-flex h-10 min-w-[120px] items-center justify-center rounded-xl bg-emerald-600 px-4 text-[10px] font-black text-white hover:bg-emerald-700 shadow-xl shadow-emerald-900/20 active:scale-95 transition-all">Certificate</a>
-                                    </td>
-                                    <td class="px-4 py-4 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'transcript']) }}" class="inline-flex h-10 min-w-[120px] items-center justify-center rounded-xl bg-green-600 px-4 text-[10px] font-black text-white hover:bg-green-700 shadow-xl shadow-green-900/20 active:scale-95 transition-all">Certificate One</a>
-                                    </td>
-                                    <td class="px-4 py-4 text-center">
-                                        <a href="#" class="inline-flex h-10 min-w-[120px] items-center justify-center rounded-xl bg-slate-600 px-4 text-[10px] font-black text-white hover:bg-slate-700 shadow-xl active:scale-95 transition-all">Transcript</a>
-                                    </td>
-                                    <td class="px-4 py-4 text-center">
-                                        <a href="#" class="inline-flex h-10 min-w-[120px] items-center justify-center rounded-xl bg-blue-500 px-4 text-[10px] font-black text-white hover:bg-blue-600 shadow-xl active:scale-95 transition-all">TranscriptOne</a>
-                                    </td>
-                                    <td class="px-4 py-4 text-center">
-                                        <a href="#" class="inline-flex h-10 min-w-[120px] items-center justify-center rounded-xl bg-cyan-600 px-4 text-[10px] font-black text-white hover:bg-cyan-700 shadow-xl active:scale-95 transition-all">Transcript Two</a>
-                                    </td>
-                                    <td class="px-4 py-4 text-center">
-                                        <a href="#" class="inline-flex h-10 min-w-[120px] items-center justify-center rounded-xl bg-purple-600 px-4 text-[10px] font-black text-white hover:bg-purple-700 shadow-xl active:scale-95 transition-all">NIDCard</a>
-                                    </td>
-                                    <td class="px-4 py-4 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'student-id']) }}" class="inline-flex h-10 min-w-[120px] items-center justify-center rounded-xl bg-indigo-600 px-4 text-[10px] font-black text-white hover:bg-indigo-700 shadow-xl active:scale-95 transition-all">ID Card</a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="11" class="px-6 py-24 text-center">
-                                        <div class="flex flex-col items-center gap-3 text-slate-500">
-                                            <p class="text-sm font-bold uppercase tracking-widest">No student records found</p>
-                                        </div>
+                                    <td colspan="6" class="px-6 py-20 text-center text-sm font-bold text-slate-500">
+                                        No student records found.
                                     </td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
-
-                <div class="bg-[#071c2c] px-6 py-10 border-t border-white/5">
-                    <div class="mx-auto max-w-sm overflow-hidden rounded-[2.5rem] bg-[#0f2d44] shadow-[0_20px_50px_rgba(0,0,0,0.5)] ring-1 ring-white/10">
-                        <div class="flex flex-col items-center gap-5 p-7">
-                            <div class="flex items-center gap-2">
-                                <span class="size-3 rounded-full bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.6)] animate-pulse"></span>
-                                <span class="text-[11px] font-black text-slate-200 uppercase tracking-widest">Showing {{ $students->firstItem() ?? 0 }} to {{ $students->lastItem() ?? 0 }}</span>
-                            </div>
-
-                            <div class="rounded-full bg-[#071c2c] px-6 py-2 border border-white/5 shadow-inner">
-                                <span class="text-[10px] font-black text-indigo-400 uppercase tracking-[0.25em]">TOTAL: {{ $students->total() }}</span>
-                            </div>
-
-                            <div class="mt-4 flex items-center justify-between w-full">
-                                <button class="rounded-2xl bg-[#071c2c] px-6 py-2.5 text-[11px] font-black text-slate-400 border border-white/5 shadow-lg active:scale-95 transition-all hover:text-white">Page {{ $students->currentPage() }}</button>
-
-                                <div class="flex items-center gap-3">
-                                    @if($students->onFirstPage())
-                                        <span class="grid size-10 place-items-center rounded-xl bg-[#071c2c] text-slate-700 border border-white/5 opacity-40">«</span>
-                                    @else
-                                        <a href="{{ $students->previousPageUrl() }}" class="grid size-10 place-items-center rounded-xl bg-[#071c2c] text-white border border-white/5 shadow-xl hover:border-blue-500/50 hover:text-blue-400 hover:-translate-x-0.5 transition-all active:scale-90">«</a>
-                                    @endif
-
-                                    <div class="flex h-10 items-center rounded-xl bg-[#071c2c] px-5 border border-white/5 shadow-inner ring-1 ring-white/5">
-                                        <span class="text-[12px] font-black text-white">{{ $students->currentPage() }} / {{ $students->lastPage() }}</span>
-                                    </div>
-
-                                    @if($students->hasMorePages())
-                                        <a href="{{ $students->nextPageUrl() }}" class="grid size-10 place-items-center rounded-xl bg-[#071c2c] text-white border border-white/5 shadow-xl hover:border-blue-500/50 hover:text-blue-400 hover:translate-x-0.5 transition-all active:scale-90">»</a>
-                                    @else
-                                        <span class="grid size-10 place-items-center rounded-xl bg-[#071c2c] text-slate-700 border border-white/5 opacity-40">»</span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+
+            @if($students->hasPages())
+                <div class="mt-8">
+                    {{ $students->links() }}
+                </div>
+            @endif
         </div>
     </div>
+
+    <script>
+        function downloadPdf(event, url) {
+            event.preventDefault();
+            const win = window.open(url, '_blank');
+            win.onload = function() {
+                win.print();
+            };
+        }
+    </script>
 </x-dashboard-shell>

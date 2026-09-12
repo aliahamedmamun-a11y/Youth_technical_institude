@@ -9,386 +9,168 @@
 ])
 
 @php
-    $inputClass =
-        'w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 outline-none transition focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500';
+    $inputClass = 'w-full rounded-lg border border-white/10 bg-[#071c2c]/50 py-3 px-4 text-sm text-white placeholder-slate-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all';
     $selectClass = $inputClass . ' appearance-none cursor-pointer';
-    $sectionTitleClass =
-        'flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.1em] text-[#6cb2eb]';
+    $labelClass = 'block text-sm font-bold text-slate-400 mb-2';
 @endphp
 
 <div class="space-y-6" data-student-registration-container>
-    {{-- Auto-Scan Tabs --}}
-    <div class="rounded-2xl bg-[#03224c] p-1.5 shadow-lg">
-        <div class="grid grid-cols-1 gap-1.5 sm:grid-cols-3">
-            @foreach ([['passport', 'Passport Scan', 'Scan Passport for Auto-Fill'], ['nid', 'NID Scan', 'Scan National ID (NID) for Auto-Fill'], ['birth', 'Birth Registration Scan', 'Scan Birth Registration (জন্ম নিবন্ধন) for Auto-Fill']] as [$key, $label, $desc])
-                <button type="button"
-                    class="group relative flex items-center gap-4 rounded-xl border border-white/5 bg-[#0e315e] px-5 py-4 text-left transition hover:bg-[#15417a] {{ $key === 'nid' ? 'ring-2 ring-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.2)]' : '' }}"
-                    data-scan-tab="{{ $key }}">
-                    <div class="grid size-11 shrink-0 place-items-center rounded-lg bg-[#03224c] text-amber-500 group-hover:text-amber-400">
-                        @if ($key === 'passport')
-                            <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 19.5V5a2 2 0 0 1 2-2h11l3.5 3.5V19.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" />
-                                <circle cx="12" cy="11" r="2.5" />
-                                <path d="M8 17h8" />
-                            </svg>
-                        @elseif($key === 'nid')
-                            <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect width="18" height="12" x="3" y="6" rx="2" />
-                                <circle cx="9" cy="12" r="2" />
-                                <path d="M15 10h4M15 14h4" />
-                            </svg>
-                        @else
-                            <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                <path d="M14 2v6h6M16 13H8M16 17H8M12 12v4" />
-                            </svg>
-                        @endif
-                    </div>
-                    <div class="min-w-0">
-                        <p class="text-[11px] font-black uppercase tracking-wider text-white">[{{ $label }}]</p>
-                        <p class="truncate text-[9px] font-bold text-[#6cb2eb]/80 tracking-tight">{{ $desc }}</p>
-                    </div>
-                </button>
-            @endforeach
-        </div>
-    </div>
+    {{-- Main Form Section --}}
+    <div class="mx-auto max-w-4xl rounded-3xl border border-white/20 bg-[#03224c]/40 p-8 shadow-2xl backdrop-blur-sm lg:p-12">
+        <h2 class="mb-10 text-center text-3xl font-black tracking-tight text-[#4da6ff] uppercase">
+            {{ $student ? 'Edit Student Information' : 'Student Registration' }}
+        </h2>
 
-    {{-- Main Scanner Section --}}
-    <div class="rounded-2xl bg-[#03224c] p-6 shadow-xl ring-1 ring-white/10">
-        <div class="mb-5 flex items-center gap-2 border-b border-white/10 pb-3">
-            <svg viewBox="0 0 24 24" class="size-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="3">
-                <rect width="18" height="12" x="3" y="6" rx="2" />
-                <path d="M8 12h8" />
-            </svg>
-            <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-white/90">PASSPORT / NID AUTO-SCAN</h2>
-        </div>
-
-        <div class="grid items-center gap-6 lg:grid-cols-[1fr_auto_auto]">
-            <div class="flex items-center gap-6">
-                <button type="button" class="group relative size-16 shrink-0 rounded-full bg-[#15417a] p-1 shadow-2xl transition hover:scale-105" onclick="document.getElementById('doc-scanner-input').click()">
-                    <div class="flex size-full items-center justify-center rounded-full bg-[#03224c] text-amber-500 ring-4 ring-[#15417a]">
-                        <svg viewBox="0 0 24 24" class="size-8" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
-                            <circle cx="12" cy="13" r="3" />
-                        </svg>
-                    </div>
-                </button>
-                <div>
-                    <h3 class="text-xl font-black tracking-tight text-white">Scan Document NOW</h3>
-                    <p class="text-[11px] font-bold text-[#6cb2eb]/80 uppercase tracking-tight">Select Document Type and Upload clear image or use webcam</p>
-                </div>
-            </div>
-
-            <input type="file" id="doc-scanner-input" class="hidden" accept="image/*" onchange="simulateScan(this)">
-
-            <button type="button" onclick="document.getElementById('doc-scanner-input').click()"
-                class="inline-flex items-center gap-4 rounded-xl bg-amber-500 px-7 py-4 text-left shadow-lg shadow-amber-500/20 transition hover:bg-amber-400 active:scale-95">
-                <div class="text-[#03224c]">
-                    <p class="text-[11px] font-black uppercase tracking-widest leading-none">SCAN DOCUMENT NOW</p>
-                    <p class="mt-1 text-[9px] font-bold uppercase tracking-tight opacity-80">Upload clear Image or use webcam (JPG/PNG, Max 5MB)</p>
-                </div>
-            </button>
-
-            <div class="w-52">
-                <label class="mb-1.5 block text-[10px] font-black uppercase tracking-widest text-[#6cb2eb]">Select Document Type *</label>
-                <div class="relative">
-                    <select id="doc-type-selector" class="w-full rounded-lg border-0 bg-white px-4 py-2.5 text-[13px] font-black text-slate-800 outline-none ring-1 ring-slate-200">
-                        <option value="passport">Passport</option>
-                        <option value="nid" selected>NID</option>
-                        <option value="birth">Birth Registration (জন্ম নিবন্ধন)</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
-                        <svg class="size-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- Form Section --}}
-    <form method="POST" action="{{ $action }}" enctype="multipart/form-data" data-location-form
-        data-upazilas='@json(config('bangladesh.upazilas'))' data-old-upazila="{{ old('upazila', $student?->upazila) }}"
-        class="space-y-8 rounded-[2.5rem] bg-[#1a2533] p-6 shadow-2xl ring-1 ring-white/10 sm:p-10 registration-form" id="registration-form">
-        @csrf
-        @if ($method !== 'POST')
-            @method($method)
-        @endif
-
-        <div class="grid items-start gap-8 lg:grid-cols-[1fr_1.1fr_0.8fr]">
-            {{-- Left Column: Personal Info --}}
-            <section class="space-y-6">
-                <div class="flex items-center gap-2 rounded-lg bg-[#03224c] px-4 py-2 ring-1 ring-white/5">
-                    <svg viewBox="0 0 24 24" class="size-4 text-[#6cb2eb]" fill="none" stroke="currentColor" stroke-width="3">
-                        <circle cx="12" cy="8" r="3" />
-                        <path d="M5 21c.5-4 2.8-6 7-6s6.5 2 7 6" />
-                    </svg>
-                    <h2 class="text-[10px] font-black uppercase tracking-[0.15em] text-[#6cb2eb]">PERSONAL INFORMATION</h2>
-                </div>
-                <div class="space-y-4">
-                    <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Name *
-                        <input name="name" id="field-name" value="{{ old('name', $student?->name) }}" required placeholder="Enter full name" class="{{ $inputClass }} mt-1.5">
-                    </label>
-                    <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Father's Name *
-                        <input name="father_name" id="field-father-name" value="{{ old('father_name', $student?->father_name) }}" required placeholder="Enter father's name" class="{{ $inputClass }} mt-1.5">
-                    </label>
-                    <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Mother's Name *
-                        <input name="mother_name" id="field-mother-name" value="{{ old('mother_name', $student?->mother_name) }}" required placeholder="Enter mother's name" class="{{ $inputClass }} mt-1.5">
-                    </label>
-                    <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Date of Birth *
-                        <input type="date" name="date_of_birth" id="field-dob" value="{{ old('date_of_birth', $student?->date_of_birth?->format('Y-m-d')) }}" required class="{{ $inputClass }} mt-1.5">
-                    </label>
-                    <div class="grid gap-4 sm:grid-cols-2">
-                        <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">DOB Month *
-                            <select name="end_month" required class="{{ $selectClass }} mt-1.5">
-                                <option value="">Select Month</option>
-                                @foreach(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $month)
-                                    <option value="{{ $month }}" @selected(old('end_month', $student?->end_month) === $month)>{{ $month }}</option>
-                                @endforeach
-                            </select>
-                        </label>
-                        <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">DOB Year *
-                            <select name="end_year" required class="{{ $selectClass }} mt-1.5">
-                                <option value="">Select Year</option>
-                                @for($y = date('Y'); $y >= 1950; $y--)
-                                    <option value="{{ $y }}" @selected(old('end_year', $student?->end_year) == $y)>{{ $y }}</option>
-                                @endfor
-                            </select>
-                        </label>
-                    </div>
-                    <fieldset class="text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">
-                        <legend class="mb-3">Sex *</legend>
-                        <div class="flex gap-6">
-                            @foreach (['Male', 'Female', 'Other'] as $sex)
-                                <label class="flex cursor-pointer items-center gap-2 font-medium normal-case text-white tracking-normal">
-                                    <input type="radio" name="gender" value="{{ $sex }}" @checked(old('gender', $student?->gender) === $sex) required class="size-4 border-slate-300 bg-white text-amber-500 focus:ring-amber-500">
-                                    {{ $sex }}
-                                </label>
-                            @endforeach
-                        </div>
-                    </fieldset>
-                    <label class="block pt-2 text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Passport / NID Number *
-                        <input name="passport_nid_number" id="field-doc-number" value="{{ old('passport_nid_number', $student?->passport_nid_number) }}" required placeholder="Enter Passport or NID Number" class="{{ $inputClass }} mt-1.5">
-                    </label>
-                    <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Phone Number *
-                        <input type="tel" name="phone" value="{{ old('phone', $student?->phone) }}" required placeholder="Enter phone number" class="{{ $inputClass }} mt-1.5">
-                    </label>
-                </div>
-            </section>
-
-            {{-- Middle Column: Address & Academic --}}
-            <div class="space-y-8">
-                <section class="space-y-6">
-                    <div class="flex items-center gap-2 rounded-lg bg-[#03224c] px-4 py-2 ring-1 ring-white/5">
-                        <svg viewBox="0 0 24 24" class="size-4 text-[#6cb2eb]" fill="none" stroke="currentColor" stroke-width="3">
-                            <path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
-                            <circle cx="12" cy="9" r="2.2" />
-                        </svg>
-                        <h2 class="text-[10px] font-black uppercase tracking-[0.15em] text-[#6cb2eb]">ADDRESS INFORMATION</h2>
-                    </div>
-                    <div class="space-y-4">
-                        <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Full Address *
-                            <textarea name="address" rows="3" required placeholder="Enter full address" class="{{ $inputClass }} mt-1.5 resize-none">{{ old('address', $student?->address) }}</textarea>
-                        </label>
-                        <div class="grid gap-4 sm:grid-cols-2">
-                            <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">District *
-                                <select name="district" data-district-select required class="{{ $selectClass }} mt-1.5">
-                                    <option value="">Select district</option>
-                                    @foreach (config('bangladesh.districts') as $district)
-                                        <option value="{{ $district }}" @selected(old('district', $student?->district) === $district)>{{ $district }}</option>
-                                    @endforeach
-                                </select>
-                            </label>
-                            <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Upazila *
-                                <select name="upazila" data-upazila-select required disabled class="{{ $selectClass }} mt-1.5">
-                                    <option value="">No upazilas found</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="space-y-6">
-                    <div class="flex items-center gap-2 rounded-lg bg-[#03224c] px-4 py-2 ring-1 ring-white/5">
-                        <svg viewBox="0 0 24 24" class="size-4 text-[#6cb2eb]" fill="none" stroke="currentColor" stroke-width="3">
-                            <path d="M3 9 12 4l9 5-9 5zM6 11v5c2.8 2.3 9.2 2.3 12 0v-5M21 9v7" />
-                        </svg>
-                        <h2 class="text-[10px] font-black uppercase tracking-[0.15em] text-[#6cb2eb]">ACADEMIC INFORMATION</h2>
-                    </div>
-                    <div class="grid gap-4 sm:grid-cols-2">
-                        <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Education Qualification *
-                            <select name="education_qualification" required class="{{ $selectClass }} mt-1.5">
-                                <option selected>জানুয়ারি (January)</option>
-                                <option>ফেব্রুয়ারি (February)</option>
-                            </select>
-                        </label>
-                        <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Session Details *
-                            <select name="session" required class="{{ $selectClass }} mt-1.5">
-                                <option selected>২০২১, ২০২২, ২০২৩,</option>
-                                <option>২০২৪, ২০২৫, ২০২৬,</option>
-                            </select>
-                        </label>
-                        <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">কোর্স শুরুর মাস *
-                            <select name="start_month" required class="{{ $selectClass }} mt-1.5">
-                                <option selected>ফেব্রুয়ারি (February)</option>
-                            </select>
-                        </label>
-                        <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">কোর্স শুরুর বছর *
-                            <select name="start_year" required class="{{ $selectClass }} mt-1.5">
-                                <option selected>২০২১, ২০২৪, ২০২৭,</option>
-                            </select>
-                        </label>
-                        <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Department *
-                            <select name="course_id" required class="{{ $selectClass }} mt-1.5">
-                                <option value="">Select department</option>
-                                @foreach ($courses as $course)
-                                    <option value="{{ $course->id }}" @selected(old('course_id', $student?->course_id) == $course->id)>{{ $course->name }}</option>
-                                @endforeach
-                            </select>
-                        </label>
-                        <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Join Date *
-                            <input type="date" name="admitted_at" required value="2028-02-08" class="{{ $inputClass }} mt-1.5">
-                        </label>
-                        <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Duration *
-                            <select name="duration" required class="{{ $selectClass }} mt-1.5">
-                                <option>Select duration</option>
-                                <option>3 Months</option>
-                                <option>6 Months</option>
-                            </select>
-                        </label>
-                        <label class="block text-[11px] font-bold text-[#6cb2eb] uppercase tracking-wider">Expire Date *
-                            <input type="date" name="expire_date" required class="{{ $inputClass }} mt-1.5">
-                        </label>
-                    </div>
-                </section>
-            </div>
-
-            {{-- Right Column: Photo & Notes --}}
-            <aside class="space-y-6">
-                <section class="space-y-4">
-                    <div class="flex items-center gap-2 rounded-lg bg-[#03224c] px-4 py-2 ring-1 ring-white/5">
-                        <svg viewBox="0 0 24 24" class="size-4 text-[#6cb2eb]" fill="none" stroke="currentColor" stroke-width="3">
-                            <path d="M4 7h4l1.5-2h5L16 7h4v12H4z" />
-                            <circle cx="12" cy="13" r="3.5" />
-                        </svg>
-                        <h2 class="text-[10px] font-black uppercase tracking-[0.15em] text-[#6cb2eb]">PHOTO UPLOAD</h2>
-                    </div>
-                    <label for="student-photo"
-                        class="group flex min-h-56 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-white/5 bg-[#03224c] p-6 text-center transition hover:border-amber-500/30">
-                        <span id="photo-placeholder" class="grid place-items-center">
-                            <div class="relative grid size-12 place-items-center rounded-full bg-[#15417a] text-amber-500 shadow-xl">
-                                <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
-                                    <circle cx="12" cy="13" r="3" />
-                                </svg>
-                            </div>
-                            <strong class="mt-4 block text-[10px] font-black uppercase tracking-[0.05em] text-white">Upload Passport Size Photo</strong>
-                            <span class="mt-1 block text-[9px] font-bold uppercase text-[#6cb2eb]/60">JPG / PNG / WebP, Max 5MB</span>
-                        </span>
-                        <img id="photo-preview" class="hidden size-40 rounded-xl object-cover shadow-2xl ring-4 ring-white/5">
-                    </label>
-                    <input id="student-photo" type="file" name="image" accept="image/jpeg,image/png,image/webp" @required(!$student?->image_path) class="sr-only" data-photo-input>
-                </section>
-
-                <section class="rounded-2xl border border-white/5 bg-[#03224c]/40 p-6 shadow-xl backdrop-blur-sm">
-                    <h2 class="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#6cb2eb]">
-                        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="3">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M12 16v-4m0-4h.01" />
-                        </svg>
-                        IMPORTANT NOTES
-                    </h2>
-                    <ul class="mt-5 space-y-3 text-[10px] font-bold text-slate-300/90">
-                        <li class="flex items-center gap-2.5"><span class="text-amber-500">✓</span> Fill all the fields carefully.</li>
-                        <li class="flex items-center gap-2.5"><span class="text-amber-500">✓</span> Ensure your information is correct.</li>
-                        <li class="flex items-center gap-2.5"><span class="text-amber-500">✓</span> You can update information later.</li>
-                        <li class="flex items-center gap-2.5"><span class="text-amber-500">✓</span> Keep your documents ready.</li>
-                    </ul>
-                </section>
-            </aside>
-        </div>
-
-        @if ($declarationRequired)
-            <label class="group flex cursor-pointer items-start gap-4 rounded-2xl border border-white/5 bg-[#03224c]/30 p-5 transition hover:bg-[#03224c]/50">
-                <div class="grid size-10 shrink-0 place-items-center rounded-xl bg-cyan-900/30 text-[#6cb2eb]">
-                    <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
-                </div>
-                <div class="flex items-start gap-3 pt-1">
-                    <input type="checkbox" name="declaration" value="1" @checked(old('declaration')) required class="mt-1 size-4 rounded border-slate-300 bg-white text-amber-500 focus:ring-amber-500 focus:ring-offset-[#1a2533]">
-                    <p class="text-[11px] font-bold leading-relaxed text-slate-400">
-                        I hereby declare that all the information provided above is true and correct. I agree to abide by the rules and regulations of <span class="text-white">Bangladesh National Youth Technical Institute.</span>
-                    </p>
-                </div>
-            </label>
-        @endif
-
-        <div class="flex flex-col justify-center gap-4 pt-4 sm:flex-row">
-            <button class="inline-flex min-h-[55px] items-center justify-center gap-3 rounded-lg bg-amber-500 px-12 text-[14px] font-black uppercase tracking-widest text-[#03224c] shadow-lg shadow-amber-500/20 transition hover:bg-amber-400 active:scale-95">
-                APPLICATION SUBMIT
-            </button>
-            <button type="reset" class="inline-flex min-h-[55px] items-center justify-center gap-3 rounded-lg bg-[#b89552] px-12 text-[14px] font-black uppercase tracking-widest text-white transition hover:opacity-90">
-                <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="3">
-                    <path d="M21 12a9 9 0 1 1-9-9c2.5 0 4.7 1 6.3 2.7L21 8m0 0h-5m5 0v-5" />
-                </svg>
-                RESET FORM
-            </button>
-            @if ($cancelRoute)
-                <a href="{{ $cancelRoute }}" class="inline-flex min-h-[55px] items-center justify-center rounded-lg border border-slate-400 bg-slate-400/10 px-12 text-[14px] font-black uppercase tracking-widest text-slate-200 transition hover:bg-slate-400/20">
-                    Cancel
-                </a>
+        <form method="POST" action="{{ $action }}" enctype="multipart/form-data" data-location-form
+            data-upazilas='@json(config('bangladesh.upazilas'))' data-old-upazila="{{ old('upazila', $student?->upazila) }}"
+            class="space-y-8" id="registration-form">
+            @csrf
+            @if ($method !== 'POST')
+                @method($method)
             @endif
-        </div>
-    </form>
+
+            {{-- Avatar / Photo --}}
+            <div class="flex flex-col items-center gap-6">
+                <div class="relative group">
+                    <div class="size-40 overflow-hidden rounded-full bg-[#03224c] ring-4 ring-white/10 shadow-2xl">
+                        <img id="photo-preview" src="{{ $student?->image_path ? Storage::disk('public')->url($student->image_path) : asset('images/placeholder-avatar.png') }}"
+                            class="size-full object-cover">
+                    </div>
+                    <input type="file" name="image" id="student-photo-input" class="hidden" onchange="previewStudentPhoto(this)">
+                </div>
+                <button type="button" onclick="document.getElementById('student-photo-input').click()"
+                    class="rounded-xl bg-[#4338ca] px-8 py-2.5 text-sm font-black text-white transition hover:bg-[#4f46e5] shadow-lg shadow-indigo-900/40">
+                    Change Image
+                </button>
+                @error('image') <span class="text-xs font-bold text-rose-500">{{ $message }}</span> @enderror
+            </div>
+
+            <div class="grid gap-x-10 gap-y-6 sm:grid-cols-2">
+                {{-- Student Name --}}
+                <div>
+                    <label class="{{ $labelClass }}">Student Name</label>
+                    <input name="name" id="field-name" value="{{ old('name', $student?->name) }}" placeholder="Enter student name" class="{{ $inputClass }}">
+                </div>
+
+                {{-- Father Name --}}
+                <div>
+                    <label class="{{ $labelClass }}">Father Name</label>
+                    <input name="father_name" id="field-father-name" value="{{ old('father_name', $student?->father_name) }}" placeholder="Enter father's name" class="{{ $inputClass }}">
+                </div>
+
+                {{-- Mother Name --}}
+                <div>
+                    <label class="{{ $labelClass }}">Mother Name</label>
+                    <input name="mother_name" id="field-mother-name" value="{{ old('mother_name', $student?->mother_name) }}" placeholder="Enter mother's name" class="{{ $inputClass }}">
+                </div>
+
+                {{-- Dob --}}
+                <div>
+                    <label class="{{ $labelClass }}">Dob</label>
+                    <input type="date" name="date_of_birth" id="field-dob" value="{{ old('date_of_birth', $student?->date_of_birth?->format('Y-m-d')) }}" class="{{ $inputClass }}">
+                </div>
+
+                {{-- Gender --}}
+                <div>
+                    <label class="{{ $labelClass }}">Gender</label>
+                    <select name="gender" id="field-gender" class="{{ $selectClass }}">
+                        <option value="">Select Gender</option>
+                        @foreach (['Male', 'Female', 'Other'] as $sex)
+                            <option value="{{ $sex }}" @selected(old('gender', $student?->gender) === $sex)>{{ $sex }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Passport (ID Number) --}}
+                <div>
+                    <label class="{{ $labelClass }}">Passport</label>
+                    <input name="passport_nid_number" id="field-doc-number" value="{{ old('passport_nid_number', $student?->passport_nid_number) }}" placeholder="Enter ID number" class="{{ $inputClass }}">
+                </div>
+
+                {{-- Guardian Phone --}}
+                <div>
+                    <label class="{{ $labelClass }}">Guardian Phone</label>
+                    <input type="tel" name="phone" id="field-phone" value="{{ old('phone', $student?->phone) }}" placeholder="Enter phone number" class="{{ $inputClass }}">
+                </div>
+
+                {{-- Student Address --}}
+                <div>
+                    <label class="{{ $labelClass }}">Student Address</label>
+                    <input name="address" id="field-address" value="{{ old('address', $student?->address) }}" placeholder="Enter address" class="{{ $inputClass }}">
+                </div>
+
+                {{-- District --}}
+                <div>
+                    <label class="{{ $labelClass }}">District</label>
+                    <select name="district" id="field-district" data-district-select class="{{ $selectClass }}">
+                        <option value="">Select district</option>
+                        @foreach (config('bangladesh.districts') as $district)
+                            <option value="{{ $district }}" @selected(old('district', $student?->district) === $district)>{{ $district }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Thana --}}
+                <div>
+                    <label class="{{ $labelClass }}">Thana</label>
+                    <select name="upazila" id="field-upazila" data-upazila-select disabled class="{{ $selectClass }}">
+                        <option value="">No upazilas found</option>
+                    </select>
+                </div>
+
+                {{-- Search Course --}}
+                <div>
+                    <label class="{{ $labelClass }}">Search Course</label>
+                    <select name="course_id" id="field-course" class="{{ $selectClass }}">
+                        <option value="">Select course</option>
+                        @foreach ($courses as $course)
+                            <option value="{{ $course->id }}" @selected(old('course_id', $student?->course_id) == $course->id)>{{ $course->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Duration --}}
+                <div>
+                    <label class="{{ $labelClass }}">Duration</label>
+                    <select name="duration" id="field-duration" class="{{ $selectClass }}">
+                        <option value="">Select duration</option>
+                        <option value="3 Months" @selected(old('duration', $student?->duration) === '3 Months')>3 Months</option>
+                        <option value="6 Months" @selected(old('duration', $student?->duration) === '6 Months')>6 Months</option>
+                    </select>
+                </div>
+
+                {{-- Session --}}
+                <div>
+                    <label class="{{ $labelClass }}">Session</label>
+                    <input name="session" value="{{ old('session', $student?->session) }}" placeholder="Enter session" class="{{ $inputClass }}">
+                </div>
+
+                {{-- Education Qualification --}}
+                <div>
+                    <label class="{{ $labelClass }}">Education Qualification</label>
+                    <input name="education_qualification" value="{{ old('education_qualification', $student?->education_qualification) }}" placeholder="Enter qualification" class="{{ $inputClass }}">
+                </div>
+            </div>
+
+            <div class="mt-12 flex justify-center">
+                <button type="submit"
+                    class="w-full sm:w-80 rounded-xl bg-blue-600 py-4 text-sm font-black text-white uppercase tracking-widest transition hover:bg-blue-500 active:scale-95 shadow-lg shadow-blue-600/20">
+                    {{ $student ? 'Save Changes' : 'Complete Registration' }}
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script>
-    function simulateScan(input) {
-        if (!input.files || !input.files[0]) return;
-
-        const container = document.querySelector('[data-student-registration-container]');
-        container.classList.add('opacity-50', 'pointer-events-none');
-
-        setTimeout(() => {
-            const data = {
-                name: 'MD. ABDUR RAHMAN',
-                father_name: 'MD. ABDUL KARIM',
-                mother_name: 'MST. KHADIZA BEGUM',
-                dob: '1998-05-15',
-                doc_number: '5501234567'
-            };
-
-            document.getElementById('field-name').value = data.name;
-            document.getElementById('field-father-name').value = data.father_name;
-            document.getElementById('field-mother-name').value = data.mother_name;
-            document.getElementById('field-dob').value = data.dob;
-            document.getElementById('field-doc-number').value = data.doc_number;
-
-            container.classList.remove('opacity-50', 'pointer-events-none');
-            alert('Scan Complete! Data auto-filled.');
-        }, 1500);
+    function previewStudentPhoto(input) {
+        const preview = document.getElementById('photo-preview');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
     }
-
-    document.querySelectorAll('[data-scan-tab]').forEach(tab => {
-        tab.addEventListener('click', () => {
-            const type = tab.dataset.scanTab;
-            document.getElementById('doc-type-selector').value = type;
-
-            // Highlight active tab
-            document.querySelectorAll('[data-scan-tab]').forEach(t => {
-                t.classList.remove('ring-2', 'ring-amber-500', 'shadow-[0_0_20px_rgba(245,158,11,0.2)]');
-            });
-            tab.classList.add('ring-2', 'ring-amber-500', 'shadow-[0_0_20px_rgba(245,158,11,0.2)]');
-        });
-    });
-
-    document.querySelector('[data-photo-input]')?.addEventListener('change', function(event) {
-        const file = event.target.files?.[0];
-        const preview = document.querySelector('#photo-preview');
-        const placeholder = document.querySelector('#photo-placeholder');
-        if (!file || !preview || !placeholder) return;
-        preview.src = URL.createObjectURL(file);
-        preview.classList.remove('hidden');
-        placeholder.classList.add('hidden');
-    });
 </script>

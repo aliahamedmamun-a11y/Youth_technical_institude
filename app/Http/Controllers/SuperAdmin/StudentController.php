@@ -44,7 +44,7 @@ class StudentController extends Controller
 
         $studentData = $request->safe()->except('image');
         $studentData['registration_number'] = $this->registrationNumber();
-        $studentData['roll_number'] = $studentData['roll_number'] ?: $this->rollNumber();
+        $studentData['roll_number'] = ($studentData['roll_number'] ?? null) ?: $this->rollNumber();
         $studentData['result_status'] = 'Pending';
 
         if ($request->hasFile('image')) {

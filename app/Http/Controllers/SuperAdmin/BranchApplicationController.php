@@ -51,7 +51,6 @@ class BranchApplicationController extends Controller
 
         return view('super-admin.branch-applications.all-branches', [
             'branches' => BranchApplication::query()
-                ->where('status', BranchApplicationStatus::Approved)
                 ->when($search, fn ($query) => $query->where(fn ($nested) => $nested
                     ->where('institute_name', 'like', "%{$search}%")
                     ->orWhere('director_name', 'like', "%{$search}%")
@@ -61,6 +60,42 @@ class BranchApplicationController extends Controller
                 ->withQueryString(),
             'search' => $search,
         ]);
+    }
+
+    public function acceptedBranches(Request $request): View
+    {
+        Gate::authorize('viewAny', BranchApplication::class);
+
+        $search = $request->string('search')->trim()->toString();
+
+        return view('super-admin.branch-applications.accepted', [
+            'branches' => BranchApplication::query()
+                ->where('status', BranchApplicationStatus::Approved)
+                ->when($search, fn ($query) => $query->where(fn ($nested) => $nested
+                    ->where('institute_name', 'like', "%{$search}%")
+                    ->orWhere('id', 'like', "%{$search}%")
+                    ->orWhere('district', 'like', "%{$search}%")))
+                ->latest()
+                ->paginate(20)
+                ->withQueryString(),
+            'search' => $search,
+        ]);
+    }
+
+    public function revokeApproval(BranchApplication $branchApplication): RedirectResponse
+    {
+        Gate::authorize('update', $branchApplication);
+
+        $branchApplication->update([
+            'status' => BranchApplicationStatus::Pending,
+            'approved_at' => null,
+            'is_active' => false,
+        ]);
+
+        // Also deactivate user if exists
+        \App\Models\User::query()->where('email', $branchApplication->email)->update(['is_active' => false]);
+
+        return back()->with('status', 'Branch verification revoked and moved to pending.');
     }
 
     public function show(BranchApplication $branchApplication): View

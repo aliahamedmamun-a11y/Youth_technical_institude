@@ -36,6 +36,7 @@ class StoreStudentRequest extends FormRequest
             'passport_nid_number' => ['nullable', 'string', 'max:50'],
             'phone' => ['nullable', 'string', 'max:30'],
             'gender' => ['nullable', Rule::in(['Male', 'Female', 'Other'])],
+            'religion' => ['nullable', 'string', 'max:50'],
             'end_month' => ['nullable', 'string', 'max:20'],
             'end_year' => ['nullable', 'string', 'max:10'],
             'education_qualification' => ['nullable', 'string', 'max:255'],

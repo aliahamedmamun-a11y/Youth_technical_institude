@@ -24,6 +24,7 @@ class Student extends Model
         'phone',
         'email',
         'gender',
+        'religion',
         'date_of_birth',
         'address',
         'district',

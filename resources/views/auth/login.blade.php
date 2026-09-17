@@ -11,7 +11,7 @@
         <main class="flex min-h-screen items-center justify-center px-4 py-12">
             <section class="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-900/5">
                 <a href="{{ url('/') }}" class="mb-8 flex items-center gap-3">
-                    <img src="{{ asset('images/bnyti-logo.svg') }}" alt="BNYTI logo" class="brand-logo size-12">
+                    <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="brand-logo size-12">
                     <span>
                         <span class="block text-sm font-black text-slate-950">BNYTI</span>
                         <span class="block text-xs font-bold tracking-[0.18em] text-slate-500">STAFF ACCESS</span>

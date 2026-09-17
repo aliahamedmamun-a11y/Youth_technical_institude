@@ -6,7 +6,7 @@
         <meta name="theme-color" content="#15803d">
         <meta name="description" content="Find and verify your official Bangladesh National Youth Technical Institute examination result.">
         <title>Student Result Portal | BNYTI</title>
-        <link rel="icon" href="{{ asset('images/bnyti-logo.svg') }}" type="image/svg+xml">
+        <link rel="icon" href="{{ asset('images/Logo.png') }}" type="image/png">
         @fonts
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -14,7 +14,7 @@
         <header class="relative z-50 border-b border-slate-900/5 bg-stone-50/95 backdrop-blur-xl dark:border-white/10 dark:bg-ink/95">
             <div class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
                 <a href="{{ route('home') }}" class="group flex min-w-0 items-center gap-3" aria-label="BNYTI home">
-                    <img src="{{ asset('images/bnyti-logo.svg') }}" alt="Bangladesh National Youth Technical Institute logo" class="brand-logo size-12 shrink-0 transition duration-300 group-hover:-rotate-3 sm:size-14">
+                    <img src="{{ asset('images/Logo.png') }}" alt="Bangladesh National Youth Technical Institute logo" class="brand-logo size-12 shrink-0 transition duration-300 group-hover:-rotate-3 sm:size-14">
                     <span class="hidden min-w-0 sm:block"><span class="block truncate text-sm font-black tracking-tight text-slate-950 dark:text-white sm:text-[15px]"><span class="text-emerald-600 dark:text-emerald-400">BANGLADESH</span><span class="text-red-600 dark:text-red-400"> NATIONAL</span></span><span class="block truncate text-[10px] font-bold tracking-[0.17em] text-slate-600 dark:text-slate-300 sm:text-[11px]">YOUTH TECHNICAL INSTITUTE</span></span>
                     <span class="sm:hidden"><span class="block text-base font-black tracking-tight text-slate-950 dark:text-white">BNYTI</span><span class="block text-[9px] font-bold tracking-[0.14em] text-slate-500 dark:text-slate-300">TECHNICAL INSTITUTE</span></span>
                 </a>
@@ -41,7 +41,7 @@
         <main class="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
             <header class="text-center">
                 <a href="{{ route('home') }}" class="group inline-flex flex-col items-center" aria-label="Back to BNYTI home">
-                    <img src="{{ asset('images/bnyti-logo.svg') }}" alt="Bangladesh National Youth Technical Institute logo" class="brand-logo size-28 transition duration-300 group-hover:-rotate-3 sm:size-36">
+                    <img src="{{ asset('images/Logo.png') }}" alt="Bangladesh National Youth Technical Institute logo" class="brand-logo size-28 transition duration-300 group-hover:-rotate-3 sm:size-36">
                     <span class="mt-5 text-xl font-black tracking-tight text-emerald-700 dark:text-emerald-400 sm:text-3xl">Bangladesh National Youth Technical Institute</span>
                     <span class="mt-2 flex items-center gap-3 text-sm font-medium text-slate-600 dark:text-slate-300 sm:text-base"><span class="hidden h-px w-12 bg-emerald-600 sm:block"></span>Skill for Today, Success for Tomorrow<span class="hidden h-px w-12 bg-emerald-600 sm:block"></span></span>
                 </a>
@@ -84,7 +84,7 @@
 
             <aside class="mt-7 flex flex-col items-center gap-5 rounded-2xl border border-emerald-200 bg-white px-6 py-5 shadow-sm dark:border-emerald-400/20 dark:bg-white/5 sm:flex-row"><span class="grid size-14 shrink-0 place-items-center rounded-xl bg-emerald-600 text-white"><svg viewBox="0 0 24 24" class="size-7 fill-none stroke-current" aria-hidden="true" stroke-width="1.8"><path d="M12 3 20 6v5c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6z"/><path d="m8.5 12 2.3 2.3 4.8-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="flex-1 text-center sm:text-left"><h2 class="font-black text-emerald-800 dark:text-emerald-300">IMPORTANT</h2><p class="mt-1 text-sm font-medium text-slate-600 dark:text-slate-300">Make sure you enter the correct Roll Number to get your accurate result.</p></div><span class="hidden text-5xl text-emerald-600/30 sm:block" aria-hidden="true">✦</span></aside>
 
-            <footer class="mt-auto pt-12 text-center"><a href="{{ route('home') }}" class="inline-flex items-center gap-3 text-sm font-black text-slate-800 transition hover:text-emerald-700 dark:text-white dark:hover:text-emerald-400"><span class="h-px w-16 bg-emerald-500"></span><img src="{{ asset('images/bnyti-logo.svg') }}" alt="" class="size-10"><span class="h-px w-16 bg-emerald-500"></span></a><p class="mt-5 text-sm font-medium text-slate-600 dark:text-slate-300">© {{ date('Y') }} Bangladesh National Youth Technical Institute. All Rights Reserved.</p><p class="mt-3 text-emerald-600" aria-hidden="true">★ ★ ★</p></footer>
+            <footer class="mt-auto pt-12 text-center"><a href="{{ route('home') }}" class="inline-flex items-center gap-3 text-sm font-black text-slate-800 transition hover:text-emerald-700 dark:text-white dark:hover:text-emerald-400"><span class="h-px w-16 bg-emerald-500"></span><img src="{{ asset('images/Logo.png') }}" alt="" class="size-10"><span class="h-px w-16 bg-emerald-500"></span></a><p class="mt-5 text-sm font-medium text-slate-600 dark:text-slate-300">© {{ date('Y') }} Bangladesh National Youth Technical Institute. All Rights Reserved.</p><p class="mt-3 text-emerald-600" aria-hidden="true">★ ★ ★</p></footer>
         </main>
     </body>
 </html>

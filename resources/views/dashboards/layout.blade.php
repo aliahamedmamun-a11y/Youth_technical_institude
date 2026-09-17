@@ -11,7 +11,7 @@
         <header class="border-b border-slate-200 bg-white">
             <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
                 <a href="{{ route('dashboard') }}" class="flex min-w-0 items-center gap-3">
-                    <img src="{{ asset('images/bnyti-logo.svg') }}" alt="BNYTI logo" class="brand-logo size-11">
+                    <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="brand-logo size-11">
                     <span class="min-w-0">
                         <span class="block truncate text-sm font-black text-slate-950">Bangladesh National Youth Technical Institute</span>
                         <span class="block text-xs font-bold tracking-[0.16em] text-emerald-700">{{ auth()->user()->role->label() }}</span>

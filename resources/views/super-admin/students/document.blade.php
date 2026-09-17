@@ -44,7 +44,7 @@
     <x-dashboard-shell :title="$documentTitle" eyebrow="Student document" :description="$student->name.' · '.$student->registration_number">
         <article class="mx-auto max-w-3xl border border-slate-300 bg-white p-8 shadow-xl shadow-slate-900/10 sm:p-12">
             <header class="border-b-4 border-emerald-700 pb-6 text-center">
-                <img src="{{ asset('images/bnyti-logo.svg') }}" alt="BNYTI logo" class="mx-auto size-16">
+                <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="mx-auto size-16">
                 <h2 class="mt-3 text-2xl font-black text-slate-950">Bangladesh National Youth Technical Institute</h2>
                 <p class="mt-2 text-sm font-bold uppercase tracking-[.16em] text-emerald-700">{{ $documentTitle }}</p>
             </header>

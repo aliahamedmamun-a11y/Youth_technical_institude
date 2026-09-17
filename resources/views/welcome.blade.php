@@ -10,7 +10,7 @@
         >
 
         <title>Bangladesh National Youth Technical Institute</title>
-        <link rel="icon" href="{{ asset('images/bnyti-logo.svg') }}" type="image/svg+xml">
+        <link rel="icon" href="{{ asset('images/Logo.png') }}" type="image/png">
 
         <script>
             document.documentElement.classList.add('js');
@@ -37,7 +37,7 @@
              <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
                 <a href="#home" class="group flex items-center gap-3">
                     <img
-                        src="{{ asset('images/bnyti-logo.svg') }}"
+                        src="{{ asset('images/Logo.png') }}"
                         alt="Logo"
                         class="h-10 w-auto sm:h-12"
                     >
@@ -91,7 +91,7 @@
         <aside id="mobile-menu" class="mobile-menu-drawer lg:hidden" data-mobile-menu aria-hidden="true" aria-label="Mobile navigation" inert>
                 <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-white/10">
                     <a href="#home" class="flex min-w-0 items-center gap-3" aria-label="BNYTI home">
-                        <img src="{{ asset('images/bnyti-logo.svg') }}" alt="" class="size-11 shrink-0 object-contain">
+                        <img src="{{ asset('images/Logo.png') }}" alt="" class="size-11 shrink-0 object-contain">
                         <span><span class="block font-black text-slate-950 dark:text-white">BNYTI</span><span class="block text-[9px] font-bold tracking-[.14em] text-slate-500 dark:text-slate-300">TECHNICAL INSTITUTE</span></span>
                     </a>
                     <button type="button" class="icon-button" data-menu-dismiss aria-label="Close navigation"><svg viewBox="0 0 24 24" aria-hidden="true" class="size-6"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg></button>
@@ -1009,7 +1009,7 @@
                     <div class="space-y-6">
                         <a href="#home" class="flex items-center gap-4">
                             <div class="grid size-14 place-items-center rounded-xl bg-white p-2">
-                                <img src="{{ asset('images/bnyti-logo.svg') }}" alt="Logo" class="size-full">
+                                <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="size-full">
                             </div>
                             <div>
                                 <span class="block text-2xl font-black tracking-tight text-white uppercase leading-none">South Asia</span>

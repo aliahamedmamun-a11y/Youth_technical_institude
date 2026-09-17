@@ -16,7 +16,7 @@
         <header class="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-white/10 bg-[#071c2c] px-6 text-white shadow-md">
             <div class="flex items-center gap-4">
                 <a href="/" class="flex items-center gap-3">
-                    <img src="{{ asset('images/bnyti-logo.svg') }}" alt="BNYTI logo" class="size-9 brightness-0 invert">
+                    <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="size-9 brightness-0 invert">
                     <span class="text-sm font-black uppercase tracking-wider hidden sm:inline">SAETI</span>
                 </a>
             </div>

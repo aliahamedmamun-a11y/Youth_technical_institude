@@ -1,13 +1,13 @@
 <x-dashboard-shell title="ALL Branches">
-    <div class="mx-auto max-w-[1600px]">
+    <div class="mx-auto max-w-[1800px]">
         <div class="rounded-3xl border border-white/20 bg-[#03224c]/40 p-8 shadow-2xl backdrop-blur-sm lg:p-10">
 
-            <div class="mb-10">
-                <h1 class="text-3xl font-black tracking-tight text-[#4da6ff] uppercase lg:text-4xl">ALL Branches</h1>
+            <div class="mb-10 text-center">
+                <h1 class="text-4xl font-black tracking-tight text-[#4da6ff] uppercase lg:text-5xl">ALL Branches</h1>
             </div>
 
             {{-- Search Bar --}}
-            <div class="mb-10 max-w-2xl">
+            <div class="mx-auto mb-10 max-w-2xl">
                 <form method="GET" class="relative">
                     <input type="text" name="search" value="{{ $search }}"
                         placeholder="Search by Branch ID..."
@@ -24,44 +24,44 @@
                     <table class="w-full text-left whitespace-nowrap">
                         <thead>
                             <tr class="border-b border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-widest text-[#6cb2eb]">
-                                <th class="px-6 py-4">branchId</th>
-                                <th class="px-6 py-4">Action</th>
-                                <th class="px-6 py-4">instituteName</th>
-                                <th class="px-6 py-4">email</th>
-                                <th class="px-6 py-4">password</th>
-                                <th class="px-6 py-4">directorName</th>
-                                <th class="px-6 py-4">fatherName</th>
-                                <th class="px-6 py-4">motherName</th>
-                                <th class="px-6 py-4">mobileNumber</th>
-                                <th class="px-6 py-4">address</th>
-                                <th class="px-6 py-4">postOffice</th>
-                                <th class="px-6 py-4">upazila</th>
-                                <th class="px-6 py-4">district</th>
-                                <th class="px-6 py-4">username</th>
-                                <th class="px-6 py-4 text-center">directorPhoto</th>
-                                <th class="px-6 py-4 text-center">institutePhoto</th>
-                                <th class="px-6 py-4 text-center">nationalIdPhoto</th>
-                                <th class="px-6 py-4 text-center">signaturePhoto</th>
+                                <th class="px-4 py-4">branchId</th>
+                                <th class="px-4 py-4">Action</th>
+                                <th class="px-4 py-4">instituteName</th>
+                                <th class="px-4 py-4">email</th>
+                                <th class="px-4 py-4">password</th>
+                                <th class="px-4 py-4">directorName</th>
+                                <th class="px-4 py-4">fatherName</th>
+                                <th class="px-4 py-4">motherName</th>
+                                <th class="px-4 py-4">mobileNumber</th>
+                                <th class="px-4 py-4">address</th>
+                                <th class="px-4 py-4">postOffice</th>
+                                <th class="px-4 py-4">upazila</th>
+                                <th class="px-4 py-4">district</th>
+                                <th class="px-4 py-4">username</th>
+                                <th class="px-4 py-4 text-center">directorPhoto</th>
+                                <th class="px-4 py-4 text-center">institutePhoto</th>
+                                <th class="px-4 py-4 text-center">nationalIdPhoto</th>
+                                <th class="px-4 py-4 text-center">signaturePhoto</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-white/5">
                             @forelse($branches as $branch)
-                                <tr class="group transition-colors hover:bg-white/5">
+                                <tr class="group transition-colors hover:bg-white/5 text-[11px] font-bold">
                                     {{-- branchId --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-blue-400">
+                                    <td class="px-4 py-5 text-blue-400">
                                         {{ str_pad($branch->id, 6, '0', STR_PAD_LEFT) }}
                                     </td>
 
                                     {{-- Action --}}
-                                    <td class="px-6 py-5">
-                                        <div class="flex items-center gap-3">
+                                    <td class="px-4 py-5">
+                                        <div class="flex items-center gap-2">
                                             <a href="{{ route('super-admin.branch-applications.edit', $branch) }}"
-                                                class="rounded bg-indigo-600 px-4 py-1.5 text-[10px] font-black uppercase text-white shadow-lg transition hover:bg-indigo-500">
+                                                class="rounded bg-[#6366f1] px-3 py-1.5 text-[9px] font-black uppercase text-white shadow-lg transition hover:bg-indigo-500">
                                                 Update
                                             </a>
                                             <form action="{{ route('super-admin.branch-applications.destroy', $branch) }}" method="POST" onsubmit="return confirm('Permanently delete this branch?')">
                                                 @csrf @method('DELETE')
-                                                <button type="submit" class="rounded bg-[#ff4d94] px-4 py-1.5 text-[10px] font-black uppercase text-white shadow-lg transition hover:bg-[#ff1a75]">
+                                                <button type="submit" class="rounded bg-[#ec4899] px-3 py-1.5 text-[9px] font-black uppercase text-white shadow-lg transition hover:bg-pink-500">
                                                     Delete
                                                 </button>
                                             </form>
@@ -69,84 +69,92 @@
                                     </td>
 
                                     {{-- instituteName --}}
-                                    <td class="px-6 py-5 text-sm font-black text-[#ff4d94]">
+                                    <td class="px-4 py-5 text-pink-400 uppercase">
                                         {{ $branch->institute_name }}
                                     </td>
 
                                     {{-- email --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-emerald-400">
+                                    <td class="px-4 py-5 text-emerald-400">
                                         {{ $branch->email }}
                                     </td>
 
                                     {{-- password --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-[#ff4d94]">
-                                        {{ $branch->password ?? 'Pa$$w0rd!' }}
+                                    <td class="px-4 py-5 text-pink-400">
+                                        {{ $branch->password ?: 'Pa$$w0rd!' }}
                                     </td>
 
                                     {{-- directorName --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
+                                    <td class="px-4 py-5 text-slate-400">
                                         {{ $branch->director_name }}
                                     </td>
 
                                     {{-- fatherName --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
-                                        {{ $branch->father_name }}
+                                    <td class="px-4 py-5 text-slate-400">
+                                        {{ $branch->father_name ?: 'N/A' }}
                                     </td>
 
                                     {{-- motherName --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
-                                        {{ $branch->mother_name }}
+                                    <td class="px-4 py-5 text-slate-400">
+                                        {{ $branch->mother_name ?: 'N/A' }}
                                     </td>
 
                                     {{-- mobileNumber --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
+                                    <td class="px-4 py-5 text-slate-400">
                                         {{ $branch->mobile_number }}
                                     </td>
 
                                     {{-- address --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
+                                    <td class="px-4 py-5 text-slate-400 max-w-[200px] truncate">
                                         {{ $branch->full_address }}
                                     </td>
 
                                     {{-- postOffice --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
-                                        {{ $branch->post_office }}
+                                    <td class="px-4 py-5 text-slate-400">
+                                        {{ $branch->post_office ?: 'N/A' }}
                                     </td>
 
                                     {{-- upazila --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
+                                    <td class="px-4 py-5 text-slate-400">
                                         {{ $branch->upazila }}
                                     </td>
 
                                     {{-- district --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
+                                    <td class="px-4 py-5 text-slate-400">
                                         {{ $branch->district }}
                                     </td>
 
                                     {{-- username --}}
-                                    <td class="px-6 py-5 text-sm font-bold text-slate-400">
+                                    <td class="px-4 py-5 text-slate-400">
                                         {{ $branch->username }}
                                     </td>
 
                                     {{-- Photos --}}
-                                    <td class="px-6 py-5">
+                                    <td class="px-4 py-5">
                                         <div class="flex justify-center">
-                                            <img src="{{ $branch->director_photo_path ? Storage::disk('public')->url($branch->director_photo_path) : asset('images/placeholder-avatar.png') }}" class="size-12 rounded-full border-2 border-white/10 object-cover shadow-xl">
+                                            <div class="size-11 overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-lg">
+                                                <img src="{{ $branch->director_photo_path ? Storage::disk('public')->url($branch->director_photo_path) : asset('images/placeholder-avatar.png') }}" class="size-full object-cover">
+                                            </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-5">
+                                    <td class="px-4 py-5">
                                         <div class="flex justify-center">
-                                            <img src="{{ $branch->institute_photo_path ? Storage::disk('public')->url($branch->institute_photo_path) : asset('images/placeholder-institute.png') }}" class="size-12 rounded-full border-2 border-white/10 object-cover shadow-xl">
+                                            <div class="size-11 overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-lg">
+                                                <img src="{{ $branch->institute_photo_path ? Storage::disk('public')->url($branch->institute_photo_path) : asset('images/placeholder-institute.png') }}" class="size-full object-cover">
+                                            </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-5">
+                                    <td class="px-4 py-5">
                                         <div class="flex justify-center">
-                                            <img src="{{ $branch->nid_photo_path ? Storage::disk('public')->url($branch->nid_photo_path) : asset('images/placeholder-doc.png') }}" class="size-12 rounded-full border-2 border-white/10 object-cover shadow-xl">
+                                            <div class="size-11 overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-lg">
+                                                <img src="{{ $branch->nid_photo_path ? Storage::disk('public')->url($branch->nid_photo_path) : asset('images/placeholder-doc.png') }}" class="size-full object-cover">
+                                            </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-5">
+                                    <td class="px-4 py-5">
                                         <div class="flex justify-center">
-                                            <img src="{{ $branch->director_signature_path ? Storage::disk('public')->url($branch->director_signature_path) : asset('images/placeholder-sig.png') }}" class="size-12 rounded-full border-2 border-white/10 object-cover shadow-xl">
+                                            <div class="size-11 overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-lg">
+                                                <img src="{{ $branch->director_signature_path ? Storage::disk('public')->url($branch->director_signature_path) : asset('images/placeholder-sig.png') }}" class="size-full object-cover brightness-0 invert">
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -161,6 +169,16 @@
                     </table>
                 </div>
             </div>
+
+            @if($branches->hasPages())
+                <div class="mt-8">
+                    {{ $branches->links() }}
+                </div>
+            @endif
+        </div>
+    </div>
+</x-dashboard-shell>
+
 
             @if($branches->hasPages())
                 <div class="mt-8">

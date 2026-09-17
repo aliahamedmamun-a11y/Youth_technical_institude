@@ -116,10 +116,28 @@
                     <input name="passport_nid_number" id="field-doc-number" value="{{ old('passport_nid_number', $student?->passport_nid_number) }}" placeholder="Enter ID number" class="{{ $inputClass }}">
                 </div>
 
+                {{-- Roll Number --}}
+                <div>
+                    <label class="{{ $labelClass }}">Roll Number</label>
+                    <input name="roll_number" id="field-roll-number" value="{{ old('roll_number', $student?->roll_number) }}" placeholder="Enter roll number" class="{{ $inputClass }}">
+                </div>
+
                 {{-- Guardian Phone --}}
                 <div>
                     <label class="{{ $labelClass }}">Guardian Phone</label>
                     <input type="tel" name="phone" id="field-phone" value="{{ old('phone', $student?->phone) }}" placeholder="Enter phone number" class="{{ $inputClass }}">
+                </div>
+
+                {{-- Religion --}}
+                <div>
+                    <label class="{{ $labelClass }}">Religion</label>
+                    <select name="religion" class="{{ $selectClass }}">
+                        <option value="Islam" @selected(old('religion', $student?->religion ?? '') === 'Islam')>Islam</option>
+                        <option value="Hinduism" @selected(old('religion', $student?->religion ?? '') === 'Hinduism')>Hinduism</option>
+                        <option value="Buddhism" @selected(old('religion', $student?->religion ?? '') === 'Buddhism')>Buddhism</option>
+                        <option value="Christianity" @selected(old('religion', $student?->religion ?? '') === 'Christianity')>Christianity</option>
+                        <option value="Other" @selected(old('religion', $student?->religion ?? '') === 'Other')>Other</option>
+                    </select>
                 </div>
 
                 {{-- District --}}
@@ -150,6 +168,12 @@
                             <option value="{{ $course->id }}" @selected(old('course_id', $student?->course_id) == $course->id)>{{ $course->name }}</option>
                         @endforeach
                     </select>
+                </div>
+
+                {{-- Session --}}
+                <div>
+                    <label class="{{ $labelClass }}">Session</label>
+                    <input name="session" value="{{ old('session', $student?->session) }}" placeholder="e.g. 2026-27" class="{{ $inputClass }}">
                 </div>
 
                 {{-- Duration --}}

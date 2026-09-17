@@ -3,7 +3,7 @@
         <div class="rounded-3xl border border-white/20 bg-[#03224c]/40 p-8 shadow-2xl backdrop-blur-sm lg:p-12">
 
             <div class="mb-10 text-center">
-                <h1 class="text-3xl font-black tracking-tight text-[#4da6ff] uppercase lg:text-4xl">User Approval Requests</h1>
+                <h1 class="text-4xl font-black tracking-tight text-[#6366f1] uppercase">User Approval Requests</h1>
             </div>
 
             <div class="overflow-hidden rounded-2xl border border-white/5 bg-[#071c2c]/30">
@@ -11,24 +11,24 @@
                     <table class="w-full text-left">
                         <thead>
                             <tr class="border-b border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-widest text-[#6cb2eb]">
-                                <th class="px-6 py-4">Photo</th>
-                                <th class="px-6 py-4">Institute Name</th>
-                                <th class="px-6 py-4">Director Name</th>
-                                <th class="px-6 py-4">Email</th>
-                                <th class="px-6 py-4">District</th>
-                                <th class="px-6 py-4 text-center">Actions</th>
+                                <th class="px-6 py-4">PHOTO</th>
+                                <th class="px-6 py-4">INSTITUTE NAME</th>
+                                <th class="px-6 py-4">DIRECTOR NAME</th>
+                                <th class="px-6 py-4">EMAIL</th>
+                                <th class="px-6 py-4">DISTRICT</th>
+                                <th class="px-6 py-4 text-center">ACTIONS</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-white/5">
                             @forelse($applications as $application)
                                 <tr class="group transition-colors hover:bg-white/5">
                                     <td class="px-6 py-4">
-                                        <div class="size-10 overflow-hidden rounded-full border border-white/10 bg-slate-800">
-                                            <img src="{{ $application->institute_photo_path ? asset('storage/' . $application->institute_photo_path) : asset('images/placeholder-avatar.png') }}"
+                                        <div class="size-11 overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-lg">
+                                            <img src="{{ $application->director_photo_path ? Storage::disk('public')->url($application->director_photo_path) : asset('images/placeholder-avatar.png') }}"
                                                 class="size-full object-cover">
                                         </div>
                                     </td>
-                                    <td class="px-6 py-5 text-sm font-bold text-white">
+                                    <td class="px-6 py-5 text-sm font-bold text-white uppercase">
                                         {{ $application->institute_name }}
                                     </td>
                                     <td class="px-6 py-5 text-sm font-bold text-slate-400">
@@ -41,15 +41,15 @@
                                         {{ $application->district }}
                                     </td>
                                     <td class="px-6 py-5">
-                                        <div class="flex items-center justify-center gap-4">
+                                        <div class="flex items-center justify-center gap-3">
                                             {{-- Approve Action --}}
                                             <form method="POST" action="{{ route('super-admin.branch-applications.update', $application) }}" onsubmit="return confirm('Approve this branch?')">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="approved">
                                                 <button type="submit" class="text-emerald-500 transition hover:scale-110 active:scale-95" title="Approve Request">
-                                                    <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="3">
-                                                        <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                                    <svg viewBox="0 0 24 24" class="size-6" fill="currentColor">
+                                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
                                                 </button>
                                             </form>
 
@@ -57,8 +57,8 @@
                                             <form action="{{ route('super-admin.branch-applications.destroy', $application) }}" method="POST" onsubmit="return confirm('Reject and delete this request?')">
                                                 @csrf @method('DELETE')
                                                 <button type="submit" class="text-[#ff4d94] transition hover:scale-110 active:scale-95" title="Reject Request">
-                                                    <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="3">
-                                                        <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                                    <svg viewBox="0 0 24 24" class="size-6" fill="currentColor">
+                                                        <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
                                                 </button>
                                             </form>
                                         </div>
@@ -75,6 +75,16 @@
                     </table>
                 </div>
             </div>
+
+            @if($applications->hasPages())
+                <div class="mt-8">
+                    {{ $applications->links() }}
+                </div>
+            @endif
+        </div>
+    </div>
+</x-dashboard-shell>
+
 
             @if($applications->hasPages())
                 <div class="mt-8">

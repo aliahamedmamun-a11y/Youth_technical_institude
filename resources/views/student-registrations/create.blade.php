@@ -6,7 +6,7 @@
         <meta name="theme-color" content="#15803d">
         <meta name="description" content="Register as a student at Bangladesh National Youth Technical Institute.">
         <title>Student Registration | BNYTI</title>
-        <link rel="icon" href="{{ asset('images/bnyti-logo.svg') }}" type="image/svg+xml">
+        <link rel="icon" href="{{ asset('images/Logo.png') }}" type="image/png">
         @fonts
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>

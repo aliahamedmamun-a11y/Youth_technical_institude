@@ -277,6 +277,8 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
         ->name('super-admin.about.publish');
 
     Route::get('/super-admin/branch-applications', [SuperAdminBranchApplicationController::class, 'index'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.index');
+    Route::get('/super-admin/accepted-branches', [SuperAdminBranchApplicationController::class, 'acceptedBranches'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.accepted');
+    Route::patch('/super-admin/branch-applications/{branchApplication}/revoke', [SuperAdminBranchApplicationController::class, 'revokeApproval'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.revoke');
     Route::get('/super-admin/all-branches', [SuperAdminBranchApplicationController::class, 'allBranches'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.all-branches');
     Route::get('/super-admin/branch-applications/{branchApplication}/edit', [SuperAdminBranchApplicationController::class, 'edit'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.edit');
     Route::put('/super-admin/branch-applications/{branchApplication}/update-data', [SuperAdminBranchApplicationController::class, 'updateData'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.update-data');

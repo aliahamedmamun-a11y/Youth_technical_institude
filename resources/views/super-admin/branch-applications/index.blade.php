@@ -84,13 +84,3 @@
         </div>
     </div>
 </x-dashboard-shell>
-
-
-            @if($applications->hasPages())
-                <div class="mt-8">
-                    {{ $applications->links() }}
-                </div>
-            @endif
-        </div>
-    </div>
-</x-dashboard-shell>

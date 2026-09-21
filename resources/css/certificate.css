@@ -16,9 +16,8 @@
 .certificate-frame {
     width: min(100%, 75rem);
     margin-inline: auto;
-    overflow: hidden;
-    background: #ffffe9;
-    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
+    position: relative;
+    padding-bottom: 2rem;
 }
 
 .certificate-document {
@@ -28,6 +27,7 @@
     overflow: hidden;
     color: #111;
     background: #ffffe9;
+    container-type: inline-size;
 }
 
 .certificate-template {
@@ -38,95 +38,244 @@
     object-fit: fill;
 }
 
-.certificate-data {
+.certificate-header,
+.certificate-left-panel,
+.certificate-main-content {
     position: absolute;
     z-index: 1;
-    overflow: hidden;
-    color: #111;
-    font-family: 'Certificate Shelley', Georgia, 'Times New Roman', serif;
-    font-size: clamp(0.45rem, 1.08vw, 1.02rem);
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.15;
+}
+
+.certificate-header {
+    top: 5.5%;
+    left: 0;
+    right: 0;
     text-align: center;
-    text-overflow: ellipsis;
-    text-shadow: 0 1px 0 rgb(255 255 238 / 0.85);
-    transform: translateY(-50%);
+}
+
+.certificate-title {
+    margin: 0;
+    font-family: 'Old English Text MT', 'Goudy Old Style', serif;
+    font-size: 5.5cqw;
+    font-weight: 400;
+}
+
+.certificate-approved {
+    margin: 0.2cqw 0 0;
+    font-size: 1.6cqw;
+    font-weight: 700;
+}
+
+.certificate-web {
+    margin: 0;
+    font-size: 1.4cqw;
+    font-weight: 600;
+}
+
+.certificate-type {
+    margin: 0.5cqw 0 0;
+    font-size: 4.8cqw;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-decoration: underline double;
+}
+
+/* Left Panel */
+.certificate-left-panel {
+    top: 25%;
+    left: 7.5%;
+    width: 16%;
+    bottom: 5%;
+}
+
+.certificate-incorporation {
+    width: 100%;
+    border: 1px solid #111;
+    background: white;
+    padding: 0.5cqw;
+    height: 38%;
+}
+
+.certificate-inc-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.certificate-qr-main {
+    margin-top: 1.5cqw;
+    width: 80%;
+    aspect-ratio: 1;
+    margin-inline: auto;
+}
+
+.certificate-qr-main img {
+    width: 100%;
+}
+
+.certificate-grading {
+    margin-top: 1.5cqw;
+    font-size: 1.1cqw;
+}
+
+.grading-title {
+    margin: 0 0 0.2cqw;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.certificate-grading table {
+    width: 100%;
+    border-collapse: collapse;
+    font-weight: 700;
+}
+
+.certificate-grading td, .certificate-grading th {
+    padding: 0.1cqw;
+    border: 1px solid #111;
+    text-align: center;
+}
+
+.certificate-result-date {
+    position: absolute;
+    bottom: 1cqw;
+    left: 0;
+    width: 150%;
+    font-size: 1.4cqw;
+    font-weight: 700;
     white-space: nowrap;
 }
 
-.certificate-data--serial {
-    top: 39.1%;
-    left: 29.5%;
-    width: 19%;
+/* Main Content Area */
+.certificate-main-content {
+    top: 30%;
+    left: 24%;
+    right: 8%;
+    bottom: 5%;
 }
 
-.certificate-data--registration {
-    top: 37.5%;
-    left: 68%;
-    width: 23%;
+.certificate-crest {
+    position: absolute;
+    top: 0;
+    left: 2.5%;
+    width: 12%;
 }
 
-.certificate-data--session {
-    top: 42.8%;
-    left: 64.5%;
-    width: 27%;
+.certificate-crest img {
+    width: 100%;
 }
 
-.certificate-data--student {
-    top: 48.2%;
-    left: 35%;
-    width: 56%;
-    font-size: clamp(0.52rem, 1.2vw, 1.15rem);
+.certificate-qr-top {
+    position: absolute;
+    top: -2cqw;
+    right: 0;
+    width: 10%;
 }
 
-.certificate-data--father {
-    top: 52.7%;
-    left: 34%;
-    width: 50%;
+.certificate-qr-top img {
+    width: 100%;
 }
 
-.certificate-data--mother {
-    top: 57.2%;
-    left: 27%;
-    width: 57%;
+.certificate-top-meta {
+    margin-top: 10cqw;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.8cqw;
+    font-weight: 700;
 }
 
-.certificate-data--course {
-    top: 61.7%;
-    left: 25%;
-    width: 66%;
+.cert-serial span {
+    font-style: italic;
+    font-family: serif;
 }
 
-.certificate-data--roll {
-    top: 66.2%;
-    left: 32%;
-    width: 14%;
+.cert-right-meta p {
+    margin: 0;
+    text-align: right;
 }
 
-.certificate-data--semester {
-    top: 66.2%;
-    left: 53.5%;
-    width: 37.5%;
+.cert-right-meta span {
+    display: inline-block;
+    min-width: 8cqw;
+    font-style: italic;
 }
 
-.certificate-data--month {
-    top: 70.7%;
-    left: 50%;
-    width: 24%;
+.certificate-body {
+    margin-top: 2.5cqw;
+    font-size: 2.1cqw;
+    line-height: 1.8;
+    font-weight: 700;
 }
 
-.certificate-data--gpa {
-    top: 70.7%;
-    left: 82%;
-    width: 9%;
+.cert-row {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
 }
 
-.certificate-data--date {
-    top: 88.4%;
-    left: 8%;
-    width: 17%;
-    font-size: clamp(0.42rem, 0.9vw, 0.86rem);
+.cert-value {
+    font-family: 'Certificate Shelley', cursive, serif;
+    font-size: 2.6cqw;
+    margin: 0 0.4cqw;
+    font-style: italic;
+}
+
+.cert-value--name {
+    font-size: 3.2cqw;
+}
+
+.cert-label {
+    margin-left: auto;
+    font-size: 1.8cqw;
+}
+
+.cert-row--last {
+    margin-top: 0.5cqw;
+}
+
+.certificate-footer-sigs {
+    position: absolute;
+    bottom: 2cqw;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+}
+
+.sig-checked, .sig-controller {
+    width: 35%;
+    text-align: center;
+}
+
+.sig-image {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5cqw;
+}
+
+.sig-line {
+    width: 100%;
+    height: 1px;
+    background: #111;
+    margin: 0.2cqw 0;
+}
+
+.certificate-footer-sigs p {
+    margin: 0;
+    font-size: 1.5cqw;
+    font-weight: 700;
+}
+
+.certificate-footer-note {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #e11d48;
+    font-weight: 800;
+    font-size: 1.2rem;
 }
 
 .certificate-actions {

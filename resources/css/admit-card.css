@@ -32,37 +32,100 @@
 }
 
 .admit-card__serial,
+.admit-card__header,
+.admit-card__logo,
 .admit-card__student-details,
 .admit-card__photo,
 .admit-card__exam-details,
+.admit-card__directions,
 .admit-card__qr,
+.admit-card__signature,
 .admit-card__printing-date {
     position: absolute;
     z-index: 1;
 }
 
-.admit-card__serial {
-    top: 33.9%;
-    left: 10.7%;
-    width: 31%;
-    margin: 0;
-    overflow: hidden;
-    font-size: clamp(0.48rem, 1.15vw, 1.08rem);
-    font-weight: 700;
-    line-height: 1.15;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.admit-card__header {
+    top: 4.5%;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
 
-.admit-card__serial span {
-    margin-right: 0.35em;
+.admit-card__approved {
+    margin: 0;
+    font-size: clamp(0.45rem, 1.2vw, 1rem);
+    font-weight: 600;
+}
+
+.admit-card__title-en {
+    margin: 0.1em 0 0;
+    font-family: Arial, sans-serif;
+    font-size: clamp(0.8rem, 2.5vw, 2.2rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: #000;
+}
+
+.admit-card__title-bn {
+    margin: -0.1em 0 0.2em;
+    font-size: clamp(1rem, 3.2vw, 2.8rem);
+    font-weight: 700;
+    color: #e11d48;
+}
+
+.admit-card__badge-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.admit-card__badge {
+    background: #e11d48;
+    color: white;
+    padding: 0.15em 0.8em;
+    border-radius: 0.2em;
+    font-size: clamp(0.7rem, 2vw, 1.8rem);
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.admit-card__logo {
+    top: 29.5%;
+    left: 7.5%;
+    width: 8.5%;
+    text-align: center;
+}
+
+.admit-card__logo img {
+    width: 100%;
+    height: auto;
+}
+
+.admit-card__logo p {
+    margin: 0.2em 0 0;
+    font-size: clamp(0.35rem, 0.8vw, 0.75rem);
+    font-weight: 700;
+    color: #1e3a8a;
+}
+
+.admit-card__serial {
+    top: 42.5%;
+    left: 7.5%;
+    width: 25%;
+    margin: 0;
+    font-size: clamp(0.48rem, 1.15vw, 1.08rem);
+    font-weight: 700;
+}
+
+.admit-card__serial-number {
+    color: #e11d48;
 }
 
 .admit-card__student-details {
-    top: 38.7%;
-    left: 10.7%;
+    top: 46.7%;
+    left: 7.5%;
     display: grid;
-    width: 51%;
+    width: 54%;
     gap: clamp(0.34rem, 1.12vw, 1.05rem);
     margin: 0;
     font-size: clamp(0.46rem, 1.08vw, 1.02rem);
@@ -73,7 +136,7 @@
 .admit-card__student-details > div {
     display: grid;
     min-width: 0;
-    grid-template-columns: 42% minmax(0, 1fr);
+    grid-template-columns: 35% minmax(0, 1fr);
     align-items: baseline;
 }
 
@@ -94,6 +157,7 @@
 .admit-card__student-details dd::before {
     content: ':';
     margin-right: 0.35em;
+    margin-left: 0.35em;
 }
 
 .admit-card__exam-details dt::after {
@@ -106,9 +170,9 @@
 }
 
 .admit-card__photo {
-    top: 32.5%;
-    left: 80.1%;
-    width: 10.1%;
+    top: 35.5%;
+    left: 77.9%;
+    width: 11.5%;
     margin: 0;
 }
 
@@ -118,7 +182,7 @@
     width: 100%;
     aspect-ratio: 4 / 5;
     border: clamp(1px, 0.14vw, 2px) solid #183463;
-    border-radius: clamp(0.3rem, 0.75vw, 0.75rem);
+    border-radius: clamp(0.1rem, 0.25vw, 0.3rem);
     box-sizing: border-box;
     background: white;
     object-fit: cover;
@@ -150,10 +214,10 @@
 }
 
 .admit-card__exam-details {
-    top: 51.6%;
-    right: 9.8%;
+    top: 51.1%;
+    right: 9.1%;
     display: grid;
-    width: 21%;
+    width: 23%;
     gap: clamp(0.22rem, 0.74vw, 0.7rem);
     margin: 0;
     font-size: clamp(0.44rem, 1vw, 0.94rem);
@@ -171,13 +235,13 @@
 
 .admit-card__exam-number dd {
     display: grid;
-    width: 48%;
-    min-height: clamp(1rem, 3.8vw, 2.8rem);
+    width: 58%;
+    min-height: clamp(1rem, 3.2vw, 2.4rem);
     margin-left: 0.55em;
     place-items: center;
     overflow: hidden;
-    border: clamp(1px, 0.1vw, 2px) solid #737373;
-    font-size: clamp(0.38rem, 0.82vw, 0.78rem);
+    border: clamp(1px, 0.1vw, 2px) solid #191919;
+    font-size: clamp(0.44rem, 1vw, 1rem);
     text-overflow: ellipsis;
 }
 
@@ -185,13 +249,34 @@
     margin-top: clamp(0.02rem, 0.16vw, 0.15rem);
 }
 
+.admit-card__directions {
+    bottom: 12.5%;
+    left: 7.5%;
+    width: 45%;
+}
+
+.admit-card__directions h3 {
+    margin: 0 0 0.2em;
+    font-size: clamp(0.5rem, 1.2vw, 1.1rem);
+    font-weight: 800;
+    text-decoration: underline;
+}
+
+.admit-card__directions ol {
+    margin: 0;
+    padding-left: 1.2em;
+    font-size: clamp(0.4rem, 0.85vw, 0.8rem);
+    font-weight: 600;
+    line-height: 1.4;
+}
+
 .admit-card__qr {
-    top: 79.1%;
-    left: 57.4%;
+    bottom: 15.5%;
+    left: 56%;
     width: 7.6%;
     overflow: hidden;
-    border: clamp(1px, 0.1vw, 2px) solid #183463;
-    border-radius: clamp(0.2rem, 0.42vw, 0.45rem);
+    border: clamp(1px, 0.1vw, 2px) solid #191919;
+    border-radius: clamp(0.1rem, 0.2vw, 0.3rem);
     box-sizing: border-box;
     background: white;
     color: white;
@@ -209,7 +294,7 @@
 .admit-card__qr span {
     display: block;
     overflow: hidden;
-    background: #183463;
+    background: #000;
     padding: clamp(0.08rem, 0.13vw, 0.13rem) 0.08rem;
     font-family: Arial, Helvetica, sans-serif;
     font-size: clamp(0.25rem, 0.44vw, 0.44rem);
@@ -222,14 +307,41 @@
     white-space: nowrap;
 }
 
+.admit-card__signature {
+    bottom: 12.5%;
+    right: 9.1%;
+    width: 28%;
+    text-align: center;
+}
+
+.admit-card__signature-placeholder {
+    font-family: 'Dancing Script', cursive; /* Fallback for signature style */
+    font-size: clamp(1rem, 2.5vw, 2.2rem);
+    line-height: 1;
+}
+
+.admit-card__signature-line {
+    width: 100%;
+    height: 1px;
+    background: #191919;
+    margin: 0.2em 0;
+}
+
+.admit-card__signature p {
+    margin: 0;
+    font-size: clamp(0.38rem, 0.8vw, 0.78rem);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
 .admit-card__printing-date {
     bottom: 5.7%;
-    left: 11.8%;
+    left: 7.5%;
     width: 24%;
     margin: 0;
     overflow: hidden;
-    font-size: clamp(0.38rem, 0.82vw, 0.78rem);
-    font-weight: 700;
+    font-size: clamp(0.35rem, 0.75vw, 0.7rem);
+    font-weight: 600;
     line-height: 1.15;
     text-overflow: ellipsis;
     white-space: nowrap;

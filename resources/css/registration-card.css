@@ -32,55 +32,99 @@
     object-fit: fill;
 }
 
-.registration-card__course,
+.registration-card__header,
+.registration-card__logo,
 .registration-card__serial,
 .registration-card__details,
-.registration-card__photo,
-.registration-card__qr {
+.registration-card__right-side,
+.registration-card__signatures,
+.registration-card__notes {
     position: absolute;
     z-index: 1;
 }
 
-.registration-card__course {
-    top: 22.15%;
-    left: 27%;
-    width: 46%;
-    margin: 0;
-    overflow: hidden;
-    font-size: 2.5cqw;
-    font-weight: 700;
-    line-height: 1.15;
+.registration-card__header {
+    top: 5.5%;
+    left: 0;
+    right: 0;
     text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+}
+
+.registration-card__approved {
+    margin: 0;
+    font-size: 1.8cqw;
+    font-weight: 600;
+}
+
+.registration-card__title-en {
+    margin: 0.1em 0 0;
+    font-family: Arial, sans-serif;
+    font-size: 3.2cqw;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: #000;
+}
+
+.registration-card__title-bn {
+    margin: -0.1em 0 0.2em;
+    font-size: 3.8cqw;
+    font-weight: 700;
+    color: #e11d48;
+}
+
+.registration-card__badge-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.registration-card__badge {
+    background: #e11d48;
+    color: white;
+    padding: 0.15em 0.8em;
+    border-radius: 0.2em;
+    font-size: 2.5cqw;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.registration-card__course-title {
+    margin: 0.3em 0 0;
+    font-size: 2.2cqw;
+    font-weight: 800;
+}
+
+.registration-card__logo {
+    top: 14.5%;
+    left: 12.5%;
+    width: 11.5%;
+}
+
+.registration-card__logo img {
+    width: 100%;
+    height: auto;
 }
 
 .registration-card__serial {
-    top: 27.7%;
+    top: 27.5%;
     left: 10%;
-    width: 35%;
+    width: 25%;
     margin: 0;
-    overflow: hidden;
-    color: #d71920;
-    font-size: 1.72cqw;
+    font-size: 1.8cqw;
     font-weight: 700;
-    line-height: 1.15;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
-.registration-card__serial span {
-    margin-right: 0.2em;
+.registration-card__serial-number {
+    color: #e11d48;
 }
 
 .registration-card__details {
-    top: 32.2%;
+    top: 31.2%;
     left: 10%;
     display: grid;
-    width: 60%;
+    width: 65%;
+    gap: 1.4cqw;
     margin: 0;
-    grid-template-rows: repeat(13, minmax(0, 1fr));
-    font-size: 1.7cqw;
+    font-size: 1.9cqw;
     font-weight: 700;
     line-height: 1.15;
 }
@@ -88,9 +132,8 @@
 .registration-card__details > div {
     display: grid;
     min-width: 0;
-    min-height: 4.2cqw;
     grid-template-columns: 42% minmax(0, 1fr);
-    align-items: center;
+    align-items: baseline;
 }
 
 .registration-card__details dt,
@@ -104,14 +147,17 @@
 
 .registration-card__details dd::before {
     content: ':';
-    margin-right: 0.4em;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
 }
 
-.registration-card__photo {
-    top: 27.45%;
-    left: 73.05%;
-    width: 18.05%;
-    margin: 0;
+.registration-card__right-side {
+    top: 25.5%;
+    right: 12.5%;
+    width: 13.5%;
+    display: flex;
+    flex-direction: column;
+    gap: 2cqw;
 }
 
 .registration-card__photo > img,
@@ -119,8 +165,7 @@
     display: block;
     width: 100%;
     aspect-ratio: 4 / 5;
-    border: max(1px, 0.16cqw) solid #183463;
-    border-radius: 1.35cqw;
+    border: max(1px, 0.12cqw) solid #000;
     box-sizing: border-box;
     background: white;
     object-fit: cover;
@@ -130,13 +175,11 @@
 .registration-card__photo-placeholder {
     display: grid;
     place-content: center;
-    justify-items: center;
-    gap: 0.3cqw;
     color: #737373;
 }
 
 .registration-card__photo-placeholder svg {
-    width: 42%;
+    width: 50%;
     fill: none;
     stroke: currentColor;
     stroke-linecap: round;
@@ -144,48 +187,72 @@
     stroke-width: 1.5;
 }
 
-.registration-card__photo-placeholder span {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 0.55cqw;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
 .registration-card__qr {
-    top: 43.8%;
-    left: 77.15%;
-    width: 12.2%;
-    overflow: hidden;
-    border: max(1px, 0.12cqw) solid #183463;
-    border-radius: 0.65cqw;
-    box-sizing: border-box;
+    width: 100%;
+    border: max(1px, 0.12cqw) solid #000;
     background: white;
-    color: white;
-    text-decoration: none;
+    padding: 0.4cqw;
 }
 
 .registration-card__qr img {
     display: block;
-    width: calc(100% - 1cqw);
-    margin: 0.5cqw;
-    margin-bottom: 0.25cqw;
+    width: 100%;
     aspect-ratio: 1;
 }
 
-.registration-card__qr span {
-    display: block;
-    overflow: hidden;
-    background: #183463;
-    padding: 0.22cqw 0.12cqw 0.18cqw;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.72cqw;
-    font-weight: 700;
-    letter-spacing: 0.025em;
-    line-height: 1;
+.registration-card__signatures {
+    bottom: 12%;
+    left: 10%;
+    right: 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2cqw;
     text-align: center;
-    text-overflow: ellipsis;
-    text-transform: uppercase;
-    white-space: nowrap;
+}
+
+.registration-card__sig-student,
+.registration-card__sig-head,
+.registration-card__sig-secretary {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 8cqw;
+}
+
+.registration-card__sig-placeholder {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3cqw;
+    line-height: 1;
+}
+
+.registration-card__sig-line {
+    width: 100%;
+    height: 1px;
+    background: #000;
+    margin: 0.2em 0;
+}
+
+.registration-card__signatures p {
+    margin: 0;
+    font-size: 1.6cqw;
+    font-weight: 700;
+}
+
+.registration-card__sig-secretary p {
+    line-height: 1.1;
+}
+
+.registration-card__notes {
+    bottom: 5.5%;
+    left: 10%;
+    right: 10%;
+}
+
+.registration-card__notes p {
+    margin: 0;
+    font-size: 1.4cqw;
+    font-weight: 600;
+    line-height: 1.5;
 }
 
 .registration-card-actions {

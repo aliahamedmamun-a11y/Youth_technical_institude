@@ -28,6 +28,13 @@
                 </div>
             @endif
 
+            {{-- Student Photo --}}
+            @if($student->image_path)
+                <div class="cert-student-photo">
+                    <img src="{{ asset('storage/' . $student->image_path) }}" alt="{{ $student->name }}">
+                </div>
+            @endif
+
             {{-- Top Meta Data --}}
             <div class="cert-field cert-field--serial">
                 {{ $certificateSerial ?? '036564' }}

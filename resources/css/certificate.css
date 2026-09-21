@@ -53,24 +53,24 @@
     font-weight: 700;
     color: #0B1953;
     white-space: nowrap;
-    transform: translateY(-68%); /* Fits neatly right on top of the dotted lines */
+    transform: translateY(-55%); /* Aligns text baseline right on top of dotted lines */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Specific positioning to line up perfectly with every dotted line on the template */
+/* Specific positioning to line up perfectly with every dotted line on the template grid */
 
 /* 1. Reg No (Top Right: Reg No: ............) */
 .cert-field--reg-no {
-    top: 37.8%;
-    left: 67.5%;
+    top: 41.5%;
+    left: 68.0%;
     font-size: 15px;
     font-weight: bold;
 }
 
 /* 2. Serial No (Middle Left: Serial No: ............) */
 .cert-field--serial {
-    top: 42.8%;
+    top: 46.8%;
     left: 31.0%;
     font-size: 15px;
     font-weight: bold;
@@ -78,15 +78,15 @@
 
 /* 3. Session (Middle Right: Session: ............) */
 .cert-field--session {
-    top: 42.8%;
-    left: 67.5%;
+    top: 46.8%;
+    left: 68.0%;
     font-size: 15px;
     font-weight: bold;
 }
 
 /* 4. Student Name (This is to certify that............) */
 .cert-field--name {
-    top: 48.4%;
+    top: 52.1%;
     left: 38.5%;
     font-size: 16px;
     font-weight: bold;
@@ -94,28 +94,28 @@
 
 /* 5. Father's Name (Son/Daughter of............ Father) */
 .cert-field--father {
-    top: 54.2%;
+    top: 57.4%;
     left: 35.0%;
     font-size: 15px;
 }
 
 /* 6. Mother's Name (and............ Mother) */
 .cert-field--mother {
-    top: 59.8%;
+    top: 62.7%;
     left: 27.5%;
     font-size: 15px;
 }
 
 /* 7. Institute Name (of............) */
 .cert-field--institute {
-    top: 65.4%;
+    top: 68.0%;
     left: 26.0%;
     font-size: 15px;
 }
 
 /* 8. Roll No (bearing Roll No............) */
 .cert-field--roll {
-    top: 71.0%;
+    top: 73.3%;
     left: 34.5%;
     font-size: 15px;
     font-weight: bold;
@@ -123,7 +123,7 @@
 
 /* 9. Course Name (duly passed the............) */
 .cert-field--course {
-    top: 71.0%;
+    top: 73.3%;
     left: 56.5%;
     font-size: 16px;
     font-weight: bold;
@@ -131,14 +131,14 @@
 
 /* 10. Exam Held Date (Course Examination held in the month of............) */
 .cert-field--exam-held {
-    top: 76.6%;
+    top: 78.6%;
     left: 52.0%;
     font-size: 15px;
 }
 
 /* 11. CGPA (and he/she Secured CGPA............) */
 .cert-field--cgpa {
-    top: 76.6%;
+    top: 78.6%;
     left: 83.5%;
     font-size: 15px;
     font-weight: bold;
@@ -146,7 +146,7 @@
 
 /* 12. Publication Date (Date of Publication of Result:............) */
 .cert-field--publication-date {
-    top: 86.8%;
+    top: 89.2%;
     left: 25.0%;
     font-size: 14px;
     font-weight: bold;
@@ -155,7 +155,7 @@
 /* QR Code Placement inside the specific left window border */
 .cert-qr-code {
     position: absolute;
-    top: 41.8%;
+    top: 44.5%;
     left: 8.5%;
     width: 10.6%;
     aspect-ratio: 1;

@@ -48,7 +48,7 @@
     position: absolute;
     z-index: 10;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: #0B1953;
     white-space: nowrap;
@@ -95,51 +95,51 @@
 
 /* 5. Father's Name (Son/Daughter of............ Father) */
 .cert-field--father {
-    top: 53.8%;
+    top: 51.8%;
     left: 41.5%;
 }
 
 /* 6. Mother's Name (and............ Mother) */
 .cert-field--mother {
-    top: 59.4%;
+    top: 55.4%;
     left: 31.0%;
 }
 
 /* 7. Institute Name (of............) */
 .cert-field--institute {
-    top: 65.0%;
+    top: 63.0%;
     left: 20.0%;
 }
 
 /* 8. Roll No (bearing Roll No............) */
 .cert-field--roll {
-    top: 70.6%;
+    top: 65.6%;
     left: 35.0%;
     font-size: 16px;
 }
 
 /* 9. Course Name (duly passed the............) */
 .cert-field--course {
-    top: 71.0%;
+    top: 65.0%;
     left: 53.5%;
 }
 
 /* 10. Exam Held Date (Course Examination held in the month of............) */
 .cert-field--exam-held {
-    top: 76.6%;
+    top: 71.6%;
     left: 49.0%;
 }
 
 /* 11. CGPA (and he/she Secured CGPA............) */
 .cert-field--cgpa {
-    top: 76.6%;
-    left: 84.0%;
+    top: 71.6%;
+    left: 84.5%;
 }
 
 /* 12. Publication Date (Date of Publication of Result:............) */
 .cert-field--publication-date {
-    top: 90.8%;
-    left: 32.0%;
+    top: 87.8%;
+    left: 25.0%;
 }
 
 /* QR Code Placement inside the specific left window border */

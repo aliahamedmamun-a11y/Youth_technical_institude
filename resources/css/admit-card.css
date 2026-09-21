@@ -57,16 +57,16 @@
 }
 
 /* Student details left box placement */
-.ac-field--institute { top: 48.8%; left: 24.5%; }
-.ac-field--student   { top: 52.4%; left: 24.5%; font-size: 15pt; font-weight: 700; }
-.ac-field--father    { top: 56.1%; left: 24.5%; }
-.ac-field--mother    { top: 59.7%; left: 24.5%; }
-.ac-field--dob       { top: 63.3%; left: 24.5%; }
-.ac-field--session   { top: 67.0%; left: 24.5%; }
+.ac-field--institute { top: 49.8%; left: 24.5%; }
+.ac-field--student   { top: 53.4%; left: 24.5%; font-size: 15pt; font-weight: 700; text-transform: uppercase; }
+.ac-field--father    { top: 57.0%; left: 24.5%; }
+.ac-field--mother    { top: 60.6%; left: 24.5%; }
+.ac-field--dob       { top: 64.2%; left: 24.5%; }
+.ac-field--session   { top: 67.8%; left: 24.5%; }
 
 /* Subject Name Placement below the divider line */
 .ac-field--subject {
-    top: 76.5%;
+    top: 77.5%;
     left: 20.0%;
     font-size: 15pt;
     font-weight: 700;
@@ -74,14 +74,14 @@
 
 /* Right-side Meta Inputs Placement */
 .ac-field--roll {
-    top: 54.3%;
+    top: 54.8%;
     left: 77.5%;
     font-size: 15pt;
     font-weight: 700;
 }
 
 .ac-field--reg {
-    top: 59.7%;
+    top: 60.2%;
     left: 77.5%;
     font-size: 15pt;
     font-weight: 700;

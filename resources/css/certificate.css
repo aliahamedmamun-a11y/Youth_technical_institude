@@ -52,7 +52,7 @@
     font-weight: 700;
     color: #0B1953;
     white-space: nowrap;
-    transform: translateY(-50%); /* Centers text on the line */
+    transform: translateY(-70%); /* Lifted slightly to sit on the line */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }

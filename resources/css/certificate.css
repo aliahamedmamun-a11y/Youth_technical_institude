@@ -43,97 +43,97 @@
     z-index: 0;
 }
 
-/* Base text overlay style using Certificate Shelley Cursive font */
+/* Base style for cursive dynamic text fields */
 .cert-field {
     position: absolute;
     z-index: 10;
     font-family: 'Certificate Shelley', 'Dancing Script', 'Times New Roman', cursive, serif;
-    font-size: 25pt;
+    font-size: 24pt;
     font-weight: 500;
     color: #000;
     white-space: nowrap;
-    transform: translateY(-60%); /* Perfectly aligns with the printed dotted lines */
+    transform: translateY(-65%); /* Adjusted to sit perfectly on the dotted lines */
 }
 
-/* Non-cursive meta data style matching template print type */
+/* Non-cursive / Meta styles */
 .cert-field--meta {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 15pt;
+    font-size: 16pt;
     font-weight: bold;
-    transform: translateY(-50%);
 }
 
+/* Individual field positionings tuned to the target template */
 .cert-field--serial {
-    top: 9.3%;
-    left: 28.5%;
+    top: 7.8%;
+    left: 28.2%;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 15pt;
+    font-size: 16pt;
     font-weight: bold;
 }
 
 .cert-field--reg-no {
-    top: 9.6%;
+    top: 8.5%;
     left: 77.0%;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 15pt;
+    font-size: 16pt;
     font-weight: bold;
 }
 
 .cert-field--session {
-    top: 15.6%;
+    top: 14.5%;
     left: 75.0%;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 15pt;
+    font-size: 16pt;
     font-weight: bold;
 }
 
 .cert-field--name {
-    top: 25.8%;
+    top: 25.2%;
     left: 36.5%;
-    font-size: 26pt;
+    font-size: 28pt;
     font-weight: 600;
 }
 
 .cert-field--father {
-    top: 34.0%;
-    left: 36.0%;
+    top: 33.5%;
+    left: 36.5%;
     font-size: 24pt;
 }
 
 .cert-field--mother {
-    top: 42.4%;
-    left: 36.0%;
+    top: 41.8%;
+    left: 36.5%;
     font-size: 24pt;
 }
 
 .cert-field--institute {
-    top: 50.8%;
-    left: 36.0%;
-    font-size: 23pt;
+    top: 50.2%;
+    left: 36.5%;
+    font-size: 22pt;
 }
 
 .cert-field--roll {
-    top: 59.2%;
-    left: 33.5%;
+    top: 58.5%;
+    left: 33.0%;
     font-size: 18pt;
     font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
 }
 
 .cert-field--course {
-    top: 58.6%;
+    top: 58.0%;
     left: 55.5%;
-    font-size: 23pt;
+    font-size: 22pt;
 }
 
 .cert-field--exam-held {
-    top: 67.5%;
+    top: 67.0%;
     left: 51.5%;
-    font-size: 21pt;
+    font-size: 20pt;
 }
 
 .cert-field--cgpa {
-    top: 67.0%;
+    top: 66.5%;
     left: 86.5%;
     font-size: 18pt;
     font-family: 'Times New Roman', Times, serif;
@@ -141,14 +141,14 @@
 }
 
 .cert-field--publication-date {
-    top: 80.5%;
-    left: 25.8%;
-    font-size: 13pt;
+    top: 80.8%;
+    left: 26.2%;
+    font-size: 14pt;
     font-family: Arial, sans-serif;
     font-weight: 700;
 }
 
-/* QR Code Placement inside the specific left window border */
+/* QR Code Placement inside the designated left border box */
 .cert-qr-code {
     position: absolute;
     top: 29.5%;

@@ -3,6 +3,10 @@
     padding: 1.5rem;
     overflow-x: auto;
     background: #292a26;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .registration-card-frame {
@@ -19,9 +23,9 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    color: #171717;
+    color: #000;
     background: white;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .registration-card__template {
@@ -30,229 +34,98 @@
     width: 100%;
     height: 100%;
     object-fit: fill;
+    z-index: 0;
 }
 
-.registration-card__header,
-.registration-card__logo,
-.registration-card__serial,
-.registration-card__details,
-.registration-card__right-side,
-.registration-card__signatures,
-.registration-card__notes {
+/* Base style for dynamic values overlays */
+.rc-field {
     position: absolute;
-    z-index: 1;
-}
-
-.registration-card__header {
-    top: 5.5%;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
-.registration-card__approved {
-    margin: 0;
-    font-size: 11pt;
+    z-index: 10;
+    font-size: 13.5pt;
     font-weight: 600;
+    color: #111;
+    white-space: nowrap;
+    transform: translateY(-50%);
 }
 
-.registration-card__title-en {
-    margin: 0.1em 0 0;
-    font-family: Arial, sans-serif;
-    font-size: 22pt;
-    font-weight: 900;
-    letter-spacing: -0.02em;
+.rc-field--serial {
+    top: 20.2%;
+    left: 17.0%;
+    font-size: 14pt;
+    font-weight: 700;
+    color: #e11d48;
+}
+
+/* Main Information rows placement */
+.registration-card__data-box {
+    position: absolute;
+    top: 24.5%;
+    left: 8.5%;
+    right: 8.5%;
+    display: flex;
+    flex-direction: column;
+    gap: 13.5pt;
+    z-index: 10;
+}
+
+.rc-row {
+    display: flex;
+    align-items: baseline;
+    font-size: 13.5pt;
+}
+
+.rc-label {
+    width: 175pt;
+    font-weight: 700;
+    color: #222;
+}
+
+.rc-sep {
+    width: 20pt;
+    font-weight: 700;
+}
+
+.rc-val {
+    font-weight: 600;
     color: #000;
 }
 
-.registration-card__title-bn {
-    margin: -0.1em 0 0.2em;
-    font-size: 28pt;
-    font-weight: 700;
-    color: #e11d48;
-}
-
-.registration-card__badge-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
-.registration-card__badge {
-    background: #e11d48;
-    color: white;
-    padding: 0.15em 0.8em;
-    border-radius: 0.2em;
-    font-size: 18pt;
-    font-weight: 800;
-    text-transform: uppercase;
-}
-
-.registration-card__course-title {
-    margin: 0.3em 0 0;
-    font-size: 14pt;
-    font-weight: 800;
-}
-
-.registration-card__logo {
-    top: 14.5%;
-    left: 12.5%;
-    width: 65pt;
-}
-
-.registration-card__logo img {
-    width: 100%;
-    height: auto;
-}
-
-.registration-card__serial {
-    top: 27.5%;
-    left: 10%;
-    width: 25%;
-    margin: 0;
-    font-size: 11pt;
-    font-weight: 700;
-}
-
-.registration-card__serial-number {
-    color: #e11d48;
-}
-
-.registration-card__details {
-    top: 31.2%;
-    left: 10%;
-    display: grid;
-    width: 65%;
-    gap: 10pt;
-    margin: 0;
-    font-size: 12pt;
-    font-weight: 700;
-    line-height: 1.15;
-}
-
-.registration-card__details > div {
-    display: grid;
-    min-width: 0;
-    grid-template-columns: 42% minmax(0, 1fr);
-    align-items: baseline;
-}
-
-.registration-card__details dt,
-.registration-card__details dd {
-    min-width: 0;
-    margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.registration-card__details dd::before {
-    content: ':';
-    margin-right: 0.5em;
-    margin-left: 0.5em;
-}
-
-.registration-card__right-side {
-    top: 25.5%;
-    right: 12.5%;
-    width: 85pt;
+/* Top Right Meta (Photo and QR) */
+.rc-meta-right {
+    position: absolute;
+    top: 13.8%;
+    right: 8.5%;
+    width: 12.5%;
     display: flex;
     flex-direction: column;
-    gap: 15pt;
+    gap: 10pt;
+    z-index: 10;
 }
 
-.registration-card__photo > img,
-.registration-card__photo-placeholder {
-    display: block;
+.registration-card__photo {
     width: 100%;
     aspect-ratio: 4 / 5;
-    border: 1pt solid #000;
-    box-sizing: border-box;
     background: white;
+    border: 0.5pt solid #eee;
+    overflow: hidden;
+}
+
+.registration-card__photo img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    object-position: center;
-}
-
-.registration-card__photo-placeholder {
-    display: grid;
-    place-content: center;
-    color: #737373;
-}
-
-.registration-card__photo-placeholder svg {
-    width: 40pt;
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.5;
 }
 
 .registration-card__qr {
     width: 100%;
-    border: 1pt solid #000;
+    aspect-ratio: 1;
     background: white;
     padding: 2pt;
 }
 
 .registration-card__qr img {
-    display: block;
     width: 100%;
-    aspect-ratio: 1;
-}
-
-.registration-card__signatures {
-    bottom: 12%;
-    left: 10%;
-    right: 10%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 15pt;
-    text-align: center;
-}
-
-.registration-card__sig-student,
-.registration-card__sig-head,
-.registration-card__sig-secretary {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    min-height: 50pt;
-}
-
-.registration-card__sig-placeholder {
-    font-family: 'Dancing Script', cursive;
-    font-size: 20pt;
-    line-height: 1;
-}
-
-.registration-card__sig-line {
-    width: 100%;
-    height: 1px;
-    background: #000;
-    margin: 2pt 0;
-}
-
-.registration-card__signatures p {
-    margin: 0;
-    font-size: 10pt;
-    font-weight: 700;
-}
-
-.registration-card__sig-secretary p {
-    line-height: 1.1;
-}
-
-.registration-card__notes {
-    bottom: 5.5%;
-    left: 10%;
-    right: 10%;
-}
-
-.registration-card__notes p {
-    margin: 0;
-    font-size: 9pt;
-    font-weight: 600;
-    line-height: 1.5;
+    height: 100%;
 }
 
 .registration-card-actions {
@@ -261,6 +134,7 @@
     justify-content: center;
     gap: 0.75rem;
     margin-top: 1.5rem;
+    z-index: 20;
 }
 
 @page {
@@ -275,6 +149,7 @@
         height: 297mm;
         margin: 0;
         background: white;
+        overflow: hidden;
     }
 
     body {
@@ -298,5 +173,10 @@
         margin: 0;
         padding: 0;
         box-shadow: none;
+    }
+
+    .registration-card {
+        width: 210mm;
+        height: 297mm;
     }
 }

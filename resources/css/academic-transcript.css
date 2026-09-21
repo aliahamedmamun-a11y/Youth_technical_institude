@@ -17,10 +17,10 @@
     width: 210mm;
     height: 297mm;
     overflow: hidden;
-    color: #111;
+    color: #000;
     background: white;
     box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: Arial, sans-serif;
 }
 
 .transcript-template {
@@ -29,268 +29,139 @@
     width: 100%;
     height: 100%;
     object-fit: fill;
+    z-index: 0;
 }
 
-.transcript-header,
-.transcript-crest,
-.transcript-qr-top,
-.transcript-serial,
-.transcript-grading-scale,
-.transcript-student-info,
-.transcript-tables-container,
-.transcript-footer,
-.transcript-verification-note {
+/* Absolute overlays for dynamic elements */
+.ts-field {
     position: absolute;
-    z-index: 1;
+    z-index: 10;
+    font-size: 10.5pt;
+    font-weight: 500;
+    color: #111111;
+    white-space: nowrap;
 }
 
-.transcript-header {
-    top: 5%;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
-.transcript-institute-title {
-    margin: 0;
-    font-family: 'Old English Text MT', 'Goudy Old Style', serif;
-    font-size: 26pt;
-    font-weight: 400;
-}
-
-.transcript-approved {
-    margin: 2pt 0 0;
+.ts-field--serial {
+    top: 17.2%;
+    left: 20.0%;
     font-size: 10pt;
-    font-weight: 600;
+    font-weight: 700;
 }
 
-.transcript-web {
-    margin: 0;
-    font-size: 8pt;
-    font-weight: 600;
-}
-
-.transcript-badge-wrapper {
-    margin-top: 5pt;
-}
-
-.transcript-badge {
-    background: #15803d;
-    color: white;
-    padding: 2pt 15pt;
-    border-radius: 3pt;
-    font-size: 16pt;
+.ts-field--semester {
+    top: 17.2%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12pt;
     font-weight: 800;
+    color: white;
+    background: #e11d48;
+    padding: 2pt 12pt;
+    border-radius: 2pt;
     text-transform: uppercase;
 }
 
-.transcript-crest {
-    top: 8.5%;
+/* Student Information Block Placement */
+.transcript-student-info-box {
+    position: absolute;
+    top: 21.3%;
     left: 10.5%;
-    width: 60pt;
-}
-
-.transcript-crest img {
-    width: 100%;
-}
-
-.transcript-qr-top {
-    top: 8.5%;
     right: 10.5%;
-    width: 60pt;
-}
-
-.transcript-qr-top img {
-    width: 100%;
-}
-
-.transcript-serial {
-    top: 23.5%;
-    left: 10.5%;
-    margin: 0;
-    font-size: 11pt;
-    font-weight: 700;
-}
-
-.transcript-serial-number {
-    color: #e11d48;
-}
-
-.transcript-grading-scale {
-    top: 25.5%;
-    right: 10.5%;
-    width: 120pt;
-    border-collapse: collapse;
-    font-size: 7pt;
-}
-
-.transcript-grading-scale th {
-    background: #f3f4f6;
-    border: 0.5pt solid #111;
-    padding: 2pt;
-    font-size: 8pt;
-}
-
-.transcript-grading-scale td {
-    border: 0.5pt solid #111;
-    padding: 1pt;
-    text-align: center;
-    font-weight: 600;
-}
-
-.transcript-student-info {
-    top: 25.5%;
-    left: 10.5%;
-    width: 72%;
     display: flex;
-    justify-content: space-between;
-    font-size: 11pt;
-    font-weight: 700;
-    line-height: 1.4;
+    flex-direction: column;
+    gap: 5.5pt;
+    font-size: 10.5pt;
+    line-height: 1.2;
 }
 
-.transcript-details-left, .transcript-details-right {
-    margin: 0;
-    width: 48%;
-}
-
-.transcript-details-left > div, .transcript-details-right > div {
+.ts-row {
     display: flex;
     align-items: baseline;
 }
 
-.transcript-details-left dt, .transcript-details-right dt {
-    min-width: 80pt;
+.ts-label {
+    width: 135pt;
+    font-weight: 700;
+    color: #222;
 }
 
-.transcript-details-left dd, .transcript-details-right dd {
-    margin: 0;
+.ts-sep {
+    width: 15pt;
+    font-weight: 700;
 }
 
-.transcript-tables-container {
-    top: 41%;
+.ts-val {
+    font-weight: 600;
+    color: #111;
+}
+
+/* Main Result Table Placement */
+.transcript-main-table-container {
+    position: absolute;
+    top: 47.0%;
     left: 10.5%;
     right: 10.5%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15pt;
+    z-index: 10;
 }
 
-.transcript-semester-table {
-    border: 0.5pt solid #111;
-}
-
-.semester-header {
-    background: #f3f4f6;
-    border-bottom: 0.5pt solid #111;
-    display: flex;
-    justify-content: space-between;
-    padding: 2pt 5pt;
-    font-size: 9pt;
-    font-weight: 800;
-}
-
-.transcript-subject-values {
+.ts-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 8pt;
+    font-size: 10pt;
+    background: transparent;
 }
 
-.transcript-subject-values th, .transcript-subject-values td {
-    border-right: 0.5pt solid #111;
-    border-bottom: 0.5pt solid #111;
-    padding: 2pt;
+.ts-table th, .ts-table td {
+    border: 0.75pt solid #222;
+    padding: 6.5pt 6pt;
     text-align: center;
     font-weight: 600;
 }
 
-.transcript-subject-values th {
-    background: #f9fafb;
-    font-size: 7.5pt;
+.ts-table th {
+    background: #fdfdfd;
+    font-weight: 800;
+    font-size: 10.5pt;
 }
 
-.transcript-subject-values td:nth-child(2) {
+.ts-table td:nth-child(2) {
     text-align: left;
-    width: 45%;
+    padding-left: 12pt;
 }
 
-.transcript-subject-values tr:last-child td {
-    border-bottom: 0;
+/* Summary Row at the bottom of the table */
+.ts-summary-row td {
+    padding: 5pt 8pt;
+    font-weight: 800;
+    background: #fcfcfc;
 }
 
-.transcript-subject-values td:last-child, .transcript-subject-values th:last-child {
-    border-right: 0;
-}
-
-.transcript-footer {
-    bottom: 8%;
-    left: 10.5%;
-    right: 10.5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.footer-qr {
-    width: 20%;
-    text-align: center;
-}
-
-.footer-qr img {
-    width: 50pt;
+/* Footer elements */
+.ts-footer-qr {
+    position: absolute;
+    bottom: 7.2%;
+    left: 10.8%;
+    width: 11%;
     aspect-ratio: 1;
-    border: 0.5pt solid #111;
-    padding: 2pt;
+    z-index: 10;
+    background: white;
 }
 
-.footer-qr p {
-    margin: 4pt 0 0;
-    font-size: 8pt;
-    font-weight: 700;
-}
-
-.footer-sigs {
-    width: 70%;
-    display: flex;
-    justify-content: flex-end;
-    gap: 40pt;
-    text-align: center;
-}
-
-.sig-compared, .sig-controller {
-    width: 140pt;
-}
-
-.sig-placeholder {
-    font-family: 'Dancing Script', cursive;
-    font-size: 18pt;
-}
-
-.sig-line {
+.ts-footer-qr img {
     width: 100%;
-    height: 1px;
-    background: #111;
-    margin: 2pt 0;
+    height: 100%;
 }
 
-.footer-sigs p {
-    margin: 0;
-    font-size: 9pt;
+.ts-footer-note {
+    position: absolute;
+    bottom: 5.2%;
+    left: 10.5%;
+    font-size: 7.5pt;
     font-weight: 700;
-}
-
-.sig-inst {
-    font-size: 7pt !important;
-}
-
-.transcript-verification-note {
-    bottom: 4.5%;
-    left: 0;
-    right: 0;
-    text-align: center;
-    color: #e11d48;
-    font-weight: 700;
-    font-size: 9pt;
+    color: #333;
+    max-width: 25%;
+    line-height: 1.3;
 }
 
 .transcript-actions {
@@ -299,6 +170,7 @@
     justify-content: center;
     gap: 0.75rem;
     margin-top: 1.5rem;
+    z-index: 20;
 }
 
 @page {

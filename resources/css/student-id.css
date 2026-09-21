@@ -16,83 +16,51 @@
 }
 
 .id-card {
-    width: 320px;
-    height: 500px;
+    width: 300pt;
+    height: 450pt;
     background: white;
-    border-radius: 20px;
+    border-radius: 12pt;
     overflow: hidden;
     position: relative;
     box-shadow: 0 1rem 3rem rgba(0,0,0,0.3);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
     color: #111;
 }
 
-.id-card__background {
+.id-card__template {
     position: absolute;
-    inset: 0;
+    top: 0;
+    width: 200%;
+    height: 100%;
+    object-fit: fill;
     z-index: 0;
 }
 
-.id-card__background svg {
-    width: 100%;
-    height: 100%;
+.id-card--front .id-card__template {
+    left: 0;
+}
+
+.id-card--back .id-card__template {
+    right: 0;
 }
 
 .id-card__content {
     position: relative;
     z-index: 1;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem;
+    width: 100%;
 }
 
 /* Front Side */
-.id-card--front .id-card__header {
-    text-align: center;
-    margin-top: 1rem;
-}
-
-.id-card--front .id-card__logo {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 0.5rem;
-}
-
-.id-card--front .id-card__inst-name {
-    font-size: 0.9rem;
-    font-weight: 900;
-    color: #1a4d2e;
-    text-transform: uppercase;
-    line-height: 1.2;
-}
-
-.id-card--front .id-card__inst-web {
-    font-size: 0.6rem;
-    font-weight: 700;
-    color: #444;
-}
-
-.id-card--front .id-card__title-badge {
-    background: #1a4d2e;
-    color: white;
-    padding: 0.4rem 1.5rem;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    font-weight: 900;
-    margin-top: 1rem;
-    letter-spacing: 1px;
-}
-
 .id-card--front .id-card__photo-box {
-    width: 140px;
-    height: 170px;
-    border: 2px solid #1a4d2e;
-    border-radius: 10px;
-    margin-top: 2rem;
+    position: absolute;
+    top: 38.3%;
+    left: 20.8%;
+    width: 58.4%;
+    height: 38.5%;
+    border-radius: 4pt;
     overflow: hidden;
-    background: #f8fafc;
+    background: white;
 }
 
 .id-card--front .id-card__photo-box img {
@@ -101,142 +69,52 @@
     object-fit: cover;
 }
 
-.id-card--front .id-card__student-info {
-    margin-top: 1.5rem;
-    text-align: center;
-}
-
-.id-card--front .id-card__student-name {
-    font-size: 1.1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: #1a4d2e;
-}
-
-.id-card--front .id-card__student-course {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #555;
-    margin-top: 0.2rem;
-}
-
-.id-card--front .id-card__footer {
-    margin-top: auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 1rem;
-}
-
-.id-card--front .id-card__signature {
-    text-align: center;
-}
-
-.id-card--front .id-card__sig-placeholder {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.5rem;
-    color: #111;
-}
-
-.id-card--front .id-card__sig-line {
-    width: 120px;
-    height: 1px;
-    background: #111;
-    margin: 0.2rem 0;
-}
-
-.id-card--front .id-card__sig-label {
-    font-size: 0.6rem;
-    font-weight: 800;
-    text-transform: uppercase;
-}
-
-/* Back Side */
-.id-card--back .id-card__title-badge {
-    background: #1a4d2e;
-    color: white;
-    padding: 0.3rem 1.2rem;
-    border-radius: 5px;
-    font-size: 0.8rem;
-    font-weight: 900;
-    margin-top: 2.5rem;
-    text-transform: uppercase;
-}
-
+/* Back Side Details */
 .id-card--back .id-card__details {
-    width: 100%;
-    margin-top: 1.5rem;
-    font-size: 0.75rem;
+    position: absolute;
+    top: 24%;
+    left: 8%;
+    right: 8%;
+    height: 40%;
+    font-size: 10pt;
     font-weight: 700;
+    color: #1a4d2e;
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    align-items: flex-start;
 }
 
-.id-card--back .id-card__details div {
-    display: flex;
+.id-card--back .id-card__details dl {
+    display: grid;
+    grid-template-columns: 80pt 1fr;
+    row-gap: 4.5pt;
+    width: 100%;
 }
 
 .id-card--back .id-card__details dt {
-    width: 40%;
+    text-transform: uppercase;
+    font-size: 8.5pt;
+    letter-spacing: 0.5pt;
 }
 
 .id-card--back .id-card__details dd {
-    flex: 1;
     margin: 0;
+    color: #000;
 }
 
-.id-card--back .id-card__instructions-badge {
-    background: #1a4d2e;
-    color: white;
-    padding: 0.2rem 1rem;
-    border-radius: 10px;
-    font-size: 0.7rem;
-    font-weight: 800;
-    margin-top: 1.5rem;
-    text-transform: uppercase;
-}
-
-.id-card--back .id-card__instructions-list {
-    margin-top: 0.8rem;
-    font-size: 0.6rem;
-    font-weight: 600;
-    line-height: 1.4;
-    padding: 0 0.5rem;
-}
-
+/* QR Code on Back */
 .id-card--back .id-card__qr-box {
-    width: 60px;
-    height: 60px;
-    border: 1px solid #1a4d2e;
-    margin-top: 1.5rem;
-    padding: 3px;
+    position: absolute;
+    bottom: 12.8%;
+    left: 40.5%;
+    width: 19%;
+    aspect-ratio: 1;
+    background: white;
+    padding: 1.5pt;
 }
 
 .id-card--back .id-card__qr-box img {
     width: 100%;
     height: 100%;
-}
-
-.id-card--back .id-card__footer-info {
-    margin-top: auto;
-    width: 100%;
-    font-size: 0.55rem;
-    font-weight: 700;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding-bottom: 0.5rem;
-}
-
-.id-card--back .id-card__address {
-    max-width: 60%;
-}
-
-.id-card--back .id-card__contact {
-    text-align: right;
 }
 
 /* Actions */
@@ -247,18 +125,23 @@
 }
 
 @media print {
-    .transcript-screen, .id-card-actions {
+    .id-card-actions {
         display: none !important;
     }
 
     .student-id-screen {
         padding: 0;
+        min-height: 0;
         background: white;
+    }
+
+    .student-id-container {
+        gap: 30pt;
     }
 
     .id-card {
         box-shadow: none;
-        border: 1px solid #eee;
         break-inside: avoid;
+        border: 0.1pt solid #eee;
     }
 }

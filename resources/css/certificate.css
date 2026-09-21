@@ -11,12 +11,15 @@
     padding: 1.5rem;
     overflow-x: auto;
     background: #292a26;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .certificate-frame {
     width: 297mm;
     height: 210mm;
-    margin-inline: auto;
     position: relative;
     background: #fff;
     box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
@@ -27,8 +30,8 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    color: #111;
-    background: #ffffe9;
+    color: #000;
+    background: #fff;
 }
 
 .certificate-template {
@@ -37,251 +40,108 @@
     width: 100%;
     height: 100%;
     object-fit: fill;
+    z-index: 0;
 }
 
-.certificate-header,
-.certificate-left-panel,
-.certificate-main-content {
+/* Common style for all dynamic text fields */
+.cert-field {
     position: absolute;
-    z-index: 1;
+    z-index: 10;
+    font-family: 'Certificate Shelley', 'Dancing Script', cursive, serif;
+    font-size: 20pt;
+    font-weight: 500;
+    color: #111111;
+    white-space: nowrap;
+    transform: translateY(-50%);
 }
 
-/* Base text sizing using % of height for vertical and % of width for horizontal */
-.certificate-header {
-    top: 5%;
-    left: 0;
-    right: 0;
-    text-align: center;
+/* Individual field positionings tuned precisely to line up with the template dots/lines */
+.cert-field--serial {
+    top: 32.2%;
+    left: 31.0%;
+    font-size: 18pt;
 }
 
-.certificate-title {
-    margin: 0;
-    font-family: 'Old English Text MT', 'Goudy Old Style', serif;
-    font-size: 38pt;
-    font-weight: 400;
+.cert-field--reg-no {
+    top: 32.2%;
+    left: 72.0%;
+    font-size: 18pt;
 }
 
-.certificate-approved {
-    margin: 2pt 0 0;
-    font-size: 11pt;
-    font-weight: 700;
+.cert-field--session {
+    top: 37.8%;
+    left: 72.0%;
+    font-size: 18pt;
 }
 
-.certificate-web {
-    margin: 0;
-    font-size: 10pt;
+.cert-field--name {
+    top: 43.2%;
+    left: 41.5%;
+    font-size: 25pt;
     font-weight: 600;
 }
 
-.certificate-type {
-    margin: 5pt 0 0;
-    font-size: 34pt;
-    font-weight: 900;
-    letter-spacing: 0.05em;
-    text-decoration: underline double;
-}
-
-/* Left Panel */
-.certificate-left-panel {
-    top: 25%;
-    left: 7.5%;
-    width: 16.5%;
-    height: 70%;
-}
-
-.certificate-incorporation {
-    width: 100%;
-    border: 1px solid #111;
-    background: white;
-    padding: 2pt;
-    height: 38%;
-}
-
-.certificate-inc-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.certificate-qr-main {
-    margin-top: 10pt;
-    width: 80%;
-    aspect-ratio: 1;
-    margin-inline: auto;
-}
-
-.certificate-qr-main img {
-    width: 100%;
-}
-
-.certificate-grading {
-    margin-top: 10pt;
-    font-size: 7.5pt;
-}
-
-.grading-title {
-    margin: 0 0 2pt;
-    font-weight: 800;
-    text-align: center;
-    text-decoration: underline;
-}
-
-.certificate-grading table {
-    width: 100%;
-    border-collapse: collapse;
-    font-weight: 700;
-}
-
-.certificate-grading td, .certificate-grading th {
-    padding: 1pt;
-    border: 0.5pt solid #111;
-    text-align: center;
-}
-
-.certificate-result-date {
-    position: absolute;
-    bottom: 5pt;
-    left: 0;
-    width: 150%;
-    font-size: 10pt;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-/* Main Content Area */
-.certificate-main-content {
-    top: 28%;
-    left: 25.5%;
-    right: 8%;
-    height: 65%;
-}
-
-.certificate-crest {
-    position: absolute;
-    top: 0;
-    left: 2%;
-    width: 12%;
-}
-
-.certificate-crest img {
-    width: 100%;
-}
-
-.certificate-qr-top {
-    position: absolute;
-    top: -10pt;
-    right: 0;
-    width: 10%;
-}
-
-.certificate-qr-top img {
-    width: 100%;
-}
-
-.certificate-top-meta {
-    margin-top: 65pt;
-    display: flex;
-    justify-content: space-between;
-    font-size: 12pt;
-    font-weight: 700;
-}
-
-.cert-serial span {
-    font-style: italic;
-    font-family: serif;
-}
-
-.cert-right-meta p {
-    margin: 0;
-    text-align: right;
-}
-
-.cert-right-meta span {
-    display: inline-block;
-    min-width: 60pt;
-    font-style: italic;
-    text-align: left;
-}
-
-.certificate-body {
-    margin-top: 18pt;
-    font-size: 14pt;
-    line-height: 1.8;
-    font-weight: 700;
-}
-
-.cert-row {
-    margin: 0;
-    display: flex;
-    align-items: baseline;
-}
-
-.cert-value {
-    font-family: 'Certificate Shelley', cursive, serif;
-    font-size: 18pt;
-    margin: 0 4pt;
-    font-style: italic;
-}
-
-.cert-value--name {
+.cert-field--father {
+    top: 48.8%;
+    left: 36.0%;
     font-size: 22pt;
 }
 
-.cert-label {
-    margin-left: auto;
-    font-size: 12pt;
+.cert-field--mother {
+    top: 54.4%;
+    left: 21.0%;
+    font-size: 22pt;
 }
 
-.cert-row--last {
-    margin-top: 5pt;
+.cert-field--institute {
+    top: 59.8%;
+    left: 20.0%;
+    font-size: 21pt;
 }
 
-.certificate-footer-sigs {
-    position: absolute;
-    bottom: 15pt;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 5%;
+.cert-field--roll {
+    top: 65.4%;
+    left: 33.0%;
+    font-size: 19pt;
 }
 
-.sig-checked, .sig-controller {
-    width: 35%;
-    text-align: center;
+.cert-field--course {
+    top: 65.4%;
+    left: 63.5%;
+    font-size: 21pt;
 }
 
-.sig-image {
-    font-family: 'Dancing Script', cursive;
-    font-size: 24pt;
+.cert-field--exam-held {
+    top: 70.8%;
+    left: 54.5%;
+    font-size: 19pt;
 }
 
-.sig-line {
-    width: 100%;
-    height: 1px;
-    background: #111;
-    margin: 2pt 0;
+.cert-field--cgpa {
+    top: 70.8%;
+    left: 88.0%;
+    font-size: 20pt;
+    font-weight: 600;
 }
 
-.certificate-footer-sigs p {
-    margin: 0;
-    font-size: 10pt;
+.cert-field--publication-date {
+    top: 90.5%;
+    left: 25.5%;
+    font-size: 14pt;
+    font-family: 'Courier New', Courier, monospace;
     font-weight: 700;
 }
 
-.sig-inst {
-    font-size: 8pt !important;
-}
-
-.certificate-footer-note {
+/* QR Code Placement */
+.cert-qr-code {
     position: absolute;
-    bottom: 5pt;
-    left: 0;
-    right: 0;
-    text-align: center;
-    color: #e11d48;
-    font-weight: 800;
-    font-size: 11pt;
+    top: 41.8%;
+    left: 8.5%;
+    width: 10.6%;
+    aspect-ratio: 1;
+    z-index: 10;
+    background: #fff;
+    padding: 2px;
 }
 
 .certificate-actions {
@@ -290,6 +150,7 @@
     justify-content: center;
     gap: 0.75rem;
     margin-top: 1.5rem;
+    z-index: 20;
 }
 
 @page {
@@ -335,4 +196,3 @@
         height: 210mm;
     }
 }
-

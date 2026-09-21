@@ -95,50 +95,50 @@
 
 /* 5. Father's Name (Son/Daughter of............ Father) */
 .cert-field--father {
-    top: 51.8%;
+    top: 52.8%;
     left: 41.5%;
 }
 
 /* 6. Mother's Name (and............ Mother) */
 .cert-field--mother {
-    top: 55.4%;
+    top: 57.4%;
     left: 31.0%;
 }
 
 /* 7. Institute Name (of............) */
 .cert-field--institute {
-    top: 63.0%;
-    left: 20.0%;
+    top: 61.0%;
+    left: 27.0%;
 }
 
 /* 8. Roll No (bearing Roll No............) */
 .cert-field--roll {
-    top: 65.6%;
+    top: 67.6%;
     left: 35.0%;
     font-size: 16px;
 }
 
 /* 9. Course Name (duly passed the............) */
 .cert-field--course {
-    top: 65.0%;
+    top: 67.0%;
     left: 53.5%;
 }
 
 /* 10. Exam Held Date (Course Examination held in the month of............) */
 .cert-field--exam-held {
-    top: 71.6%;
-    left: 49.0%;
+    top: 70.6%;
+    left: 53.0%;
 }
 
 /* 11. CGPA (and he/she Secured CGPA............) */
 .cert-field--cgpa {
-    top: 71.6%;
+    top: 70.6%;
     left: 84.5%;
 }
 
 /* 12. Publication Date (Date of Publication of Result:............) */
 .cert-field--publication-date {
-    top: 87.8%;
+    top: 90.0%;
     left: 25.0%;
 }
 

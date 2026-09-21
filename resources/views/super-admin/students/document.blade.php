@@ -24,6 +24,7 @@
         :latest-result="$latestResult"
         :cumulative-gpa="$cumulativeGpa"
         :certificate-serial="$certificateSerial"
+        :qr-code="$registrationCardQrCode ?? null"
     />
 @elseif ($document === 'testimonial')
     <x-testimonial

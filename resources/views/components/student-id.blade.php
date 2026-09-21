@@ -1,7 +1,5 @@
 @props([
     'student',
-    'instituteName' => 'Bangladesh National Youth Technical Institute',
-    'instituteWeb' => 'www.bntei.com',
     'qrCode' => null,
 ])
 
@@ -11,22 +9,10 @@
     <div class="student-id-container">
         {{-- Front Side --}}
         <article class="id-card id-card--front">
-            <div class="id-card__background">
-                <svg viewBox="0 0 320 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 0H320V400C320 400 240 430 160 430C80 430 0 400 0 400V0Z" fill="#F8FAF4"/>
-                    <path d="M0 400V500H320V400C320 400 240 430 160 430C80 430 0 400 0 400Z" fill="#1A4D2E"/>
-                </svg>
-            </div>
+            {{-- Using the combined template image --}}
+            <img src="{{ asset('images/Logo Or ID card-02.png') }}" alt="" class="id-card__template">
 
             <div class="id-card__content">
-                <div class="id-card__header">
-                    <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="id-card__logo">
-                    <h2 class="id-card__inst-name">{{ $instituteName }}</h2>
-                    <p class="id-card__inst-web">{{ $instituteWeb }}</p>
-                </div>
-
-                <div class="id-card__title-badge">STUDENT ID</div>
-
                 <div class="id-card__photo-box">
                     @if ($student->image_path)
                         <img src="{{ asset('storage/'.$student->image_path) }}" alt="{{ $student->name }}">
@@ -37,70 +23,43 @@
                     @endif
                 </div>
 
-                <div class="id-card__student-info">
-                    <h3 class="id-card__student-name">{{ $student->name }}</h3>
-                    <p class="id-card__student-course">{{ $student->course?->name }}</p>
-                </div>
-
-                <div class="id-card__footer">
-                    <div class="id-card__signature">
-                        <div class="id-card__sig-placeholder">Saiful</div>
-                        <div class="id-card__sig-line"></div>
-                        <p class="id-card__sig-label">Controller of Examinations</p>
-                    </div>
-                </div>
+                {{-- Optional: Add Name/Course on front if desired, but template seems to favor back side for info --}}
             </div>
         </article>
 
         {{-- Back Side --}}
         <article class="id-card id-card--back">
-            <div class="id-card__background">
-                <svg viewBox="0 0 320 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 0H320V100C320 100 240 70 160 70C80 70 0 100 0 100V0Z" fill="#1A4D2E"/>
-                    <path d="M0 100V400C0 400 80 430 160 430C240 430 320 400 320 400V100C320 100 240 70 160 70C80 70 0 100 0 100Z" fill="#F8FAF4"/>
-                    <path d="M0 400V500H320V400C320 400 240 430 160 430C80 430 0 400 0 400Z" fill="#1A4D2E"/>
-                </svg>
-            </div>
+            <img src="{{ asset('images/Logo Or ID card-02.png') }}" alt="" class="id-card__template">
 
             <div class="id-card__content">
-                <div class="id-card__title-badge">STUDENT INFORMATION</div>
-
-                <dl class="id-card__details">
-                    <div><dt>Student ID</dt><dd>: {{ $student->registration_number }}</dd></div>
-                    <div><dt>Father's Name</dt><dd>: {{ $student->father_name }}</dd></div>
-                    <div><dt>Mother's Name</dt><dd>: {{ $student->mother_name }}</dd></div>
-                    <div><dt>Date of Birth</dt><dd>: {{ $student->date_of_birth?->format('d-m-Y') }}</dd></div>
-                    <div><dt>Blood Group</dt><dd>: {{ $student->blood_group ?? 'O+' }}</dd></div>
-                    <div><dt>Contact No</dt><dd>: {{ $student->phone }}</dd></div>
-                </dl>
-
-                <div class="id-card__instructions-badge">INSTRUCTIONS</div>
-                <ul class="id-card__instructions-list">
-                    <li>● This ID card is non-transferable.</li>
-                    <li>● The cardholder must carry this ID card at all times in the Institute.</li>
-                    <li>● This ID card must be shown when requested by the authority. If found, please return this card to the Institute office.</li>
-                </ul>
+                <div class="id-card__details">
+                    <dl>
+                        <dt>Name</dt><dd>: {{ $student->name }}</dd>
+                        <dt>Roll No</dt><dd>: {{ $student->roll_number ?? '—' }}</dd>
+                        <dt>Reg No</dt><dd>: {{ $student->registration_number }}</dd>
+                        <dt>Session</dt><dd>: {{ $student->session ?? '2020-2023' }}</dd>
+                        <dt>Course</dt><dd>: {{ $student->course?->name ?? '—' }}</dd>
+                        <dt>Blood Group</dt><dd>: {{ $student->blood_group ?? 'O+' }}</dd>
+                        <dt>Father's Name</dt><dd>: {{ $student->father_name ?? '—' }}</dd>
+                        <dt>Mother's Name</dt><dd>: {{ $student->mother_name ?? '—' }}</dd>
+                        <dt>Phone</dt><dd>: {{ $student->phone }}</dd>
+                    </dl>
+                </div>
 
                 <div class="id-card__qr-box">
                     @if($qrCode)
-                        <img src="{{ $qrCode }}" alt="QR">
+                        <img src="{{ $qrCode }}" alt="QR Verification">
+                    @else
+                        {{-- Fallback QR if none provided --}}
+                        <div class="size-full bg-slate-50 flex items-center justify-center text-[8px] text-slate-300">QR CODE</div>
                     @endif
-                </div>
-
-                <div class="id-card__footer-info">
-                    <div class="id-card__address">
-                        Address: House-52, Road-01, Dhanmondi R/A, Dhaka-1205, Bangladesh.
-                    </div>
-                    <div class="id-card__contact">
-                        Phone:<br>+880 1717 123456<br>+880 1999 654321
-                    </div>
                 </div>
             </div>
         </article>
     </div>
 
     <nav class="id-card-actions print:hidden">
-        <button type="button" data-print-document class="rounded-full bg-emerald-700 px-8 py-3 font-black text-white transition hover:bg-emerald-600">
+        <button type="button" data-print-document onclick="window.print()" class="rounded-full bg-emerald-700 px-8 py-3 font-black text-white transition hover:bg-emerald-600 cursor-pointer">
             Print ID Card
         </button>
         <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-full border border-slate-300 bg-white px-8 py-3 font-black text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">

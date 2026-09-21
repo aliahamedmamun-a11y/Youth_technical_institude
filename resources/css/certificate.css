@@ -95,26 +95,26 @@
 
 /* 5. Father's Name (Son/Daughter of............ Father) */
 .cert-field--father {
-    top: 54.2%;
-    left: 35.0%;
+    top: 53.8%;
+    left: 41.5%;
 }
 
 /* 6. Mother's Name (and............ Mother) */
 .cert-field--mother {
-    top: 59.8%;
-    left: 27.5%;
+    top: 59.4%;
+    left: 31.0%;
 }
 
 /* 7. Institute Name (of............) */
 .cert-field--institute {
-    top: 65.4%;
-    left: 37.0%;
+    top: 65.0%;
+    left: 20.0%;
 }
 
 /* 8. Roll No (bearing Roll No............) */
 .cert-field--roll {
-    top: 71.0%;
-    left: 32.0%;
+    top: 70.6%;
+    left: 35.0%;
     font-size: 16px;
 }
 

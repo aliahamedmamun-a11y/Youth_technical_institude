@@ -48,108 +48,98 @@
     position: absolute;
     z-index: 10;
     font-family: 'Times New Roman', Times, serif;
-    font-style: italic;
     font-size: 15px;
     font-weight: 700;
     color: #0B1953;
     white-space: nowrap;
-    transform: translateY(-68%); /* Fits neatly right on top of the dotted lines */
+    transform: translateY(-50%); /* Centers text on the line */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.cert-field--cursive {
+    font-family: 'Certificate Shelley', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px; /* Cursive fonts usually need to be larger to be readable */
 }
 
 /* Specific positioning to line up perfectly with every dotted line on the template */
 
 /* 1. Reg No (Top Right: Reg No: ............) */
 .cert-field--reg-no {
-    top: 34.0%;
-    left: 78.5%;
-    font-size: 15px;
-    font-weight: bold;
+    top: 37.8%;
+    left: 70.0%;
+    font-size: 16px;
 }
 
 /* 2. Serial No (Middle Left: Serial No: ............) */
 .cert-field--serial {
-    top: 39.0%;
-    left: 43.0%;
-    font-size: 15px;
-    font-weight: bold;
+    top: 42.8%;
+    left: 31.0%;
+    font-size: 16px;
 }
 
 /* 3. Session (Middle Right: Session: ............) */
 .cert-field--session {
-    top: 39.0%;
-    left: 78.5%;
-    font-size: 15px;
-    font-weight: bold;
+    top: 42.8%;
+    left: 70.0%;
+    font-size: 16px;
 }
 
 /* 4. Student Name (This is to certify that............) */
 .cert-field--name {
-    top: 44.6%;
-    left: 42.0%;
-    font-size: 16px;
-    font-weight: bold;
+    top: 48.4%;
+    left: 38.5%;
 }
 
 /* 5. Father's Name (Son/Daughter of............ Father) */
 .cert-field--father {
-    top: 50.2%;
-    left: 36.0%;
-    font-size: 15px;
+    top: 54.2%;
+    left: 35.0%;
 }
 
 /* 6. Mother's Name (and............ Mother) */
 .cert-field--mother {
-    top: 55.8%;
-    left: 22.0%;
-    font-size: 15px;
+    top: 59.8%;
+    left: 27.5%;
 }
 
 /* 7. Institute Name (of............) */
 .cert-field--institute {
-    top: 61.4%;
-    left: 20.0%;
-    font-size: 15px;
+    top: 65.4%;
+    left: 37.0%;
 }
 
 /* 8. Roll No (bearing Roll No............) */
 .cert-field--roll {
-    top: 67.0%;
+    top: 71.0%;
     left: 32.0%;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 16px;
 }
 
 /* 9. Course Name (duly passed the............) */
 .cert-field--course {
-    top: 67.0%;
-    left: 60.0%;
-    font-size: 16px;
-    font-weight: bold;
+    top: 71.0%;
+    left: 53.5%;
 }
 
 /* 10. Exam Held Date (Course Examination held in the month of............) */
 .cert-field--exam-held {
-    top: 72.6%;
-    left: 55.0%;
-    font-size: 15px;
+    top: 76.6%;
+    left: 49.0%;
 }
 
 /* 11. CGPA (and he/she Secured CGPA............) */
 .cert-field--cgpa {
-    top: 72.6%;
-    left: 85.0%;
-    font-size: 15px;
-    font-weight: bold;
+    top: 76.6%;
+    left: 84.0%;
 }
 
 /* 12. Publication Date (Date of Publication of Result:............) */
 .cert-field--publication-date {
-    top: 82.8%;
-    left: 36.0%;
-    font-size: 14px;
-    font-weight: bold;
+    top: 86.8%;
+    left: 22.0%;
 }
 
 /* QR Code Placement inside the specific left window border */
@@ -162,25 +152,6 @@
     z-index: 10;
     background: #fff;
     padding: 2px;
-}
-
-/* Student Photo Placement */
-.cert-student-photo {
-    position: absolute;
-    top: 15.5%;
-    right: 7.5%;
-    width: 25mm;
-    height: 30mm;
-    z-index: 10;
-    border: 1px solid #eee;
-    background: #fff;
-    padding: 2px;
-}
-
-.cert-student-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 
 .certificate-actions {

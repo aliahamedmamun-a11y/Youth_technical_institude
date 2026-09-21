@@ -43,7 +43,7 @@
     z-index: 0;
 }
 
-/* Common style for all dynamic text fields */
+/* Base text overlay style */
 .cert-field {
     position: absolute;
     z-index: 10;
@@ -55,80 +55,80 @@
     transform: translateY(-50%);
 }
 
-/* Individual field positionings tuned precisely to line up with the template dots/lines */
+/* Positioning tuned based on the overlapping screenshot */
 .cert-field--serial {
     top: 32.2%;
-    left: 31.0%;
-    font-size: 18pt;
+    left: 28.5%;
+    font-size: 16pt;
 }
 
 .cert-field--reg-no {
     top: 32.2%;
     left: 72.0%;
-    font-size: 18pt;
+    font-size: 16pt;
 }
 
 .cert-field--session {
     top: 37.8%;
     left: 72.0%;
-    font-size: 18pt;
+    font-size: 16pt;
 }
 
 .cert-field--name {
-    top: 43.2%;
-    left: 41.5%;
-    font-size: 25pt;
+    top: 42.8%;
+    left: 42.0%;
+    font-size: 24pt;
     font-weight: 600;
 }
 
 .cert-field--father {
-    top: 48.8%;
-    left: 36.0%;
-    font-size: 22pt;
+    top: 48.4%;
+    left: 38.0%;
+    font-size: 20pt;
 }
 
 .cert-field--mother {
-    top: 54.4%;
-    left: 21.0%;
-    font-size: 22pt;
+    top: 54.2%;
+    left: 22.0%;
+    font-size: 20pt;
 }
 
 .cert-field--institute {
     top: 59.8%;
     left: 20.0%;
-    font-size: 21pt;
+    font-size: 20pt;
 }
 
 .cert-field--roll {
     top: 65.4%;
-    left: 33.0%;
-    font-size: 19pt;
+    left: 33.5%;
+    font-size: 18pt;
 }
 
 .cert-field--course {
     top: 65.4%;
-    left: 63.5%;
-    font-size: 21pt;
+    left: 64.0%;
+    font-size: 20pt;
 }
 
 .cert-field--exam-held {
-    top: 70.8%;
+    top: 71.0%;
     left: 54.5%;
-    font-size: 19pt;
+    font-size: 18pt;
 }
 
 .cert-field--cgpa {
-    top: 70.8%;
-    left: 88.0%;
+    top: 71.0%;
+    left: 88.5%;
     font-size: 20pt;
     font-weight: 600;
 }
 
 .cert-field--publication-date {
     top: 90.5%;
-    left: 25.5%;
+    left: 25.8%;
     font-size: 14pt;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Arial, sans-serif;
     font-weight: 700;
 }
 

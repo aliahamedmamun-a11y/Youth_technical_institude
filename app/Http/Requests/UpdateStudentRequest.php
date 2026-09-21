@@ -36,6 +36,8 @@ class UpdateStudentRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:30'],
             'gender' => ['nullable', Rule::in(['Male', 'Female', 'Other'])],
             'religion' => ['nullable', 'string', 'max:50'],
+            'start_month' => ['nullable', 'string', 'max:20'],
+            'start_year' => ['nullable', 'string', 'max:10'],
             'end_month' => ['nullable', 'string', 'max:20'],
             'end_year' => ['nullable', 'string', 'max:10'],
             'education_qualification' => ['nullable', 'string', 'max:255'],

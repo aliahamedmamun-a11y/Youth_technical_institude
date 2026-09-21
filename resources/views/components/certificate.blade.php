@@ -18,8 +18,10 @@
 
     <div class="certificate-frame">
         <article class="certificate-document" aria-label="Certificate for {{ $student->name }}">
+            {{-- The template image provides the border and background --}}
             <img class="certificate-template" src="{{ asset('images/certificate-template.png') }}" alt="">
 
+            {{-- Static Headers - Adjust these if they overlap with your template text --}}
             <header class="certificate-header">
                 <h2 class="certificate-title">Bangladesh National Technical Education Institute</h2>
                 <p class="certificate-approved">Approved by Govt. Of The People's Republic of Bangladesh</p>
@@ -27,43 +29,42 @@
                 <h3 class="certificate-type">CERTIFICATE</h3>
             </header>
 
+            {{-- Left Side Panel --}}
             <aside class="certificate-left-panel">
                 <div class="certificate-incorporation">
-                    {{-- Placeholder for Incorporation Certificate image --}}
-                    <div class="certificate-inc-image">
-                        <img src="{{ asset('images/Reg-Admit-pad-04.png') }}" alt="Incorporation">
-                    </div>
+                    <img src="{{ asset('images/Reg-Admit-pad-04.png') }}" alt="Reg" class="w-full h-full object-contain">
                 </div>
 
                 <div class="certificate-qr-main">
                     @if($qrCode)
-                        <img src="{{ $qrCode }}" alt="QR Code">
+                        <img src="{{ $qrCode }}" alt="QR">
                     @endif
                 </div>
 
                 <div class="certificate-grading">
                     <p class="grading-title">Grading System</p>
                     <table>
-                        <tr><th>80 or Above</th><th>A+</th><th>4.00</th></tr>
-                        <tr><th>75 - Below 80</th><th>A</th><th>3.75</th></tr>
-                        <tr><th>70 - Below 75</th><th>A-</th><th>3.50</th></tr>
-                        <tr><th>65 - Below 70</th><th>B+</th><th>3.25</th></tr>
-                        <tr><th>60 - Below 65</th><th>B</th><th>3.00</th></tr>
-                        <tr><th>55 - Below 60</th><th>B-</th><th>2.75</th></tr>
-                        <tr><th>50 - Below 55</th><th>C+</th><th>2.50</th></tr>
+                        <tr><td>80 or Above</td><td>A+</td><td>4.00</td></tr>
+                        <tr><td>75 - Below 80</td><td>A</td><td>3.75</td></tr>
+                        <tr><td>70 - Below 75</td><td>A-</td><td>3.50</td></tr>
+                        <tr><td>65 - Below 70</td><td>B+</td><td>3.25</td></tr>
+                        <tr><td>60 - Below 65</td><td>B</td><td>3.00</td></tr>
+                        <tr><td>55 - Below 60</td><td>B-</td><td>2.75</td></tr>
+                        <tr><td>50 - Below 55</td><td>C+</td><td>2.50</td></tr>
                     </table>
                 </div>
                 <p class="certificate-result-date">Date of Publication of Result: <span>{{ $latestResult?->published_at?->format('d-M-Y') ?? '15-Feb-2024' }}</span></p>
             </aside>
 
+            {{-- Main Dynamic Content --}}
             <div class="certificate-main-content">
                 <div class="certificate-crest">
-                    <img src="{{ asset('images/Logo.png') }}" alt="BNTEI Crest">
+                    <img src="{{ asset('images/Logo.png') }}" alt="Logo">
                 </div>
 
                 <div class="certificate-qr-top">
                     @if($qrCode)
-                        <img src="{{ $qrCode }}" alt="QR Code">
+                        <img src="{{ $qrCode }}" alt="QR Top">
                     @endif
                 </div>
 
@@ -98,16 +99,17 @@
                     </div>
                 </div>
             </div>
+
+            <p class="certificate-footer-note">Note: This Certificate is issued without any alteration or erasure</p>
         </article>
-        <p class="certificate-footer-note">Note: This Certificate is issued without any alteration or erasure</p>
     </div>
 
-    <nav class="certificate-actions print:hidden" aria-label="Certificate actions">
-        <button type="button" data-print-document class="rounded-full bg-emerald-700 px-5 py-3 font-black text-white transition hover:bg-emerald-600">
-            Print certificate
+    <nav class="certificate-actions print:hidden">
+        <button type="button" data-print-document class="rounded-full bg-emerald-700 px-8 py-3 font-black text-white transition hover:bg-emerald-600">
+            Print Certificate
         </button>
-        <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-full border border-slate-300 bg-white px-5 py-3 font-black text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">
-            Back to student
+        <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-full border border-slate-300 bg-white px-8 py-3 font-black text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">
+            Back
         </a>
     </nav>
 </main>

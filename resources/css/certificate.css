@@ -14,20 +14,21 @@
 }
 
 .certificate-frame {
-    width: min(100%, 75rem);
+    width: 297mm;
+    height: 210mm;
     margin-inline: auto;
     position: relative;
-    padding-bottom: 2rem;
+    background: #fff;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
 }
 
 .certificate-document {
     position: relative;
     width: 100%;
-    aspect-ratio: 297 / 210;
+    height: 100%;
     overflow: hidden;
     color: #111;
     background: #ffffe9;
-    container-type: inline-size;
 }
 
 .certificate-template {
@@ -45,8 +46,9 @@
     z-index: 1;
 }
 
+/* Base text sizing using % of height for vertical and % of width for horizontal */
 .certificate-header {
-    top: 5.5%;
+    top: 5%;
     left: 0;
     right: 0;
     text-align: center;
@@ -55,25 +57,25 @@
 .certificate-title {
     margin: 0;
     font-family: 'Old English Text MT', 'Goudy Old Style', serif;
-    font-size: 5.5cqw;
+    font-size: 38pt;
     font-weight: 400;
 }
 
 .certificate-approved {
-    margin: 0.2cqw 0 0;
-    font-size: 1.6cqw;
+    margin: 2pt 0 0;
+    font-size: 11pt;
     font-weight: 700;
 }
 
 .certificate-web {
     margin: 0;
-    font-size: 1.4cqw;
+    font-size: 10pt;
     font-weight: 600;
 }
 
 .certificate-type {
-    margin: 0.5cqw 0 0;
-    font-size: 4.8cqw;
+    margin: 5pt 0 0;
+    font-size: 34pt;
     font-weight: 900;
     letter-spacing: 0.05em;
     text-decoration: underline double;
@@ -83,15 +85,15 @@
 .certificate-left-panel {
     top: 25%;
     left: 7.5%;
-    width: 16%;
-    bottom: 5%;
+    width: 16.5%;
+    height: 70%;
 }
 
 .certificate-incorporation {
     width: 100%;
     border: 1px solid #111;
     background: white;
-    padding: 0.5cqw;
+    padding: 2pt;
     height: 38%;
 }
 
@@ -102,7 +104,7 @@
 }
 
 .certificate-qr-main {
-    margin-top: 1.5cqw;
+    margin-top: 10pt;
     width: 80%;
     aspect-ratio: 1;
     margin-inline: auto;
@@ -113,12 +115,12 @@
 }
 
 .certificate-grading {
-    margin-top: 1.5cqw;
-    font-size: 1.1cqw;
+    margin-top: 10pt;
+    font-size: 7.5pt;
 }
 
 .grading-title {
-    margin: 0 0 0.2cqw;
+    margin: 0 0 2pt;
     font-weight: 800;
     text-align: center;
     text-decoration: underline;
@@ -131,33 +133,33 @@
 }
 
 .certificate-grading td, .certificate-grading th {
-    padding: 0.1cqw;
-    border: 1px solid #111;
+    padding: 1pt;
+    border: 0.5pt solid #111;
     text-align: center;
 }
 
 .certificate-result-date {
     position: absolute;
-    bottom: 1cqw;
+    bottom: 5pt;
     left: 0;
     width: 150%;
-    font-size: 1.4cqw;
+    font-size: 10pt;
     font-weight: 700;
     white-space: nowrap;
 }
 
 /* Main Content Area */
 .certificate-main-content {
-    top: 30%;
-    left: 24%;
+    top: 28%;
+    left: 25.5%;
     right: 8%;
-    bottom: 5%;
+    height: 65%;
 }
 
 .certificate-crest {
     position: absolute;
     top: 0;
-    left: 2.5%;
+    left: 2%;
     width: 12%;
 }
 
@@ -167,7 +169,7 @@
 
 .certificate-qr-top {
     position: absolute;
-    top: -2cqw;
+    top: -10pt;
     right: 0;
     width: 10%;
 }
@@ -177,10 +179,10 @@
 }
 
 .certificate-top-meta {
-    margin-top: 10cqw;
+    margin-top: 65pt;
     display: flex;
     justify-content: space-between;
-    font-size: 1.8cqw;
+    font-size: 12pt;
     font-weight: 700;
 }
 
@@ -196,13 +198,14 @@
 
 .cert-right-meta span {
     display: inline-block;
-    min-width: 8cqw;
+    min-width: 60pt;
     font-style: italic;
+    text-align: left;
 }
 
 .certificate-body {
-    margin-top: 2.5cqw;
-    font-size: 2.1cqw;
+    margin-top: 18pt;
+    font-size: 14pt;
     line-height: 1.8;
     font-weight: 700;
 }
@@ -211,32 +214,31 @@
     margin: 0;
     display: flex;
     align-items: baseline;
-    flex-wrap: wrap;
 }
 
 .cert-value {
     font-family: 'Certificate Shelley', cursive, serif;
-    font-size: 2.6cqw;
-    margin: 0 0.4cqw;
+    font-size: 18pt;
+    margin: 0 4pt;
     font-style: italic;
 }
 
 .cert-value--name {
-    font-size: 3.2cqw;
+    font-size: 22pt;
 }
 
 .cert-label {
     margin-left: auto;
-    font-size: 1.8cqw;
+    font-size: 12pt;
 }
 
 .cert-row--last {
-    margin-top: 0.5cqw;
+    margin-top: 5pt;
 }
 
 .certificate-footer-sigs {
     position: absolute;
-    bottom: 2cqw;
+    bottom: 15pt;
     left: 0;
     right: 0;
     display: flex;
@@ -251,31 +253,35 @@
 
 .sig-image {
     font-family: 'Dancing Script', cursive;
-    font-size: 3.5cqw;
+    font-size: 24pt;
 }
 
 .sig-line {
     width: 100%;
     height: 1px;
     background: #111;
-    margin: 0.2cqw 0;
+    margin: 2pt 0;
 }
 
 .certificate-footer-sigs p {
     margin: 0;
-    font-size: 1.5cqw;
+    font-size: 10pt;
     font-weight: 700;
+}
+
+.sig-inst {
+    font-size: 8pt !important;
 }
 
 .certificate-footer-note {
     position: absolute;
-    bottom: 0.5rem;
+    bottom: 5pt;
     left: 0;
     right: 0;
     text-align: center;
     color: #e11d48;
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 11pt;
 }
 
 .certificate-actions {
@@ -298,6 +304,7 @@
         height: 210mm;
         margin: 0;
         background: white;
+        overflow: hidden;
     }
 
     body {
@@ -305,27 +312,27 @@
         -webkit-print-color-adjust: exact;
     }
 
-    .certificate-screen,
-    .certificate-frame,
-    .certificate-document {
+    .certificate-screen {
+        padding: 0;
+        min-height: 0;
+        background: white;
+    }
+
+    .certificate-actions {
+        display: none !important;
+    }
+
+    .certificate-frame {
         width: 297mm;
         height: 210mm;
         margin: 0;
         padding: 0;
-    }
-
-    .certificate-screen {
-        min-height: 0;
-        overflow: hidden;
-        background: white;
-    }
-
-    .certificate-frame {
-        max-width: none;
         box-shadow: none;
     }
 
     .certificate-document {
-        aspect-ratio: auto;
+        width: 297mm;
+        height: 210mm;
     }
 }
+

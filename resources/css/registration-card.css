@@ -6,21 +6,21 @@
 }
 
 .registration-card-frame {
-    width: min(100%, 52rem);
+    width: 210mm;
+    height: 297mm;
     margin-inline: auto;
-    overflow: hidden;
-    background: white;
+    position: relative;
+    background: #fff;
     box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
 }
 
 .registration-card {
     position: relative;
     width: 100%;
-    aspect-ratio: 210 / 297;
+    height: 100%;
     overflow: hidden;
     color: #171717;
     background: white;
-    container-type: inline-size;
     font-family: Georgia, 'Times New Roman', serif;
 }
 
@@ -52,14 +52,14 @@
 
 .registration-card__approved {
     margin: 0;
-    font-size: 1.8cqw;
+    font-size: 11pt;
     font-weight: 600;
 }
 
 .registration-card__title-en {
     margin: 0.1em 0 0;
     font-family: Arial, sans-serif;
-    font-size: 3.2cqw;
+    font-size: 22pt;
     font-weight: 900;
     letter-spacing: -0.02em;
     color: #000;
@@ -67,7 +67,7 @@
 
 .registration-card__title-bn {
     margin: -0.1em 0 0.2em;
-    font-size: 3.8cqw;
+    font-size: 28pt;
     font-weight: 700;
     color: #e11d48;
 }
@@ -82,21 +82,21 @@
     color: white;
     padding: 0.15em 0.8em;
     border-radius: 0.2em;
-    font-size: 2.5cqw;
+    font-size: 18pt;
     font-weight: 800;
     text-transform: uppercase;
 }
 
 .registration-card__course-title {
     margin: 0.3em 0 0;
-    font-size: 2.2cqw;
+    font-size: 14pt;
     font-weight: 800;
 }
 
 .registration-card__logo {
     top: 14.5%;
     left: 12.5%;
-    width: 11.5%;
+    width: 65pt;
 }
 
 .registration-card__logo img {
@@ -109,7 +109,7 @@
     left: 10%;
     width: 25%;
     margin: 0;
-    font-size: 1.8cqw;
+    font-size: 11pt;
     font-weight: 700;
 }
 
@@ -122,9 +122,9 @@
     left: 10%;
     display: grid;
     width: 65%;
-    gap: 1.4cqw;
+    gap: 10pt;
     margin: 0;
-    font-size: 1.9cqw;
+    font-size: 12pt;
     font-weight: 700;
     line-height: 1.15;
 }
@@ -154,10 +154,10 @@
 .registration-card__right-side {
     top: 25.5%;
     right: 12.5%;
-    width: 13.5%;
+    width: 85pt;
     display: flex;
     flex-direction: column;
-    gap: 2cqw;
+    gap: 15pt;
 }
 
 .registration-card__photo > img,
@@ -165,7 +165,7 @@
     display: block;
     width: 100%;
     aspect-ratio: 4 / 5;
-    border: max(1px, 0.12cqw) solid #000;
+    border: 1pt solid #000;
     box-sizing: border-box;
     background: white;
     object-fit: cover;
@@ -179,7 +179,7 @@
 }
 
 .registration-card__photo-placeholder svg {
-    width: 50%;
+    width: 40pt;
     fill: none;
     stroke: currentColor;
     stroke-linecap: round;
@@ -189,9 +189,9 @@
 
 .registration-card__qr {
     width: 100%;
-    border: max(1px, 0.12cqw) solid #000;
+    border: 1pt solid #000;
     background: white;
-    padding: 0.4cqw;
+    padding: 2pt;
 }
 
 .registration-card__qr img {
@@ -206,7 +206,7 @@
     right: 10%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 2cqw;
+    gap: 15pt;
     text-align: center;
 }
 
@@ -216,12 +216,12 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    min-height: 8cqw;
+    min-height: 50pt;
 }
 
 .registration-card__sig-placeholder {
     font-family: 'Dancing Script', cursive;
-    font-size: 3cqw;
+    font-size: 20pt;
     line-height: 1;
 }
 
@@ -229,12 +229,12 @@
     width: 100%;
     height: 1px;
     background: #000;
-    margin: 0.2em 0;
+    margin: 2pt 0;
 }
 
 .registration-card__signatures p {
     margin: 0;
-    font-size: 1.6cqw;
+    font-size: 10pt;
     font-weight: 700;
 }
 
@@ -250,7 +250,7 @@
 
 .registration-card__notes p {
     margin: 0;
-    font-size: 1.4cqw;
+    font-size: 9pt;
     font-weight: 600;
     line-height: 1.5;
 }
@@ -282,27 +282,21 @@
         -webkit-print-color-adjust: exact;
     }
 
-    .registration-card-screen,
-    .registration-card-frame,
-    .registration-card {
+    .registration-card-screen {
+        padding: 0;
+        min-height: 0;
+        background: white;
+    }
+
+    .registration-card-actions {
+        display: none !important;
+    }
+
+    .registration-card-frame {
         width: 210mm;
         height: 297mm;
         margin: 0;
         padding: 0;
-    }
-
-    .registration-card-screen {
-        min-height: 0;
-        overflow: hidden;
-        background: white;
-    }
-
-    .registration-card-frame {
-        max-width: none;
         box-shadow: none;
-    }
-
-    .registration-card {
-        aspect-ratio: auto;
     }
 }

@@ -8,19 +8,18 @@
 .transcript-stack {
     display: grid;
     gap: 1.5rem;
-    width: min(100%, 52.5rem);
+    width: 210mm;
     margin-inline: auto;
 }
 
 .transcript-page {
     position: relative;
-    width: 100%;
-    aspect-ratio: 210 / 297;
+    width: 210mm;
+    height: 297mm;
     overflow: hidden;
     color: #111;
     background: white;
     box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
-    container-type: inline-size;
     font-family: Georgia, 'Times New Roman', serif;
 }
 
@@ -55,32 +54,32 @@
 .transcript-institute-title {
     margin: 0;
     font-family: 'Old English Text MT', 'Goudy Old Style', serif;
-    font-size: 3.8cqw;
+    font-size: 26pt;
     font-weight: 400;
 }
 
 .transcript-approved {
-    margin: 0.2cqw 0 0;
-    font-size: 1.4cqw;
+    margin: 2pt 0 0;
+    font-size: 10pt;
     font-weight: 600;
 }
 
 .transcript-web {
     margin: 0;
-    font-size: 1.2cqw;
+    font-size: 8pt;
     font-weight: 600;
 }
 
 .transcript-badge-wrapper {
-    margin-top: 0.8cqw;
+    margin-top: 5pt;
 }
 
 .transcript-badge {
-    background: #15803d; /* Green as per image */
+    background: #15803d;
     color: white;
-    padding: 0.15em 0.8em;
-    border-radius: 0.2em;
-    font-size: 2.2cqw;
+    padding: 2pt 15pt;
+    border-radius: 3pt;
+    font-size: 16pt;
     font-weight: 800;
     text-transform: uppercase;
 }
@@ -88,7 +87,7 @@
 .transcript-crest {
     top: 8.5%;
     left: 10.5%;
-    width: 10%;
+    width: 60pt;
 }
 
 .transcript-crest img {
@@ -98,7 +97,7 @@
 .transcript-qr-top {
     top: 8.5%;
     right: 10.5%;
-    width: 10%;
+    width: 60pt;
 }
 
 .transcript-qr-top img {
@@ -109,7 +108,7 @@
     top: 23.5%;
     left: 10.5%;
     margin: 0;
-    font-size: 1.6cqw;
+    font-size: 11pt;
     font-weight: 700;
 }
 
@@ -120,21 +119,21 @@
 .transcript-grading-scale {
     top: 25.5%;
     right: 10.5%;
-    width: 16%;
+    width: 120pt;
     border-collapse: collapse;
-    font-size: 1cqw;
+    font-size: 7pt;
 }
 
 .transcript-grading-scale th {
     background: #f3f4f6;
-    border: 0.1cqw solid #111;
-    padding: 0.2cqw;
-    font-size: 1.1cqw;
+    border: 0.5pt solid #111;
+    padding: 2pt;
+    font-size: 8pt;
 }
 
 .transcript-grading-scale td {
-    border: 0.1cqw solid #111;
-    padding: 0.15cqw;
+    border: 0.5pt solid #111;
+    padding: 1pt;
     text-align: center;
     font-weight: 600;
 }
@@ -145,7 +144,7 @@
     width: 72%;
     display: flex;
     justify-content: space-between;
-    font-size: 1.6cqw;
+    font-size: 11pt;
     font-weight: 700;
     line-height: 1.4;
 }
@@ -161,7 +160,7 @@
 }
 
 .transcript-details-left dt, .transcript-details-right dt {
-    min-width: 35%;
+    min-width: 80pt;
 }
 
 .transcript-details-left dd, .transcript-details-right dd {
@@ -174,40 +173,40 @@
     right: 10.5%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2cqw;
+    gap: 15pt;
 }
 
 .transcript-semester-table {
-    border: 0.1cqw solid #111;
+    border: 0.5pt solid #111;
 }
 
 .semester-header {
     background: #f3f4f6;
-    border-bottom: 0.1cqw solid #111;
+    border-bottom: 0.5pt solid #111;
     display: flex;
     justify-content: space-between;
-    padding: 0.3cqw 0.6cqw;
-    font-size: 1.3cqw;
+    padding: 2pt 5pt;
+    font-size: 9pt;
     font-weight: 800;
 }
 
 .transcript-subject-values {
     width: 100%;
     border-collapse: collapse;
-    font-size: 1.1cqw;
+    font-size: 8pt;
 }
 
 .transcript-subject-values th, .transcript-subject-values td {
-    border-right: 0.1cqw solid #111;
-    border-bottom: 0.1cqw solid #111;
-    padding: 0.2cqw;
+    border-right: 0.5pt solid #111;
+    border-bottom: 0.5pt solid #111;
+    padding: 2pt;
     text-align: center;
     font-weight: 600;
 }
 
 .transcript-subject-values th {
     background: #f9fafb;
-    font-size: 1cqw;
+    font-size: 7.5pt;
 }
 
 .transcript-subject-values td:nth-child(2) {
@@ -238,15 +237,15 @@
 }
 
 .footer-qr img {
-    width: 45%;
+    width: 50pt;
     aspect-ratio: 1;
-    border: 0.1cqw solid #111;
-    padding: 0.2cqw;
+    border: 0.5pt solid #111;
+    padding: 2pt;
 }
 
 .footer-qr p {
-    margin: 0.4cqw 0 0;
-    font-size: 1.2cqw;
+    margin: 4pt 0 0;
+    font-size: 8pt;
     font-weight: 700;
 }
 
@@ -254,34 +253,34 @@
     width: 70%;
     display: flex;
     justify-content: flex-end;
-    gap: 8cqw;
+    gap: 40pt;
     text-align: center;
 }
 
 .sig-compared, .sig-controller {
-    width: 45%;
+    width: 140pt;
 }
 
 .sig-placeholder {
     font-family: 'Dancing Script', cursive;
-    font-size: 2.8cqw;
+    font-size: 18pt;
 }
 
 .sig-line {
     width: 100%;
     height: 1px;
     background: #111;
-    margin: 0.2cqw 0;
+    margin: 2pt 0;
 }
 
 .footer-sigs p {
     margin: 0;
-    font-size: 1.4cqw;
+    font-size: 9pt;
     font-weight: 700;
 }
 
 .sig-inst {
-    font-size: 1.1cqw !important;
+    font-size: 7pt !important;
 }
 
 .transcript-verification-note {
@@ -291,7 +290,7 @@
     text-align: center;
     color: #e11d48;
     font-weight: 700;
-    font-size: 1.2cqw;
+    font-size: 9pt;
 }
 
 .transcript-actions {
@@ -311,7 +310,6 @@
     html,
     body {
         width: 210mm;
-        height: 297mm;
         margin: 0;
         background: white;
     }
@@ -321,29 +319,26 @@
         -webkit-print-color-adjust: exact;
     }
 
-    .transcript-screen,
-    .transcript-stack,
-    .transcript-page {
-        width: 210mm;
-        height: 297mm;
-        margin: 0;
+    .transcript-screen {
         padding: 0;
+        min-height: 0;
+        background: white;
     }
 
-    .transcript-screen {
-        min-height: 0;
-        overflow: hidden;
-        background: white;
+    .transcript-actions {
+        display: none !important;
     }
 
     .transcript-stack {
         display: block;
+        width: 210mm;
     }
 
     .transcript-page {
-        break-after: page;
+        width: 210mm;
+        height: 297mm;
         box-shadow: none;
         page-break-after: always;
-        aspect-ratio: auto;
+        break-after: page;
     }
 }

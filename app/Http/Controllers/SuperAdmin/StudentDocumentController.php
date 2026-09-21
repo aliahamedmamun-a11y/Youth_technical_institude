@@ -28,8 +28,11 @@ class StudentDocumentController extends Controller
         'registration-card' => 'Registration Card',
         'student-id' => 'Student ID Card',
         'certificate' => 'Certificate',
+        'certificate-one' => 'Certificate One',
         'testimonial' => 'Testimonial',
         'transcript' => 'Transcript',
+        'transcript-one' => 'Transcript One',
+        'transcript-two' => 'Transcript Two',
         'forwarding-letter' => 'Forwarding Letter',
         'results' => 'Results',
     ];
@@ -75,11 +78,11 @@ class StudentDocumentController extends Controller
             $documentData = [...$documentData, ...$this->admitCardData($student, $qrCode)];
         }
 
-        if ($document === 'registration-card') {
+        if ($document === 'registration-card' || $document === 'student-id') {
             $documentData = [...$documentData, ...$this->registrationCardData($student, $qrCode)];
         }
 
-        if ($document === 'transcript') {
+        if ($document === 'transcript' || $document === 'transcript-one' || $document === 'transcript-two') {
             $documentData = [
                 ...$documentData,
                 ...$this->transcriptData($student, $resultQrCode),

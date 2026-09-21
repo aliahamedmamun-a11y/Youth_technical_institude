@@ -31,6 +31,7 @@ class Student extends Model
         'upazila',
         'passport_nid_number',
         'education_qualification',
+        'duration',
 
         'start_month',
         'end_month',

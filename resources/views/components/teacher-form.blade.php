@@ -42,7 +42,7 @@
             <label class="{{ $labelClass }}">Teacher Photo</label>
             <div class="relative group aspect-square size-40 rounded-2xl border-2 border-dashed border-white/10 bg-[#071c2c]/50 flex flex-col items-center justify-center p-4 transition-all hover:border-emerald-500/50 cursor-pointer overflow-hidden">
                 @if ($teacher?->image_path)
-                    <img id="teacher-preview" src="{{ Storage::disk('public')->url($teacher->image_path) }}"
+                    <img id="teacher-preview" src="{{ asset('storage/' . $teacher->image_path) }}"
                         class="absolute inset-0 h-full w-full object-cover opacity-60 group-hover:opacity-80 transition-all">
                 @else
                     <img id="teacher-preview" src="#" class="absolute inset-0 h-full w-full object-cover hidden opacity-60 group-hover:opacity-80 transition-all">

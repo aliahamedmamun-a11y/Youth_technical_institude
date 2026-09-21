@@ -55,7 +55,7 @@
             <label class="{{ $labelClass }}">Entry image</label>
             <div class="relative group aspect-video rounded-2xl border-2 border-dashed border-white/10 bg-[#071c2c]/50 flex flex-col items-center justify-center p-4 transition-all hover:border-blue-500/50 cursor-pointer overflow-hidden">
                 @if ($about->image_path)
-                    <img id="about-preview" src="{{ Storage::disk('public')->url($about->image_path) }}"
+                    <img id="about-preview" src="{{ asset('storage/' . $about->image_path) }}"
                         class="absolute inset-0 h-full w-full object-cover opacity-40 group-hover:opacity-60 transition-all duration-500">
                 @else
                     <img id="about-preview" src="#" class="absolute inset-0 h-full w-full object-cover hidden opacity-40 group-hover:opacity-60 transition-all duration-500">

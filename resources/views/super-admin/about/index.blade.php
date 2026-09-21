@@ -62,7 +62,7 @@
                             <div class="flex items-start gap-4">
                                 @if($about->image_path)
                                     <div class="size-20 shrink-0 overflow-hidden rounded-2xl border-2 border-white/5 bg-slate-800">
-                                        <img src="{{ Storage::disk('public')->url($about->image_path) }}" class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                        <img src="{{ asset('storage/' . $about->image_path) }}" class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500">
                                     </div>
                                 @endif
                                 <div class="min-w-0 flex-1">

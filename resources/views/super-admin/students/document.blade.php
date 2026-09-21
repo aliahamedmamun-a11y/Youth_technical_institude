@@ -18,7 +18,7 @@
         :qr-code="$registrationCardQrCode"
         :qr-url="$registrationCardQrUrl"
     />
-@elseif ($document === 'certificate')
+@elseif ($document === 'certificate' || $document === 'certificate-one')
     <x-certificate
         :student="$student"
         :latest-result="$latestResult"
@@ -31,7 +31,12 @@
         :latest-result="$latestResult"
         :cumulative-gpa="$cumulativeGpa"
     />
-@elseif ($document === 'transcript')
+@elseif ($document === 'student-id')
+    <x-student-id
+        :student="$student"
+        :qr-code="$registrationCardQrCode ?? null"
+    />
+@elseif ($document === 'transcript' || $document === 'transcript-one' || $document === 'transcript-two')
     <x-academic-transcript
         :student="$student"
         :pages="$transcriptPages"

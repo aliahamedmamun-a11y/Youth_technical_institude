@@ -82,9 +82,33 @@
             {{-- Main Content Area --}}
             <main class="min-w-0 flex-1 p-6 lg:p-12">
                 @if (session('status'))
-                    <div class="mb-6 rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm font-bold text-emerald-400 shadow-sm backdrop-blur-sm" role="status">
-                        {{ session('status') }}
+                    <div id="status-popup" class="fixed top-24 right-6 z-50 transform transition-all duration-500 ease-out translate-x-[calc(100%+24px)]">
+                        <div class="flex items-center gap-5 rounded-[2rem] border border-white/20 bg-[#03224c]/90 p-5 shadow-2xl backdrop-blur-xl ring-1 ring-white/10 min-w-[340px]">
+                            <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
+                                <svg viewBox="0 0 24 24" class="size-7" fill="none" stroke="currentColor" stroke-width="3">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-[#6cb2eb]">System Notification</h4>
+                                <p class="mt-1 text-sm font-black text-white">{{ session('status') }}</p>
+                            </div>
+                            <button onclick="document.getElementById('status-popup').classList.add('translate-x-[calc(100%+24px)]')" class="text-slate-500 transition hover:text-white">
+                                <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                        </div>
                     </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const popup = document.getElementById('status-popup');
+                            setTimeout(() => {
+                                popup.classList.remove('translate-x-[calc(100%+24px)]');
+                            }, 300);
+                            setTimeout(() => {
+                                popup.classList.add('translate-x-[calc(100%+24px)]');
+                            }, 6000);
+                        });
+                    </script>
                 @endif
 
                 <div data-admin-workspace>

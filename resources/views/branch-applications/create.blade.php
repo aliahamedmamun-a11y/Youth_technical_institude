@@ -19,7 +19,33 @@
 
         <main id="main-content" class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
             <section class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-emerald-950 via-green-800 to-emerald-700 px-6 py-8 text-white shadow-2xl sm:px-10 sm:py-12 lg:px-14"><div class="absolute -right-20 -top-24 size-72 rounded-full border-[40px] border-emerald-300/10"></div><div class="relative grid items-center gap-8 lg:grid-cols-[1fr_auto_1fr]"><div class="flex items-center gap-4"><img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="size-20 rounded-full bg-white p-1 shadow-lg sm:size-28"><div><p class="text-lg font-black uppercase tracking-wide sm:text-2xl">Bangladesh National Youth</p><p class="text-sm font-bold uppercase tracking-[.12em] text-emerald-200 sm:text-base">Technical Institute</p><p class="mt-2 text-xs text-emerald-100">Empowering Youth, Building Future</p></div></div><div class="text-center"><div class="mb-3 text-emerald-200">◆</div><h1 class="text-3xl font-black uppercase tracking-tight sm:text-5xl">Branch Registration</h1><p class="mt-3 font-medium text-emerald-100">Build Your Future With BNYTI</p></div><div class="hidden justify-self-end rounded-2xl border border-white/20 bg-white/10 p-5 text-right backdrop-blur sm:block"><p class="text-xs font-bold uppercase tracking-widest text-emerald-200">{{ now()->format('d F Y') }}</p><p class="mt-2 text-lg font-black">{{ now()->format('l') }}</p><p class="mt-1 text-sm text-emerald-100">{{ now()->format('h:i A') }} · Local Time</p></div></div><div class="relative mt-8 grid gap-3 rounded-2xl border border-white/20 bg-white/10 p-4 text-center backdrop-blur sm:grid-cols-4">@foreach ([['Secure Registration', 'Your information is safe'], ['Verified Partnership', 'Government approved'], ['Approved Branch', 'Trusted learning center'], ['Nationwide Network', '250+ branches across Bangladesh']] as [$title, $body])<div class="border-white/15 px-3 sm:border-r sm:last:border-r-0"><p class="text-xs font-black uppercase tracking-wide">{{ $title }}</p><p class="mt-1 text-xs text-emerald-100">{{ $body }}</p></div>@endforeach</div></section>
-            @if (session('status'))<div class="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 font-bold text-emerald-800">{{ session('status') }}</div>@endif
+
+            @if (session('status'))
+                <div id="status-popup" class="fixed top-8 right-6 z-[110] transform transition-all duration-500 ease-out translate-x-[calc(100%+24px)]">
+                    <div class="flex items-center gap-5 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-2xl ring-1 ring-slate-900/5 min-w-[340px] dark:bg-deep dark:border-white/10">
+                        <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400">
+                            <svg viewBox="0 0 24 24" class="size-7" fill="none" stroke="currentColor" stroke-width="3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 dark:text-[#6cb2eb]">System Notification</h4>
+                            <p class="mt-1 text-sm font-black text-slate-900 dark:text-white">{{ session('status') }}</p>
+                        </div>
+                        <button onclick="document.getElementById('status-popup').classList.add('translate-x-[calc(100%+24px)]')" class="text-slate-400 transition hover:text-slate-900 dark:hover:text-white">
+                            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const popup = document.getElementById('status-popup');
+                        setTimeout(() => popup.classList.remove('translate-x-[calc(100%+24px)]'), 400);
+                        setTimeout(() => popup.classList.add('translate-x-[calc(100%+24px)]'), 7000);
+                    });
+                </script>
+            @endif
+
             <div class="mt-7"><x-branch-application-form :action="route('branch-applications.store')" /></div>
         </main>
         <footer class="mt-8 bg-emerald-950 text-white"><div class="mx-auto grid max-w-7xl gap-4 px-4 py-7 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">@foreach ([['Trusted & Verified', 'Government Registered'], ['Quality Technical Education', 'Practical & Skill Based'], ['Nationwide Network', '250+ branches across Bangladesh'], ['Support 24/7', '+880 9696-481628']] as [$title, $body])<div class="flex items-center gap-3 border-white/15 sm:border-r sm:last:border-r-0"><span class="grid size-10 shrink-0 place-items-center rounded-full bg-emerald-700 text-emerald-100">✓</span><span><strong class="block text-sm">{{ $title }}</strong><small class="text-emerald-200">{{ $body }}</small></span></div>@endforeach</div><div class="border-t border-white/10 px-4 py-4 text-center text-xs text-emerald-200">© {{ date('Y') }} Bangladesh National Youth Technical Institute. All rights reserved.</div></footer>

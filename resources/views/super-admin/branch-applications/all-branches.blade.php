@@ -132,28 +132,28 @@
                                     <td class="px-4 py-5">
                                         <div class="flex justify-center">
                                             <div class="size-11 overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-lg">
-                                                <img src="{{ $branch->director_photo_path ? Storage::disk('public')->url($branch->director_photo_path) : asset('images/placeholder-avatar.png') }}" class="size-full object-cover">
+                                                <img src="{{ $branch->director_photo_path ? asset('storage/' . $branch->director_photo_path) : asset('images/placeholder-avatar.png') }}" class="size-full object-cover">
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-4 py-5">
                                         <div class="flex justify-center">
                                             <div class="size-11 overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-lg">
-                                                <img src="{{ $branch->institute_photo_path ? Storage::disk('public')->url($branch->institute_photo_path) : asset('images/placeholder-institute.png') }}" class="size-full object-cover">
+                                                <img src="{{ $branch->institute_photo_path ? asset('storage/' . $branch->institute_photo_path) : asset('images/placeholder-institute.png') }}" class="size-full object-cover">
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-4 py-5">
                                         <div class="flex justify-center">
                                             <div class="size-11 overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-lg">
-                                                <img src="{{ $branch->nid_photo_path ? Storage::disk('public')->url($branch->nid_photo_path) : asset('images/placeholder-doc.png') }}" class="size-full object-cover">
+                                                <img src="{{ $branch->nid_photo_path ? asset('storage/' . $branch->nid_photo_path) : asset('images/placeholder-doc.png') }}" class="size-full object-cover">
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-4 py-5">
                                         <div class="flex justify-center">
                                             <div class="size-11 overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-lg">
-                                                <img src="{{ $branch->director_signature_path ? Storage::disk('public')->url($branch->director_signature_path) : asset('images/placeholder-sig.png') }}" class="size-full object-cover brightness-0 invert">
+                                                <img src="{{ $branch->director_signature_path ? asset('storage/' . $branch->director_signature_path) : asset('images/placeholder-sig.png') }}" class="size-full object-cover brightness-0 invert">
                                             </div>
                                         </div>
                                     </td>
@@ -169,16 +169,6 @@
                     </table>
                 </div>
             </div>
-
-            @if($branches->hasPages())
-                <div class="mt-8">
-                    {{ $branches->links() }}
-                </div>
-            @endif
-        </div>
-    </div>
-</x-dashboard-shell>
-
 
             @if($branches->hasPages())
                 <div class="mt-8">

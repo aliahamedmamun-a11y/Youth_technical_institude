@@ -18,15 +18,28 @@
         <article class="admit-card" aria-label="Admit card for {{ $student->name }}">
             <img class="admit-card__template" src="{{ asset('images/admit-card-template.png') }}" alt="">
 
-            <p class="admit-card__serial"><span>Serial No.</span> {{ $serial }}</p>
+            <div class="admit-card__header">
+                <p class="admit-card__approved">Approved by Govt. of The People's Republic of Bangladesh</p>
+                <h2 class="admit-card__title-en">Bangladesh National Technical Education Institute</h2>
+                <h2 class="admit-card__title-bn">বাংলাদেশ জাতীয় কারিগরি শিক্ষা ইনস্টিটিউট</h2>
+                <div class="admit-card__badge-wrapper">
+                    <span class="admit-card__badge">Admit Card</span>
+                </div>
+            </div>
+
+            <div class="admit-card__logo">
+                <img src="{{ asset('images/Logo.png') }}" alt="BNTEI Logo">
+                <p>www.bntei.com</p>
+            </div>
+
+            <p class="admit-card__serial"><span>Serial No.</span> <span class="admit-card__serial-number">{{ $serial }}</span></p>
 
             <dl class="admit-card__student-details" aria-label="Student information">
-                <div><dt>Institute Code</dt><dd>{{ $instituteCode }}</dd></div>
                 <div><dt>Name of the Institute</dt><dd>{{ $instituteName }}</dd></div>
                 <div><dt>Name of the Student</dt><dd>{{ $student->name }}</dd></div>
                 <div><dt>Father's Name</dt><dd>{{ $student->father_name ?? '—' }}</dd></div>
                 <div><dt>Mother's Name</dt><dd>{{ $student->mother_name ?? '—' }}</dd></div>
-                <div><dt>Date of Birth</dt><dd>{{ $student->date_of_birth?->format('d M Y') ?? '—' }}</dd></div>
+                <div><dt>Date of Birth</dt><dd>{{ $student->date_of_birth?->format('Y-m-d') ?? '—' }}</dd></div>
                 <div><dt>Session</dt><dd>{{ $student->session ?? '—' }}</dd></div>
                 <div><dt>Subject Name</dt><dd>{{ $student->course?->name ?? '—' }}</dd></div>
             </dl>
@@ -51,10 +64,25 @@
                 <div class="admit-card__examinee-type"><dt>Type of the Examinee</dt><dd>{{ $examineeType }}</dd></div>
             </dl>
 
+            <div class="admit-card__directions">
+                <h3>Directions:</h3>
+                <ol>
+                    <li>The Examinee must bring the Registration Card along with the Admit Card in the examination hall.</li>
+                    <li>The examinee must sign in the attendance sheet otherwise examinee will be treated as absent.</li>
+                </ol>
+            </div>
+
             <a class="admit-card__qr" href="{{ $qrUrl }}" aria-label="Open institute website">
                 <img src="{{ $qrCode }}" alt="QR code for {{ $qrUrl }}">
                 <span>Scan to Verify</span>
             </a>
+
+            <div class="admit-card__signature">
+                <div class="admit-card__signature-placeholder">Saiful</div>
+                <div class="admit-card__signature-line"></div>
+                <p>Controller of Examinations</p>
+                <p>Bangladesh National Technical Education Institute</p>
+            </div>
 
             <p class="admit-card__printing-date">Printing Date: {{ $printedAt->format('j M Y') }}</p>
         </article>

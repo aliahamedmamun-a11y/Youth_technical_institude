@@ -1,4 +1,4 @@
-<x-dashboard-shell 
+<x-dashboard-shell
     :title="$student->name"
     eyebrow="Student profile"
     :description="($student->registration_number ?? 'Student record').' · '.$student->course->name"
@@ -17,13 +17,11 @@
 
 
                     @if ($student->image_path)
-
-                        <img 
-                            src="{{ Storage::disk('public')->url($student->image_path) }}"
+                        <img
+                            src="{{ asset('storage/' . $student->image_path) }}"
                             alt="Photo of {{ $student->name }}"
                             class="size-20 rounded-2xl object-cover"
                         >
-
                     @endif
 
 
@@ -92,7 +90,7 @@
 
                         <dd class="mt-2 font-bold text-slate-900">
 
-                            {{ 
+                            {{
                                 $value instanceof \Carbon\CarbonInterface
                                 ? $value->format('d M Y')
                                 : ($value ?: '—')
@@ -131,7 +129,7 @@
             <div class="mt-8 flex flex-wrap gap-3">
 
 
-                <a 
+                <a
                     href="{{ route('super-admin.students.edit', $student) }}"
                     class="rounded-full bg-emerald-700 px-5 py-3 font-black text-white"
                 >
@@ -176,7 +174,7 @@
             <div class="mt-4 grid gap-2">
 
 
-                <a 
+                <a
                     href="{{ route('super-admin.students.semester-enrollments.index', $student) }}"
                     class="rounded-xl bg-emerald-50 px-4 py-3 text-sm font-black text-emerald-700 hover:bg-emerald-100"
                 >
@@ -185,7 +183,7 @@
 
 
 
-                <a 
+                <a
                     href="{{ route('super-admin.students.results.index', $student) }}"
                     class="rounded-xl bg-blue-50 px-4 py-3 text-sm font-black text-blue-700 hover:bg-blue-100"
                 >
@@ -206,7 +204,7 @@
                 ] as $document => $label)
 
 
-                    <a 
+                    <a
                         href="{{ route('super-admin.students.documents.show', [$student, $document]) }}"
                         class="rounded-xl bg-slate-50 px-4 py-3 text-sm font-black text-slate-700 hover:bg-emerald-50 hover:text-emerald-800"
                     >

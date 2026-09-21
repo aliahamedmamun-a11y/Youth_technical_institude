@@ -46,7 +46,7 @@
                     <div class="flex items-center justify-between p-6 transition-colors hover:bg-white/5">
                         <div class="flex items-center gap-4">
                             @if($card->image_path)
-                                <img src="{{ Storage::disk('public')->url($card->image_path) }}" class="size-10 rounded-full object-cover border border-white/10">
+                                <img src="{{ asset('storage/' . $card->image_path) }}" class="size-10 rounded-full object-cover border border-white/10">
                             @endif
                             <p class="text-sm font-black text-white">
                                 {{ $card->name }} <span class="mx-2 text-slate-500">-</span>

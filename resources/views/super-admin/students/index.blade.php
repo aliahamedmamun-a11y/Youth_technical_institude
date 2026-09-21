@@ -29,10 +29,11 @@
                                 <th class="px-3 py-4 text-center">ADMIT-CARD</th>
                                 <th class="px-3 py-4 text-center">REGISTRATION</th>
                                 <th class="px-3 py-4 text-center">CERTIFICATE</th>
+                                <th class="px-3 py-4 text-center">CERTIFICATE ONE</th>
                                 <th class="px-3 py-4 text-center">TRANSCRIPT</th>
-                                <th class="px-3 py-4 text-center">TRANSCRIPTONE</th>
-                                <th class="px-3 py-4 text-center">TRANSCRIPTTWO</th>
-                                <th class="px-3 py-4 text-center">NIDCARD</th>
+                                <th class="px-3 py-4 text-center">TRANSCRIPT ONE</th>
+                                <th class="px-3 py-4 text-center">TRANSCRIPT TWO</th>
+                                <th class="px-3 py-4 text-center">NID CARD</th>
                                 <th class="px-3 py-4 text-center text-[#ff4d94]">CERT STATUS</th>
                                 <th class="px-3 py-4 text-center">TRANS STATUS</th>
                                 <th class="px-3 py-4 text-center">TRANS-ONE STATUS</th>
@@ -74,7 +75,7 @@
                                     <td class="px-3 py-4">
                                         <div class="size-10 overflow-hidden rounded-md border border-white/10 bg-slate-800 shadow-lg">
                                             @if($student->image_path)
-                                                <img src="{{ Storage::disk('public')->url($student->image_path) }}" alt="{{ $student->name }}" class="size-full object-cover">
+                                                <img src="{{ asset('storage/' . $student->image_path) }}" alt="{{ $student->name }}" class="size-full object-cover">
                                             @else
                                                 <div class="flex size-full items-center justify-center text-[8px] text-slate-600">No Img</div>
                                             @endif
@@ -120,16 +121,16 @@
                                         </a>
                                     </td>
 
-                                    {{-- TRANSCRIPT --}}
+                                    {{-- CERTIFICATE ONE --}}
                                     <td class="px-3 py-4 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'transcript']) }}"
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'certificate-one']) }}"
                                            onclick="downloadPdf(event, this.href)"
                                            class="inline-block rounded-md bg-[#198754] px-3 py-1.5 text-[9px] font-black text-white shadow-lg transition hover:bg-green-800">
                                             Certificate One
                                         </a>
                                     </td>
 
-                                    {{-- TRANSCRIPTONE --}}
+                                    {{-- TRANSCRIPT --}}
                                     <td class="px-3 py-4 text-center">
                                         <a href="{{ route('super-admin.students.documents.show', [$student, 'transcript']) }}"
                                            onclick="downloadPdf(event, this.href)"
@@ -138,12 +139,21 @@
                                         </a>
                                     </td>
 
-                                    {{-- TRANSCRIPTTWO --}}
+                                    {{-- TRANSCRIPT ONE --}}
                                     <td class="px-3 py-4 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'transcript']) }}"
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'transcript-one']) }}"
                                            onclick="downloadPdf(event, this.href)"
                                            class="inline-block rounded-md bg-[#17a2b8] px-3 py-1.5 text-[9px] font-black text-white shadow-lg transition hover:bg-cyan-700">
-                                            TranscriptOne
+                                            Transcript One
+                                        </a>
+                                    </td>
+
+                                    {{-- TRANSCRIPT TWO --}}
+                                    <td class="px-3 py-4 text-center">
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'transcript-two']) }}"
+                                           onclick="downloadPdf(event, this.href)"
+                                           class="inline-block rounded-md bg-[#17a2b8] px-3 py-1.5 text-[9px] font-black text-white shadow-lg transition hover:bg-cyan-700">
+                                            Transcript Two
                                         </a>
                                     </td>
 
@@ -152,7 +162,7 @@
                                         <a href="{{ route('super-admin.students.documents.show', [$student, 'registration-card']) }}"
                                            onclick="downloadPdf(event, this.href)"
                                            class="inline-block rounded-md bg-[#17a2b8] px-3 py-1.5 text-[9px] font-black text-white shadow-lg transition hover:bg-cyan-700">
-                                            TranscriptTwo
+                                            NID Card
                                         </a>
                                     </td>
 

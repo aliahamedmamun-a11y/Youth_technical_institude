@@ -107,7 +107,7 @@
 
                 @if($course?->image_path)
                     <div class="mt-4">
-                        <img src="{{ Storage::disk('public')->url($course->image_path) }}" class="mx-auto h-32 rounded-lg object-cover">
+                        <img src="{{ asset('storage/' . $course->image_path) }}" class="mx-auto h-32 rounded-lg object-cover">
                     </div>
                 @endif
             </div>

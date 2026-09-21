@@ -24,7 +24,7 @@
                                 <tr class="group transition-colors hover:bg-white/5">
                                     <td class="px-6 py-4">
                                         <div class="size-11 overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-lg">
-                                            <img src="{{ $application->director_photo_path ? Storage::disk('public')->url($application->director_photo_path) : asset('images/placeholder-avatar.png') }}"
+                                            <img src="{{ $application->director_photo_path ? asset('storage/' . $application->director_photo_path) : asset('images/placeholder-avatar.png') }}"
                                                 class="size-full object-cover">
                                         </div>
                                     </td>

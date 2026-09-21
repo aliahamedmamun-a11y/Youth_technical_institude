@@ -21,14 +21,31 @@
             <article class="transcript-page" data-transcript-page aria-label="Academic transcript page {{ $loop->iteration }} of {{ $loop->count }} for {{ $student->name }}">
                 <img class="transcript-template" src="{{ $transcriptTemplateUrl }}" alt="">
 
-                <p class="transcript-serial"><span>Serial No:</span> {{ $page['serial'] ?? '—' }}</p>
+                <header class="transcript-header">
+                    <h2 class="transcript-institute-title">Bangladesh National Technical Education Institute</h2>
+                    <p class="transcript-approved">Approved by Govt. of The People's Republic of Bangladesh</p>
+                    <p class="transcript-web">www.bntei.com</p>
+                    <div class="transcript-badge-wrapper">
+                        <span class="transcript-badge">Academic Transcript</span>
+                    </div>
+                </header>
 
-                <h2 class="transcript-semester">
-                    {{ $result?->semester ?? 'No Published Result' }}{{ $page['isContinuation'] ? ' (Cont.)' : '' }}
-                </h2>
+                <div class="transcript-crest">
+                    <img src="{{ asset('images/Logo.png') }}" alt="BNTEI Crest">
+                </div>
+
+                <div class="transcript-qr-top">
+                    @if($page['verificationQrCode'])
+                        <img src="{{ $page['verificationQrCode'] }}" alt="QR Code">
+                    @endif
+                </div>
+
+                <p class="transcript-serial"><span>Serial No:</span> <span class="transcript-serial-number">{{ $page['serial'] ?? '036564' }}</span></p>
 
                 <table class="transcript-grading-scale" aria-label="Grading system">
-                    <caption>Grading System</caption>
+                    <thead>
+                        <tr><th colspan="3">Grading System</th></tr>
+                    </thead>
                     <tbody>
                         @foreach ($gradingScale as $gradeBand)
                             <tr>
@@ -40,71 +57,86 @@
                     </tbody>
                 </table>
 
-                <dl class="transcript-student-values" aria-label="Student and academic information">
-                    <div><dt>Name of Student</dt><dd>{{ $student->name ?? '—' }}</dd></div>
-                    <div><dt>Father's Name</dt><dd>{{ $student->father_name ?? '—' }}</dd></div>
-                    <div><dt>Mother's Name</dt><dd>{{ $student->mother_name ?? '—' }}</dd></div>
-                    <div><dt>Roll No</dt><dd>{{ $student->roll_number ?? '—' }}</dd></div>
-                    <div><dt>Registration No</dt><dd>{{ $student->registration_number ?? '—' }}</dd></div>
-                    <div><dt>Institution</dt><dd>{{ $instituteName }}</dd></div>
-                    <div><dt>Technology</dt><dd>{{ $student->course?->name ?? '—' }}</dd></div>
-                    <div><dt>Course Duration</dt><dd>{{ $student->duration ?? $student->course?->duration ?? '—' }}</dd></div>
-                    <div><dt>Session</dt><dd>{{ $result?->session ?? $student->session ?? '—' }}</dd></div>
-                    <div><dt>Final CGPA</dt><dd>{{ $cumulativeGpa !== null ? number_format((float) $cumulativeGpa, 2) : '—' }}</dd></div>
-                    <div><dt>Letter Grade</dt><dd>{{ $letterGrade ?? '—' }}</dd></div>
-                </dl>
+                <div class="transcript-student-info">
+                    <dl class="transcript-details-left">
+                        <div><dt>Name of Student</dt><dd>: {{ $student->name }}</dd></div>
+                        <div><dt>Father's Name</dt><dd>: {{ $student->father_name ?? '—' }}</dd></div>
+                        <div><dt>Mother's Name</dt><dd>: {{ $student->mother_name ?? '—' }}</dd></div>
+                        <div><dt>Institution</dt><dd>: {{ $instituteName }}</dd></div>
+                        <div><dt>Technology</dt><dd>: {{ $student->course?->name ?? '—' }}</dd></div>
+                        <div><dt>Final CGPA</dt><dd>: {{ $cumulativeGpa !== null ? number_format((float) $cumulativeGpa, 2) : '—' }}</dd></div>
+                    </dl>
+                    <dl class="transcript-details-right">
+                        <div><dt>Roll No</dt><dd>: {{ $student->roll_number ?? '—' }}</dd></div>
+                        <div><dt>Registration No</dt><dd>: {{ $student->registration_number ?? '—' }}</dd></div>
+                        <div><dt>Course Duration</dt><dd>: {{ $student->duration ?? $student->course?->duration ?? '—' }}</dd></div>
+                        <div><dt>Session</dt><dd>: {{ $result?->session ?? $student->session ?? '—' }}</dd></div>
+                        <div><dt>Earned Credit</dt><dd>: 0.00</dd></div>
+                        <div><dt>Letter Grade</dt><dd>: {{ $letterGrade ?? '—' }}</dd></div>
+                    </dl>
+                </div>
 
-                @if ($result)
-                    <table class="transcript-subject-values">
-                        <caption class="sr-only">Subjects for {{ $result->semester }}</caption>
-                        <thead>
-                            <tr>
-                                <th scope="col">Subjects<br>Code</th>
-                                <th scope="col">Subjects Name</th>
-                                <th scope="col">Credit<br>Hours</th>
-                                <th scope="col">Letter<br>Grade</th>
-                                <th scope="col">Grade<br>Points</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for ($rowIndex = 0; $rowIndex < 7; $rowIndex++)
-                                @php($subject = $page['subjects']->get($rowIndex))
-                                <tr data-transcript-subject-row>
-                                    <td>{{ $subject?->code }}</td>
-                                    <td>{{ $subject?->title }}</td>
-                                    <td>{{ $subject ? number_format((float) $subject->credit, 2) : '' }}</td>
-                                    <td>{{ $subject?->grade }}</td>
-                                    <td>{{ $subject?->grade_point !== null ? number_format((float) $subject->grade_point, 2) : '' }}</td>
-                                </tr>
-                            @endfor
-                        </tbody>
-                    </table>
-
-                    @if ($page['isSemesterFinal'])
-                        <dl class="transcript-semester-summary" aria-label="Semester result summary">
-                            <div>
-                                <dt>{{ $result->semester }} GPA</dt>
-                                <dd>{{ $result->gpa !== null ? number_format((float) $result->gpa, 2) : '—' }}</dd>
+                <div class="transcript-tables-container">
+                    {{-- This container would hold the 8 semester tables in 2 columns as per the image --}}
+                    {{-- For now, rendering the current page's results as one of those tables --}}
+                    @if ($result)
+                        <div class="transcript-semester-table">
+                            <div class="semester-header">
+                                <span>{{ $result->semester }}</span>
+                                <span>GPA: {{ number_format((float) $result->gpa, 2) }}</span>
+                                <span>Grade: {{ $result->overall_grade }}</span>
                             </div>
-                            <div>
-                                <dt>Result</dt>
-                                <dd>{{ $page['outcome'] ?? '—' }}</dd>
-                            </div>
-                        </dl>
+                            <table class="transcript-subject-values">
+                                <thead>
+                                    <tr>
+                                        <th>Sub Code</th>
+                                        <th>Subject Name</th>
+                                        <th>Credit</th>
+                                        <th>Grade</th>
+                                        <th>Point</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for ($rowIndex = 0; $rowIndex < 6; $rowIndex++)
+                                        @php($subject = $page['subjects']->get($rowIndex))
+                                        <tr>
+                                            <td>{{ $subject?->code }}</td>
+                                            <td>{{ $subject?->title }}</td>
+                                            <td>{{ $subject ? number_format((float) $subject->credit, 2) : '' }}</td>
+                                            <td>{{ $subject?->grade }}</td>
+                                            <td>{{ $subject?->grade_point !== null ? number_format((float) $subject->grade_point, 2) : '' }}</td>
+                                        </tr>
+                                    @endfor
+                                </tbody>
+                            </table>
+                        </div>
                     @endif
+                </div>
 
-                    @if ($page['verificationQrCode'] && $page['verificationUrl'])
-                        <a class="transcript-verification" href="{{ $page['verificationUrl'] }}" aria-label="Verify {{ $result->semester }} result">
-                            <img src="{{ $page['verificationQrCode'] }}" alt="Verification QR code">
-                            <span>Scan the QR code to verify this marksheet.</span>
-                            <small>{{ $page['verificationReference'] }}</small>
-                        </a>
-                    @endif
-                @else
-                    <section class="transcript-no-results">
-                        <p>No published results available</p>
-                    </section>
-                @endif
+                <footer class="transcript-footer">
+                    <div class="footer-qr">
+                        @if($page['verificationQrCode'])
+                            <img src="{{ $page['verificationQrCode'] }}" alt="QR Code">
+                        @endif
+                        <p>Result Published: {{ $result?->published_at?->format('d-M-Y') ?? '15-Feb-2024' }}</p>
+                    </div>
+                    <div class="footer-sigs">
+                        <div class="sig-compared">
+                            <div class="sig-placeholder">Jahid</div>
+                            <div class="sig-line"></div>
+                            <p>Compared By</p>
+                        </div>
+                        <div class="sig-controller">
+                            <div class="sig-placeholder">Saiful</div>
+                            <div class="sig-line"></div>
+                            <p>Controller of Examinations</p>
+                            <p class="sig-inst">Bangladesh National Technical Education Institute</p>
+                        </div>
+                    </div>
+                </footer>
+                <div class="transcript-verification-note">
+                    For verification please visit BNTEI website: www.bntei.com
+                </div>
             </article>
         @endforeach
     </div>

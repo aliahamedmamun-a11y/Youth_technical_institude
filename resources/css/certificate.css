@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
 @font-face {
     font-family: 'Certificate Shelley';
     src: url('./fonts/certificate-shelle.ttf') format('truetype');
@@ -48,7 +50,7 @@
     position: absolute;
     z-index: 10;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     color: #0B1953;
     white-space: nowrap;
@@ -58,10 +60,10 @@
 }
 
 .cert-field--cursive {
-    font-family: 'Certificate Shelley', cursive;
+    font-family: 'Great Vibes', 'Certificate Shelley', cursive;
     font-style: normal;
     font-weight: 400;
-    font-size: 22px; /* Cursive fonts usually need to be larger to be readable */
+    font-size: 26px; /* Great Vibes needs to be slightly larger */
 }
 
 /* Specific positioning to line up perfectly with every dotted line on the template */
@@ -75,7 +77,7 @@
 
 /* 2. Serial No (Middle Left: Serial No: ............) */
 .cert-field--serial {
-    top: 42.75%;
+    top: 42.8%;
     left: 31.0%;
     font-size: 16px;
 }
@@ -95,51 +97,51 @@
 
 /* 5. Father's Name (Son/Daughter of............ Father) */
 .cert-field--father {
-    top: 52.8%;
+    top: 53.8%;
     left: 41.5%;
 }
 
 /* 6. Mother's Name (and............ Mother) */
 .cert-field--mother {
-    top: 57.4%;
+    top: 59.4%;
     left: 31.0%;
 }
 
 /* 7. Institute Name (of............) */
 .cert-field--institute {
-    top: 61.0%;
-    left: 27.0%;
+    top: 65.0%;
+    left: 20.0%;
 }
 
 /* 8. Roll No (bearing Roll No............) */
 .cert-field--roll {
-    top: 67.6%;
+    top: 70.6%;
     left: 35.0%;
     font-size: 16px;
 }
 
 /* 9. Course Name (duly passed the............) */
 .cert-field--course {
-    top: 67.0%;
+    top: 71.0%;
     left: 53.5%;
 }
 
 /* 10. Exam Held Date (Course Examination held in the month of............) */
 .cert-field--exam-held {
-    top: 70.6%;
-    left: 53.0%;
+    top: 76.6%;
+    left: 49.0%;
 }
 
 /* 11. CGPA (and he/she Secured CGPA............) */
 .cert-field--cgpa {
-    top: 70.6%;
-    left: 84.5%;
+    top: 76.6%;
+    left: 84.0%;
 }
 
 /* 12. Publication Date (Date of Publication of Result:............) */
 .cert-field--publication-date {
-    top: 90.0%;
-    left: 25.0%;
+    top: 86.8%;
+    left: 22.0%;
 }
 
 /* QR Code Placement inside the specific left window border */

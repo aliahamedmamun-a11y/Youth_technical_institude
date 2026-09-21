@@ -18,62 +18,64 @@
 
     <div class="certificate-frame">
         <article class="certificate-document" aria-label="Certificate for {{ $student->name }}">
-            {{-- Background certificate template containing pre-printed text and borders --}}
-            <img class="certificate-template" src="{{ asset('images/certificate-template.png') }}" alt="Certificate Template Background">
+            {{-- Template Image provides the background and dotted lines --}}
+            <img class="certificate-template" src="{{ asset('images/certificate-template.png') }}" alt="">
 
-            {{-- QR Code Layer --}}
+            {{-- QR Code in the designated left box --}}
             @if($qrCode)
                 <div class="cert-qr-code">
-                    <img src="{{ $qrCode }}" alt="Verification QR Code" class="w-full h-full">
+                    <img src="{{ $qrCode }}" alt="QR Verification" class="w-full h-full">
                 </div>
             @endif
 
-            {{-- Dynamic Values precisely overlaying the lines --}}
-            <div class="cert-field cert-field--serial" aria-label="Serial Number">
+            {{-- Top Meta Data --}}
+            <div class="cert-field cert-field--serial">
                 {{ $certificateSerial ?? '036564' }}
             </div>
 
-            <div class="cert-field cert-field--reg-no" aria-label="Registration Number">
+            <div class="cert-field cert-field--reg-no">
                 {{ $student->registration_number ?? '50936900' }}
             </div>
 
-            <div class="cert-field cert-field--session" aria-label="Session">
+            <div class="cert-field cert-field--session">
                 {{ $latestResult?->session ?? $student->session ?? '2020 - 2023' }}
             </div>
 
-            <div class="cert-field cert-field--name" aria-label="Student Name">
+            {{-- Main Body Content - Cursive Values --}}
+            <div class="cert-field cert-field--name">
                 {{ $student->name }}
             </div>
 
-            <div class="cert-field cert-field--father" aria-label="Father's Name">
+            <div class="cert-field cert-field--father">
                 {{ $student->father_name ?? '—' }}
             </div>
 
-            <div class="cert-field cert-field--mother" aria-label="Mother's Name">
+            <div class="cert-field cert-field--mother">
                 {{ $student->mother_name ?? '—' }}
             </div>
 
-            <div class="cert-field cert-field--institute" aria-label="Institute Name">
+            <div class="cert-field cert-field--institute">
                 {{ $student->institute_name ?? 'Bangladesh Technical Training Institute' }}
             </div>
 
-            <div class="cert-field cert-field--roll" aria-label="Roll Number">
+            <div class="cert-field cert-field--roll">
                 {{ $student->roll_number ?? '906912' }}
             </div>
 
-            <div class="cert-field cert-field--course" aria-label="Course Name">
+            <div class="cert-field cert-field--course">
                 {{ $student->course?->name ?? 'Diploma in Electrician' }}
             </div>
 
-            <div class="cert-field cert-field--exam-held" aria-label="Examination Held Month/Year">
-                {{ $latestResult?->published_at?->format('M Y') ?? 'Dec 2023' }}
+            <div class="cert-field cert-field--exam-held">
+                {{ $latestResult?->published_at?->format('d M Y') ?? '15 Dec 2023' }}
             </div>
 
-            <div class="cert-field cert-field--cgpa" aria-label="Secured CGPA">
+            <div class="cert-field cert-field--cgpa">
                 {{ $certificateGpa !== null ? number_format((float) $certificateGpa, 2) : '3.75' }}
             </div>
 
-            <div class="cert-field cert-field--publication-date" aria-label="Date of Publication of Result">
+            {{-- Result Publication Date --}}
+            <div class="cert-field cert-field--publication-date">
                 {{ $latestResult?->published_at?->format('d-M-Y') ?? '15-Feb-2024' }}
             </div>
         </article>

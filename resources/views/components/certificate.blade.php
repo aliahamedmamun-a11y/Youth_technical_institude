@@ -28,13 +28,6 @@
                 </div>
             @endif
 
-            {{-- Student Photo --}}
-            @if($student->image_path)
-                <div class="cert-student-photo">
-                    <img src="{{ asset('storage/' . $student->image_path) }}" alt="{{ $student->name }}">
-                </div>
-            @endif
-
             {{-- Top Meta Data --}}
             <div class="cert-field cert-field--serial">
                 {{ $certificateSerial ?? '036564' }}
@@ -49,19 +42,19 @@
             </div>
 
             {{-- Main Body Content - Cursive Values --}}
-            <div class="cert-field cert-field--name">
+            <div class="cert-field cert-field--name cert-field--cursive">
                 {{ $student->name }}
             </div>
 
-            <div class="cert-field cert-field--father">
+            <div class="cert-field cert-field--father cert-field--cursive">
                 {{ $student->father_name ?? '—' }}
             </div>
 
-            <div class="cert-field cert-field--mother">
+            <div class="cert-field cert-field--mother cert-field--cursive">
                 {{ $student->mother_name ?? '—' }}
             </div>
 
-            <div class="cert-field cert-field--institute">
+            <div class="cert-field cert-field--institute cert-field--cursive">
                 {{ $student->institute_name ?? 'Bangladesh Technical Training Institute' }}
             </div>
 
@@ -69,20 +62,20 @@
                 {{ $student->roll_number ?? '906912' }}
             </div>
 
-            <div class="cert-field cert-field--course">
+            <div class="cert-field cert-field--course cert-field--cursive">
                 {{ $student->course?->name ?? 'Diploma in Electrician' }}
             </div>
 
-            <div class="cert-field cert-field--exam-held">
+            <div class="cert-field cert-field--exam-held cert-field--cursive">
                 {{ $latestResult?->published_at?->format('d M Y') ?? '15 Dec 2023' }}
             </div>
 
-            <div class="cert-field cert-field--cgpa">
+            <div class="cert-field cert-field--cgpa cert-field--cursive">
                 {{ $certificateGpa !== null ? number_format((float) $certificateGpa, 2) : '3.75' }}
             </div>
 
             {{-- Result Publication Date --}}
-            <div class="cert-field cert-field--publication-date">
+            <div class="cert-field cert-field--publication-date cert-field--cursive">
                 {{ $latestResult?->published_at?->format('d-M-Y') ?? '15-Feb-2024' }}
             </div>
         </article>

@@ -47,12 +47,14 @@
 .cert-field {
     position: absolute;
     z-index: 10;
-    font-family: 'Certificate Shelley', 'Dancing Script', cursive, serif;
-    font-size: 24pt;
-    font-weight: 500;
-    color: #111;
+    font-family: 'Certificate Shelley', 'Dancing Script', cursive;
+    font-size: 26pt;
+    font-weight: 400;
+    color: #000;
     white-space: nowrap;
-    transform: translateY(-50%);
+    transform: translateY(-75%); /* Lifts the cursive text to sit perfectly on the dotted line */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Specific positioning to line up with the dotted lines on the template */
@@ -83,26 +85,26 @@
 .cert-field--name {
     top: 42.8%;
     left: 42.0%;
-    font-size: 26pt;
-    font-weight: 600;
+    font-size: 34pt; /* Increased size to match the grand calligraphy style of the template */
+    font-weight: 400;
 }
 
 .cert-field--father {
     top: 48.4%;
     left: 38.0%;
-    font-size: 22pt;
+    font-size: 28pt;
 }
 
 .cert-field--mother {
     top: 54.2%;
     left: 22.0%;
-    font-size: 22pt;
+    font-size: 28pt;
 }
 
 .cert-field--institute {
     top: 59.8%;
     left: 20.0%;
-    font-size: 22pt;
+    font-size: 26pt;
 }
 
 .cert-field--roll {

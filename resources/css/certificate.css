@@ -1,6 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cedarville+Cursive&family=Great+Vibes&display=swap');
 
 @font-face {
+    font-family: 'English 111 Vivace';
+    src: url('/fonts/certificate-shelle.ttf') format('truetype'),
+         url('./fonts/certificate-shelle.ttf') format('truetype');
+    font-display: block;
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'English 111 Vivace BT';
+    src: url('/fonts/certificate-shelle.ttf') format('truetype'),
+         url('./fonts/certificate-shelle.ttf') format('truetype');
+    font-display: block;
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
     font-family: 'Certificate Shelley';
     src: url('/fonts/certificate-shelle.ttf') format('truetype'),
          url('./fonts/certificate-shelle.ttf') format('truetype');
@@ -15,6 +33,15 @@
          url('./fonts/certificate-shelle.ttf') format('truetype');
     font-display: block;
     font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Calligri Expanded Italic';
+    src: url('/fonts/certificate-shelle.ttf') format('truetype'),
+         url('./fonts/certificate-shelle.ttf') format('truetype');
+    font-display: block;
+    font-style: italic;
     font-weight: 400;
 }
 
@@ -59,7 +86,7 @@
 .cert-field {
     position: absolute;
     z-index: 10;
-    font-family: 'Certificate Shelley', 'Shelley-AllegroScriptWd', 'Alex Brush', 'Great Vibes', 'Cedarville Cursive', 'Palace Script MT', cursive, serif;
+    font-family: 'English 111 Vivace', 'English 111 Vivace BT', 'Certificate Shelley', 'Shelley-AllegroScriptWd', 'Calligri Expanded Italic', 'Calligri', 'Alex Brush', 'Great Vibes', 'Cedarville Cursive', 'Palace Script MT', cursive, serif;
     font-size: 15px;
     font-weight: 400;
     color: #000000;
@@ -71,7 +98,7 @@
 }
 
 .cert-field--cursive {
-    font-family: 'Certificate Shelley', 'Shelley-AllegroScriptWd', 'Alex Brush', 'Great Vibes', 'Cedarville Cursive', 'Palace Script MT', cursive, serif;
+    font-family: 'English 111 Vivace', 'English 111 Vivace BT', 'Certificate Shelley', 'Shelley-AllegroScriptWd', 'Calligri Expanded Italic', 'Calligri', 'Alex Brush', 'Great Vibes', 'Cedarville Cursive', 'Palace Script MT', cursive, serif;
     font-style: normal;
     font-weight: 400;
     font-size: 32px;

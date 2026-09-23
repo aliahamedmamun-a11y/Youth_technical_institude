@@ -60,10 +60,10 @@
 }
 
 .cert-field--cursive {
-    font-family: 'Certificate Shelley', 'Great Vibes', cursive;
+    font-family: 'Certificate Shelley', Georgia, 'Times New Roman', serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 26px; /* Great Vibes needs to be slightly larger */
+    font-size: 26px;
 }
 
 /* Specific positioning to line up perfectly with every dotted line on the template */

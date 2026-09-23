@@ -24,7 +24,7 @@
     overflow: hidden;
     color: #000;
     background: white;
-    font-family: Arial, sans-serif;
+    font-family: Georgia, 'Times New Roman', serif;
 }
 
 .admit-card__template {
@@ -45,7 +45,7 @@
     color: #000;      /* Pure rich black color */
     white-space: nowrap;
     transform: translateY(-50%);
-    font-family: Arial, sans-serif;
+    font-family: Georgia, 'Times New Roman', serif;
 }
 
 .ac-field--serial {

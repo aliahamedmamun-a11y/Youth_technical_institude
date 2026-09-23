@@ -27,24 +27,6 @@
     font-weight: 400;
 }
 
-@font-face {
-    font-family: 'Shelley-AllegroScriptWd';
-    src: url('/fonts/certificate-shelle.ttf') format('truetype'),
-         url('./fonts/certificate-shelle.ttf') format('truetype');
-    font-display: block;
-    font-style: normal;
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: 'Calligri Expanded Italic';
-    src: url('/fonts/certificate-shelle.ttf') format('truetype'),
-         url('./fonts/certificate-shelle.ttf') format('truetype');
-    font-display: block;
-    font-style: italic;
-    font-weight: 400;
-}
-
 .certificate-screen {
     min-height: 100vh;
     padding: 1.5rem;

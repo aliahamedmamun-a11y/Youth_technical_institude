@@ -228,7 +228,7 @@ test('certificate dynamic values use the dedicated Shelley font', function () {
         ->toBeFile()
         ->and($certificateStyles)
         ->toContain("font-family: 'Certificate Shelley';")
-        ->toContain("font-family: 'Certificate Shelley', 'Shelley-AllegroScriptWd', 'Palace Script MT', 'Palace Script', Georgia, 'Times New Roman', serif;")
+        ->toContain("font-family: 'English 111 Vivace', 'English 111 Vivace BT', 'Certificate Shelley', 'Shelley-AllegroScriptWd', 'Calligri Expanded Italic', 'Calligri', 'Alex Brush', 'Great Vibes', 'Cedarville Cursive', 'Palace Script MT', cursive, serif;")
         ->and(file_get_contents(resource_path('css/admit-card.css')))
         ->not->toContain('Certificate Shelley')
         ->and(file_get_contents(resource_path('css/registration-card.css')))

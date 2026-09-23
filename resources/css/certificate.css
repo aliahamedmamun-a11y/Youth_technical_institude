@@ -52,7 +52,7 @@
     font-family: 'Times New Roman', Times, serif;
     font-size: 15px;
     font-weight: 700;
-    color: #0B1953;
+    color: #000000;
     white-space: nowrap;
     transform: translateY(-70%); /* Lifted slightly to sit on the line */
     -webkit-font-smoothing: antialiased;
@@ -60,7 +60,7 @@
 }
 
 .cert-field--cursive {
-    font-family: 'Great Vibes', 'Certificate Shelley', cursive;
+    font-family: 'Certificate Shelley', 'Great Vibes', cursive;
     font-style: normal;
     font-weight: 400;
     font-size: 26px; /* Great Vibes needs to be slightly larger */

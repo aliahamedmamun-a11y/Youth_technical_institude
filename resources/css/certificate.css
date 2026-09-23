@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 @font-face {
-    font-family: 'Shelley Allegro Script';
+    font-family: 'Certificate Shelley';
     src: url('./fonts/certificate-shelle.ttf') format('truetype');
     font-display: block;
     font-style: normal;
@@ -9,7 +9,7 @@
 }
 
 @font-face {
-    font-family: 'Certificate Shelley';
+    font-family: 'Shelley-AllegroScriptWd';
     src: url('./fonts/certificate-shelle.ttf') format('truetype');
     font-display: block;
     font-style: normal;
@@ -53,13 +53,13 @@
     z-index: 0;
 }
 
-/* Dynamic field styling for handwritten/dotted line values */
+/* Dynamic field styling for handwritten/calligraphy dotted line values */
 .cert-field {
     position: absolute;
     z-index: 10;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Certificate Shelley', 'Shelley-AllegroScriptWd', 'Palace Script MT', 'Palace Script', Georgia, 'Times New Roman', serif;
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 400;
     color: #000000;
     white-space: nowrap;
     transform: translateY(-70%); /* Lifted slightly to sit on the line */
@@ -68,7 +68,7 @@
 }
 
 .cert-field--cursive {
-    font-family: 'Shelley Allegro Script', 'Shelley-AllegroScriptWd', 'Palace Script MT', 'Palace Script', 'Certificate Shelley', Georgia, 'Times New Roman', serif;
+    font-family: 'Certificate Shelley', 'Shelley-AllegroScriptWd', 'Palace Script MT', 'Palace Script', Georgia, 'Times New Roman', serif;
     font-style: normal;
     font-weight: 400;
     font-size: 32px;
@@ -101,9 +101,7 @@
 .cert-field--name {
     top: 48.4%;
     left: 38.5%;
-    font-family: 'Shelley Allegro Script', 'Shelley-AllegroScriptWd', 'Certificate Shelley', cursive, serif;
-    font-size: 42px;
-    font-weight: normal;
+    font-size: 34px;
 }
 
 /* 5. Father's Name (Son/Daughter of............ Father) */

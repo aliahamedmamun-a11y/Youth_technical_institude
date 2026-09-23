@@ -29,15 +29,15 @@
             @endif
 
             {{-- Top Meta Data --}}
-            <div class="cert-field cert-field--serial">
+            <div class="cert-field cert-field--serial cert-field--cursive">
                 {{ $certificateSerial ?? '036564' }}
             </div>
 
-            <div class="cert-field cert-field--reg-no">
+            <div class="cert-field cert-field--reg-no cert-field--cursive">
                 {{ $student->registration_number ?? '50936900' }}
             </div>
 
-            <div class="cert-field cert-field--session">
+            <div class="cert-field cert-field--session cert-field--cursive">
                 {{ $latestResult?->session ?? $student->session ?? '2020 - 2023' }}
             </div>
 
@@ -58,7 +58,7 @@
                 {{ $student->institute_name ?? 'Bangladesh Technical Training Institute' }}
             </div>
 
-            <div class="cert-field cert-field--roll">
+            <div class="cert-field cert-field--roll cert-field--cursive">
                 {{ $student->roll_number ?? '906912' }}
             </div>
 

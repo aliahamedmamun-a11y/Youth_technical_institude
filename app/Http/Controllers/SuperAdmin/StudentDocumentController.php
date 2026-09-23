@@ -78,7 +78,7 @@ class StudentDocumentController extends Controller
             $documentData = [...$documentData, ...$this->admitCardData($student, $qrCode)];
         }
 
-        if ($document === 'registration-card' || $document === 'student-id') {
+        if ($document === 'registration-card' || $document === 'student-id' || $document === 'certificate' || $document === 'certificate-one') {
             $documentData = [...$documentData, ...$this->registrationCardData($student, $qrCode)];
         }
 

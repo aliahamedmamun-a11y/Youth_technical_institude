@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 @font-face {
+    font-family: 'Shelley Allegro Script';
+    src: url('./fonts/certificate-shelle.ttf') format('truetype');
+    font-display: block;
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
     font-family: 'Certificate Shelley';
     src: url('./fonts/certificate-shelle.ttf') format('truetype');
     font-display: block;
@@ -60,7 +68,7 @@
 }
 
 .cert-field--cursive {
-    font-family: 'Palace Script MT', 'Palace Script', 'Certificate Shelley', Georgia, 'Times New Roman', serif;
+    font-family: 'Shelley Allegro Script', 'Shelley-AllegroScriptWd', 'Palace Script MT', 'Palace Script', 'Certificate Shelley', Georgia, 'Times New Roman', serif;
     font-style: normal;
     font-weight: 400;
     font-size: 32px;
@@ -93,7 +101,9 @@
 .cert-field--name {
     top: 48.4%;
     left: 38.5%;
-    font-size: 34px;
+    font-family: 'Shelley Allegro Script', 'Shelley-AllegroScriptWd', 'Certificate Shelley', cursive, serif;
+    font-size: 42px;
+    font-weight: normal;
 }
 
 /* 5. Father's Name (Son/Daughter of............ Father) */

@@ -27,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
+        if (! file_exists(public_path('storage')) && file_exists(storage_path('app/public'))) {
+            @symlink(storage_path('app/public'), public_path('storage'));
+        }
+
         View::composer('components.dashboard-shell', function ($view): void {
             $view->with([
                 'adminNavigation' => config('admin_navigation'),

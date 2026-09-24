@@ -58,9 +58,11 @@ class BranchStudentController extends Controller
     public function edit(Student $student): View
     {
         $student->load('course');
+        $courses = \App\Models\Course::query()->where('is_active', true)->orderBy('name')->get();
 
         return view('students.edit', [
             'student' => $student,
+            'courses' => $courses,
         ]);
     }
 
@@ -69,41 +71,50 @@ class BranchStudentController extends Controller
      * Update student information.
      */
     public function update(Request $request, Student $student): RedirectResponse
-{
-    $validated = $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'father_name' => ['nullable', 'string', 'max:255'],
-        'mother_name' => ['nullable', 'string', 'max:255'],
-        'phone' => ['nullable', 'string', 'max:50'],
-        'email' => ['nullable', 'email', 'max:255'],
-        'gender' => ['nullable', 'string', 'max:50'],
-        'date_of_birth' => ['nullable', 'date'],
-        'address' => ['nullable', 'string'],
-        'district' => ['nullable', 'string', 'max:255'],
-        'upazila' => ['nullable', 'string', 'max:255'],
-        'passport_nid_number' => ['nullable', 'string', 'max:255'],
-        'education_qualification' => ['nullable', 'string', 'max:255'],
+    {
+        $validated = $request->validate([
+            'name' => ['nullable', 'string', 'max:255'],
+            'father_name' => ['nullable', 'string', 'max:255'],
+            'mother_name' => ['nullable', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:50'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'gender' => ['nullable', 'string', 'max:50'],
+            'date_of_birth' => ['nullable', 'date'],
+            'address' => ['nullable', 'string'],
+            'district' => ['nullable', 'string', 'max:255'],
+            'upazila' => ['nullable', 'string', 'max:255'],
+            'passport_nid_number' => ['nullable', 'string', 'max:255'],
+            'education_qualification' => ['nullable', 'string', 'max:255'],
+            'start_month' => ['nullable', 'string', 'max:50'],
+            'end_month' => ['nullable', 'string', 'max:50'],
+            'start_year' => ['nullable', 'string', 'max:10'],
+            'end_year' => ['nullable', 'string', 'max:10'],
+            'session' => ['nullable', 'string', 'max:255'],
+            'roll_number' => ['nullable', 'string', 'max:255'],
+            'admitted_at' => ['nullable', 'date'],
+            'expire_date' => ['nullable', 'date'],
+            'result_status' => ['nullable', 'string', 'max:255'],
+            'grade' => ['nullable', 'string', 'max:50'],
+            'score' => ['nullable', 'numeric'],
+            'branch_id' => ['nullable', 'string', 'max:255'],
+            'director_name' => ['nullable', 'string', 'max:255'],
+            'full_marks' => ['nullable', 'numeric'],
+            'written_marks' => ['nullable', 'numeric'],
+            'viva_marks' => ['nullable', 'numeric'],
+            'practical_marks' => ['nullable', 'numeric'],
+            'cgpa' => ['nullable', 'numeric'],
+            'publication_date' => ['nullable', 'string', 'max:255'],
+            'examination_month' => ['nullable', 'string', 'max:255'],
+            'course_id' => ['nullable', 'integer'],
+            'duration' => ['nullable', 'string', 'max:255'],
+        ]);
 
-        'start_month' => ['nullable', 'string', 'max:50'],
-        'end_month' => ['nullable', 'string', 'max:50'],
-        'start_year' => ['nullable', 'string', 'max:10'],
-        'end_year' => ['nullable', 'string', 'max:10'],
+        $student->update($validated);
 
-        'session' => ['nullable', 'string', 'max:255'],
-        'roll_number' => ['nullable', 'string', 'max:255'],
-        'admitted_at' => ['nullable', 'date'],
-        'expire_date' => ['nullable', 'date'],
-        'result_status' => ['nullable', 'string', 'max:255'],
-        'grade' => ['nullable', 'string', 'max:50'],
-        'score' => ['nullable', 'numeric'],
-    ]);
-
-    $student->update($validated);
-
-    return redirect()
-        ->route('students.index')
-        ->with('status', 'Student information updated successfully.');
-}
+        return redirect()
+            ->route('students.index')
+            ->with('status', 'Student information updated successfully.');
+    }
 
 
     /**

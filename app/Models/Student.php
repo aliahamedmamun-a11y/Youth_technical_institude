@@ -15,6 +15,7 @@ class Student extends Model
 
     /** @var list<string> */
     protected $fillable = [
+        'branch_id',
         'course_id',
         'name',
         'registration_number',
@@ -42,6 +43,14 @@ class Student extends Model
         'image_path',
         'admitted_at',
         'expire_date',
+        'director_name',
+        'full_marks',
+        'written_marks',
+        'viva_marks',
+        'practical_marks',
+        'cgpa',
+        'publication_date',
+        'examination_month',
         'result_status',
         'grade',
         'score',

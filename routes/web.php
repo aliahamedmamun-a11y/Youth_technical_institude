@@ -305,6 +305,35 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
         ->name('dashboards.student');
 });
 
+Route::get('/storage/{path}', function (string $path) {
+    $filePath = storage_path('app/public/' . $path);
+
+    if (file_exists($filePath)) {
+        return response()->file($filePath);
+    }
+
+    $fallbackFolderMap = [
+        'courses' => public_path('images/bnyti-hero-premium-2.png'),
+        'students' => public_path('images/student-success-sprite.png'),
+        'teachers' => public_path('images/expert-teachers-sprite-v2.png'),
+        'homepage' => public_path('images/bnyti-hero-premium-1.png'),
+        'news' => public_path('images/institute-gallery-1.png'),
+        'about' => public_path('images/bnyti-hero-premium-2.png'),
+        'admin-cards' => public_path('images/bnyti-hero-premium-1.png'),
+    ];
+
+    $folder = explode('/', $path)[0] ?? '';
+    if (isset($fallbackFolderMap[$folder]) && file_exists($fallbackFolderMap[$folder])) {
+        return response()->file($fallbackFolderMap[$folder]);
+    }
+
+    if (file_exists(public_path('images/bnyti-hero-premium-1.png'))) {
+        return response()->file(public_path('images/bnyti-hero-premium-1.png'));
+    }
+
+    abort(404);
+})->where('path', '.*')->name('storage.fallback');
+
 Route::get('/clear-cache', function() {
     Artisan::call('optimize:clear');
     return "Cache is cleared successfully!";

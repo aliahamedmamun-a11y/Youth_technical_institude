@@ -66,7 +66,7 @@
             @error('price') <span class="mt-1 block text-xs font-bold text-rose-500">{{ $message }}</span> @enderror
         </div>
 
-        {{-- Duration (Optional but kept as part of previous schema) --}}
+        {{-- Duration --}}
         <div>
             <label class="{{ $labelClass }}">
                 <svg viewBox="0 0 24 24" class="{{ $iconClass }}" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -98,18 +98,20 @@
                         <span id="file-name" class="text-xs font-bold text-slate-400">No file chosen</span>
                     </div>
 
-                    <button type="button" class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#4338ca] py-3 text-sm font-black text-white transition hover:bg-[#4f46e5]">
+                    <button type="button" onclick="document.querySelector('input[name=image]').click()" class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#4338ca] py-3 text-sm font-black text-white transition hover:bg-[#4f46e5]">
                         <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                         Upload Photo
                     </button>
                 </div>
 
-                @if($course?->image_path)
-                    <div class="mt-4">
-                        <img src="{{ asset('storage/' . $course->image_path) }}" class="mx-auto h-32 rounded-lg object-cover">
-                    </div>
-                @endif
+                @php
+                    $courseImg = $course?->image_path ? (str_starts_with($course->image_path, 'http') ? $course->image_path : (str_starts_with($course->image_path, 'images/') ? asset($course->image_path) : asset('storage/' . $course->image_path))) : null;
+                @endphp
+
+                <div class="mt-4 {{ $courseImg ? '' : 'hidden' }}" id="course-preview-container">
+                    <img id="course-preview" src="{{ $courseImg ?: '#' }}" onerror="this.onerror=null; this.src='{{ asset('images/bnyti-hero-premium-2.png') }}';" class="mx-auto h-32 rounded-lg object-cover">
+                </div>
             </div>
             @error('image') <span class="mt-2 block text-xs font-bold text-rose-500">{{ $message }}</span> @enderror
         </div>
@@ -139,6 +141,16 @@
         const fileName = document.getElementById('file-name');
         if (input.files && input.files[0]) {
             fileName.textContent = input.files[0].name;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.getElementById('course-preview');
+                const container = document.getElementById('course-preview-container');
+                if (img) {
+                    img.src = e.target.result;
+                    if (container) container.classList.remove('hidden');
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
         } else {
             fileName.textContent = 'No file chosen';
         }

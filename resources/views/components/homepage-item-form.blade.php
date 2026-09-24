@@ -69,7 +69,10 @@
             <label class="{{ $labelClass }}">Media Image</label>
             <div class="relative group aspect-video rounded-2xl border-2 border-dashed border-white/10 bg-[#071c2c]/50 flex flex-col items-center justify-center p-4 transition-all hover:border-blue-500/50 cursor-pointer overflow-hidden">
                 @if ($item->image_path)
-                    <img id="item-preview" src="{{ str_starts_with($item->image_path, 'images/') ? asset($item->image_path) : Storage::disk('public')->url($item->image_path) }}"
+                    @php
+                        $itemImg = str_starts_with($item->image_path, 'http') ? $item->image_path : (str_starts_with($item->image_path, 'images/') ? asset($item->image_path) : asset('storage/' . $item->image_path));
+                    @endphp
+                    <img id="item-preview" src="{{ $itemImg }}" onerror="this.onerror=null; this.src='{{ asset('images/bnyti-hero-premium-1.png') }}';"
                         class="absolute inset-0 h-full w-full object-cover opacity-40 group-hover:opacity-60 transition-all duration-500">
                 @else
                     <img id="item-preview" src="#" class="absolute inset-0 h-full w-full object-cover hidden opacity-40 group-hover:opacity-60 transition-all duration-500">

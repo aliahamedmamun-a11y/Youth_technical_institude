@@ -75,7 +75,10 @@
                                     <td class="px-3 py-4">
                                         <div class="size-10 overflow-hidden rounded-md border border-white/10 bg-slate-800 shadow-lg">
                                             @if($student->image_path)
-                                                <img src="{{ asset('storage/' . $student->image_path) }}" alt="{{ $student->name }}" class="size-full object-cover">
+                                                @php
+                                                    $studentImg = str_starts_with($student->image_path, 'http') ? $student->image_path : (str_starts_with($student->image_path, 'images/') ? asset($student->image_path) : asset('storage/' . $student->image_path));
+                                                @endphp
+                                                <img src="{{ $studentImg }}" alt="{{ $student->name }}" onerror="this.onerror=null; this.src='{{ asset('images/student-success-sprite.png') }}';" class="size-full object-cover">
                                             @else
                                                 <div class="flex size-full items-center justify-center text-[8px] text-slate-600">No Img</div>
                                             @endif

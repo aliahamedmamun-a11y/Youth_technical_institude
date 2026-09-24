@@ -16,7 +16,7 @@
                 <div class="grid md:grid-cols-[minmax(260px,0.8fr)_1.2fr]">
                     <div class="relative min-h-80 overflow-hidden bg-[#2699e8] md:min-h-full">
                         @if ($teacher->image_path)
-                            <img src="{{ Storage::disk('public')->url($teacher->image_path) }}" alt="{{ $teacher->name }}" class="size-full object-cover object-top">
+                            <img src="{{ asset('storage/' . $teacher->image_path) }}" alt="{{ $teacher->name }}" class="size-full object-cover object-top">
                         @else
                             <div class="size-full min-h-80 bg-[url('/images/expert-teachers-sprite-v2.png')] bg-no-repeat" style="background-size: 600% auto; background-position: 0 52%;"></div>
                         @endif

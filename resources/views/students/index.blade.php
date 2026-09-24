@@ -146,10 +146,13 @@
                             <a href="{{ route('students.show', $student) }}">
 
                                 @if($student->image_path)
-
+                                    @php
+                                        $studentImg = str_starts_with($student->image_path, 'http') ? $student->image_path : (str_starts_with($student->image_path, 'images/') ? asset($student->image_path) : asset('storage/' . $student->image_path));
+                                    @endphp
                                     <img
-                                        src="{{ asset('storage/'.$student->image_path) }}"
+                                        src="{{ $studentImg }}"
                                         alt="{{ $student->name }}"
+                                        onerror="this.onerror=null; this.src='{{ asset('images/student-success-sprite.png') }}';"
                                         class="w-14 h-14 rounded-full object-cover mx-auto border-2 border-green-600 cursor-pointer hover:opacity-80" >
 
                                 @else

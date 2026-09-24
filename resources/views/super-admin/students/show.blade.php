@@ -17,9 +17,13 @@
 
 
                     @if ($student->image_path)
+                        @php
+                            $studentImg = str_starts_with($student->image_path, 'http') ? $student->image_path : (str_starts_with($student->image_path, 'images/') ? asset($student->image_path) : asset('storage/' . $student->image_path));
+                        @endphp
                         <img
-                            src="{{ asset('storage/' . $student->image_path) }}"
+                            src="{{ $studentImg }}"
                             alt="Photo of {{ $student->name }}"
+                            onerror="this.onerror=null; this.src='{{ asset('images/student-success-sprite.png') }}';"
                             class="size-20 rounded-2xl object-cover"
                         >
                     @endif

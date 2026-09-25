@@ -3,24 +3,28 @@
     padding: 1.5rem;
     overflow-x: auto;
     background: #292a26;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .registration-card-frame {
-    width: min(100%, 52rem);
+    width: 210mm;
+    height: 297mm;
     margin-inline: auto;
-    overflow: hidden;
-    background: white;
+    position: relative;
+    background: #fff;
     box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
 }
 
 .registration-card {
     position: relative;
     width: 100%;
-    aspect-ratio: 210 / 297;
+    height: 100%;
     overflow: hidden;
-    color: #171717;
+    color: #000;
     background: white;
-    container-type: inline-size;
     font-family: Georgia, 'Times New Roman', serif;
 }
 
@@ -30,162 +34,99 @@
     width: 100%;
     height: 100%;
     object-fit: fill;
+    z-index: 0;
 }
 
-.registration-card__course,
-.registration-card__serial,
-.registration-card__details,
-.registration-card__photo,
-.registration-card__qr {
+/* Base style for dynamic values overlays */
+.rc-field {
     position: absolute;
-    z-index: 1;
-}
-
-.registration-card__course {
-    top: 22.15%;
-    left: 27%;
-    width: 46%;
-    margin: 0;
-    overflow: hidden;
-    font-size: 2.5cqw;
-    font-weight: 700;
-    line-height: 1.15;
-    text-align: center;
-    text-overflow: ellipsis;
+    z-index: 10;
+    font-size: 13.5pt;
+    font-weight: 600;
+    color: #111;
     white-space: nowrap;
+    transform: translateY(-50%);
+    font-family: Georgia, 'Times New Roman', serif;
 }
 
-.registration-card__serial {
-    top: 27.7%;
-    left: 10%;
-    width: 35%;
-    margin: 0;
-    overflow: hidden;
-    color: #d71920;
-    font-size: 1.72cqw;
+.rc-field--serial {
+    top: 20.2%;
+    left: 18.5%;
+    font-size: 14pt;
     font-weight: 700;
-    line-height: 1.15;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    color: #e11d48;
 }
 
-.registration-card__serial span {
-    margin-right: 0.2em;
+/* Main Information rows placement */
+.registration-card__data-box {
+    position: absolute;
+    top: 24.5%;
+    left: 8.5%;
+    right: 8.5%;
+    display: flex;
+    flex-direction: column;
+    gap: 13.5pt;
+    z-index: 10;
 }
 
-.registration-card__details {
-    top: 32.2%;
-    left: 10%;
-    display: grid;
-    width: 60%;
-    margin: 0;
-    grid-template-rows: repeat(13, minmax(0, 1fr));
-    font-size: 1.7cqw;
+.rc-row {
+    display: flex;
+    align-items: baseline;
+    font-size: 13.5pt;
+}
+
+.rc-label {
+    width: 175pt;
     font-weight: 700;
-    line-height: 1.15;
+    color: #222;
 }
 
-.registration-card__details > div {
-    display: grid;
-    min-width: 0;
-    min-height: 4.2cqw;
-    grid-template-columns: 42% minmax(0, 1fr);
-    align-items: center;
+.rc-sep {
+    width: 20pt;
+    font-weight: 700;
 }
 
-.registration-card__details dt,
-.registration-card__details dd {
-    min-width: 0;
-    margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.rc-val {
+    font-weight: 600;
+    color: #000;
 }
 
-.registration-card__details dd::before {
-    content: ':';
-    margin-right: 0.4em;
+/* Top Right Meta (Photo and QR) */
+.rc-meta-right {
+    position: absolute;
+    top: 13.8%;
+    right: 8.5%;
+    width: 12.5%;
+    display: flex;
+    flex-direction: column;
+    gap: 10pt;
+    z-index: 10;
 }
 
 .registration-card__photo {
-    top: 27.45%;
-    left: 73.05%;
-    width: 18.05%;
-    margin: 0;
-}
-
-.registration-card__photo > img,
-.registration-card__photo-placeholder {
-    display: block;
     width: 100%;
     aspect-ratio: 4 / 5;
-    border: max(1px, 0.16cqw) solid #183463;
-    border-radius: 1.35cqw;
-    box-sizing: border-box;
     background: white;
+    border: 0.5pt solid #eee;
+    overflow: hidden;
+}
+
+.registration-card__photo img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    object-position: center;
-}
-
-.registration-card__photo-placeholder {
-    display: grid;
-    place-content: center;
-    justify-items: center;
-    gap: 0.3cqw;
-    color: #737373;
-}
-
-.registration-card__photo-placeholder svg {
-    width: 42%;
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.5;
-}
-
-.registration-card__photo-placeholder span {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 0.55cqw;
-    font-weight: 700;
-    text-transform: uppercase;
 }
 
 .registration-card__qr {
-    top: 43.8%;
-    left: 77.15%;
-    width: 12.2%;
-    overflow: hidden;
-    border: max(1px, 0.12cqw) solid #183463;
-    border-radius: 0.65cqw;
-    box-sizing: border-box;
+    width: 100%;
+    aspect-ratio: 1;
     background: white;
-    color: white;
-    text-decoration: none;
+    padding: 2pt;
 }
 
 .registration-card__qr img {
-    display: block;
-    width: calc(100% - 1cqw);
-    margin: 0.5cqw;
-    margin-bottom: 0.25cqw;
-    aspect-ratio: 1;
-}
-
-.registration-card__qr span {
-    display: block;
-    overflow: hidden;
-    background: #183463;
-    padding: 0.22cqw 0.12cqw 0.18cqw;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.72cqw;
-    font-weight: 700;
-    letter-spacing: 0.025em;
-    line-height: 1;
-    text-align: center;
-    text-overflow: ellipsis;
-    text-transform: uppercase;
-    white-space: nowrap;
+    width: 100%;
+    height: 100%;
 }
 
 .registration-card-actions {
@@ -194,6 +135,7 @@
     justify-content: center;
     gap: 0.75rem;
     margin-top: 1.5rem;
+    z-index: 20;
 }
 
 @page {
@@ -208,6 +150,7 @@
         height: 297mm;
         margin: 0;
         background: white;
+        overflow: hidden;
     }
 
     body {
@@ -215,27 +158,26 @@
         -webkit-print-color-adjust: exact;
     }
 
-    .registration-card-screen,
-    .registration-card-frame,
-    .registration-card {
+    .registration-card-screen {
+        padding: 0;
+        min-height: 0;
+        background: white;
+    }
+
+    .registration-card-actions {
+        display: none !important;
+    }
+
+    .registration-card-frame {
         width: 210mm;
         height: 297mm;
         margin: 0;
         padding: 0;
-    }
-
-    .registration-card-screen {
-        min-height: 0;
-        overflow: hidden;
-        background: white;
-    }
-
-    .registration-card-frame {
-        max-width: none;
         box-shadow: none;
     }
 
     .registration-card {
-        aspect-ratio: auto;
+        width: 210mm;
+        height: 297mm;
     }
 }

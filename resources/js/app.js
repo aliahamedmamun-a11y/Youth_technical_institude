@@ -411,6 +411,31 @@ document.querySelectorAll('[data-result-form]').forEach((resultForm) => {
     const semesterSelect = resultForm.querySelector('[data-result-semester]');
     const configuredSubjects = JSON.parse(resultForm.dataset.semesterSubjects || '{}');
 
+    const calculateGrade = (marks) => {
+        const value = parseFloat(marks);
+        if (isNaN(value)) return { grade: '', point: '' };
+        if (value >= 80) return { grade: 'A+', point: '4.00' };
+        if (value >= 75) return { grade: 'A', point: '3.75' };
+        if (value >= 70) return { grade: 'A-', point: '3.50' };
+        if (value >= 65) return { grade: 'B+', point: '3.25' };
+        if (value >= 60) return { grade: 'B', point: '3.00' };
+        if (value >= 55) return { grade: 'B-', point: '2.75' };
+        if (value >= 50) return { grade: 'C+', point: '2.50' };
+        if (value >= 45) return { grade: 'C', point: '2.25' };
+        if (value >= 40) return { grade: 'D', point: '2.00' };
+        return { grade: 'F', point: '0.00' };
+    };
+
+    const updateGradeForInput = (marksInput) => {
+        const row = marksInput.closest('[data-result-subject-row]');
+        if (!row) return;
+        const gradeInput = row.querySelector('input[name*="[grade]"]:not([name*="[grade_point]"])');
+        const pointInput = row.querySelector('input[name*="[grade_point]"]');
+        const { grade, point } = calculateGrade(marksInput.value);
+        if (gradeInput) gradeInput.value = grade;
+        if (pointInput) pointInput.value = point;
+    };
+
     const renumberRows = () => {
         subjectsBody.querySelectorAll('[data-result-subject-row]').forEach((row, index) => {
             row.querySelectorAll('input').forEach((input) => {
@@ -440,6 +465,12 @@ document.querySelectorAll('[data-result-form]').forEach((resultForm) => {
         row.dataset.resultSubjectRow = '';
         row.innerHTML = `<td class="px-3 py-2"><input name="subjects[${index}][code]" required class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input name="subjects[${index}][title]" required class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][credit]" required min="0.5" max="20" step="0.5" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][marks]" min="0" max="100" step="0.01" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input name="subjects[${index}][grade]" required class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][grade_point]" required min="0" max="4" step="0.01" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2 text-right"><button type="button" data-remove-result-subject class="font-black text-rose-600">Remove</button></td>`;
         subjectsBody.append(row);
+    });
+
+    subjectsBody.addEventListener('input', (event) => {
+        if (event.target.matches('input[name*="[marks]"]')) {
+            updateGradeForInput(event.target);
+        }
     });
 
     subjectsBody.addEventListener('click', (event) => {

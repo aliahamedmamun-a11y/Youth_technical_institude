@@ -1,0 +1,1 @@
+<x-dashboard-shell title="Add News" eyebrow="Content management" description="Create a new institute announcement."><x-news-form :news="$news" :action="route('super-admin.news.store')" submit-label="Publish news" /></x-dashboard-shell>

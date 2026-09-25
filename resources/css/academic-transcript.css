@@ -1,0 +1,381 @@
+.transcript-screen {
+    min-height: 100vh;
+    padding: 1.5rem;
+    overflow-x: auto;
+    background: #292a26;
+}
+
+.transcript-stack {
+    display: grid;
+    gap: 1.5rem;
+    width: min(100%, 52.5rem);
+    margin-inline: auto;
+}
+
+.transcript-page {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 210 / 297;
+    overflow: hidden;
+    color: #111;
+    background: white;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
+    container-type: inline-size;
+    font-family: Georgia, 'Times New Roman', serif;
+}
+
+.transcript-template {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.transcript-serial,
+.transcript-semester,
+.transcript-grading-scale,
+.transcript-student-values,
+.transcript-subject-values,
+.transcript-semester-summary,
+.transcript-verification,
+.transcript-no-results {
+    position: absolute;
+    z-index: 1;
+}
+
+.transcript-serial {
+    top: 18.9%;
+    left: 10.5%;
+    width: 25%;
+    margin: 0;
+    overflow: hidden;
+    color: #444;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.12cqw;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.transcript-serial span {
+    margin-right: 0.45cqw;
+}
+
+.transcript-semester {
+    top: 18.85%;
+    left: 42%;
+    display: grid;
+    width: 20%;
+    min-height: 2.7%;
+    margin: 0;
+    padding: 0.38cqw 0.7cqw;
+    place-items: center;
+    overflow: hidden;
+    color: white;
+    background: #49380d;
+    font-size: 1.55cqw;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.transcript-grading-scale {
+    top: 18.6%;
+    right: 10.4%;
+    width: 15.8%;
+    border: 0.08cqw solid #222;
+    border-collapse: collapse;
+    background: rgb(255 255 255 / 0.88);
+    font-size: 0.62cqw;
+    line-height: 1;
+    text-align: center;
+}
+
+.transcript-grading-scale caption {
+    border: 0.08cqw solid #222;
+    border-bottom: 0;
+    padding: 0.2cqw;
+    background: rgb(255 255 255 / 0.9);
+    font-size: 0.7cqw;
+    font-weight: 600;
+}
+
+.transcript-grading-scale td {
+    border: 0.06cqw solid #333;
+    padding: 0.12cqw 0.18cqw;
+    white-space: nowrap;
+}
+
+.transcript-grading-scale td:first-child {
+    width: 62%;
+}
+
+.transcript-grading-scale td:nth-child(2) {
+    width: 18%;
+}
+
+.transcript-student-values {
+    top: 23%;
+    left: 10.6%;
+    display: grid;
+    width: 59.5%;
+    margin: 0;
+    grid-template-rows: repeat(11, 2.75cqw);
+    font-size: 1.55cqw;
+    line-height: 1;
+}
+
+.transcript-student-values > div {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: 37% minmax(0, 1fr);
+    align-items: center;
+}
+
+.transcript-student-values dt,
+.transcript-student-values dd {
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.transcript-student-values dt {
+    display: flex;
+    padding-right: 0.75cqw;
+    justify-content: space-between;
+}
+
+.transcript-student-values dt::after {
+    content: ':';
+}
+
+.transcript-student-values dd {
+    font-weight: 500;
+}
+
+.transcript-subject-values {
+    top: 44.3%;
+    left: 10.4%;
+    display: block;
+    width: 79.2%;
+    height: 26.4%;
+    border: 0.08cqw solid #222;
+    border-collapse: collapse;
+    background: rgb(255 255 255 / 0.34);
+    table-layout: fixed;
+    font-size: 1.25cqw;
+}
+
+.transcript-subject-values thead,
+.transcript-subject-values tbody {
+    display: block;
+    width: 100%;
+}
+
+.transcript-subject-values thead {
+    height: 17%;
+}
+
+.transcript-subject-values tbody {
+    height: 83%;
+}
+
+.transcript-subject-values tr {
+    display: grid;
+    min-width: 0;
+    height: 100%;
+    grid-template-columns: 16.2% 48.9% 12.2% 11.5% 11.2%;
+}
+
+.transcript-subject-values tbody tr {
+    height: 14.2857%;
+}
+
+.transcript-subject-values th,
+.transcript-subject-values td {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-right: 0.07cqw solid #333;
+    border-bottom: 0.07cqw solid #333;
+    padding: 0 0.35cqw;
+    line-height: 1.08;
+    text-align: center;
+    text-overflow: ellipsis;
+}
+
+.transcript-subject-values th:last-child,
+.transcript-subject-values td:last-child {
+    border-right: 0;
+}
+
+.transcript-subject-values tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.transcript-subject-values th {
+    font-size: 1.24cqw;
+    font-weight: 500;
+}
+
+.transcript-subject-values td {
+    font-size: 1.17cqw;
+    white-space: nowrap;
+}
+
+.transcript-semester-summary {
+    top: 71.05%;
+    right: 10.4%;
+    display: grid;
+    width: 29.5%;
+    height: 6.2%;
+    margin: 0;
+    border: 0.08cqw solid #222;
+    background: rgb(255 255 255 / 0.5);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    font-size: 1.14cqw;
+}
+
+.transcript-semester-summary > div {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: 68.5% minmax(0, 1fr);
+    align-items: center;
+}
+
+.transcript-semester-summary > div + div {
+    border-top: 0.07cqw solid #333;
+}
+
+.transcript-semester-summary dt,
+.transcript-semester-summary dd {
+    display: flex;
+    min-width: 0;
+    height: 100%;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding-inline: 0.4cqw;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.transcript-semester-summary dd {
+    border-left: 0.07cqw solid #333;
+}
+
+.transcript-verification {
+    top: 86.2%;
+    left: 11.5%;
+    display: grid;
+    width: 12.5%;
+    justify-items: center;
+    color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    text-decoration: none;
+}
+
+.transcript-verification img {
+    display: block;
+    width: 8.7cqw;
+    height: 8.7cqw;
+    border: 0.1cqw solid #111;
+    background: white;
+}
+
+.transcript-verification span,
+.transcript-verification small {
+    width: 100%;
+    overflow: hidden;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+}
+
+.transcript-verification span {
+    margin-top: 0.3cqw;
+    font-size: 0.52cqw;
+}
+
+.transcript-verification small {
+    margin-top: 0.1cqw;
+    font-size: 0.46cqw;
+    white-space: nowrap;
+}
+
+.transcript-no-results {
+    top: 50%;
+    left: 25%;
+    width: 50%;
+    color: #6b5b18;
+    font-size: 2.1cqw;
+    font-weight: 700;
+    text-align: center;
+}
+
+.transcript-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+@page {
+    size: A4 portrait;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        width: 210mm;
+        margin: 0;
+        background: white;
+    }
+
+    body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .transcript-screen,
+    .transcript-stack,
+    .transcript-page {
+        width: 210mm;
+        margin: 0;
+        padding: 0;
+    }
+
+    .transcript-screen {
+        min-height: 0;
+        overflow: visible;
+        background: white;
+    }
+
+    .transcript-stack {
+        display: block;
+    }
+
+    .transcript-page {
+        height: 297mm;
+        aspect-ratio: auto;
+        break-after: page;
+        box-shadow: none;
+        page-break-after: always;
+    }
+
+    .transcript-page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+}

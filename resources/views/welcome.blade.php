@@ -10,7 +10,7 @@
         >
 
         <title>Bangladesh National Youth Technical Institute</title>
-        <link rel="icon" href="{{ asset('images/bnyti-logo.svg') }}" type="image/svg+xml">
+        <link rel="icon" href="{{ asset('images/Logo.png') }}" type="image/png">
 
         <script>
             document.documentElement.classList.add('js');
@@ -33,73 +33,25 @@
             Skip to content
         </a>
 
-        <header class="fixed inset-x-0 top-0 z-50 border-b border-slate-900/5 bg-stone-50/85 backdrop-blur-xl dark:border-white/10 dark:bg-ink/80">
-            <div class="border-b border-slate-900/5 bg-ink text-white dark:border-white/10">
-                <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 text-[11px] font-semibold tracking-wide sm:px-6 lg:px-8">
-                    <p class="flex min-w-0 items-center gap-2">
-                        <span class="size-1.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_12px_#34d399]"></span>
-                        <span class="truncate" data-i18n="topMessage">Admissions are open for the July 2026 session</span>
-                    </p>
-                    <div class="hidden items-center gap-5 sm:flex">
-                        <a href="tel:+8809696481628" class="transition hover:text-emerald-300">+880 9696-481628</a>
-                        <a href="mailto:bnyti-edubd@gmail.com" class="transition hover:text-emerald-300">bnyti-edubd@gmail.com</a>
-                    </div>
-                </div>
-            </div>
-
-            <nav class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8" aria-label="Primary navigation">
-                <a href="#home" class="group flex min-w-0 items-center gap-3" aria-label="BNYTI home">
+        <header class="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-ink">
+             <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+                <a href="#home" class="group flex items-center gap-3">
                     <img
-                        src="{{ asset('images/bnyti-logo.svg') }}"
-                        alt="Bangladesh National Youth Technical Institute logo"
-                        class="size-12 shrink-0 object-contain transition duration-300 group-hover:-rotate-3 sm:size-14"
+                        src="{{ asset('images/Logo.png') }}"
+                        alt="Logo"
+                        class="h-10 w-auto sm:h-12"
                     >
-                    <span class="min-w-0 sm:hidden">
-                        <span class="block text-base font-black tracking-tight text-slate-950 dark:text-white">BNYTI</span>
-                        <span class="block text-[9px] font-bold tracking-[0.14em] text-slate-500 dark:text-slate-300">TECHNICAL INSTITUTE</span>
-                    </span>
-                    <span class="hidden min-w-0 sm:block">
-                        <span class="block truncate text-sm font-black tracking-tight text-slate-950 dark:text-white sm:text-[15px]">
-                            <span class="text-emerald-600 dark:text-emerald-400">BANGLADESH</span>
-                            <span class="text-red-600 dark:text-red-400"> NATIONAL</span>
-                        </span>
-                        <span class="block truncate text-[10px] font-bold tracking-[0.17em] text-slate-600 dark:text-slate-300 sm:text-[11px]">
-                            YOUTH TECHNICAL INSTITUTE
-                        </span>
-                    </span>
+                    <div class="hidden sm:block">
+                        <span class="block text-2xl font-black tracking-tight text-[#03224c] dark:text-white uppercase leading-none">South Asia</span>
+                        <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400 mt-1">National Technical Institute</span>
+                    </div>
+                    <div class="sm:hidden">
+                        <span class="block text-xl font-black tracking-tighter text-[#03224c] dark:text-white">SOUTH ASIA</span>
+                    </div>
                 </a>
-
-                <div class="hidden items-center gap-7 lg:flex">
-                    <a href="#home" class="nav-link active" data-i18n="navHome">Home</a>
-                    <a href="#courses" class="nav-link" data-i18n="navCourses">Courses</a>
-                    <a href="#about" class="nav-link" data-i18n="navAbout">About</a>
-                    <a href="#branch-application-promo" class="nav-link" data-i18n="navBranches">Branches</a>
-                    <a href="{{ route('results.index') }}" class="nav-link">Results</a>
-                    <details class="group relative">
-                        <summary class="nav-link flex cursor-pointer list-none items-center gap-1">Apply Now <svg viewBox="0 0 24 24" class="size-4 transition group-open:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg></summary>
-                        <div class="absolute right-0 top-full z-30 mt-3 w-52 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-white/10 dark:bg-ink">
-                            <a href="{{ route('branch-applications.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-200 dark:hover:bg-emerald-500/10">Branch Registration</a>
-                        </div>
-                    </details>
-                    <a href="{{ route('login') }}" class="nav-link">Staff Login</a>
-                    <a href="#latest-news-contact" class="nav-link" data-i18n="navContact">Contact</a>
-                </div>
-
-                <div class="flex shrink-0 items-center gap-2">
-                    <button type="button" class="icon-button hidden lg:inline-grid" data-locale-toggle aria-label="Switch language">
-                        <span class="text-xs font-black" data-locale-label>বাং</span>
-                    </button>
-                    <button type="button" class="icon-button hidden lg:inline-grid" data-theme-toggle aria-label="Toggle color theme">
-                        <svg data-theme-sun viewBox="0 0 24 24" aria-hidden="true" class="size-5">
-                            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
-                            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/>
-                        </svg>
-                        <svg data-theme-moon viewBox="0 0 24 24" aria-hidden="true" class="hidden size-5">
-                            <path d="M20 15.1A8.5 8.5 0 0 1 8.9 4a8.5 8.5 0 1 0 11.1 11.1Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/>
-                        </svg>
-                    </button>
-                    <a href="#latest-news-contact" class="hidden rounded-full bg-emerald-500 px-5 py-3 text-sm font-black text-ink shadow-lg shadow-emerald-500/20 transition hover:-translate-y-0.5 hover:bg-emerald-400 xl:inline-flex" data-i18n="getStarted">
-                        Get Started
+                <div class="flex items-center gap-4">
+                    <a href="{{ route('branch-applications.create') }}" class="rounded-lg bg-[#03224c] px-5 py-2 text-xs font-black text-white uppercase tracking-widest transition hover:bg-slate-800 sm:text-sm">
+                        Admission 2026
                     </a>
                     <button
                         type="button"
@@ -117,6 +69,21 @@
                         </svg>
                     </button>
                 </div>
+            </div>
+            <nav class="hidden border-t border-slate-100 bg-[#03224c] lg:block dark:border-white/5">
+                <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+                    <div class="flex items-center gap-8">
+                        <a href="#home" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Home</a>
+                        <a href="#courses" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Courses</a>
+                        <a href="#about" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">About</a>
+                        <a href="#branch-application-promo" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Branches</a>
+                        <a href="{{ route('results.index') }}" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Results</a>
+                        <a href="#latest-news-contact" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Contact</a>
+                    </div>
+                    <a href="{{ route('login') }}" class="rounded bg-amber-500 px-6 py-1.5 text-xs font-black text-[#03224c] uppercase transition hover:bg-amber-400">
+                        Student Login
+                    </a>
+                </div>
             </nav>
         </header>
 
@@ -124,7 +91,7 @@
         <aside id="mobile-menu" class="mobile-menu-drawer lg:hidden" data-mobile-menu aria-hidden="true" aria-label="Mobile navigation" inert>
                 <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-white/10">
                     <a href="#home" class="flex min-w-0 items-center gap-3" aria-label="BNYTI home">
-                        <img src="{{ asset('images/bnyti-logo.svg') }}" alt="" class="size-11 shrink-0 object-contain">
+                        <img src="{{ asset('images/Logo.png') }}" alt="" class="size-11 shrink-0 object-contain">
                         <span><span class="block font-black text-slate-950 dark:text-white">BNYTI</span><span class="block text-[9px] font-bold tracking-[.14em] text-slate-500 dark:text-slate-300">TECHNICAL INSTITUTE</span></span>
                     </a>
                     <button type="button" class="icon-button" data-menu-dismiss aria-label="Close navigation"><svg viewBox="0 0 24 24" aria-hidden="true" class="size-6"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg></button>
@@ -167,47 +134,47 @@
                 $heroItems = $homepageItems('hero');
                 $heroLead = $heroItems->first();
             @endphp
-            <section id="home" class="hero-slide relative min-h-[620px] overflow-hidden bg-ink pt-[108px] text-white sm:min-h-[600px] lg:min-h-[620px] lg:pt-[116px]" data-hero-carousel>
+            <section id="home" class="hero-slide relative min-h-[620px] overflow-hidden bg-ink pt-[120px] text-white sm:min-h-[600px] lg:min-h-[650px] lg:pt-[120px]" data-hero-carousel>
                 @foreach ($heroItems as $hero)
+                    @php
+                        $heroFallback = asset('images/bnyti-hero-premium-' . (($loop->index % 3) + 1) . '.png');
+                        if ($hero->image_path) {
+                            if (str_starts_with($hero->image_path, 'http://') || str_starts_with($hero->image_path, 'https://')) {
+                                $heroSrc = $hero->image_path;
+                            } elseif (str_starts_with($hero->image_path, 'images/')) {
+                                $heroSrc = asset($hero->image_path);
+                            } else {
+                                $heroSrc = asset('storage/' . $hero->image_path);
+                            }
+                        } else {
+                            $heroSrc = $heroFallback;
+                        }
+                    @endphp
                     <img
-                        src="{{ str_starts_with($hero->image_path, 'images/') ? asset($hero->image_path) : Storage::disk('public')->url($hero->image_path) }}"
+                        src="{{ $heroSrc }}"
                         alt="{{ $hero->title }}"
-                        class="hero-carousel-image absolute inset-0 size-full object-cover object-[68%_center] opacity-0 sm:object-[58%_center]"
+                        class="hero-carousel-image absolute inset-0 size-full object-cover object-center opacity-0"
                         data-hero-image
+                        onerror="this.onerror=null; this.src='{{ $heroFallback }}';"
                         @if ($loop->first) fetchpriority="high" @else loading="lazy" @endif
                     >
                 @endforeach
-                <div class="hero-mobile-overlay absolute inset-0 bg-[linear-gradient(90deg,rgba(3,7,18,.88)_0%,rgba(3,7,18,.62)_42%,rgba(3,7,18,.38)_76%,rgba(3,7,18,.72)_100%)]"></div>
-                <div class="absolute inset-0 bg-[radial-gradient(circle_at_18%_68%,rgba(251,191,36,.24),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(59,130,246,.2),transparent_28%)]"></div>
-                <div class="absolute inset-x-0 bottom-0 h-1 bg-emerald-500"></div>
+                <div class="hero-mobile-overlay absolute inset-0 bg-[#03224c]/40"></div>
+                <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,34,76,.6)_0%,rgba(3,34,76,.2)_50%,transparent_100%)]"></div>
+                <div class="absolute inset-x-0 bottom-0 h-1 bg-amber-500"></div>
 
                 <div class="hero-content-frame relative mx-auto flex min-h-[552px] max-w-7xl items-center px-4 pt-8 pb-24 sm:min-h-[492px] sm:px-6 sm:py-12 lg:min-h-[504px] lg:px-8">
-                    <div class="hero-content reveal is-visible flex w-full max-w-[620px] flex-col items-start gap-5 sm:gap-8 lg:ml-12">
-                        <h1 class="sr-only">{{ $heroLead?->title ?? 'Practical skills for a future without limits.' }}</h1>
+                    <div class="hero-content reveal is-visible flex w-full max-w-[720px] flex-col items-start gap-6 sm:gap-8">
+                        <h1 class="text-3xl font-black leading-[1.1] text-white uppercase sm:text-5xl lg:text-6xl">
+                            {{ $heroLead?->title ?? 'Empowering South Asia\'s Tech Leaders. Building a Secure Future.' }}
+                        </h1>
 
-                        <div class="hero-badge">
-                            <span class="size-2.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_16px_#34d399]"></span>
-                            <span>{{ $heroLead?->subtitle ?? 'Bangladesh National Youth Technical Institute' }}</span>
-                        </div>
-
-                        <div class="h-1 w-28 rounded-full bg-emerald-500 shadow-[0_0_24px_rgba(16,185,129,.65)]"></div>
-
-                        <p class="sr-only" data-i18n="heroBody">
-                            {{ $heroLead?->body }}
-                        </p>
-
-                        <div class="hero-actions flex w-full flex-wrap items-center gap-3 sm:w-auto sm:gap-4">
-                            <a href="{{ $heroLead?->link_url ?? '#courses' }}" class="hero-primary-button group">
-                                <span>{{ $heroLead?->link_label ?? 'Get Started' }}</span>
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5 transition group-hover:translate-x-1">
-                                    <path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                </svg>
+                        <div class="hero-actions mt-4 flex w-full flex-wrap items-center gap-4 sm:w-auto">
+                            <a href="{{ $heroLead?->link_url ?? '#courses' }}" class="rounded-md bg-amber-500 px-10 py-4 text-sm font-black text-[#03224c] uppercase tracking-wider shadow-2xl transition hover:bg-amber-400">
+                                <span>{{ $heroLead?->link_label ?? 'Join Course' }}</span>
                             </a>
-                            <a href="#latest-news-contact" class="hero-outline-button">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5">
-                                    <path d="M7.2 3h3l1.5 4.2-2 1.7c1.3 2.8 2.8 4.3 5.5 5.5l1.7-2 4.1 1.5v3c0 2.2-1.8 4-4 4C9.3 20.9 3 14.7 3 7a4 4 0 0 1 4.2-4Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"/>
-                                </svg>
-                                <span>Contact Us</span>
+                            <a href="#courses" class="rounded-md border-2 border-white px-10 py-4 text-sm font-black text-white uppercase tracking-wider transition hover:bg-white hover:text-[#03224c]">
+                                <span>Programs</span>
                             </a>
                         </div>
                     </div>
@@ -258,7 +225,7 @@
                             default => 'M4 7.5 12 3l8 4.5-8 4.5-8-4.5Zm3 2.2V15c3 2.3 7 2.3 10 0V9.7M20 8v6m-1 2h2',
                             };
                         @endphp
-                        <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-emerald-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-emerald-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0">
+                        <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-emerald-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-emerald-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0 {{ $item->stable_key === 'practical-lab' ? 'bg-[#f0fcf9] dark:bg-emerald-400/5' : '' }}">
                             <span class="grid h-8 place-items-center text-[#159b63] transition-transform duration-200 group-hover:-translate-y-0.5 dark:text-emerald-400">
                                 <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55">
                                     <path d="{{ $icon }}" />
@@ -275,201 +242,183 @@
             @endif
 
             @if ($isSectionVisible('about'))
-            <section id="about" class="overflow-hidden bg-white py-14 dark:bg-deep sm:py-16 lg:py-[clamp(56px,8vh,88px)]" data-about-carousel data-about-interval="10000" data-about-viewport-fit>
-                @if ($aboutEntries->isNotEmpty())
-                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" data-about-layout="profile" data-about-size="balanced">
-                        <div class="relative">
-                            @foreach ($aboutEntries as $about)
-                                @php
-                                    $aboutImage = $about->image_path ?: $about->principal_image_path;
-                                @endphp
-                                <article class="grid items-start gap-5 md:grid-cols-[minmax(230px,0.62fr)_minmax(0,1.55fr)] md:gap-7 lg:grid-cols-[minmax(260px,0.62fr)_minmax(0,1.6fr)] lg:gap-8 {{ $loop->first ? '' : 'hidden' }}" data-about-slide>
-                                    <div class="mx-auto w-full max-w-[340px] overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white shadow-[0_10px_24px_rgba(15,23,42,.12)] dark:border-white/10 dark:bg-ink lg:max-w-[360px]">
-                                        <img src="{{ $aboutImage ? (str_starts_with($aboutImage, 'images/') ? asset($aboutImage) : Storage::disk('public')->url($aboutImage)) : asset('images/principal-portrait.webp') }}" alt="{{ $about->about_heading }}" class="aspect-[4/5.15] w-full object-cover object-top lg:h-[clamp(340px,50vh,430px)] lg:aspect-auto" loading="lazy">
-                                        @if ($about->principal_name)
-                                            <div class="bg-[#0b2447] px-4 py-3.5 text-center text-white"><h3 class="text-lg font-black tracking-tight sm:text-xl">{{ $about->principal_name }}</h3><p class="mt-0.5 text-xs text-slate-200">{{ $about->principal_title }}</p></div>
-                                        @endif
-                                    </div>
-                                    <div class="min-w-0 pt-1 md:pt-0">
-                                        <div class="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-5">
-                                            <h2 class="min-w-0 max-w-full text-2xl font-black tracking-tight text-slate-950 sm:text-3xl dark:text-white" aria-label="About Us" data-about-heading>
-                                                About <span class="text-emerald-600 dark:text-emerald-400">Us</span>
-                                            </h2>
-                                            <span class="h-[3px] min-w-16 flex-1 rounded-full bg-emerald-600 sm:max-w-32" aria-hidden="true"></span>
-                                        </div>
-                                        <div class="mt-3 h-px w-full bg-slate-200 dark:bg-white/10"></div>
-                                        <h3 class="mt-4 text-sm font-semibold text-slate-900 dark:text-white">About the Institution</h3>
-                                        @if ($about->summary)
-                                            <p class="mt-1.5 text-sm leading-5.5 text-slate-700 lg:text-[clamp(13px,1.55vh,14px)] lg:leading-[clamp(18px,2.2vh,21px)] dark:text-slate-200">{{ $about->summary }}</p>
-                                        @endif
-                                        @if ($about->content)
-                                            <div class="mt-1.5 whitespace-pre-line text-sm leading-5.5 text-slate-600 lg:text-[clamp(13px,1.55vh,14px)] lg:leading-[clamp(18px,2.2vh,21px)] dark:text-slate-300">{{ $about->content }}</div>
-                                        @endif
-                                    </div>
-                                </article>
-                            @endforeach
-                            @if ($aboutEntries->count() > 1)
-                                <div class="mt-8 flex items-center justify-between border-t border-slate-200 pt-4 dark:border-white/10">
-                                    <span class="text-xs font-bold text-slate-500" aria-live="polite"><span data-about-current>1</span> / {{ $aboutEntries->count() }}</span>
-                                    <div class="flex items-center gap-2"><button type="button" data-about-prev class="grid size-9 place-items-center rounded-full border border-slate-200 font-black hover:bg-emerald-50" aria-label="Previous About entry">←</button><div class="flex gap-1.5" role="tablist" aria-label="About entries">@foreach ($aboutEntries as $about)<button type="button" data-about-dot="{{ $loop->index }}" class="size-2.5 rounded-full bg-slate-300 data-[active=true]:bg-emerald-600" aria-label="Show About entry {{ $loop->iteration }}" role="tab"></button>@endforeach</div><button type="button" data-about-next class="grid size-9 place-items-center rounded-full border border-slate-200 font-black hover:bg-emerald-50" aria-label="Next About entry">→</button></div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                  @else
-                     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                         <div class="rounded-[1.35rem] border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-white/10 dark:bg-ink">
-                             <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">About the institute</p>
-                             <h2 class="mt-3 text-3xl font-black tracking-tight">Education that moves beyond the classroom.</h2>
-                             <p class="mx-auto mt-4 max-w-3xl whitespace-pre-line text-slate-600 dark:text-slate-300">Bangladesh National Youth Technical Institute (BNYTI) is committed to empowering young people with industry-relevant knowledge, practical expertise, and modern technological skills.</p>
-                         </div>
-                     </div>
-                  @endif
-            </section>
-            @endif
+            <section id="about" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-20 lg:py-24">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <h2 class="reveal mb-12 text-center text-3xl font-black uppercase tracking-tight text-[#03224c] dark:text-white sm:text-4xl">
+                        ABOUT SOUTH ASIA NATIONAL TECHNICAL INSTITUTE
+                    </h2>
 
-            <section id="about-legacy" class="hidden" aria-hidden="true">
-                @php
-                    $aboutContent = $instituteProfile?->content ?? "Bangladesh National Youth Technical Institute (BNYTI) is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation's youth with industry-relevant knowledge, practical expertise, and modern technological skills.\n\nBNYTI provides a comprehensive learning environment that combines theoretical knowledge with hands-on training, professional ethics, and practical experience. Our goal is to equip every learner with the confidence and competence required to succeed in today's competitive world.\n\nThrough years of excellence and dedication, the institute has expanded its educational services across Bangladesh. Our growing branch network continues to deliver accessible, quality technical education and skills development training to students and trainees.";
-                    $aboutParagraphs = preg_split('/\R{2,}/', trim($aboutContent)) ?: [];
-                    $principalImage = $instituteProfile?->principal_image_path;
-                @endphp
-                <div class="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[0.82fr_1.35fr] lg:gap-10 lg:px-8">
-                    <article class="reveal mx-auto w-full max-w-[360px] overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white shadow-[0_18px_45px_rgba(15,23,42,.14)] dark:border-white/10 dark:bg-ink">
-                        <div class="aspect-[4/4.6] max-h-[415px] overflow-hidden bg-stone-100">
+                    @php
+                        $about = $aboutEntries->first();
+                        $aboutFallback = asset('images/bnyti-hero-premium-2.png');
+                        if ($about?->image_path) {
+                            if (str_starts_with($about->image_path, 'http://') || str_starts_with($about->image_path, 'https://')) {
+                                $aboutSrc = $about->image_path;
+                            } elseif (str_starts_with($about->image_path, 'images/')) {
+                                $aboutSrc = asset($about->image_path);
+                            } else {
+                                $aboutSrc = asset('storage/' . $about->image_path);
+                            }
+                        } else {
+                            $aboutSrc = $aboutFallback;
+                        }
+                    @endphp
+                    <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
+                        <div class="reveal overflow-hidden rounded-2xl shadow-xl">
                             <img
-                                src="{{ $principalImage ? (str_starts_with($principalImage, 'images/') ? asset($principalImage) : Storage::disk('public')->url($principalImage)) : asset('images/principal-portrait.webp') }}"
-                                alt="Portrait of {{ $instituteProfile?->principal_name ?? 'Mst Salma Rahman' }}, {{ $instituteProfile?->principal_title ?? 'Principal' }}"
-                                class="size-full object-cover object-top"
+                                src="{{ $aboutSrc }}"
+                                alt="Institute Building"
+                                class="w-full object-cover aspect-[4/3] lg:aspect-auto"
                                 loading="lazy"
+                                onerror="this.onerror=null; this.src='{{ $aboutFallback }}';"
                             >
                         </div>
-                        <div class="bg-[#0b2447] px-6 py-5 text-center text-white">
-                            <h3 class="text-xl font-black tracking-tight sm:text-2xl">{{ $instituteProfile?->principal_name ?? 'Mst Salma Rahman' }}</h3>
-                            <p class="mt-1 text-sm font-medium text-slate-200">{{ $instituteProfile?->principal_title ?? 'Principal' }}</p>
-                        </div>
-                    </article>
 
-                    <div class="reveal" style="--reveal-delay: 120ms">
-                        <div class="flex items-center gap-4">
-                            <h2 class="text-3xl font-black tracking-tight text-slate-950 sm:text-4xl dark:text-white">{{ $instituteProfile?->about_heading ?? 'About Us' }}</h2>
-                            <span class="mt-2 h-1 w-24 rounded-full bg-emerald-600 sm:w-32"></span>
-                        </div>
-                        <div class="mt-4 h-px w-full bg-slate-200 dark:bg-white/10"></div>
-
-                        <div class="mt-5 flex flex-col gap-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
-                            <h3 class="font-bold text-slate-900 dark:text-white">About the Institution</h3>
-                            @if ($instituteProfile)
-                                @foreach ($aboutParagraphs as $paragraph)
-                                    <p>{{ $paragraph }}</p>
-                                @endforeach
-                            @else
-                            <p>
-                                Bangladesh National Youth Technical Institute (BNYTI) is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation’s youth with industry-relevant knowledge, practical expertise, and modern technological skills.
-                            </p>
-                            <p>
-                                BNYTI provides a comprehensive learning environment that combines theoretical knowledge with hands-on training, professional ethics, and practical experience. Our goal is to equip every learner with the confidence and competence required to succeed in today’s competitive world.
-                            </p>
-                            <p>
-                                Through years of excellence and dedication, the institute has expanded its educational services across Bangladesh. Our growing branch network continues to deliver accessible, quality technical education and skills development training to students and trainees.
-                            </p>
-                            @endif
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-            @if ($isSectionVisible('statistics'))
-            <section class="bg-white px-3 pb-7 dark:bg-deep sm:px-5 lg:px-8" aria-label="BNYTI achievements">
-                <div class="mx-auto grid max-w-[1460px] grid-cols-2 overflow-hidden rounded-xl bg-[#071f3f] px-2 py-2.5 shadow-[0_5px_18px_rgba(7,31,63,.2)] sm:grid-cols-3 sm:px-3 lg:grid-cols-6 lg:px-4">
-                    @foreach ($homepageItems('statistics') as $item)
-                        @php
-                            $value = $item->title;
-                            $label = $item->subtitle ?: $item->body;
-                            $icon = match ($item->icon) {
-                                'students' => 'M8.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7-1a2.75 2.75 0 1 0 0-5.5M2.5 20v-2.5a5.5 5.5 0 0 1 11 0V20h-11Zm11.5-6a4.75 4.75 0 0 1 7.5 3.9V20H17',
-                                'branches' => 'M4 21V10l8-7 8 7v11M8 21v-7h8v7M6.5 8.5V4H9v2.3M3 21h18',
-                                'courses' => 'M3.5 5.5c2.8-.8 5.6-.4 8.5 1.3v14c-2.9-1.7-5.7-2.1-8.5-1.3v-14Zm17 0c-2.8-.8-5.6-.4-8.5 1.3v14c2.9-1.7 5.7-2.1 8.5-1.3v-14ZM12 6.8V21',
-                                'trainers' => 'M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 21v-2a7 7 0 0 1 14 0v2M18 8.5h3m-1.5-1.5v3',
-                                default => 'M12 21s7-3.8 7-10V5.5L12 3 5 5.5V11c0 6.2 7 10 7 10Zm-3-10 2 2 4-4',
-                            };
-                        @endphp
-                        <article class="flex min-h-[66px] items-center justify-center gap-2.5 px-2 py-2 sm:min-h-[70px] lg:justify-start lg:px-3">
-                            <span class="grid size-8 shrink-0 place-items-center text-[#16a467]">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65">
-                                    <path d="{{ $icon }}" />
-                                </svg>
-                            </span>
+                        <div class="reveal" style="--reveal-delay: 150ms">
                             <div class="min-w-0">
-                                <strong class="block text-[13px] leading-4 font-black text-white sm:text-sm">{{ $value }}</strong>
-                                <span class="block text-[8px] leading-3 font-semibold text-slate-300 sm:text-[9px]">{{ $label }}</span>
+                                <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                    {{ $about?->content ?? "Bangladesh National Youth Technical Institute (BNYTI) is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation's youth with industry-relevant knowledge, practical expertise, and modern technological skills." }}
+                                </p>
+
+                                <div class="mt-8">
+                                    <h3 class="text-xl font-black text-[#03224c] dark:text-white">MFU Team or SO?</h3>
+
+                                    <div class="mt-5 flex flex-col gap-8 sm:flex-row sm:items-start">
+                                        <ul class="flex-1 space-y-3">
+                                            @foreach([
+                                                'MF Student for Features',
+                                                'M& Commercial Institutes',
+                                                'MP Coeistment Assistont',
+                                                'WFIS and & Accobers Program'
+                                            ] as $item)
+                                                <li class="flex items-center gap-3 text-slate-800 dark:text-slate-200">
+                                                    <span class="size-2.5 shrink-0 rounded-full bg-[#3e5b6d] dark:bg-emerald-500"></span>
+                                                    <span class="text-sm font-bold">{{ $item }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+
+                                        <div class="shrink-0 w-full rounded-xl border-2 border-[#3e5b6d]/30 bg-white/40 p-5 text-center sm:w-52 dark:border-white/10 dark:bg-white/5">
+                                            <h4 class="border-b-2 border-[#3e5b6d]/30 pb-2 text-lg font-black text-[#3e5b6d] dark:text-emerald-400 uppercase tracking-tighter">
+                                                On-line Value
+                                            </h4>
+                                            <p class="mt-4 text-[10px] font-bold leading-tight text-slate-600 dark:text-slate-400">
+                                                Dernorats pase nist aodaized<br>
+                                                ourl of dultaaan tremp ava<br>
+                                                tradition huxbet
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </article>
-                    @endforeach
+                        </div>
+                    </div>
                 </div>
             </section>
             @endif
 
-            <section id="courses" class="bg-stone-50 py-12 dark:bg-ink sm:py-16">
+
+            @if ($isSectionVisible('statistics'))
+            <section class="bg-[#03224c] py-20 dark:bg-deep" aria-label="BNYTI achievements">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="section-heading-row flex items-start justify-between gap-4 sm:items-center">
-                        <div>
-                            <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Popular Courses</h2>
-                            <span class="mt-2 block h-0.5 w-8 rounded-full bg-emerald-500"></span>
-                        </div>
-                        <a href="#courses" class="section-heading-link group inline-flex shrink-0 items-center gap-1.5 text-[10px] font-bold text-slate-700 transition hover:text-emerald-600 sm:gap-2 sm:text-[11px] dark:text-slate-300 dark:hover:text-emerald-400">
-                            View All Courses
-                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4 text-emerald-500 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                <path d="M4 10h12m-4-4 4 4-4 4" />
-                            </svg>
-                        </a>
+                    <div class="mb-16 text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-[0.25em] text-white sm:text-4xl">Training Input</h2>
                     </div>
 
-                    <div class="mt-7" data-course-carousel data-course-interval="5000">
-                        <div class="course-carousel-track flex gap-5 overflow-x-auto scroll-smooth" data-course-track tabindex="0" aria-label="Popular courses">
+                    <div class="grid grid-cols-2 justify-center gap-y-12 gap-x-8 md:grid-cols-4 lg:gap-16">
+                        @foreach ($homepageItems('statistics')->take(4) as $item)
+                            @php
+                                $borderColors = ['border-sky-400', 'border-amber-400', 'border-sky-400', 'border-amber-400'];
+                                $borderColor = $borderColors[$loop->index % 4];
+                            @endphp
+                            <div class="flex flex-col items-center">
+                                <div class="relative flex size-40 items-center justify-center rounded-full border-[6px] {{ $borderColor }} p-6 text-center transition-transform duration-300 hover:scale-105 sm:size-48 lg:size-52">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <span class="text-3xl font-black text-white sm:text-4xl">{{ $item->title }}</span>
+                                        <span class="mt-2 max-w-[130px] text-[10px] font-extrabold leading-tight text-slate-200 uppercase tracking-widest sm:text-11px">{{ $item->subtitle ?: $item->body }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="mt-16 flex justify-center gap-3">
+                        <span class="size-2 rounded-full bg-white/20"></span>
+                        <span class="size-2 rounded-full bg-white"></span>
+                        <span class="size-2 rounded-full bg-white/20"></span>
+                        <span class="size-2 rounded-full bg-white/20"></span>
+                    </div>
+                </div>
+            </section>
+            @endif
+
+
+            <section id="courses" class="bg-[#f0f8f7] py-16 dark:bg-ink sm:py-20">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="mb-12 text-center">
+                        <h2 class="text-2xl font-black uppercase tracking-[0.2em] text-slate-800 dark:text-white sm:text-3xl">Popular Courses</h2>
+                    </div>
+
+                    <div class="relative group" data-course-carousel data-course-interval="5000">
+                        <!-- Navigation Arrows -->
+                        <div class="hidden lg:block">
+                            <button type="button" class="absolute -left-5 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-lg border border-slate-50 transition hover:bg-emerald-500 hover:text-white focus:outline-none dark:bg-deep dark:border-white/10 dark:text-white/60" data-course-prev aria-label="Previous courses">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                            </button>
+                            <button type="button" class="absolute -right-5 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-lg border border-slate-50 transition hover:bg-emerald-500 hover:text-white focus:outline-none dark:bg-deep dark:border-white/10 dark:text-white/60" data-course-next aria-label="Next courses">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                            </button>
+                        </div>
+
+                        <div class="course-carousel-track flex gap-6 overflow-x-auto scroll-smooth pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-course-track tabindex="0" aria-label="Popular courses">
                         @forelse ($popularCourses as $course)
                             @php
                                 $courseImages = ['images/bnyti-hero-premium-2.png', 'images/bnyti-hero-premium-1.png', 'images/bnyti-hero-premium-3.png', 'images/bnyti-hero-premium-1.png'];
-                                $coursePositions = ['object-[68%_center]', 'object-[58%_center]', 'object-[52%_center]', 'object-[78%_center]'];
-                                $courseBadges = ['bg-amber-400', 'bg-sky-500', 'bg-pink-500', 'bg-violet-600'];
-                                $courseIcons = ['M13 2 6 13h5l-1 9 8-12h-5V2Z', 'M4 4h16v12H4V4Zm4 16h8m-4-4v4', 'M4 20l4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10L4 20Zm10-13 3 3M4 20l1-4 3 3-4 1Z', 'M8 8 4 12l4 4m8-8 4 4-4 4m-2-11-4 18'];
+                                $coursePositions = ['object-center', 'object-center', 'object-center', 'object-center'];
                                 $courseIndex = $loop->index % 4;
-                                $courseImage = $course->image_path ? Storage::disk('public')->url($course->image_path) : asset($courseImages[$courseIndex]);
+                                $fallbackCourseImage = asset($courseImages[$courseIndex]);
+
+                                if ($course->image_path) {
+                                    if (str_starts_with($course->image_path, 'http://') || str_starts_with($course->image_path, 'https://')) {
+                                        $courseImage = $course->image_path;
+                                    } elseif (str_starts_with($course->image_path, 'images/')) {
+                                        $courseImage = asset($course->image_path);
+                                    } else {
+                                        $courseImage = asset('storage/' . $course->image_path);
+                                    }
+                                } else {
+                                    $courseImage = $fallbackCourseImage;
+                                }
                             @endphp
-                            <article class="course-carousel-slide group flex h-full w-full shrink-0 snap-start flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_3px_12px_rgba(15,23,42,.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,.13)] dark:border-white/10 dark:bg-deep" data-course-slide>
-                                <div class="relative aspect-video shrink-0 overflow-hidden bg-slate-100">
+                            <article class="course-carousel-slide group flex w-[280px] shrink-0 snap-start flex-col rounded-[2rem] bg-white p-4 shadow-sm transition duration-300 hover:shadow-xl dark:bg-deep sm:w-[290px]" data-course-slide>
+                                <div class="relative aspect-square shrink-0 overflow-hidden rounded-2xl bg-slate-100">
                                     <img
                                         src="{{ $courseImage }}"
-                                        alt="{{ $course->name }} training"
-                                        class="size-full object-cover {{ $coursePositions[$courseIndex] }} transition duration-500 group-hover:scale-105"
+                                        alt="{{ $course->name }}"
+                                        class="size-full object-cover transition duration-500 group-hover:scale-105"
                                         loading="lazy"
+                                        onerror="this.onerror=null; this.src='{{ $fallbackCourseImage }}';"
                                     >
-                                    <span class="absolute bottom-0 left-4 grid size-9 translate-y-1/2 place-items-center rounded-lg {{ $courseBadges[$courseIndex] }} text-white shadow-lg ring-4 ring-white dark:ring-deep">
-                                        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                            <path d="{{ $courseIcons[$courseIndex] }}" />
-                                        </svg>
-                                    </span>
                                 </div>
 
-                                <div class="flex min-h-[174px] flex-1 flex-col px-4 pt-7 pb-4">
-                                    <h3 class="line-clamp-2 min-h-10 text-sm leading-5 font-extrabold text-[#0b2447] dark:text-white">{{ $course->name }}</h3>
-                                    <p class="mt-2 line-clamp-2 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{{ $course->description }}</p>
-                                    <dl class="mt-3 grid gap-1.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                                        <div class="flex items-center gap-1.5">
-                                            <dt class="sr-only">Duration</dt>
-                                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5">
-                                                <circle cx="10" cy="10" r="7" />
-                                                <path d="M10 6v4l2.5 1.5" />
+                                <div class="flex flex-1 flex-col px-1 py-5">
+                                    <h3 class="text-xl font-black leading-tight text-slate-900 dark:text-white">{{ $course->name }}</h3>
+                                    <p class="mt-2 line-clamp-2 text-xs font-medium leading-relaxed text-slate-500 dark:text-slate-400">{{ $course->description }}</p>
+
+                                    <!-- Star Rating -->
+                                    <div class="mt-4 flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
+                                        @for ($star = 0; $star < 5; $star++)
+                                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="currentColor">
+                                                <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
                                             </svg>
-                                            <dd>{{ $course->duration }}</dd>
-                                        </div>
-                                        <div class="flex items-center gap-1.5">
-                                            <dt class="sr-only">Course overview</dt>
-                                            <span class="w-3.5 text-center font-black">৳</span>
-                                            <dd class="line-clamp-1">{{ Str::limit($course->description, 48) }}</dd>
-                                        </div>
-                                    </dl>
+                                        @endfor
+                                    </div>
+
+                                    <div class="mt-6">
+                                        <a href="#latest-news-contact" class="block w-full rounded-xl bg-[#f5a623] py-3 text-center text-sm font-black text-white transition hover:bg-[#e69516]">
+                                            Learn More
+                                        </a>
+                                    </div>
                                 </div>
                             </article>
                         @empty
@@ -478,93 +427,97 @@
                             </div>
                         @endforelse
                         </div>
-                        @if ($popularCourses->count() > 1)
-                            <div class="course-carousel-controls mt-5 items-center justify-center gap-4" aria-label="Course carousel controls">
-                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-course-prev aria-label="Previous courses">
-                                    <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
-                                </button>
-                                <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-course-current>1</span> of <span data-course-total>1</span></p>
-                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-course-next aria-label="Next courses">
-                                    <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
-                                </button>
-                            </div>
-                        @endif
+
+                        <!-- Mobile controls & status -->
+                        <div class="mt-4 flex items-center justify-center gap-4 lg:hidden">
+                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-course-prev aria-label="Previous courses">
+                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
+                            </button>
+                            <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-course-current>1</span> of <span data-course-total>1</span></p>
+                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-course-next aria-label="Next courses">
+                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section id="expert-teachers" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16">
+            <section id="expert-teachers" class="bg-[#e7f3f9] py-16 dark:bg-[#0f172a] sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="section-heading-row flex items-start justify-between gap-4 sm:items-center">
-                        <div>
-                            <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Our Expert Teachers</h2>
-                            <span class="mt-1 block h-0.5 w-6 rounded-full bg-emerald-500"></span>
-                        </div>
-                        <a href="#latest-news-contact" class="section-heading-link group inline-flex shrink-0 items-center gap-1.5 text-[10px] font-bold text-slate-700 transition hover:text-emerald-600 dark:text-slate-300 dark:hover:text-emerald-400">
-                            View All Teachers
-                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-3.5 text-emerald-500 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                <path d="M4 10h12m-4-4 4 4-4 4" />
-                            </svg>
-                        </a>
+                    <div class="mb-12 text-center">
+                        <h2 class="text-2xl font-black uppercase tracking-wider text-slate-900 dark:text-white sm:text-3xl">Expert Teachers Gallery</h2>
                     </div>
 
-                    <div class="mt-5" data-teacher-carousel data-teacher-interval="5000">
-                    <div class="teacher-carousel-track flex gap-5 overflow-x-auto scroll-smooth" data-teacher-track tabindex="0" aria-label="Teacher profiles">
-                        @foreach ($teacherCards as $teacher)
-                            <article class="teacher-carousel-slide group flex h-full w-full shrink-0 snap-start flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-deep" data-teacher-slide>
-                                <div class="relative aspect-[4/4.6] shrink-0 overflow-hidden bg-white" data-teacher-image-background="white">
-                                    @if ($teacher['image_path'])
-                                        <img
-                                            src="{{ Storage::url($teacher['image_path']) }}?v=white-background"
-                                            alt="{{ $teacher['name'] }}"
-                                            class="size-full object-cover object-top transition duration-500 group-hover:scale-105"
-                                            loading="lazy"
-                                        >
-                                    @else
-                                        <div
-                                            role="img"
-                                            aria-label="{{ $teacher['name'] }}"
-                                            class="size-full bg-no-repeat transition duration-500 group-hover:scale-105"
-                                            style="background-image: url('{{ asset('images/expert-teachers-sprite-v2.png') }}'); background-size: 600% auto; background-position: {{ $loop->index * 20 }}% 52%;"
-                                        ></div>
-                                    @endif
-                                </div>
-
-                                <div class="flex flex-1 flex-col items-center px-4 py-4 text-center">
-                                    <h3 class="line-clamp-2 text-sm leading-5 font-black text-slate-950 dark:text-white">{{ $teacher['name'] }}</h3>
-                                    <p class="mt-1 truncate text-[11px] font-bold text-emerald-700 dark:text-emerald-400">{{ $teacher['department'] }}</p>
-                                    <span class="mt-3 inline-flex max-w-full rounded-full bg-emerald-600 px-3 py-1.5 text-[9px] leading-none font-bold text-white shadow-sm">
-                                        {{ $teacher['designation'] }}
-                                    </span>
-                                    @if ($teacher['id'])
-                                        <a href="{{ route('teachers.show', $teacher['id']) }}" class="mt-3 inline-flex items-center justify-center gap-1 rounded-full border border-emerald-200 px-3 py-2 text-[11px] font-black text-emerald-700 transition hover:border-emerald-400 hover:bg-emerald-50 dark:border-emerald-400/30 dark:text-emerald-300 dark:hover:bg-emerald-400/10">
-                                            আরও পড়ুন... <span aria-hidden="true" class="text-sm">→</span>
-                                        </a>
-                                    @else
-                                        <details class="mt-3 w-full text-left">
-                                            <summary class="flex cursor-pointer list-none items-center justify-center gap-1 rounded-full border border-emerald-200 px-3 py-2 text-[11px] font-black text-emerald-700 transition hover:border-emerald-400 hover:bg-emerald-50 dark:border-emerald-400/30 dark:text-emerald-300 dark:hover:bg-emerald-400/10">
-                                                আরও পড়ুন... <span aria-hidden="true" class="text-sm">→</span>
-                                            </summary>
-                                            <p class="mt-3 rounded-xl bg-slate-50 px-3 py-3 text-left text-[11px] leading-5 text-slate-600 dark:bg-white/5 dark:text-slate-300">
-                                                {{ $teacher['description'] ?: 'Our instructor brings practical guidance and industry-focused experience to every class.' }}
-                                            </p>
-                                        </details>
-                                    @endif
-                                </div>
-                            </article>
-                        @endforeach
-                    </div>
-                    @if ($teacherCards->count() > 1)
-                        <div class="teacher-carousel-controls mt-5 items-center justify-center gap-4" aria-label="Teacher carousel controls">
-                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-teacher-prev aria-label="Previous teacher page">
-                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
+                    <div class="relative group" data-teacher-carousel data-teacher-interval="5000">
+                        <!-- Navigation Arrows -->
+                        <div class="hidden lg:block">
+                            <button type="button" class="absolute -left-6 top-[40%] z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-slate-400 shadow-md backdrop-blur-sm transition hover:bg-white hover:text-slate-600 focus:outline-none dark:bg-slate-800 dark:text-white/60" data-teacher-prev aria-label="Previous teachers">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="size-5"><path d="m15 18-6-6 6-6" /></svg>
                             </button>
-                            <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-teacher-current>1</span> of <span data-teacher-total>1</span></p>
-                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-teacher-next aria-label="Next teacher page">
-                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
+                            <button type="button" class="absolute -right-6 top-[40%] z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-slate-400 shadow-md backdrop-blur-sm transition hover:bg-white hover:text-slate-600 focus:outline-none dark:bg-slate-800 dark:text-white/60" data-teacher-next aria-label="Next teachers">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="size-5"><path d="m9 18 6-6-6-6" /></svg>
                             </button>
                         </div>
-                    @endif
+
+                        <div class="teacher-carousel-track flex gap-5 overflow-x-auto scroll-smooth pb-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-teacher-track tabindex="0" aria-label="Teacher profiles">
+                            @foreach ($teacherCards as $teacher)
+                                <article class="teacher-carousel-slide group flex w-[260px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-white p-3 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition duration-300 hover:shadow-xl dark:bg-slate-900 sm:w-[280px]" data-teacher-slide>
+                                    <div class="relative aspect-[1/1.1] w-full overflow-hidden rounded-xl bg-slate-100">
+                                        @if ($teacher['image_path'])
+                                            @php
+                                                $teacherFallback = asset('images/bnyti-hero-premium-1.png');
+                                                if (str_starts_with($teacher['image_path'], 'http://') || str_starts_with($teacher['image_path'], 'https://')) {
+                                                    $teacherSrc = $teacher['image_path'];
+                                                } elseif (str_starts_with($teacher['image_path'], 'images/')) {
+                                                    $teacherSrc = asset($teacher['image_path']);
+                                                } else {
+                                                    $teacherSrc = asset('storage/' . $teacher['image_path']);
+                                                }
+                                            @endphp
+                                            <img
+                                                src="{{ $teacherSrc }}"
+                                                alt="{{ $teacher['name'] }}"
+                                                class="size-full object-cover"
+                                                loading="lazy"
+                                                onerror="this.onerror=null; this.src='{{ $teacherFallback }}';"
+                                            >
+                                        @else
+                                            <div
+                                                role="img"
+                                                aria-label="{{ $teacher['name'] }}"
+                                                class="size-full bg-cover bg-center bg-no-repeat"
+                                                style="background-image: url('{{ asset('images/expert-teachers-sprite-v2.png') }}'); background-size: 600% auto; background-position: {{ $loop->index * 20 }}% 52%;"
+                                            ></div>
+                                        @endif
+                                    </div>
+
+                                    <div class="flex flex-1 flex-col px-1 pt-4 pb-2">
+                                        <h3 class="text-base font-black text-slate-900 dark:text-white">{{ $teacher['name'] }}</h3>
+                                        <p class="mt-0.5 text-[10px] font-bold text-slate-500 uppercase tracking-tight">{{ $teacher['designation'] ?? $teacher['department'] }}</p>
+
+                                        <p class="mt-3 line-clamp-3 text-[11px] font-medium leading-relaxed text-slate-600 dark:text-slate-400">
+                                            Expert in {{ $teacher['department'] }} with over {{ $teacher['experience'] }} years of practical industry experience and academic excellence.
+                                        </p>
+
+                                        <div class="mt-4 flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
+                                            @for ($star = 0; $star < 5; $star++)
+                                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="currentColor">
+                                                    <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
+                                                </svg>
+                                            @endfor
+                                        </div>
+                                    </div>
+                                </article>
+                            @endforeach
+                        </div>
+
+                        <!-- Scroll Indicators -->
+                        <div class="mt-2 flex items-center justify-center gap-2">
+                            <span class="size-1.5 rounded-full bg-slate-300 dark:bg-white/10"></span>
+                            <span class="size-1.5 rounded-full bg-slate-800 dark:bg-white"></span>
+                            <span class="size-1.5 rounded-full bg-slate-300 dark:bg-white/10"></span>
+                            <span class="size-1.5 rounded-full bg-slate-300 dark:bg-white/10"></span>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -701,97 +654,103 @@
                 </div>
             </section>
 
-            <section id="institute-gallery" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16">
+            <section id="institute-gallery" class="bg-[#03224c] py-16 text-white sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="section-heading-row flex items-start justify-between gap-4 sm:items-center">
-                        <div>
-                            <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Institute Gallery</h2>
-                            <span class="mt-1 block h-0.5 w-6 rounded-full bg-emerald-500"></span>
-                        </div>
-                        <a href="#institute-gallery" class="section-heading-link group inline-flex shrink-0 items-center gap-1.5 text-[10px] font-bold text-slate-700 transition hover:text-emerald-600 dark:text-slate-300 dark:hover:text-emerald-400">
-                            View All Gallery
-                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-3.5 text-emerald-500 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                <path d="M4 10h12m-4-4 4 4-4 4" />
-                            </svg>
-                        </a>
+                    <div class="mb-12 text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-[0.2em] text-white sm:text-4xl">Student Gallery</h2>
                     </div>
 
                     @php
                         $galleryItems = $homepageItems('gallery');
                     @endphp
-                    <div class="mt-4" data-gallery-carousel data-gallery-interval="5000">
-                        <div class="gallery-carousel-track flex gap-3 overflow-x-auto scroll-smooth" data-gallery-track tabindex="0" aria-label="Institute gallery">
-                        @foreach ($galleryItems as $item)
+                    <div class="relative group" data-gallery-carousel data-gallery-interval="5000">
+                        <!-- Navigation Arrows -->
+                        <div class="hidden lg:block">
+                            <button type="button" class="absolute -left-8 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white shadow-xl border border-white/20 transition hover:bg-emerald-500 hover:text-white focus:outline-none" data-gallery-prev aria-label="Previous images">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                            </button>
+                            <button type="button" class="absolute -right-8 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white shadow-xl border border-white/20 transition hover:bg-emerald-500 hover:text-white focus:outline-none" data-gallery-next aria-label="Next images">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                            </button>
+                        </div>
+
+                        <div class="gallery-carousel-track grid grid-cols-2 gap-2 overflow-hidden sm:grid-cols-4 sm:gap-3" data-gallery-track aria-label="Student gallery">
+                        @foreach ($galleryItems->take(8) as $item)
                             @php
-                                $label = $item->title;
-                                $image = $item->image_path ?: 'images/institute-gallery-1.png';
-                                $panel = $item->metadata['panel'] ?? 0;
+                                $galleryFallback = asset('images/institute-gallery-' . (($loop->index % 2) + 1) . '.png');
+                                if ($item->image_path) {
+                                    if (str_starts_with($item->image_path, 'http://') || str_starts_with($item->image_path, 'https://')) {
+                                        $gallerySrc = $item->image_path;
+                                    } elseif (str_starts_with($item->image_path, 'images/')) {
+                                        $gallerySrc = asset($item->image_path);
+                                    } else {
+                                        $gallerySrc = asset('storage/' . $item->image_path);
+                                    }
+                                } else {
+                                    $gallerySrc = $galleryFallback;
+                                }
                             @endphp
-                            <figure class="gallery-carousel-slide group min-w-0 shrink-0 snap-start" data-gallery-slide>
-                                <div
-                                    role="img"
-                                    aria-label="{{ $label }}"
-                                    class="aspect-5/4 overflow-hidden rounded-xl bg-slate-200 bg-no-repeat shadow-[0_3px_10px_rgba(15,23,42,.10)] ring-1 ring-slate-900/5 transition duration-300 group-hover:-translate-y-1 group-hover:shadow-lg dark:bg-slate-800 dark:ring-white/10"
-                                    style="background-image: url('{{ asset($image) }}'); background-size: 400% auto; background-position: {{ $panel * 33.333 }}% 50%;"
-                                ></div>
-                                <figcaption class="mt-2 truncate text-center text-[9px] font-bold text-slate-700 dark:text-slate-300">{{ $label }}</figcaption>
-                            </figure>
+                            <div class="gallery-carousel-slide aspect-[4/3] overflow-hidden rounded-lg bg-slate-800" data-gallery-slide>
+                                <img
+                                    src="{{ $gallerySrc }}"
+                                    alt="{{ $item->title }}"
+                                    class="size-full object-cover transition duration-500 hover:scale-110"
+                                    loading="lazy"
+                                    onerror="this.onerror=null; this.src='{{ $galleryFallback }}';"
+                                >
+                            </div>
                         @endforeach
                         </div>
-                        @if ($galleryItems->count() > 1)
-                            <div class="gallery-carousel-controls mt-5 items-center justify-center gap-4" aria-label="Institute gallery controls">
-                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-gallery-prev aria-label="Previous gallery images">
-                                    <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
-                                </button>
-                                <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-gallery-current>1</span> of <span data-gallery-total>1</span></p>
-                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-gallery-next aria-label="Next gallery images">
-                                    <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
-                                </button>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </section>
 
-            <section id="student-success-stories" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16">
+            <section id="student-success-stories" class="bg-[#f8fafc] py-16 dark:bg-ink sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div>
-                        <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Student Success Stories</h2>
-                        <span class="mt-1.5 block h-0.5 w-8 rounded-full bg-emerald-500"></span>
+                    <div class="mb-12 text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Student Success Stories</h2>
+                        <div class="mx-auto mt-2 h-1 w-16 rounded-full bg-emerald-500"></div>
                     </div>
 
                     @php
                         $studentStories = $homepageItems('testimonials');
                     @endphp
-                    <div class="mt-5" data-student-carousel data-student-interval="5000">
-                        <div class="student-carousel-track flex gap-5 overflow-x-auto scroll-smooth" data-student-track tabindex="0" aria-label="Student success stories">
+                    <div class="relative group" data-student-carousel data-student-interval="5000">
+                        <div class="student-carousel-track flex gap-6 overflow-x-auto scroll-smooth pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-student-track tabindex="0" aria-label="Student success stories">
                         @foreach ($studentStories as $item)
                             @php
                                 $quote = $item->body;
                                 $name = $item->title;
                                 $position = $item->subtitle;
                             @endphp
-                            <article class="student-carousel-slide relative flex h-full w-full shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white px-5 py-5 shadow-[0_7px_24px_rgba(15,23,42,.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(15,23,42,.12)] dark:border-white/10 dark:bg-deep" data-student-slide>
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7 text-emerald-600 dark:text-emerald-400" fill="currentColor">
-                                    <path d="M9.2 6.4C6.2 7.8 4.5 10 4.2 13H8v5H3.1v-3.3c0-4.3 2-7.5 6.1-9.5v1.2Zm10 0c-3 1.4-4.7 3.6-5 6.6H18v5h-4.9v-3.3c0-4.3 2-7.5 6.1-9.5v1.2Z" />
-                                </svg>
-
-                                <div class="mt-1 flex flex-1 items-start gap-3">
+                            <article class="student-carousel-slide group flex w-[320px] shrink-0 snap-start overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-deep sm:w-[380px]" data-student-slide>
+                                <div class="relative w-32 shrink-0 p-3 sm:w-40 sm:p-4">
                                     <div
                                         role="img"
                                         aria-label="{{ $name }}"
-                                        class="size-14 shrink-0 rounded-full bg-slate-100 bg-no-repeat ring-2 ring-white shadow-md dark:bg-slate-800 dark:ring-deep"
-                                        style="background-image: url('{{ asset('images/student-success-sprite.png') }}'); background-size: 400% auto; background-position: {{ $loop->index * 33.333 }}% 30%;"
+                                        class="aspect-[4/5] w-full overflow-hidden rounded-t-2xl rounded-b-[3.5rem] bg-slate-100 bg-cover bg-center bg-no-repeat ring-1 ring-slate-900/5 transition duration-500 group-hover:scale-105 dark:ring-white/10 sm:rounded-b-[4.5rem]"
+                                        style="background-image: url('{{ asset('images/student-success-sprite.png') }}'); background-position: {{ $loop->index * 33.333 }}% 30%;"
                                     ></div>
-                                    <p class="text-[11px] leading-5 font-medium text-slate-700 dark:text-slate-300">{{ $quote }}</p>
                                 </div>
 
-                                <div class="mt-4 border-t border-slate-100 pt-3 dark:border-white/10">
-                                    <p class="text-[11px] font-black text-[#0b2447] dark:text-white">— {{ $name }}</p>
-                                    <p class="mt-0.5 truncate text-[9px] font-medium text-slate-500 dark:text-slate-400">{{ $position }}</p>
-                                    <div class="mt-2 flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
+                                <div class="flex flex-1 flex-col justify-center px-5 py-6">
+                                    <h3 class="text-lg font-black leading-tight text-[#0b2447] dark:text-white">{{ $name }}</h3>
+                                    <p class="mt-0.5 text-[11px] font-bold text-[#16a34a] dark:text-emerald-400">{{ $position }}</p>
+
+                                    <div class="mt-4 space-y-2">
+                                        <div class="flex flex-col">
+                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Course:</span>
+                                            <span class="text-[12px] font-black text-slate-800 dark:text-slate-200 leading-none">{{ $item->metadata['course'] ?? 'Technical Training' }}</span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Outcome:</span>
+                                            <span class="line-clamp-2 text-[11px] font-bold leading-snug text-slate-600 dark:text-slate-400">{{ Str::limit($quote, 55) }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-5 flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
                                         @for ($star = 0; $star < 5; $star++)
-                                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-3.5" fill="currentColor">
+                                            <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="currentColor">
                                                 <path d="m10 1.8 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8L10 1.8Z" />
                                             </svg>
                                         @endfor
@@ -800,13 +759,15 @@
                             </article>
                         @endforeach
                         </div>
+
+                        <!-- Navigation Controls -->
                         @if ($studentStories->count() > 1)
-                            <div class="student-carousel-controls mt-5 items-center justify-center gap-4" aria-label="Student story carousel controls">
-                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-student-prev aria-label="Previous student stories">
+                            <div class="mt-4 flex items-center justify-center gap-4 lg:hidden">
+                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-student-prev aria-label="Previous stories">
                                     <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
                                 </button>
                                 <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-student-current>1</span> of <span data-student-total>1</span></p>
-                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-student-next aria-label="Next student stories">
+                                <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-student-next aria-label="Next stories">
                                     <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
                                 </button>
                             </div>
@@ -815,116 +776,136 @@
                 </div>
             </section>
 
-            <section id="latest-news-contact" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16">
-                <div class="mx-auto grid max-w-7xl gap-5 px-4 sm:px-6 lg:grid-cols-[1.65fr_.85fr] lg:px-8">
-                    <div class="min-w-0 rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_7px_24px_rgba(15,23,42,.06)] dark:border-white/10 dark:bg-deep">
-                        <div class="section-heading-row flex items-start justify-between gap-4 sm:items-center">
-                            <div>
-                                <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Latest News &amp; Updates</h2>
-                                <span class="mt-1 block h-0.5 w-6 rounded-full bg-emerald-500"></span>
-                            </div>
-                            <a href="{{ route('news.index') }}" class="section-heading-link group inline-flex shrink-0 items-center gap-1.5 text-[10px] font-bold text-slate-700 transition hover:text-emerald-600 dark:text-slate-300 dark:hover:text-emerald-400">
-                                View All News
-                                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-3.5 text-emerald-500 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                    <path d="M4 10h12m-4-4 4 4-4 4" />
-                                </svg>
-                            </a>
-                        </div>
-
-                        @php
-                            $newsCards = ($latestNews ?? collect())->isNotEmpty() ? $latestNews : collect([
-                                ['Admission Open', 'New batch admission is going on.', '26 May, 2026', 'emerald', 'megaphone', null, null],
-                                ['Exam Notice', 'Final exam routine has been published.', '24 May, 2026', 'blue', 'document', null, null],
-                                ['Result Published', 'Check your latest online result.', '23 May, 2026', 'rose', 'clipboard', null, null],
-                                ['Workshop', 'Web Development Workshop held.', '20 May, 2026', 'sky', 'workshop', null, null],
-                            ]);
-                        @endphp
-
-                        <div class="mt-4 min-w-0" data-news-carousel data-news-interval="5000">
-                            <div class="overflow-hidden" data-news-viewport>
-                            <div class="news-carousel-track flex w-full min-w-0 gap-3" data-news-track tabindex="0" aria-label="Latest news and updates">
-                            @foreach ($newsCards as [$title, $description, $date, $tone, $icon, $imagePath, $slug])
-                                <a href="{{ $slug ? route('news.show', $slug) : route('news.index') }}" class="news-carousel-slide group flex h-full w-full shrink-0 snap-start flex-col overflow-hidden rounded-xl bg-slate-50 ring-1 ring-slate-900/5 transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:bg-slate-900/40 dark:ring-white/10" data-news-slide>
-                                    @if ($imagePath)
-                                        <img src="{{ str_starts_with($imagePath, 'images/') ? asset($imagePath) : Storage::disk('public')->url($imagePath) }}" alt="" class="h-24 w-full object-cover">
-                                    @else
-                                    <span @class([
-                                        'grid size-9 shrink-0 place-items-center rounded-lg',
-                                        'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400' => $tone === 'emerald',
-                                        'bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400' => $tone === 'blue',
-                                        'bg-rose-100 text-rose-600 dark:bg-rose-500/15 dark:text-rose-400' => $tone === 'rose',
-                                        'bg-sky-100 text-sky-600 dark:bg-sky-500/15 dark:text-sky-400' => $tone === 'sky',
-                                    ])>
-                                        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                                            @if ($icon === 'megaphone')
-                                                <path d="m4 13 13-5v8L4 11v2Zm4 1 2 6h3l-1.5-5M20 10v4" />
-                                            @elseif ($icon === 'document')
-                                                <path d="M6 3h8l4 4v14H6V3Zm8 0v5h5M9 12h6m-6 4h6" />
-                                            @elseif ($icon === 'clipboard')
-                                                <path d="M8 5H5v16h14V5h-3M9 3h6v4H9V3Zm0 9 2 2 4-4m-6 8h6" />
-                                            @else
-                                                <path d="M4 5h16v14H4V5Zm4-2v4m8-4v4M7 11h3v3H7v-3Zm7 0h3m-3 4h3" />
-                                            @endif
-                                        </svg>
-                                    </span>
-                                    @endif
-                                    <div class="min-w-0 flex-1 px-3 py-3">
-                                        <h3 class="truncate text-[10px] font-black text-[#0b2447] dark:text-white">{{ $title }} <span class="text-emerald-500">•</span></h3>
-                                        <p class="mt-1 line-clamp-2 text-[10px] leading-4 text-slate-500 dark:text-slate-400">{{ $description }}</p>
-                                        <time class="mt-2 block text-[10px] font-bold text-slate-400">{{ $date }}</time>
-                                    </div>
-                                </a>
-                            @endforeach
-                            </div>
-                            </div>
-                            @if ($newsCards->count() > 1)
-                                <div class="news-carousel-controls mt-5 items-center justify-center gap-4" aria-label="News carousel controls">
-                                    <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-news-prev aria-label="Previous news page">
-                                        <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
-                                    </button>
-                                    <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-news-current>1</span> of <span data-news-total>1</span></p>
-                                    <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:bg-deep dark:text-white" data-news-next aria-label="Next news page">
-                                        <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
-                                    </button>
-                                </div>
-                            @endif
-                        </div>
+            <section id="update-notice-board" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-20">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="mb-12 text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Update Notice Board</h2>
+                        <p class="mt-2 text-sm font-bold text-slate-600 dark:text-slate-400">Latest official announcements and academic updates from the institute.</p>
                     </div>
 
-                    <aside class="contact-card grid min-w-0 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_7px_24px_rgba(15,23,42,.06)] sm:grid-cols-[1fr_1.1fr] lg:grid-cols-1 xl:grid-cols-[.95fr_1.05fr] dark:border-white/10 dark:bg-deep" data-contact-card>
-                        <div class="min-w-0 p-5 sm:p-6">
-                            <h2 class="text-lg font-black tracking-tight text-[#0b2447] sm:text-xl dark:text-white">Contact Us</h2>
-                            <p class="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-400">Call, email, or visit our institute for admission and course information.</p>
-                            <div class="mt-5 grid gap-2.5 text-xs font-semibold text-slate-600 dark:text-slate-300">
-                                <a href="tel:+8809696481628" class="contact-method">
-                                    <span class="contact-method-icon"><svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h3l1 4-2 1c1 2.5 2.5 4 5 5l1-2 4 1v3c0 1.1-.9 2-2 2C8.4 17 3 11.6 3 5a2 2 0 0 1 2-2Z" /></svg></span>
-                                    <span class="min-w-0 break-words">{{ $contactSettings?->metadata['phone'] ?? '+880 9696-481628' }}</span>
+                    @php
+                        $newsCards = ($latestNews ?? collect())->isNotEmpty() ? $latestNews : collect([
+                            ['Admission Open', 'New batch admission is going on for the next session.', '26 May, 2026', 'emerald', 'megaphone', null, null],
+                            ['Exam Notice', 'Final exam routine for 2026 has been published officially.', '24 May, 2026', 'blue', 'document', null, null],
+                            ['Result Published', 'Check your latest online result from student portal.', '23 May, 2026', 'rose', 'clipboard', null, null],
+                            ['Workshop', 'Special Web Development Workshop will be held soon.', '20 May, 2026', 'sky', 'workshop', null, null],
+                        ]);
+                    @endphp
+
+                    <div class="grid items-start gap-8 lg:grid-cols-[1.6fr_1fr]">
+                        <div class="grid gap-6 sm:grid-cols-2">
+                             @foreach ($newsCards->take(4) as [$title, $description, $date, $tone, $icon, $imagePath, $slug])
+                                <a href="{{ $slug ? route('news.show', $slug) : route('news.index') }}" class="group relative flex flex-col justify-between overflow-hidden rounded-[1.4rem] bg-white p-7 shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition hover:-translate-y-1 hover:shadow-xl dark:bg-slate-900/40">
+                                    <div class="absolute inset-y-0 right-0 w-1.5 bg-[#03224c] transition-all group-hover:w-2 dark:bg-emerald-500"></div>
+                                    <div>
+                                        <h3 class="text-[15px] font-black leading-tight text-[#0b2447] dark:text-white">{{ $title }}</h3>
+                                        <p class="mt-3 text-[13px] font-medium leading-relaxed text-slate-600 dark:text-slate-400">{{ $description }}</p>
+                                    </div>
+                                    <div class="mt-6 flex items-center justify-between border-t border-slate-50 pt-4 dark:border-white/5">
+                                        <span class="text-[12px] font-black text-emerald-600 dark:text-emerald-400">Learn more</span>
+                                        <time class="text-[11px] font-bold text-slate-400">{{ $date }}</time>
+                                    </div>
                                 </a>
-                                <a href="mailto:bnyti-edubd@gmail.com" class="contact-method">
-                                    <span class="contact-method-icon"><svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 5h14v10H3V5Zm0 1 7 5 7-5" /></svg></span>
-                                    <span class="min-w-0 [overflow-wrap:anywhere]">{{ $contactSettings?->metadata['email'] ?? 'bnyti-edubd@gmail.com' }}</span>
-                                </a>
-                                <p class="contact-method">
-                                    <span class="contact-method-icon"><svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 18s6-5 6-10A6 6 0 1 0 4 8c0 5 6 10 6 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /></svg></span>
-                                    <span class="min-w-0 break-words">{{ $contactSettings?->metadata['address'] ?? 'Haji Hossain Plaza, Demra Bazar Road, Dhaka-1360' }}</span>
-                                </p>
+                             @endforeach
+                        </div>
+
+                        <aside class="relative overflow-hidden rounded-[2rem] bg-white p-3 shadow-2xl dark:bg-slate-900/40">
+                             <div class="relative aspect-[4/3] w-full overflow-hidden rounded-[1.5rem] bg-[#e7eadf] lg:aspect-square">
+                                <svg viewBox="0 0 240 180" aria-hidden="true" class="size-full">
+                                    <rect width="240" height="180" fill="#e4e8dd" />
+                                    <path d="M-20 31 260 150M-10 132 180-15M50 195 250 32M-20 86 260 96" stroke="white" stroke-width="9" />
+                                    <path d="M-20 31 260 150M-10 132 180-15M50 195 250 32M-20 86 260 96" stroke="#d1d8ca" stroke-width="1.5" />
+                                    <path d="M146 48c-10 0-18 8-18 18 0 14 18 32 18 32s18-18 18-32c0-10-8-18-18-18Z" fill="#ef4444" />
+                                    <circle cx="146" cy="66" r="6" fill="white" />
+                                </svg>
+                                <div class="absolute inset-x-4 bottom-4">
+                                    <a href="https://maps.google.com/?q=Haji+Hossain+Plaza+Demra+Dhaka" target="_blank" rel="noopener noreferrer" class="flex w-full items-center justify-center rounded-xl bg-[#0b2447] py-3 text-xs font-black text-white shadow-lg transition hover:bg-slate-800">View Map</a>
+                                </div>
+                             </div>
+                             <div class="px-5 py-6">
+                                 <h3 class="text-lg font-black text-[#0b2447] dark:text-white">Visit Our Campus</h3>
+                                 <div class="mt-4 space-y-3">
+                                     <div class="flex items-start gap-3">
+                                         <svg viewBox="0 0 20 20" class="mt-0.5 size-4 shrink-0 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 18s6-5 6-10A6 6 0 1 0 4 8c0 5 6 10 6 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
+                                         <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['address'] ?? 'Haji Hossain Plaza, Demra Bazar Road, Dhaka-1360' }}</p>
+                                     </div>
+                                     <div class="flex items-center gap-3">
+                                         <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h3l1 4-2 1c1 2.5 2.5 4 5 5l1-2 4 1v3c0 1.1-.9 2-2 2C8.4 17 3 11.6 3 5a2 2 0 0 1 2-2Z"/></svg>
+                                         <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['phone'] ?? '+880 9696-481628' }}</p>
+                                     </div>
+                                 </div>
+                             </div>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact-section" class="bg-[#f8fafc] py-16 dark:bg-ink sm:py-20">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="mb-12 text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Contact Section</h2>
+                    </div>
+
+                    <div class="grid items-start gap-10 lg:grid-cols-[1.2fr_1fr_.8fr]">
+                        <!-- Contact Form -->
+                        <div class="rounded-2xl border-4 border-[#155e75] bg-white p-6 shadow-xl dark:bg-slate-900/60">
+                            <form action="#" method="POST" class="space-y-4">
+                                <input type="text" placeholder="Name" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800">
+                                <input type="email" placeholder="Email" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800">
+                                <input type="text" placeholder="Your Address" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800">
+                                <textarea placeholder="Message" rows="4" class="w-full rounded-md border border-slate-200 px-4 py-3 text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none dark:border-white/10 dark:bg-slate-800"></textarea>
+                                <button type="submit" class="w-full rounded-md bg-[#f5a623] py-3 text-sm font-black text-white uppercase transition hover:bg-[#e69516]">Submit</button>
+                            </form>
+                        </div>
+
+                        <!-- Contact Details -->
+                        <div class="space-y-8 py-4">
+                            <div class="flex items-center gap-4 pb-4 border-b border-slate-200 dark:border-white/10">
+                                <a href="#" class="grid size-8 place-items-center rounded-full bg-[#1877f2] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="M13.5 21v-8h2.8l.4-3.1h-3.2V8c0-.9.3-1.5 1.6-1.5h1.7V3.7c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2H7.3V13h2.8v8h3.4Z"/></svg></a>
+                                <a href="#" class="grid size-8 place-items-center rounded-full bg-[#1da1f2] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+                                <a href="#" class="grid size-8 place-items-center rounded-full bg-[#e4405f] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-none stroke-current" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                                <a href="#" class="grid size-8 place-items-center rounded-full bg-[#ff0000] text-white hover:opacity-80 transition"><svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2C5.12 19.5 12 19.5 12 19.5s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33zM9.75 15.02V8.48l5.75 3.27-5.75 3.27z"/></svg></a>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="grid size-8 shrink-0 place-items-center rounded-full bg-[#0b2447] text-white">
+                                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Student Address</h3>
+                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">Haji Hossain Plaza, Demra,<br>Dhaka-1360, Bangladesh</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="grid size-8 shrink-0 place-items-center rounded-full bg-[#0b2447] text-white">
+                                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Phone Number</h3>
+                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">+880 9696-481628</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="grid size-8 shrink-0 place-items-center rounded-full bg-[#0b2447] text-white">
+                                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Mobile Number</h3>
+                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">+880 1675-870000<br>bnyti-edubd@gmail.com</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="relative min-h-52 overflow-hidden bg-[#e7eadf] sm:min-h-full lg:min-h-52 xl:min-h-full" aria-label="Institute location map">
-                            <svg viewBox="0 0 240 180" aria-hidden="true" class="absolute inset-0 size-full">
-                                <rect width="240" height="180" fill="#e4e8dd" />
-                                <path d="M-20 31 260 150M-10 132 180-15M50 195 250 32M-20 86 260 96" stroke="white" stroke-width="9" />
-                                <path d="M-20 31 260 150M-10 132 180-15M50 195 250 32M-20 86 260 96" stroke="#d1d8ca" stroke-width="1.5" />
-                                <path d="M146 48c-10 0-18 8-18 18 0 14 18 32 18 32s18-18 18-32c0-10-8-18-18-18Z" fill="#ef4444" />
-                                <circle cx="146" cy="66" r="6" fill="white" />
-                            </svg>
-                            <div class="absolute inset-x-3 bottom-3 grid grid-cols-2 gap-2 sm:inset-x-4 sm:bottom-4">
-                                <a href="tel:+8809696481628" class="contact-action bg-[#0b2447] hover:bg-slate-800">Call now</a>
-                                <a href="https://maps.google.com/?q=Haji+Hossain+Plaza+Demra+Dhaka" target="_blank" rel="noopener noreferrer" class="contact-action bg-emerald-600 hover:bg-emerald-500">Directions</a>
-                            </div>
+                        <!-- Map -->
+                        <div class="relative aspect-square w-full overflow-hidden rounded-2xl bg-white shadow-lg">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.887255866185!2d90.49969147589417!3d23.715694889785834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b719489f6b95%3A0xc6c4f8d55d144983!2sDemra%20Bazar%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1716800000000!5m2!1sen!2sbd"
+                                class="size-full border-0"
+                                allowfullscreen=""
+                                loading="lazy"
+                            ></iframe>
                         </div>
-                    </aside>
+                    </div>
                 </div>
             </section>
 
@@ -1088,115 +1069,52 @@
             --}}
         </main>
 
-        <footer class="public-page-footer bg-[#031735] text-white">
-            <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
-                <div class="grid min-w-0 gap-10 xl:grid-cols-[1.15fr_2.25fr_1.4fr] xl:items-start xl:gap-12">
-                    <div class="min-w-0">
-                        <a href="#home" class="inline-flex items-center gap-3" aria-label="BNYTI home">
-                            <img
-                                src="{{ asset('images/bnyti-logo.svg') }}"
-                                alt=""
-                                class="brand-logo size-14 shrink-0"
-                            >
-                            <span class="text-xl leading-none font-black tracking-wide">
-                                BNYTI
-                                <span class="mt-1 block text-[8px] leading-tight font-bold tracking-[0.08em] text-slate-300">
-                                    BANGLADESH NATIONAL<br>YOUTH TECHNICAL INSTITUTE
-                                </span>
-                            </span>
+        <footer class="bg-[#031735] text-white">
+            <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+                <div class="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr]">
+                    <div class="space-y-6">
+                        <a href="#home" class="flex items-center gap-4">
+                            <div class="grid size-14 place-items-center rounded-xl bg-white p-2">
+                                <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="size-full">
+                            </div>
+                            <div>
+                                <span class="block text-2xl font-black tracking-tight text-white uppercase leading-none">South Asia</span>
+                                <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mt-1">National Technical Institute</span>
+                            </div>
                         </a>
-                        <p class="mt-4 text-xs font-semibold text-slate-300">{{ $footerSettings?->body ?? 'Skills Today, Success Tomorrow' }}</p>
-                        <div class="mt-5 flex flex-wrap items-center gap-3">
-                            <a href="#" class="footer-social bg-[#1877f2]" aria-label="Follow BNYTI on Facebook">
-                                <svg viewBox="0 0 24 24" class="size-4 fill-current" aria-hidden="true">
-                                    <path d="M13.5 21v-8h2.8l.4-3.1h-3.2V8c0-.9.3-1.5 1.6-1.5h1.7V3.7c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2H7.3V13h2.8v8h3.4Z"/>
-                                </svg>
-                            </a>
-                            <a href="#" class="footer-social bg-[#ff0033]" aria-label="Subscribe to BNYTI on YouTube">
-                                <svg viewBox="0 0 24 24" class="size-4 fill-current" aria-hidden="true">
-                                    <path d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.8 4.7 12 4.7 12 4.7s-5.8 0-7.6.5a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2 12a29 29 0 0 0 .4 4.8 2.8 2.8 0 0 0 2 2c1.8.5 7.6.5 7.6.5s5.8 0 7.6-.5a2.8 2.8 0 0 0 2-2A29 29 0 0 0 22 12a29 29 0 0 0-.4-4.8ZM10 15.2V8.8l5.5 3.2-5.5 3.2Z"/>
-                                </svg>
-                            </a>
-                            <a href="#" class="footer-social bg-[#0a66c2]" aria-label="Follow BNYTI on LinkedIn">
-                                <svg viewBox="0 0 24 24" class="size-4 fill-current" aria-hidden="true">
-                                    <path d="M6.5 8.2H3.2V21h3.3V8.2ZM4.9 3A1.9 1.9 0 1 0 5 6.8 1.9 1.9 0 0 0 5 3Zm5 5.2V21h3.3v-6.3c0-1.7.3-3.3 2.4-3.3s2.1 1.9 2.1 3.4V21H21v-7c0-3.4-.7-6.1-4.8-6.1a4.2 4.2 0 0 0-3.8 2.1h-.1V8.2H10Z"/>
-                                </svg>
-                            </a>
-                            <a href="#" class="footer-social bg-gradient-to-br from-[#7c3aed] via-[#ec4899] to-[#f59e0b]" aria-label="Follow BNYTI on Instagram">
-                                <svg viewBox="0 0 24 24" class="size-4 fill-none stroke-current" aria-hidden="true">
-                                    <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke-width="2"/>
-                                    <circle cx="12" cy="12" r="4" stroke-width="2"/>
-                                    <circle cx="17.5" cy="6.5" r="1" class="fill-current stroke-none"/>
-                                </svg>
-                            </a>
+                        <p class="text-sm leading-relaxed text-slate-300">
+                            Bangladesh National Youth Technical Institute provides practical, industry-focused technical education for a skilled future.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-black text-white">Quick Links</h3>
+                        <div class="mt-6 grid gap-3 text-sm font-bold text-slate-400">
+                            <a href="#home" class="hover:text-emerald-400 transition">Admission</a>
+                            <a href="#courses" class="hover:text-emerald-400 transition">Courses</a>
+                            <a href="{{ route('results.index') }}" class="hover:text-emerald-400 transition">Exam Site</a>
+                            <a href="#institute-gallery" class="hover:text-emerald-400 transition">Photogallery</a>
+                            <a href="#" class="hover:text-emerald-400 transition">Primary Report</a>
+                            <a href="{{ route('login') }}" class="hover:text-emerald-400 transition">Student Status</a>
                         </div>
                     </div>
 
-                    <div class="grid min-w-0 grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3" data-footer-navigation>
-                    <nav class="min-w-0" aria-label="Quick links">
-                        <h3 class="text-sm font-bold">Quick Links</h3>
-                        <div class="mt-4 grid gap-2 text-xs text-slate-300">
-                            <a href="#home" class="footer-link">Home</a>
-                            <a href="#about" class="footer-link">About Us</a>
-                            <a href="#courses" class="footer-link">Courses</a>
-                            <a href="#branch-application-promo" class="footer-link">Branches</a>
-                            <a href="{{ route('login') }}" class="footer-link">Staff Login</a>
-                            <a href="#latest-news-contact" class="footer-link">Contact Us</a>
+                    <div>
+                        <h3 class="text-lg font-black text-white">Careers</h3>
+                        <div class="mt-6 grid gap-3 text-sm font-bold text-slate-400">
+                            <a href="#about" class="hover:text-emerald-400 transition">General Info</a>
+                            <a href="#branch-application-promo" class="hover:text-emerald-400 transition">Branches Info</a>
+                            <a href="#notice-bar" class="hover:text-emerald-400 transition">Notice</a>
+                            <a href="#latest-news-contact" class="hover:text-emerald-400 transition">Contact Details</a>
+                            <a href="#" class="hover:text-emerald-400 transition">Careers</a>
                         </div>
-                    </nav>
-
-                    <nav class="min-w-0" aria-label="Student zone">
-                        <h3 class="text-sm font-bold">Student Zone</h3>
-                        <div class="mt-4 grid gap-2 text-xs text-slate-300">
-                            <a href="{{ route('login') }}" class="footer-link">Student Portal</a>
-                            <a href="{{ route('login') }}" class="footer-link">Admit Card</a>
-                            <a href="{{ route('results.index') }}" class="footer-link">Results</a>
-                            <a href="#latest-news-contact" class="footer-link">Certificate Verification</a>
-                            <a href="#latest-news-contact" class="footer-link">Notice Board</a>
-                        </div>
-                    </nav>
-
-                    <nav class="col-span-2 min-w-0 sm:col-span-1" aria-label="Resources">
-                        <h3 class="text-sm font-bold">Resources</h3>
-                        <div class="mt-4 grid gap-2 text-xs text-slate-300">
-                            <a href="#" class="footer-link">FAQs</a>
-                            <a href="#" class="footer-link">Privacy Policy</a>
-                            <a href="#" class="footer-link">Terms &amp; Conditions</a>
-                            <a href="#" class="footer-link">Download Prospectus</a>
-                            <a href="#" class="footer-link">Sitemap</a>
-                        </div>
-                    </nav>
-                    </div>
-
-                    <div class="min-w-0">
-                        <h3 class="text-sm font-bold">Newsletter</h3>
-                        <p class="mt-4 max-w-sm text-xs leading-5 text-slate-300">
-                            Subscribe to get the latest updates<br class="hidden lg:block"> and news.
-                        </p>
-                        <form class="mt-4 flex max-w-md flex-col gap-2 rounded-2xl border border-white/15 bg-white/5 p-2 min-[380px]:flex-row min-[380px]:rounded-full" data-footer-newsletter onsubmit="return false;">
-                            <label for="footer-email" class="sr-only">Enter your email</label>
-                            <input
-                                id="footer-email"
-                                type="email"
-                                name="email"
-                                placeholder="Enter your email"
-                                autocomplete="email"
-                                class="min-h-11 min-w-0 flex-1 border-0 bg-transparent px-3 text-sm text-white outline-none placeholder:text-slate-500 focus:ring-0"
-                            >
-                            <button type="submit" class="min-h-11 shrink-0 rounded-xl bg-emerald-500 px-5 py-2 text-sm font-bold text-white transition hover:bg-emerald-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 min-[380px]:rounded-full">
-                                Subscribe
-                            </button>
-                        </form>
-                        <p class="mt-5 text-xs text-slate-400">
-                            Made with <span class="text-red-400" aria-label="love">♥</span> for Youth Empowerment
-                        </p>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-white/10">
-                <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-center text-xs leading-5 text-slate-400 sm:px-6 md:flex-row md:items-center md:justify-between md:text-left lg:px-8">
-                    <p>© {{ date('Y') }} Bangladesh National Youth Technical Institute. All rights reserved.</p>
-                    <p>{{ $footerSettings?->body ?? 'Skills Today, Success Tomorrow' }}</p>
+            <div class="border-t border-white/10 py-8 text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+                <div class="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <p>© {{ date('Y') }} South Asia National Technical Institute. All rights reserved.</p>
+                    <p>Managed by BNYTI Technical Solutions</p>
                 </div>
             </div>
         </footer>

@@ -18,12 +18,13 @@
         :qr-code="$registrationCardQrCode"
         :qr-url="$registrationCardQrUrl"
     />
-@elseif ($document === 'certificate')
+@elseif ($document === 'certificate' || $document === 'certificate-one')
     <x-certificate
         :student="$student"
         :latest-result="$latestResult"
         :cumulative-gpa="$cumulativeGpa"
         :certificate-serial="$certificateSerial"
+        :qr-code="$registrationCardQrCode ?? null"
     />
 @elseif ($document === 'testimonial')
     <x-testimonial
@@ -31,7 +32,12 @@
         :latest-result="$latestResult"
         :cumulative-gpa="$cumulativeGpa"
     />
-@elseif ($document === 'transcript')
+@elseif ($document === 'student-id')
+    <x-student-id
+        :student="$student"
+        :qr-code="$registrationCardQrCode ?? null"
+    />
+@elseif ($document === 'transcript' || $document === 'transcript-one' || $document === 'transcript-two')
     <x-academic-transcript
         :student="$student"
         :pages="$transcriptPages"
@@ -44,7 +50,7 @@
     <x-dashboard-shell :title="$documentTitle" eyebrow="Student document" :description="$student->name.' · '.$student->registration_number">
         <article class="mx-auto max-w-3xl border border-slate-300 bg-white p-8 shadow-xl shadow-slate-900/10 sm:p-12">
             <header class="border-b-4 border-emerald-700 pb-6 text-center">
-                <img src="{{ asset('images/bnyti-logo.svg') }}" alt="BNYTI logo" class="mx-auto size-16">
+                <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="mx-auto size-16">
                 <h2 class="mt-3 text-2xl font-black text-slate-950">Bangladesh National Youth Technical Institute</h2>
                 <p class="mt-2 text-sm font-bold uppercase tracking-[.16em] text-emerald-700">{{ $documentTitle }}</p>
             </header>
@@ -53,13 +59,13 @@
                 <div class="mt-8 rounded-2xl border-2 border-emerald-700 p-6">
                     <p class="document-dynamic-value text-xl">{{ $student->name }}</p>
                     <p class="mt-2 font-bold text-slate-600">Student ID: <span class="document-dynamic-value">{{ $student->registration_number }}</span></p>
-                    <p class="mt-1 text-slate-600">Course: <span class="document-dynamic-value">{{ $student->course->name }}</span></p>
+                    <p class="mt-1 text-slate-600">Course: <span class="document-dynamic-value">{{ $student->course?->name ?? '—' }}</span></p>
                     <p class="mt-1 text-slate-600">Phone: <span class="document-dynamic-value">{{ $student->phone }}</span></p>
                 </div>
             @elseif ($document === 'results')
                 <dl class="mt-8 grid gap-5 sm:grid-cols-2">
                     <div><dt class="text-xs font-black uppercase text-slate-500">Student</dt><dd class="document-dynamic-value mt-1">{{ $student->name }}</dd></div>
-                    <div><dt class="text-xs font-black uppercase text-slate-500">Course</dt><dd class="document-dynamic-value mt-1">{{ $student->course->name }}</dd></div>
+                    <div><dt class="text-xs font-black uppercase text-slate-500">Course</dt><dd class="document-dynamic-value mt-1">{{ $student->course?->name ?? '—' }}</dd></div>
                     <div><dt class="text-xs font-black uppercase text-slate-500">Result status</dt><dd class="document-dynamic-value mt-1">{{ $student->result_status }}</dd></div>
                     <div><dt class="text-xs font-black uppercase text-slate-500">Grade / Score</dt><dd class="document-dynamic-value mt-1">{{ $student->grade ?? '—' }} / {{ $student->score ?? '—' }}</dd></div>
                 </dl>
@@ -67,7 +73,7 @@
                 <p class="mt-8 text-center text-lg leading-9 text-slate-700">
                     This is to certify that <strong class="document-dynamic-value">{{ $student->name }}</strong>,
                     registration number <strong class="document-dynamic-value">{{ $student->registration_number }}</strong>,
-                    is enrolled in <strong class="document-dynamic-value">{{ $student->course->name }}</strong>
+                    is enrolled in <strong class="document-dynamic-value">{{ $student->course?->name ?? '—' }}</strong>
                     at Bangladesh National Youth Technical Institute.
                 </p>
                 <dl class="mt-8 grid gap-5 sm:grid-cols-2">

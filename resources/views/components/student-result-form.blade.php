@@ -22,3 +22,17 @@
     <div class="overflow-x-auto rounded-xl border border-slate-200"><table class="w-full min-w-[900px] text-left text-sm"><thead class="bg-slate-50 text-xs font-black uppercase tracking-wide text-slate-500"><tr><th class="px-3 py-3">Code</th><th class="px-3 py-3">Title</th><th class="px-3 py-3">Credit</th><th class="px-3 py-3">Marks</th><th class="px-3 py-3">Grade</th><th class="px-3 py-3">Grade point</th><th class="px-3 py-3"></th></tr></thead><tbody data-result-subjects>@foreach ($subjects as $index => $subject)<tr data-result-subject-row><td class="px-3 py-2"><input name="subjects[{{ $index }}][code]" required value="{{ old("subjects.$index.code", $subject?->code) }}" class="{{ $inputClass }}"></td><td class="px-3 py-2"><input name="subjects[{{ $index }}][title]" required value="{{ old("subjects.$index.title", $subject?->title) }}" class="{{ $inputClass }}"></td><td class="px-3 py-2"><input type="number" name="subjects[{{ $index }}][credit]" required min="0.5" max="20" step="0.5" value="{{ old("subjects.$index.credit", $subject?->credit) }}" class="{{ $inputClass }}"></td><td class="px-3 py-2"><input type="number" name="subjects[{{ $index }}][marks]" min="0" max="100" step="0.01" value="{{ old("subjects.$index.marks", $subject?->marks) }}" class="{{ $inputClass }}"></td><td class="px-3 py-2"><input name="subjects[{{ $index }}][grade]" required value="{{ old("subjects.$index.grade", $subject?->grade) }}" class="{{ $inputClass }}"></td><td class="px-3 py-2"><input type="number" name="subjects[{{ $index }}][grade_point]" required min="0" max="4" step="0.01" value="{{ old("subjects.$index.grade_point", $subject?->grade_point) }}" class="{{ $inputClass }}"></td><td class="px-3 py-2 text-right"><button type="button" data-remove-result-subject class="font-black text-rose-600">Remove</button></td></tr>@endforeach</tbody></table></div>
     <div class="flex justify-end gap-3"><a href="{{ $student ? route('super-admin.students.results.index', $student) : route('super-admin.students.index') }}" class="rounded-full border border-slate-300 px-5 py-3 font-black text-slate-700">Cancel</a><button class="rounded-full bg-blue-600 px-5 py-3 font-black text-white">{{ $submitLabel }}</button></div>
 </form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('[data-result-form]');
+        if (form) {
+            form.querySelectorAll('input[name*="[marks]"]').forEach(input => {
+                if (input.value) {
+                    const event = new Event('input', { bubbles: true });
+                    input.dispatchEvent(event);
+                }
+            });
+        }
+    });
+</script>

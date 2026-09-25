@@ -501,7 +501,7 @@
 
             <nav class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8" aria-label="Primary navigation">
                 <a href="{{ route('home') }}#home" class="group flex min-w-0 items-center gap-3" aria-label="BNYTI home">
-                    <img src="{{ asset('images/bnyti-logo.svg') }}" alt="Bangladesh National Youth Technical Institute logo" class="size-12 shrink-0 transition duration-300 group-hover:-rotate-3 sm:size-14">
+                    <img src="{{ asset('images/Logo.png') }}" alt="Bangladesh National Youth Technical Institute logo" class="size-12 shrink-0 transition duration-300 group-hover:-rotate-3 sm:size-14">
                     <span class="hidden min-w-0 sm:block"><span class="block truncate text-sm font-black tracking-tight text-slate-950 sm:text-[15px]"><span class="text-emerald-600">BANGLADESH</span><span class="text-red-600"> NATIONAL</span></span><span class="block truncate text-[10px] font-bold tracking-[.17em] text-slate-600 sm:text-[11px]">YOUTH TECHNICAL INSTITUTE</span></span>
                     <span class="sm:hidden"><span class="block text-base font-black tracking-tight text-slate-950">BNYTI</span><span class="block text-[9px] font-bold tracking-[.14em] text-slate-500">TECHNICAL INSTITUTE</span></span>
                 </a>
@@ -605,7 +605,7 @@
                             <path d="M68 8Q73 3 78 8Q83 3 88 8"/>
                         </svg>
 
-                        <img src="{{ asset('images/bnyti-logo.svg') }}" alt="Bangladesh National Youth Technical Institute logo" class="brand-logo">
+                        <img src="{{ asset('images/Logo.png') }}" alt="Bangladesh National Youth Technical Institute logo" class="brand-logo">
 
                         <div class="brand-condensed mt-4 uppercase">
                             <p class="brand-bangladesh">Bangladesh</p>

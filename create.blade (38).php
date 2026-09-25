@@ -1,1 +1,0 @@
-<x-dashboard-shell title="Add Subject" eyebrow="Academic setup" :description="'Add a subject to '.$semester->name"><x-subject-form :semester="$semester" :action="route('super-admin.semesters.subjects.store', $semester)" /></x-dashboard-shell>

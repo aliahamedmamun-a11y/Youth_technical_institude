@@ -1,1 +1,0 @@
-<x-dashboard-shell title="Add Homepage Item" eyebrow="Homepage CMS" description="Add content to {{ $section->label }}."><x-homepage-section-navigation :sections="$sections" :current-section="$section" /><x-homepage-item-form :item="$item" :section="$section" :action="route('super-admin.homepage.items.store')" submit-label="Create item" /></x-dashboard-shell>

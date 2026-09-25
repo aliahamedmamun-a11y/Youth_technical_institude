@@ -1,0 +1,164 @@
+.testimonial-screen {
+    min-height: 100vh;
+    padding: 1.5rem;
+    overflow-x: auto;
+    background: #292a26;
+}
+
+.testimonial-frame {
+    width: min(100%, 75rem);
+    margin-inline: auto;
+    overflow: hidden;
+    background: #ffffe9;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
+}
+
+.testimonial-document {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4700 / 3320;
+    overflow: hidden;
+    color: #111;
+    background: #ffffe9;
+}
+
+.testimonial-template {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.testimonial-data {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    color: #111;
+    font-family: 'Document Corsiva', Georgia, 'Times New Roman', serif;
+    font-size: clamp(0.44rem, 1vw, 0.98rem);
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-shadow: 0 1px 0 rgb(255 255 238 / 0.85);
+    transform: translateY(-50%);
+    white-space: nowrap;
+}
+
+.testimonial-data--serial {
+    top: 34.5%;
+    left: 17.2%;
+    width: 20%;
+    text-align: left;
+}
+
+.testimonial-data--student {
+    top: 44.1%;
+    left: 23.4%;
+    width: 56.6%;
+    font-size: clamp(0.5rem, 1.12vw, 1.08rem);
+}
+
+.testimonial-data--father {
+    top: 48.8%;
+    left: 9.6%;
+    width: 36.3%;
+}
+
+.testimonial-data--course {
+    top: 48.8%;
+    left: 58.1%;
+    width: 31.3%;
+}
+
+.testimonial-data--grade {
+    top: 53.5%;
+    left: 63.9%;
+    width: 8.2%;
+}
+
+.testimonial-data--gpa {
+    top: 53.5%;
+    left: 82.5%;
+    width: 7.2%;
+}
+
+.testimonial-data--roll {
+    top: 58.2%;
+    left: 31.1%;
+    width: 10.8%;
+}
+
+.testimonial-data--registration {
+    top: 58.2%;
+    left: 47.7%;
+    width: 13.1%;
+}
+
+.testimonial-data--session {
+    top: 58.2%;
+    left: 74.5%;
+    width: 15.2%;
+}
+
+.testimonial-data--date {
+    top: 88.2%;
+    left: 12%;
+    width: 12%;
+    font-size: clamp(0.4rem, 0.86vw, 0.82rem);
+    text-align: left;
+}
+
+.testimonial-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+@page {
+    size: A4 landscape;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        width: 297mm;
+        height: 210mm;
+        margin: 0;
+        background: white;
+    }
+
+    body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .testimonial-screen,
+    .testimonial-frame,
+    .testimonial-document {
+        width: 297mm;
+        height: 210mm;
+        margin: 0;
+        padding: 0;
+    }
+
+    .testimonial-screen {
+        min-height: 0;
+        overflow: hidden;
+        background: white;
+    }
+
+    .testimonial-frame {
+        max-width: none;
+        box-shadow: none;
+    }
+
+    .testimonial-document {
+        aspect-ratio: auto;
+    }
+}

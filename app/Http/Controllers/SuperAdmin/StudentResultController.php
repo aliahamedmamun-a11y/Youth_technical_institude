@@ -212,7 +212,7 @@ class StudentResultController extends Controller
 
     private function semesterForStudent(?int $semesterId, Student $student): ?Semester
     {
-        if ($semesterId === null) {
+        if ($semesterId === null || ! $student->course) {
             return null;
         }
 

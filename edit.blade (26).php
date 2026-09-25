@@ -1,0 +1,1 @@
+<x-dashboard-shell title="Edit Semester" eyebrow="Academic setup" :description="'Update '.$semester->name"><x-semester-form :course="$course" :semester="$semester" :action="route('super-admin.courses.semesters.update', [$course, $semester])" method="PUT" /></x-dashboard-shell>

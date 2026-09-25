@@ -1,0 +1,1 @@
+<x-dashboard-shell title="Assign Semester" eyebrow="Academic records" :description="'Assign a semester and subjects to '.$student->name"><x-student-enrollment-form :student="$student" :semesters="$semesters" :action="route('super-admin.students.semester-enrollments.store', $student)" /></x-dashboard-shell>

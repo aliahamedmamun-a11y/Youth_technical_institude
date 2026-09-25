@@ -1,0 +1,1 @@
+<x-dashboard-shell title="Edit News" eyebrow="Content management" description="Update this institute announcement."><x-news-form :news="$news" :action="route('super-admin.news.update', $news)" method="PUT" submit-label="Save changes" /></x-dashboard-shell>

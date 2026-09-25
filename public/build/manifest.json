@@ -1,0 +1,106 @@
+{
+  "_fonts-C9MNnjVw.css": {
+    "file": "assets/fonts-C9MNnjVw.css",
+    "src": "_fonts-C9MNnjVw.css"
+  },
+  "_instrument-sans-400-normal-D1W7dsQl.woff": {
+    "file": "assets/instrument-sans-400-normal-D1W7dsQl.woff",
+    "src": "_instrument-sans-400-normal-D1W7dsQl.woff"
+  },
+  "_instrument-sans-400-normal-DRC__1Mx.woff2": {
+    "file": "assets/instrument-sans-400-normal-DRC__1Mx.woff2",
+    "src": "_instrument-sans-400-normal-DRC__1Mx.woff2"
+  },
+  "_instrument-sans-500-normal-Dk9ku72i.woff2": {
+    "file": "assets/instrument-sans-500-normal-Dk9ku72i.woff2",
+    "src": "_instrument-sans-500-normal-Dk9ku72i.woff2"
+  },
+  "_instrument-sans-500-normal-Z6ESRlEs.woff": {
+    "file": "assets/instrument-sans-500-normal-Z6ESRlEs.woff",
+    "src": "_instrument-sans-500-normal-Z6ESRlEs.woff"
+  },
+  "_instrument-sans-600-normal-B7fBEWYG.woff2": {
+    "file": "assets/instrument-sans-600-normal-B7fBEWYG.woff2",
+    "src": "_instrument-sans-600-normal-B7fBEWYG.woff2"
+  },
+  "_instrument-sans-600-normal-B9e8oLYv.woff": {
+    "file": "assets/instrument-sans-600-normal-B9e8oLYv.woff",
+    "src": "_instrument-sans-600-normal-B9e8oLYv.woff"
+  },
+  "resources/css/academic-transcript.css": {
+    "file": "assets/academic-transcript-D5VX7mbs.css",
+    "name": "academic-transcript",
+    "names": [
+      "academic-transcript.css"
+    ],
+    "src": "resources/css/academic-transcript.css",
+    "isEntry": true
+  },
+  "resources/css/admit-card.css": {
+    "file": "assets/admit-card-CXT5NTHa.css",
+    "name": "admit-card",
+    "names": [
+      "admit-card.css"
+    ],
+    "src": "resources/css/admit-card.css",
+    "isEntry": true
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-NmP5Flpl.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "assets": [
+      "assets/document-monotype-corsiva-bold-italic-BV2jaLKv.ttf"
+    ]
+  },
+  "resources/css/certificate.css": {
+    "file": "assets/certificate-D3RDgQVl.css",
+    "name": "certificate",
+    "names": [
+      "certificate.css"
+    ],
+    "src": "resources/css/certificate.css",
+    "isEntry": true
+  },
+  "resources/css/fonts/document-monotype-corsiva-bold-italic.ttf": {
+    "file": "assets/document-monotype-corsiva-bold-italic-BV2jaLKv.ttf",
+    "src": "resources/css/fonts/document-monotype-corsiva-bold-italic.ttf"
+  },
+  "resources/css/registration-card.css": {
+    "file": "assets/registration-card-CZfHzXlQ.css",
+    "name": "registration-card",
+    "names": [
+      "registration-card.css"
+    ],
+    "src": "resources/css/registration-card.css",
+    "isEntry": true
+  },
+  "resources/css/student-id.css": {
+    "file": "assets/student-id-Dy__5e5H.css",
+    "name": "student-id",
+    "names": [
+      "student-id.css"
+    ],
+    "src": "resources/css/student-id.css",
+    "isEntry": true
+  },
+  "resources/css/testimonial.css": {
+    "file": "assets/testimonial-BA03Md19.css",
+    "name": "testimonial",
+    "names": [
+      "testimonial.css"
+    ],
+    "src": "resources/css/testimonial.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-wheSRqDd.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}

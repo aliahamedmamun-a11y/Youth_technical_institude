@@ -11,6 +11,10 @@
     padding: 1.5rem;
     overflow-x: auto;
     background: #292a26;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .certificate-frame {
@@ -38,95 +42,129 @@
     object-fit: fill;
 }
 
-.certificate-data {
+.certificate-data,
+.cert-field {
     position: absolute;
     z-index: 1;
     overflow: hidden;
-    color: #111;
-    font-family: 'Certificate Shelley', Georgia, 'Times New Roman', serif;
-    font-size: clamp(0.45rem, 1.08vw, 1.02rem);
+    color: #0B1953;
+    font-family: 'English 111 Vivace', 'English 111 Vivace BT', 'Certificate Shelley', 'Shelley-AllegroScriptWd', 'Calligri Expanded Italic', 'Alex Brush', 'Great Vibes', 'Cedarville Cursive', 'Palace Script MT', cursive, serif;
+    font-size: clamp(0.55rem, 1.25vw, 1.15rem);
     font-style: normal;
     font-weight: 400;
     line-height: 1.15;
     text-align: center;
     text-overflow: ellipsis;
-    text-shadow: 0 1px 0 rgb(255 255 238 / 0.85);
     transform: translateY(-50%);
     white-space: nowrap;
 }
 
-.certificate-data--serial {
+.certificate-data--serial,
+.cert-field--serial {
     top: 39.1%;
     left: 29.5%;
     width: 19%;
+    color: #e11d48;
 }
 
-.certificate-data--registration {
+.certificate-data--registration,
+.cert-field--registration,
+.cert-field--reg-no {
     top: 37.5%;
     left: 68%;
     width: 23%;
 }
 
-.certificate-data--session {
+.certificate-data--session,
+.cert-field--session {
     top: 42.8%;
     left: 64.5%;
     width: 27%;
 }
 
-.certificate-data--student {
+.certificate-data--student,
+.cert-field--student,
+.cert-field--name {
     top: 48.2%;
     left: 35%;
     width: 56%;
-    font-size: clamp(0.52rem, 1.2vw, 1.15rem);
+    font-size: clamp(0.65rem, 1.4vw, 1.35rem);
 }
 
-.certificate-data--father {
+.certificate-data--father,
+.cert-field--father {
     top: 52.7%;
     left: 34%;
     width: 50%;
 }
 
-.certificate-data--mother {
+.certificate-data--mother,
+.cert-field--mother {
     top: 57.2%;
     left: 27%;
     width: 57%;
 }
 
-.certificate-data--course {
+.certificate-data--course,
+.cert-field--course {
     top: 61.7%;
     left: 25%;
     width: 66%;
 }
 
-.certificate-data--roll {
+.certificate-data--roll,
+.cert-field--roll {
     top: 66.2%;
     left: 32%;
     width: 14%;
 }
 
-.certificate-data--semester {
+.certificate-data--semester,
+.cert-field--semester {
     top: 66.2%;
     left: 53.5%;
     width: 37.5%;
 }
 
-.certificate-data--month {
+.certificate-data--month,
+.cert-field--month,
+.cert-field--exam-held {
     top: 70.7%;
     left: 50%;
     width: 24%;
 }
 
-.certificate-data--gpa {
+.certificate-data--gpa,
+.cert-field--gpa,
+.cert-field--cgpa {
     top: 70.7%;
     left: 82%;
     width: 9%;
 }
 
-.certificate-data--date {
+.certificate-data--date,
+.cert-field--date,
+.cert-field--publication-date {
     top: 88.4%;
     left: 8%;
     width: 17%;
-    font-size: clamp(0.42rem, 0.9vw, 0.86rem);
+    font-size: clamp(0.48rem, 1.0vw, 0.95rem);
+}
+
+.cert-qr-code {
+    position: absolute;
+    top: 41.8%;
+    left: 8.5%;
+    width: 10.6%;
+    aspect-ratio: 1;
+    z-index: 10;
+    background: #fff;
+    padding: 2px;
+}
+
+.cert-qr-code img {
+    width: 100%;
+    height: 100%;
 }
 
 .certificate-actions {

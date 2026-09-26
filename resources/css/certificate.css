@@ -6,6 +6,14 @@
     font-weight: 400;
 }
 
+@font-face {
+    font-family: 'Certificate Shelley';
+    src: url('./fonts/certificate-shelle.ttf') format('truetype');
+    font-display: block;
+    font-style: italic;
+    font-weight: 700;
+}
+
 .certificate-screen {
     min-height: 100vh;
     padding: 1.5rem;
@@ -49,9 +57,9 @@
     overflow: hidden;
     color: #0B1953;
     font-family: 'English 111 Vivace', 'English 111 Vivace BT', 'Certificate Shelley', 'Shelley-AllegroScriptWd', 'Calligri Expanded Italic', 'Alex Brush', 'Great Vibes', 'Cedarville Cursive', 'Palace Script MT', cursive, serif;
-    font-size: clamp(0.55rem, 1.25vw, 1.15rem);
-    font-style: normal;
-    font-weight: 400;
+    font-size: clamp(0.65rem, 1.35vw, 1.25rem);
+    font-style: italic;
+    font-weight: 700;
     line-height: 1.15;
     text-align: center;
     text-overflow: ellipsis;
@@ -88,7 +96,7 @@
     top: 48.2%;
     left: 35%;
     width: 56%;
-    font-size: clamp(0.65rem, 1.4vw, 1.35rem);
+    font-size: clamp(0.75rem, 1.5vw, 1.45rem);
 }
 
 .certificate-data--father,
@@ -148,7 +156,7 @@
     top: 88.4%;
     left: 8%;
     width: 17%;
-    font-size: clamp(0.48rem, 1.0vw, 0.95rem);
+    font-size: clamp(0.55rem, 1.1vw, 1.05rem);
 }
 
 .cert-qr-code {

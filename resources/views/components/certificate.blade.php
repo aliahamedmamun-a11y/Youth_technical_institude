@@ -3,10 +3,12 @@
     'latestResult' => null,
     'cumulativeGpa' => null,
     'certificateSerial' => null,
+    'qrCode' => null,
 ])
 
 @php
     $certificateGpa = $cumulativeGpa ?? $latestResult?->gpa;
+    $verificationQr = $qrCode ?? $student->qr_code ?? (app(\App\Services\QrCodeService::class)->dataUri(route('home')));
 @endphp
 
 @vite(['resources/css/app.css', 'resources/css/certificate.css', 'resources/js/app.js'])
@@ -30,6 +32,12 @@
             <span class="certificate-data certificate-data--month">{{ $latestResult?->published_at?->format('F Y') ?? '—' }}</span>
             <span class="certificate-data certificate-data--gpa">{{ $certificateGpa !== null ? number_format((float) $certificateGpa, 2) : '—' }}</span>
             <span class="certificate-data certificate-data--date">{{ $latestResult?->published_at?->format('d/m/Y') ?? '—' }}</span>
+
+            @if ($verificationQr)
+                <div class="cert-qr-code">
+                    <img src="{{ $verificationQr }}" alt="Verification QR Code">
+                </div>
+            @endif
         </article>
     </div>
 

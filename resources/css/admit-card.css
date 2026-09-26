@@ -43,8 +43,8 @@
 
 .admit-card__serial {
     top: 33.9%;
-    left: 10.7%;
-    width: 31%;
+    left: 20.8%;
+    width: 25%;
     margin: 0;
     overflow: hidden;
     font-size: clamp(0.48rem, 1.15vw, 1.08rem);
@@ -54,15 +54,11 @@
     white-space: nowrap;
 }
 
-.admit-card__serial span {
-    margin-right: 0.35em;
-}
-
 .admit-card__student-details {
     top: 38.7%;
-    left: 10.7%;
+    left: 31.8%;
     display: grid;
-    width: 51%;
+    width: 44%;
     gap: clamp(0.34rem, 1.12vw, 1.05rem);
     margin: 0;
     font-size: clamp(0.46rem, 1.08vw, 1.02rem);
@@ -71,38 +67,16 @@
 }
 
 .admit-card__student-details > div {
-    display: grid;
+    display: block;
     min-width: 0;
-    grid-template-columns: 42% minmax(0, 1fr);
-    align-items: baseline;
-}
-
-.admit-card__student-details dt,
-.admit-card__student-details dd,
-.admit-card__exam-details dt,
-.admit-card__exam-details dd {
-    min-width: 0;
-    margin: 0;
 }
 
 .admit-card__student-details dd {
+    min-width: 0;
+    margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-.admit-card__student-details dd::before {
-    content: ':';
-    margin-right: 0.35em;
-}
-
-.admit-card__exam-details dt::after {
-    content: ':';
-    margin-left: 0.15em;
-}
-
-.admit-card__exam-details > div:not(.admit-card__exam-number) dd {
-    margin-left: 0.35em;
 }
 
 .admit-card__photo {
@@ -150,10 +124,10 @@
 }
 
 .admit-card__exam-details {
-    top: 51.6%;
-    right: 9.8%;
+    top: 52.8%;
+    right: 8.8%;
     display: grid;
-    width: 21%;
+    width: 14%;
     gap: clamp(0.22rem, 0.74vw, 0.7rem);
     margin: 0;
     font-size: clamp(0.44rem, 1vw, 0.94rem);
@@ -165,18 +139,17 @@
     display: flex;
     min-width: 0;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     white-space: nowrap;
 }
 
 .admit-card__exam-number dd {
     display: grid;
-    width: 48%;
-    min-height: clamp(1rem, 3.8vw, 2.8rem);
-    margin-left: 0.55em;
+    width: 100%;
+    min-height: clamp(0.9rem, 1.8vw, 1.5rem);
+    margin: 0;
     place-items: center;
     overflow: hidden;
-    border: clamp(1px, 0.1vw, 2px) solid #737373;
     font-size: clamp(0.38rem, 0.82vw, 0.78rem);
     text-overflow: ellipsis;
 }

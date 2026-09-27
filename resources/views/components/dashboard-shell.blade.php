@@ -45,13 +45,27 @@
                                             return false;
                                         }
 
-                                        if (! empty($item['parameters']) && is_array($item['parameters'])) {
-                                            foreach ($item['parameters'] as $paramKey => $paramValue) {
+                                        $itemParams = $item['parameters'] ?? [];
+
+                                        if ($pattern === 'super-admin.students.index') {
+                                            $isBranchView = request()->has('show_branches') || request()->has('branch_id') || request()->has('branch');
+                                            $itemIsBranchView = ! empty($itemParams['show_branches']);
+
+                                            return $isBranchView === $itemIsBranchView;
+                                        }
+
+                                        if (! empty($itemParams)) {
+                                            foreach ($itemParams as $paramKey => $paramValue) {
                                                 $currentVal = request()->route($paramKey) ?? request()->query($paramKey);
                                                 if ((string) $currentVal !== (string) $paramValue) {
                                                     return false;
                                                 }
                                             }
+                                            return true;
+                                        }
+
+                                        if (request()->routeIs('super-admin.branch-applications.index') && request()->has('status')) {
+                                            return false;
                                         }
 
                                         return true;

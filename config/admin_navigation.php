@@ -6,7 +6,7 @@ return [
         ['label' => 'Add Course', 'route' => 'super-admin.courses.create', 'active' => ['super-admin.courses.create'], 'icon' => 'courses'],
         ['label' => 'Remove Course', 'route' => 'super-admin.courses.index', 'active' => ['super-admin.courses.index'], 'icon' => 'courses'],
         ['label' => 'Add Student', 'route' => 'super-admin.students.create', 'active' => ['super-admin.students.create'], 'icon' => 'students'],
-        ['label' => 'Branch Students Admin', 'route' => 'super-admin.students.index', 'parameters' => ['show_branches' => 1], 'active' => ['super-admin.students.index'], 'icon' => 'students'],
+        ['label' => 'Branch Students Admin', 'route' => 'super-admin.branch-students.index', 'active' => ['super-admin.branch-students.index'], 'icon' => 'students'],
         ['label' => 'Remove Verified Branches', 'route' => 'super-admin.branch-applications.accepted', 'active' => ['super-admin.branch-applications.accepted'], 'icon' => 'branches'],
         ['label' => 'Requested Branches', 'route' => 'super-admin.branch-applications.index', 'parameters' => ['status' => 'pending'], 'active' => ['super-admin.branch-applications.index'], 'icon' => 'branches', 'badge' => 'pendingBranchApplications'],
         ['label' => 'ALL-Branches-List', 'route' => 'super-admin.all-branches', 'active' => ['super-admin.all-branches'], 'icon' => 'branches'],

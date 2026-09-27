@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Models\BranchApplication;
 use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Collection;
@@ -20,15 +21,80 @@ class StudentController extends Controller
     {
         Gate::authorize('viewAny', Student::class);
 
+        $branchId = $request->input('branch_id') ?: $request->input('branch');
+        $showBranches = $request->boolean('show_branches') || $request->routeIs('super-admin.branch-students.index');
+        $search = $request->string('search')->trim()->toString();
+
+        if ($branchId) {
+            $branch = BranchApplication::query()
+                ->where('id', $branchId)
+                ->orWhere('username', $branchId)
+                ->orWhere('id', (int) $branchId)
+                ->first();
+
+            $studentsQuery = Student::query()
+                ->with('course:id,name')
+                ->where(function ($query) use ($branchId, $branch) {
+                    $query->where('branch_id', $branchId)
+                        ->orWhere('branch_id', (string) $branchId)
+                        ->orWhere('branch_id', sprintf('%06d', (int) $branchId));
+
+                    if ($branch) {
+                        $query->orWhere('branch_id', $branch->username)
+                            ->orWhere('branch_id', $branch->institute_name);
+                    }
+                })
+                ->when($search, fn ($query, string $term) => $query->where(fn ($nested) => $nested->where('name', 'like', "%{$term}%")->orWhere('registration_number', 'like', "%{$term}%")->orWhere('roll_number', 'like', "%{$term}%")));
+
+            return view('super-admin.students.branch-students-index', [
+                'branch' => $branch,
+                'branchId' => $branchId,
+                'students' => $studentsQuery->latest()->paginate(12)->withQueryString(),
+                'search' => $search,
+                'courses' => $this->courses(),
+            ]);
+        }
+
+        if ($showBranches) {
+            $branches = BranchApplication::query()
+                ->when($search, fn ($query, string $term) => $query->where('institute_name', 'like', "%{$term}%")->orWhere('username', 'like', "%{$term}%")->orWhere('id', 'like', "%{$term}%")->orWhere('director_name', 'like', "%{$term}%"))
+                ->latest()
+                ->paginate(12)
+                ->withQueryString();
+
+            $branches->getCollection()->transform(function (BranchApplication $branch) {
+                $branch->student_count = Student::query()
+                    ->where('branch_id', $branch->id)
+                    ->orWhere('branch_id', (string) $branch->id)
+                    ->orWhere('branch_id', sprintf('%06d', $branch->id))
+                    ->orWhere('branch_id', $branch->username)
+                    ->orWhere('branch_id', $branch->institute_name)
+                    ->count();
+
+                return $branch;
+            });
+
+            return view('super-admin.students.branch-list', [
+                'branches' => $branches,
+                'search' => $search,
+            ]);
+        }
+
         return view('super-admin.students.index', [
             'students' => Student::query()
                 ->with('course:id,name')
-                ->when($request->string('search')->trim()->toString(), fn ($query, string $search) => $query->where(fn ($nested) => $nested->where('name', 'like', "%{$search}%")->orWhere('registration_number', 'like', "%{$search}%")->orWhere('roll_number', 'like', "%{$search}%")))
+                ->when($search, fn ($query, string $term) => $query->where(fn ($nested) => $nested->where('name', 'like', "%{$term}%")->orWhere('registration_number', 'like', "%{$term}%")->orWhere('roll_number', 'like', "%{$term}%")))
                 ->latest()
                 ->paginate(12)
                 ->withQueryString(),
-            'search' => $request->string('search')->trim()->toString(),
+            'search' => $search,
+            'courses' => $this->courses(),
         ]);
+    }
+
+    public function branchStudentsAdmin(Request $request): View
+    {
+        return $this->index($request->merge(['show_branches' => 1]));
     }
 
     public function create(): View

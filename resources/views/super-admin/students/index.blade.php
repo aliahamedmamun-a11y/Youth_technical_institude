@@ -24,96 +24,289 @@
                 <div class="overflow-x-auto scrollbar-hide">
                     <table class="w-full text-left whitespace-nowrap">
                         <thead>
-                            <tr class="border-b border-white/10 bg-white/5 text-[11px] font-black uppercase tracking-widest text-[#6cb2eb]">
-                                <th class="px-6 py-5">PICTURE</th>
-                                <th class="px-6 py-5">ACTIONS</th>
-                                <th class="px-6 py-5 text-center">ADMIT CARD</th>
-                                <th class="px-6 py-5 text-center">REGISTRATION CARD</th>
-                                <th class="px-6 py-5 text-center">NIDCARD</th>
-                                <th class="px-6 py-5 text-center">CERTIFICATE</th>
+                            <tr class="border-b border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-widest text-[#6cb2eb]">
+                                <th class="px-4 py-4 text-center">PICTURE</th>
+                                <th class="px-4 py-4 text-center">ACTIONS</th>
+                                <th class="px-4 py-4 text-center">ADMIT-CARD</th>
+                                <th class="px-4 py-4 text-center">REGISTRATION</th>
+                                <th class="px-4 py-4 text-center">CERTIFICATE</th>
+                                <th class="px-4 py-4 text-center">TRANSCRIPT</th>
+                                <th class="px-4 py-4 text-center">TRANSCRIPTONE</th>
+                                <th class="px-4 py-4 text-center">TRANSCRIPTTWO</th>
+                                <th class="px-4 py-4 text-center">NIDCARD</th>
+                                <th class="px-4 py-4 text-center">CERT STATUS</th>
+                                <th class="px-4 py-4 text-center">TRANS-ONE STATUS</th>
+                                <th class="px-4 py-4 text-center">BRANCH PERM</th>
+                                <th class="px-4 py-4 text-center">DELETE SCORE</th>
+                                <th class="px-4 py-4 text-center">STUDENT ID</th>
+                                <th class="px-4 py-4 text-center">STUDENT REGISTRATION NUMBER</th>
+                                <th class="px-4 py-4 text-center">STUDENT ROLL NUMBER</th>
+                                <th class="px-4 py-4 text-center">STUDENT NAME</th>
+                                <th class="px-4 py-4 text-center">FATHER NAME</th>
+                                <th class="px-4 py-4 text-center">MOTHER NAME</th>
+                                <th class="px-4 py-4 text-center">DOB</th>
+                                <th class="px-4 py-4 text-center">GENDER</th>
+                                <th class="px-4 py-4 text-center">PASSPORT</th>
+                                <th class="px-4 py-4 text-center">GUARDIAN PHONE</th>
+                                <th class="px-4 py-4 text-center">STUDENT ADDRESS</th>
+                                <th class="px-4 py-4 text-center">DISTRICT</th>
+                                <th class="px-4 py-4 text-center">THANA</th>
+                                <th class="px-4 py-4 text-center">SEARCH COURSE</th>
+                                <th class="px-4 py-4 text-center">DURATION</th>
+                                <th class="px-4 py-4 text-center">SESSION</th>
+                                <th class="px-4 py-4 text-center">EDUCATION QUALIFICATION</th>
+                                <th class="px-4 py-4 text-center">INSTITUTE</th>
+                                <th class="px-4 py-4 text-center">ISSUE DATE</th>
+                                <th class="px-4 py-4 text-center">EXPIRE DATE</th>
+                                <th class="px-4 py-4 text-center">DIRECTOR NAME</th>
+                                <th class="px-4 py-4 text-center">CREATED AT</th>
+                                <th class="px-4 py-4 text-center">PICTURE</th>
+                                <th class="px-4 py-4 text-center">EXAMINATION MONTH</th>
+                                <th class="px-4 py-4 text-center">PUBLICATION DATE</th>
+                                <th class="px-4 py-4 text-center">TOTAL MARKS</th>
+                                <th class="px-4 py-4 text-center">ID CARD</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-white/5">
                             @forelse($students as $student)
-                                <tr class="group transition-colors hover:bg-white/5 text-xs font-bold text-slate-300">
+                                @php
+                                    $studentImg = $student->image_path ? (str_starts_with($student->image_path, 'http') ? $student->image_path : asset('storage/' . $student->image_path)) : 'https://i.ibb.co/qMgPTvMQ/1000072415.jpg';
+                                    $studentJsonData = [
+                                        'id' => $student->id,
+                                        'name' => $student->name,
+                                        'father_name' => $student->father_name,
+                                        'mother_name' => $student->mother_name,
+                                        'date_of_birth' => optional($student->date_of_birth)->format('Y-m-d'),
+                                        'gender' => $student->gender ?? 'Male',
+                                        'passport_nid_number' => $student->passport_nid_number,
+                                        'phone' => $student->phone,
+                                        'address' => $student->address,
+                                        'district' => $student->district,
+                                        'upazila' => $student->upazila,
+                                        'course_id' => $student->course_id,
+                                        'duration' => $student->duration,
+                                        'session' => $student->session,
+                                        'education_qualification' => $student->education_qualification,
+                                        'admitted_at' => optional($student->admitted_at)->format('Y-m-d'),
+                                        'expire_date' => optional($student->expire_date)->format('Y-m-d'),
+                                        'created_at' => $student->created_at?->toISOString(),
+                                        'image' => $studentImg,
+                                        'update_url' => route('super-admin.students.update', $student),
+                                    ];
+                                @endphp
+                                <tr class="group transition-colors hover:bg-white/5 text-[11px] font-bold text-slate-300">
                                     {{-- PICTURE --}}
-                                    <td class="px-6 py-5">
-                                        <div class="size-14 overflow-hidden rounded-xl border border-white/20 bg-slate-800 shadow-xl">
-                                            @php
-                                                $studentImg = $student->image_path ? (str_starts_with($student->image_path, 'http') ? $student->image_path : asset('storage/' . $student->image_path)) : 'https://i.ibb.co/qMgPTvMQ/1000072415.jpg';
-                                            @endphp
+                                    <td class="px-4 py-4 text-center">
+                                        <div class="size-11 overflow-hidden rounded-xl border border-white/20 bg-slate-800 shadow-xl mx-auto">
                                             <img src="{{ $studentImg }}" alt="{{ $student->name }}" class="size-full object-cover">
                                         </div>
                                     </td>
 
                                     {{-- ACTIONS --}}
-                                    <td class="px-6 py-5">
-                                        <a href="{{ route('super-admin.students.edit', $student) }}"
-                                           data-student-id="{{ $student->id }}"
-                                           data-student-name="{{ $student->name }}"
-                                           data-student-father="{{ $student->father_name }}"
-                                           data-student-mother="{{ $student->mother_name }}"
-                                           data-student-dob="{{ optional($student->date_of_birth)->format('Y-m-d') }}"
-                                           data-student-gender="{{ $student->gender ?? 'Male' }}"
-                                           data-student-passport="{{ $student->passport_nid_number }}"
-                                           data-student-phone="{{ $student->phone }}"
-                                           data-student-address="{{ $student->address }}"
-                                           data-student-district="{{ $student->district }}"
-                                           data-student-upazila="{{ $student->upazila }}"
-                                           data-student-course="{{ $student->course_id }}"
-                                           data-student-duration="{{ $student->duration }}"
-                                           data-student-session="{{ $student->session }}"
-                                           data-student-education="{{ $student->education_qualification }}"
-                                           data-student-admitted="{{ optional($student->admitted_at)->format('Y-m-d') }}"
-                                           data-student-expire="{{ optional($student->expire_date)->format('Y-m-d') }}"
-                                           data-student-created="{{ $student->created_at?->toISOString() }}"
-                                           data-student-image="{{ $studentImg }}"
-                                           data-student-update-url="{{ route('super-admin.students.update', $student) }}"
-                                           onclick="openEditModalFromElement(event, this)"
-                                           class="text-blue-400 hover:text-blue-300 font-black uppercase text-sm tracking-wider underline transition-colors cursor-pointer">
-                                            Edit
-                                        </a>
+                                    <td class="px-4 py-4 text-center">
+                                        <div class="flex items-center gap-2 justify-center">
+                                            <a href="{{ route('super-admin.students.edit', $student) }}"
+                                               data-student="{{ json_encode($studentJsonData) }}"
+                                               onclick="openEditModalFromElement(event, this)"
+                                               class="text-blue-400 hover:text-blue-300 font-black uppercase text-[10px] tracking-wider cursor-pointer">
+                                                EDIT
+                                            </a>
+                                            <form action="{{ route('super-admin.students.destroy', $student) }}" method="POST" onsubmit="return confirm('Delete this student?')">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="text-rose-400 hover:text-rose-300 font-black uppercase text-[10px] tracking-wider">
+                                                    DELETE
+                                                </button>
+                                            </form>
+                                            <a href="{{ route('super-admin.students.edit', $student) }}"
+                                               data-student="{{ json_encode($studentJsonData) }}"
+                                               onclick="openEditModalFromElement(event, this)"
+                                               class="text-emerald-400 hover:text-emerald-300 font-black uppercase text-[10px] tracking-wider cursor-pointer">
+                                                UPDATE
+                                            </a>
+                                        </div>
                                     </td>
 
-                                    {{-- ADMIT CARD --}}
-                                    <td class="px-6 py-5 text-center">
+                                    {{-- ADMIT-CARD --}}
+                                    <td class="px-4 py-4 text-center">
                                         <a href="{{ route('super-admin.students.documents.show', [$student, 'admit-card']) }}"
                                            onclick="downloadPdf(event, this.href)"
-                                           class="inline-block rounded-xl border border-amber-500/40 bg-amber-500/20 px-5 py-2.5 text-xs font-black text-amber-300 hover:bg-amber-500 hover:text-black shadow-lg transition">
+                                           class="inline-block rounded-lg bg-red-600 hover:bg-red-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
                                             Admit-Card
                                         </a>
                                     </td>
 
-                                    {{-- REGISTRATION CARD --}}
-                                    <td class="px-6 py-5 text-center">
+                                    {{-- REGISTRATION --}}
+                                    <td class="px-4 py-4 text-center">
                                         <a href="{{ route('super-admin.students.documents.show', [$student, 'registration-card']) }}"
                                            onclick="downloadPdf(event, this.href)"
-                                           class="inline-block rounded-xl border border-emerald-500/40 bg-emerald-500/20 px-5 py-2.5 text-xs font-black text-emerald-300 hover:bg-emerald-500 hover:text-black shadow-lg transition">
+                                           class="inline-block rounded-lg bg-blue-600 hover:bg-blue-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
                                             Registration Card
                                         </a>
                                     </td>
 
-                                    {{-- NIDCARD --}}
-                                    <td class="px-6 py-5 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'registration-card']) }}"
+                                    {{-- CERTIFICATE --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'certificate']) }}"
                                            onclick="downloadPdf(event, this.href)"
-                                           class="inline-block rounded-xl border border-teal-500/40 bg-teal-500/20 px-5 py-2.5 text-xs font-black text-teal-300 hover:bg-teal-500 hover:text-black shadow-lg transition">
+                                           class="inline-block rounded-lg bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
+                                            Certificate
+                                        </a>
+                                    </td>
+
+                                    {{-- TRANSCRIPT --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'transcript']) }}"
+                                           onclick="downloadPdf(event, this.href)"
+                                           class="inline-block rounded-lg bg-teal-600 hover:bg-teal-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
+                                            Certificate One
+                                        </a>
+                                    </td>
+
+                                    {{-- TRANSCRIPTONE --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'transcript']) }}"
+                                           onclick="downloadPdf(event, this.href)"
+                                           class="inline-block rounded-lg bg-slate-600 hover:bg-slate-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
+                                            Transcript
+                                        </a>
+                                    </td>
+
+                                    {{-- TRANSCRIPTTWO --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'transcript']) }}"
+                                           onclick="downloadPdf(event, this.href)"
+                                           class="inline-block rounded-lg bg-sky-600 hover:bg-sky-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
+                                            TranscriptOne
+                                        </a>
+                                    </td>
+
+                                    {{-- NIDCARD --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'student-id']) }}"
+                                           onclick="downloadPdf(event, this.href)"
+                                           class="inline-block rounded-lg bg-cyan-600 hover:bg-cyan-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
+                                            Transcript Two
+                                        </a>
+                                    </td>
+
+                                    {{-- CERT STATUS --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'student-id']) }}"
+                                           onclick="downloadPdf(event, this.href)"
+                                           class="inline-block rounded-lg bg-purple-600 hover:bg-purple-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
                                             NIDCard
                                         </a>
                                     </td>
 
-                                    {{-- CERTIFICATE --}}
-                                    <td class="px-6 py-5 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'certificate']) }}"
+                                    {{-- TRANS-ONE STATUS --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <span class="rounded-full bg-pink-500/20 px-3 py-1 text-[9px] font-black uppercase text-pink-300">NOT ALLOWED</span>
+                                    </td>
+
+                                    {{-- BRANCH PERM --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <span class="rounded-full bg-pink-500/20 px-3 py-1 text-[9px] font-black uppercase text-pink-300">NOT ALLOWED</span>
+                                    </td>
+
+                                    {{-- DELETE SCORE --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <span class="rounded-full bg-pink-500/20 px-3 py-1 text-[9px] font-black uppercase text-pink-300">NOT ALLOWED</span>
+                                    </td>
+
+                                    {{-- STUDENT ID --}}
+                                    <td class="px-4 py-4 text-slate-300 font-mono">{{ str_pad($student->id, 6, '0', STR_PAD_LEFT) }}</td>
+
+                                    {{-- STUDENT REGISTRATION NUMBER --}}
+                                    <td class="px-4 py-4 text-slate-300 font-mono">{{ $student->registration_number }}</td>
+
+                                    {{-- STUDENT ROLL NUMBER --}}
+                                    <td class="px-4 py-4 text-slate-300 font-mono">{{ $student->roll_number }}</td>
+
+                                    {{-- STUDENT NAME --}}
+                                    <td class="px-4 py-4 text-white font-bold">{{ $student->name }}</td>
+
+                                    {{-- FATHER NAME --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->father_name ?: 'N/A' }}</td>
+
+                                    {{-- MOTHER NAME --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->mother_name ?: 'N/A' }}</td>
+
+                                    {{-- DOB --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ optional($student->date_of_birth)->format('Y-m-d') ?: 'N/A' }}</td>
+
+                                    {{-- GENDER --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->gender ?: 'Male' }}</td>
+
+                                    {{-- PASSPORT --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->passport_nid_number ?: 'N/A' }}</td>
+
+                                    {{-- GUARDIAN PHONE --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->phone }}</td>
+
+                                    {{-- STUDENT ADDRESS --}}
+                                    <td class="px-4 py-4 text-slate-400 max-w-[200px] truncate">{{ $student->address }}</td>
+
+                                    {{-- DISTRICT --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->district }}</td>
+
+                                    {{-- THANA --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->upazila }}</td>
+
+                                    {{-- SEARCH COURSE --}}
+                                    <td class="px-4 py-4 text-slate-300">{{ $student->course?->name ?: 'N/A' }}</td>
+
+                                    {{-- DURATION --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->duration ?: '6 Month\'s' }}</td>
+
+                                    {{-- SESSION --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->session ?: '2023-2024' }}</td>
+
+                                    {{-- EDUCATION QUALIFICATION --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->education_qualification ?: 'SSC' }}</td>
+
+                                    {{-- INSTITUTE --}}
+                                    <td class="px-4 py-4 text-slate-300 uppercase">{{ $student->institute_name ?: ($student->branch?->institute_name ?? 'BNTEI') }}</td>
+
+                                    {{-- ISSUE DATE --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ optional($student->admitted_at)->format('Y-m-d') ?: 'N/A' }}</td>
+
+                                    {{-- EXPIRE DATE --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ optional($student->expire_date)->format('Y-m-d') ?: 'N/A' }}</td>
+
+                                    {{-- DIRECTOR NAME --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->director_name ?: 'Md Salam' }}</td>
+
+                                    {{-- CREATED AT --}}
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->created_at?->format('Y-m-d') }}</td>
+
+                                    {{-- PICTURE --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <div class="size-11 overflow-hidden rounded-xl border border-white/20 bg-slate-800 shadow-xl mx-auto">
+                                            <img src="{{ $studentImg }}" alt="{{ $student->name }}" class="size-full object-cover">
+                                        </div>
+                                    </td>
+
+                                    {{-- EXAMINATION MONTH --}}
+                                    <td class="px-4 py-4 text-slate-400">Jul - Dec 2023</td>
+
+                                    {{-- PUBLICATION DATE --}}
+                                    <td class="px-4 py-4 text-slate-400">15 Dec 2025</td>
+
+                                    {{-- TOTAL MARKS --}}
+                                    <td class="px-4 py-4 text-slate-400 font-mono">3860</td>
+
+                                    {{-- ID CARD --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'student-id']) }}"
                                            onclick="downloadPdf(event, this.href)"
-                                           class="inline-block rounded-xl border border-blue-500/40 bg-blue-500/20 px-5 py-2.5 text-xs font-black text-blue-300 hover:bg-blue-500 hover:text-black shadow-lg transition">
-                                            Certificate
+                                           class="inline-block rounded-lg bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
+                                            ID Card
                                         </a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="px-6 py-20 text-center text-sm font-bold text-slate-400">
+                                    <td colspan="40" class="px-6 py-20 text-center text-sm font-bold text-slate-400">
                                         No student records found.
                                     </td>
                                 </tr>
@@ -309,28 +502,43 @@
 
         function openEditModalFromElement(event, el) {
             event.preventDefault();
-            const data = {
-                id: el.dataset.studentId,
-                name: el.dataset.studentName,
-                father_name: el.dataset.studentFather,
-                mother_name: el.dataset.studentMother,
-                date_of_birth: el.dataset.studentDob,
-                gender: el.dataset.studentGender,
-                passport_nid_number: el.dataset.studentPassport,
-                phone: el.dataset.studentPhone,
-                address: el.dataset.studentAddress,
-                district: el.dataset.studentDistrict,
-                upazila: el.dataset.studentUpazila,
-                course_id: el.dataset.studentCourse,
-                duration: el.dataset.studentDuration,
-                session: el.dataset.studentSession,
-                education_qualification: el.dataset.studentEducation,
-                admitted_at: el.dataset.studentAdmitted,
-                expire_date: el.dataset.studentExpire,
-                created_at: el.dataset.studentCreated,
-                image_url: el.dataset.studentImage,
-                update_url: el.dataset.studentUpdateUrl
-            };
+            let data = {};
+            if (el.dataset.student) {
+                try {
+                    data = JSON.parse(el.dataset.student);
+                    data.image_url = data.image;
+                    data.father_name = data.father_name;
+                    data.mother_name = data.mother_name;
+                    data.date_of_birth = data.date_of_birth;
+                    data.passport_nid_number = data.passport_nid_number;
+                    data.education_qualification = data.education_qualification;
+                } catch(e) {
+                    console.error("Failed to parse student data", e);
+                }
+            } else {
+                data = {
+                    id: el.dataset.studentId,
+                    name: el.dataset.studentName,
+                    father_name: el.dataset.studentFather,
+                    mother_name: el.dataset.studentMother,
+                    date_of_birth: el.dataset.studentDob,
+                    gender: el.dataset.studentGender,
+                    passport_nid_number: el.dataset.studentPassport,
+                    phone: el.dataset.studentPhone,
+                    address: el.dataset.studentAddress,
+                    district: el.dataset.studentDistrict,
+                    upazila: el.dataset.studentUpazila,
+                    course_id: el.dataset.studentCourse,
+                    duration: el.dataset.studentDuration,
+                    session: el.dataset.studentSession,
+                    education_qualification: el.dataset.studentEducation,
+                    admitted_at: el.dataset.studentAdmitted,
+                    expire_date: el.dataset.studentExpire,
+                    created_at: el.dataset.studentCreated,
+                    image_url: el.dataset.studentImage,
+                    update_url: el.dataset.studentUpdateUrl
+                };
+            }
             openEditModal(data);
         }
 

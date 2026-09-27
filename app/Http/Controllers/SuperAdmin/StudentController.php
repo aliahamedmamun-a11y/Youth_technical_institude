@@ -160,6 +160,9 @@ class StudentController extends Controller
     {
         Gate::authorize('delete', $student);
 
+        $student->results()->delete();
+        $student->semesterEnrollments()->delete();
+
         $imagePath = $student->image_path;
         $student->delete();
 

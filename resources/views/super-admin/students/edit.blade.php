@@ -1,7 +1,7 @@
 <x-dashboard-shell
     title="Edit Student"
     eyebrow="Student management"
-    description="Update the student profile, course, and result details."
+    description="Update the student profile, course, subjects, and result details."
 >
 
     <x-student-form
@@ -10,7 +10,7 @@
         :action="route('super-admin.students.update', $student)"
         method="PUT"
         submit-label="Save changes"
-        :is-admin="true"
+        :is-edit="true"
     />
 
 </x-dashboard-shell>

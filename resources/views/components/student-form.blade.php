@@ -6,10 +6,11 @@
     'submitLabel' => 'Save Changes',
     'cancelRoute' => null,
     'declarationRequired' => false,
-    'isAdmin' => false,
+    'isEdit' => false,
 ])
 
 @php
+    $isEdit = $isEdit || $student !== null;
     $inputClass = 'w-full rounded-xl border border-white/10 bg-[#071c2c]/90 py-3.5 px-4 text-sm text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all';
     $selectClass = $inputClass . ' cursor-pointer';
     $labelClass = 'block text-xs font-bold text-slate-300 mb-2 uppercase tracking-wider';
@@ -29,10 +30,10 @@
         <!-- Header -->
         <div class="text-center space-y-2">
             <h1 class="text-2xl sm:text-3xl font-black text-[#818cf8] uppercase tracking-tight">
-                {{ $student ? 'Edit Student Information' : ($isAdmin ? 'Add Student' : 'Student Registration') }}
+                {{ $isEdit ? 'Edit Student Information' : 'Student Registration' }}
             </h1>
             <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                {{ $student ? 'Update student details and academic records' : 'Fill the form below to register a new student' }}
+                {{ $isEdit ? 'Update student details and academic records' : 'Fill the form below to register a new student' }}
             </p>
         </div>
 
@@ -93,7 +94,7 @@
             @csrf
             @if ($method !== 'POST') @method($method) @endif
 
-            <!-- SECTION 1: PUBLIC REGISTRATION FIELDS -->
+            <!-- SECTION 1: REGISTRATION FIELDS -->
             <div class="space-y-6">
                 <h2 class="text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
                     Student Details
@@ -286,14 +287,14 @@
                 </div>
             </div>
 
-            <!-- ADMIN-ONLY SECTIONS: SYSTEM CODES, SUBJECTS, SEMESTER CGPA, FINAL RESULTS -->
-            @if ($isAdmin)
+            <!-- EDIT-ONLY SECTIONS (SHOWS ONLY WHEN EDITING A STUDENT RECORD) -->
+            @if ($isEdit)
                 <div class="space-y-10 pt-6 border-t border-indigo-500/30">
 
                     <!-- SECTION 3: SYSTEM CODES & RECORD FIELDS -->
                     <div class="space-y-6">
                         <h2 class="text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
-                            Registration & System Codes (Admin Only)
+                            Registration & System Codes (Edit Only)
                         </h2>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

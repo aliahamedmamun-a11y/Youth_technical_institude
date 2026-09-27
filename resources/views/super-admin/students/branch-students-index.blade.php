@@ -5,7 +5,7 @@
             <!-- Header & Back Navigation -->
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-white/10 pb-6">
                 <div>
-                    <a href="{{ route('super-admin.branch-students.index') }}"
+                    <a href="{{ route('super-admin.students.index', ['show_branches' => 1]) }}"
                        class="inline-flex items-center gap-2 text-xs font-black uppercase text-blue-400 hover:text-blue-300 transition-colors mb-2">
                         <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
@@ -27,7 +27,7 @@
 
             <!-- Search Bar -->
             <div class="mx-auto max-w-xl">
-                <form method="GET" class="relative">
+                <form method="GET" action="{{ route('super-admin.students.index') }}" class="relative">
                     <input type="hidden" name="branch_id" value="{{ $branchId }}">
                     <input type="text" name="search" value="{{ $search }}"
                         placeholder="Search by Roll Number, Name or Reg Number..."
@@ -70,32 +70,31 @@
 
                                     <!-- ACTIONS (EDIT) -->
                                     <td class="px-6 py-5">
-                                        <button type="button"
-                                                onclick='openEditModal(@json([
-                                                    "id" => $student->id,
-                                                    "name" => $student->name,
-                                                    "father_name" => $student->father_name,
-                                                    "mother_name" => $student->mother_name,
-                                                    "date_of_birth" => optional($student->date_of_birth)->format("Y-m-d"),
-                                                    "gender" => $student->gender ?? "Male",
-                                                    "passport_nid_number" => $student->passport_nid_number,
-                                                    "phone" => $student->phone,
-                                                    "address" => $student->address,
-                                                    "district" => $student->district,
-                                                    "upazila" => $student->upazila,
-                                                    "course_id" => $student->course_id,
-                                                    "duration" => $student->duration,
-                                                    "session" => $student->session,
-                                                    "education_qualification" => $student->education_qualification,
-                                                    "admitted_at" => optional($student->admitted_at)->format("Y-m-d"),
-                                                    "expire_date" => optional($student->expire_date)->format("Y-m-d"),
-                                                    "created_at" => $student->created_at?->toISOString(),
-                                                    "image_url" => $studentImg,
-                                                    "update_url" => route("super-admin.students.update", $student)
-                                                ]))'
-                                                class="text-blue-400 hover:text-blue-300 font-black uppercase text-sm tracking-wider underline transition-colors cursor-pointer">
+                                        <a href="{{ route('super-admin.students.edit', $student) }}"
+                                           data-student-id="{{ $student->id }}"
+                                           data-student-name="{{ $student->name }}"
+                                           data-student-father="{{ $student->father_name }}"
+                                           data-student-mother="{{ $student->mother_name }}"
+                                           data-student-dob="{{ optional($student->date_of_birth)->format('Y-m-d') }}"
+                                           data-student-gender="{{ $student->gender ?? 'Male' }}"
+                                           data-student-passport="{{ $student->passport_nid_number }}"
+                                           data-student-phone="{{ $student->phone }}"
+                                           data-student-address="{{ $student->address }}"
+                                           data-student-district="{{ $student->district }}"
+                                           data-student-upazila="{{ $student->upazila }}"
+                                           data-student-course="{{ $student->course_id }}"
+                                           data-student-duration="{{ $student->duration }}"
+                                           data-student-session="{{ $student->session }}"
+                                           data-student-education="{{ $student->education_qualification }}"
+                                           data-student-admitted="{{ optional($student->admitted_at)->format('Y-m-d') }}"
+                                           data-student-expire="{{ optional($student->expire_date)->format('Y-m-d') }}"
+                                           data-student-created="{{ $student->created_at?->toISOString() }}"
+                                           data-student-image="{{ $studentImg }}"
+                                           data-student-update-url="{{ route('super-admin.students.update', $student) }}"
+                                           onclick="openEditModalFromElement(event, this)"
+                                           class="text-blue-400 hover:text-blue-300 font-black uppercase text-sm tracking-wider underline transition-colors cursor-pointer">
                                             Edit
-                                        </button>
+                                        </a>
                                     </td>
 
                                     <!-- ADMIT CARD -->
@@ -331,6 +330,33 @@
 
     <script>
         const modalUpazilasByDistrict = @json(config('bangladesh.upazilas'));
+
+        function openEditModalFromElement(event, el) {
+            event.preventDefault();
+            const data = {
+                id: el.dataset.studentId,
+                name: el.dataset.studentName,
+                father_name: el.dataset.studentFather,
+                mother_name: el.dataset.studentMother,
+                date_of_birth: el.dataset.studentDob,
+                gender: el.dataset.studentGender,
+                passport_nid_number: el.dataset.studentPassport,
+                phone: el.dataset.studentPhone,
+                address: el.dataset.studentAddress,
+                district: el.dataset.studentDistrict,
+                upazila: el.dataset.studentUpazila,
+                course_id: el.dataset.studentCourse,
+                duration: el.dataset.studentDuration,
+                session: el.dataset.studentSession,
+                education_qualification: el.dataset.studentEducation,
+                admitted_at: el.dataset.studentAdmitted,
+                expire_date: el.dataset.studentExpire,
+                created_at: el.dataset.studentCreated,
+                image_url: el.dataset.studentImage,
+                update_url: el.dataset.studentUpdateUrl
+            };
+            openEditModal(data);
+        }
 
         function openEditModal(student) {
             const modal = document.getElementById('edit-student-modal');

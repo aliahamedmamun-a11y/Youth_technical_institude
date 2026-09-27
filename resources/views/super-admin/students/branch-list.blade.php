@@ -14,7 +14,8 @@
 
             <!-- Search Bar -->
             <div class="mx-auto max-w-2xl">
-                <form method="GET" action="{{ route('super-admin.branch-students.index') }}" class="relative">
+                <form method="GET" action="{{ route('super-admin.students.index') }}" class="relative">
+                    <input type="hidden" name="show_branches" value="1">
                     <input type="text" name="search" value="{{ $search }}"
                         placeholder="Search by Branch Name, ID or Director..."
                         class="w-full rounded-2xl border border-white/10 bg-[#071c2c]/70 py-4 pl-12 pr-6 text-sm text-white placeholder-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all shadow-xl">
@@ -63,7 +64,7 @@
                         </div>
 
                         <!-- Action Button -->
-                        <a href="{{ route('super-admin.branch-students.index', ['branch_id' => $branch->id]) }}"
+                        <a href="{{ route('super-admin.students.index', ['branch_id' => $branch->id]) }}"
                            class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white py-3 px-4 text-xs font-black uppercase tracking-wider shadow-lg transition-all active:scale-95">
                             <span>View Branch Students ({{ $branch->student_count }})</span>
                             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">

@@ -256,7 +256,7 @@
                                     <td class="px-4 py-4 text-slate-300">{{ $student->course?->name ?: 'N/A' }}</td>
 
                                     {{-- DURATION --}}
-                                    <td class="px-4 py-4 text-slate-400">{{ $student->duration ?: '6 Month\'s' }}</td>
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->duration ?: "6 Month's" }}</td>
 
                                     {{-- SESSION --}}
                                     <td class="px-4 py-4 text-slate-400">{{ $student->session ?: '2023-2024' }}</td>
@@ -357,6 +357,30 @@
                 @endphp
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Branch Id -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Branch Id</label>
+                        <input type="text" id="modal-branch-id" readonly class="{{ $modalInputClass }} cursor-not-allowed text-slate-400">
+                    </div>
+
+                    <!-- Student Id -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Student Id</label>
+                        <input type="text" id="modal-student-id" readonly class="{{ $modalInputClass }} cursor-not-allowed text-slate-400">
+                    </div>
+
+                    <!-- Student Registration Number -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Student Registration Number</label>
+                        <input type="text" name="registration_number" id="modal-reg-no" class="{{ $modalInputClass }}">
+                    </div>
+
+                    <!-- Student Roll Number -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Student Roll Number</label>
+                        <input type="text" name="roll_number" id="modal-roll-no" class="{{ $modalInputClass }}">
+                    </div>
 
                     <!-- Student Name -->
                     <div>
@@ -462,6 +486,12 @@
                         <input type="text" name="education_qualification" id="modal-education" placeholder="Education Qualification" class="{{ $modalInputClass }}">
                     </div>
 
+                    <!-- Institute -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Institute</label>
+                        <input type="text" name="institute_name" id="modal-institute" placeholder="Institute Name" class="{{ $modalInputClass }}">
+                    </div>
+
                     <!-- Issue Date -->
                     <div>
                         <label class="{{ $modalLabelClass }}">Issue Date</label>
@@ -474,12 +504,159 @@
                         <input type="date" name="expire_date" id="modal-expire-date" class="{{ $modalInputClass }}">
                     </div>
 
+                    <!-- Director Name -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Director Name</label>
+                        <input type="text" name="director_name" id="modal-director-name" placeholder="Director Name" class="{{ $modalInputClass }}">
+                    </div>
+
                     <!-- Created At -->
-                    <div class="md:col-span-2">
+                    <div>
                         <label class="{{ $modalLabelClass }}">Created At</label>
                         <input type="text" id="modal-created-at" readonly class="{{ $modalInputClass }} cursor-not-allowed text-slate-400">
                     </div>
 
+                    <!-- Picture -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Picture</label>
+                        <input type="text" id="modal-picture-url" readonly class="{{ $modalInputClass }} cursor-not-allowed text-slate-400">
+                    </div>
+
+                </div>
+
+                <!-- ADD SUBJECTS SECTION -->
+                <div class="space-y-4 pt-6 border-t border-white/10">
+                    <h3 class="text-base font-black text-[#818cf8] uppercase tracking-wide">Add Subjects</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Select Semester</label>
+                            <select id="modal-sub-semester" onchange="updateAddSubButtonText(this.value)" class="{{ $modalSelectClass }}">
+                                <option value="1st">1st</option>
+                                <option value="2nd">2nd</option>
+                                <option value="3rd">3rd</option>
+                                <option value="4th">4th</option>
+                                <option value="5th">5th</option>
+                                <option value="6th">6th</option>
+                                <option value="7th">7th</option>
+                                <option value="8th">8th</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Subject Names (One Per Line)</label>
+                            <textarea id="modal-sub-names" rows="3" placeholder="Enter subject names here, each on a new line." class="{{ $modalInputClass }} resize-none"></textarea>
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button" onclick="addModalSubjects()" class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-6 py-2.5 font-bold text-xs uppercase tracking-wider shadow-lg transition-all active:scale-95">
+                            <span id="add-sub-btn-text">Add Subjects for 1st Semester</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUBJECT PREVIEW TABLE -->
+                <div class="space-y-4 pt-4 border-t border-white/10">
+                    <h3 class="text-base font-black text-slate-200 uppercase tracking-wide">Subject Preview</h3>
+                    <div class="overflow-hidden rounded-xl border border-white/10 bg-[#071c2c]/70">
+                        <table class="w-full text-left text-xs font-bold text-slate-300">
+                            <thead>
+                                <tr class="border-b border-white/10 bg-white/5 uppercase tracking-widest text-[#6cb2eb]">
+                                    <th class="px-4 py-3">Subject</th>
+                                    <th class="px-4 py-3">Semester</th>
+                                    <th class="px-4 py-3 text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-subject-preview-body" class="divide-y divide-white/5">
+                                <tr>
+                                    <td colspan="3" class="px-4 py-6 text-center text-slate-500">No subjects added yet.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ACADEMIC DETAILS (PER SEMESTER) -->
+                <div class="space-y-4 pt-6 border-t border-white/10">
+                    <div>
+                        <h3 class="text-base font-black text-slate-200 uppercase tracking-wide">Academic Details (Per Semester)</h3>
+                        <p class="text-xs text-slate-400 font-medium">Enter the **CGPA (0.00-4.00)** for each semester, and the Grade will be automatically selected based on the grade point.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                        @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $sem)
+                            <div class="rounded-2xl border border-white/10 bg-[#071c2c]/80 p-4 space-y-3">
+                                <h4 class="text-xs font-black text-[#818cf8] uppercase tracking-wider">{{ $sem }} Semester</h4>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 mb-1">Grade (Auto-Calculated)</label>
+                                    <select name="semesters[{{ $sem }}][grade]" class="{{ $modalSelectClass }} py-2 text-xs">
+                                        <option value="">Select Grade</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A">A</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                        <option value="F">F</option>
+                                    </select>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- FINAL RESULT (OVERALL) -->
+                <div class="space-y-4 pt-6 border-t border-white/10">
+                    <h3 class="text-base font-black text-slate-200 uppercase tracking-wide">Final Result (Overall)</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Full Mark</label>
+                            <input type="text" name="full_mark" id="modal-full-mark" placeholder="Full Mark" class="{{ $modalInputClass }}">
+                        </div>
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Written Marks</label>
+                            <input type="text" name="written_marks" id="modal-written-marks" placeholder="Written Marks" class="{{ $modalInputClass }}">
+                        </div>
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Viva Marks</label>
+                            <input type="text" name="viva_marks" id="modal-viva-marks" placeholder="Viva Marks" class="{{ $modalInputClass }}">
+                        </div>
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Practical Mark</label>
+                            <input type="text" name="practical_mark" id="modal-practical-mark" placeholder="Practical Mark" class="{{ $modalInputClass }}">
+                        </div>
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Total Marks</label>
+                            <input type="text" name="total_marks" id="modal-total-marks" value="0" class="{{ $modalInputClass }}">
+                        </div>
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Letter Grade</label>
+                            <select name="letter_grade" id="modal-letter-grade" class="{{ $modalSelectClass }}">
+                                <option value="">Select Grade</option>
+                                <option value="A+">A+</option>
+                                <option value="A">A</option>
+                                <option value="A-">A-</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="F">F</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="{{ $modalLabelClass }}">CGPA (Overall)</label>
+                            <input type="text" name="cgpa" id="modal-cgpa" placeholder="CGPA" class="{{ $modalInputClass }}">
+                        </div>
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Publication Date</label>
+                            <input type="date" name="publication_date" id="modal-pub-date" class="{{ $modalInputClass }}">
+                        </div>
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Examination Month</label>
+                            <input type="text" name="examination_month" id="modal-exam-month" placeholder="Examination Month" class="{{ $modalInputClass }}">
+                        </div>
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Session (Display)</label>
+                            <input type="text" name="session_display" id="modal-session-disp" placeholder="Jan 2024 - Dec 2024" class="{{ $modalInputClass }}">
+                        </div>
+                    </div>
                 </div>
 
                 <!-- ACTION BUTTONS -->

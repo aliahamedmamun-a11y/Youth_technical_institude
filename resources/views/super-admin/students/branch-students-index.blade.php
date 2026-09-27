@@ -277,7 +277,7 @@
                                     <td class="px-4 py-4 text-slate-300">{{ $student->course?->name ?: 'N/A' }}</td>
 
                                     {{-- DURATION --}}
-                                    <td class="px-4 py-4 text-slate-400">{{ $student->duration ?: '6 Month\'s' }}</td>
+                                    <td class="px-4 py-4 text-slate-400">{{ $student->duration ?: "6 Month's" }}</td>
 
                                     {{-- SESSION --}}
                                     <td class="px-4 py-4 text-slate-400">{{ $student->session ?: '2023-2024' }}</td>

@@ -111,10 +111,13 @@
                     <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-2">
                         <label class="{{ $labelClass }}">Director Photo</label>
                         <div class="flex items-center justify-between gap-4">
-                            <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                                <span>Choose File</span>
-                                <input type="file" name="director_photo" accept="image/*" class="hidden" onchange="previewFile(this, 'dir-preview')">
-                            </label>
+                            <div class="flex items-center gap-3">
+                                <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                    <span>Choose File</span>
+                                    <input type="file" name="director_photo" accept="image/*" class="hidden" onchange="previewFile(this, 'dir-preview', 'dir-filename')">
+                                </label>
+                                <span id="dir-filename" class="text-xs text-slate-300 font-medium">No file chosen</span>
+                            </div>
                             <div class="size-20 rounded-xl overflow-hidden border border-white/20 bg-[#0f2d48] flex items-center justify-center">
                                 <img id="dir-preview" src="{{ $branchApplication->director_photo_path ? asset('storage/'.$branchApplication->director_photo_path) : asset('images/placeholder-avatar.png') }}" class="size-full object-cover">
                             </div>
@@ -125,10 +128,13 @@
                     <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-2">
                         <label class="{{ $labelClass }}">Institute Photo</label>
                         <div class="flex items-center justify-between gap-4">
-                            <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                                <span>Choose File</span>
-                                <input type="file" name="institute_photo" accept="image/*" class="hidden" onchange="previewFile(this, 'inst-preview')">
-                            </label>
+                            <div class="flex items-center gap-3">
+                                <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                    <span>Choose File</span>
+                                    <input type="file" name="institute_photo" accept="image/*" class="hidden" onchange="previewFile(this, 'inst-preview', 'inst-filename')">
+                                </label>
+                                <span id="inst-filename" class="text-xs text-slate-300 font-medium">No file chosen</span>
+                            </div>
                             <div class="size-20 rounded-xl overflow-hidden border border-white/20 bg-[#0f2d48] flex items-center justify-center">
                                 <img id="inst-preview" src="{{ $branchApplication->institute_photo_path ? asset('storage/'.$branchApplication->institute_photo_path) : asset('images/placeholder-institute.png') }}" class="size-full object-cover">
                             </div>
@@ -139,10 +145,13 @@
                     <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-2">
                         <label class="{{ $labelClass }}">National Id Photo</label>
                         <div class="flex items-center justify-between gap-4">
-                            <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                                <span>Choose File</span>
-                                <input type="file" name="nid_photo" accept="image/*" class="hidden" onchange="previewFile(this, 'nid-preview')">
-                            </label>
+                            <div class="flex items-center gap-3">
+                                <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                    <span>Choose File</span>
+                                    <input type="file" name="nid_photo" accept="image/*" class="hidden" onchange="previewFile(this, 'nid-preview', 'nid-filename')">
+                                </label>
+                                <span id="nid-filename" class="text-xs text-slate-300 font-medium">No file chosen</span>
+                            </div>
                             <div class="size-20 rounded-xl overflow-hidden border border-white/20 bg-[#0f2d48] flex items-center justify-center">
                                 <img id="nid-preview" src="{{ $branchApplication->nid_photo_path ? asset('storage/'.$branchApplication->nid_photo_path) : asset('images/placeholder-doc.png') }}" class="size-full object-cover">
                             </div>
@@ -153,10 +162,13 @@
                     <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-2">
                         <label class="{{ $labelClass }}">Signature Photo</label>
                         <div class="flex items-center justify-between gap-4">
-                            <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                                <span>Choose File</span>
-                                <input type="file" name="director_signature" accept="image/*" class="hidden" onchange="previewFile(this, 'sig-preview')">
-                            </label>
+                            <div class="flex items-center gap-3">
+                                <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                    <span>Choose File</span>
+                                    <input type="file" name="director_signature" accept="image/*" class="hidden" onchange="previewFile(this, 'sig-preview', 'sig-filename')">
+                                </label>
+                                <span id="sig-filename" class="text-xs text-slate-300 font-medium">No file chosen</span>
+                            </div>
                             <div class="size-20 rounded-xl overflow-hidden border border-white/20 bg-[#0f2d48] flex items-center justify-center">
                                 <img id="sig-preview" src="{{ $branchApplication->director_signature_path ? asset('storage/'.$branchApplication->director_signature_path) : asset('images/placeholder-sig.png') }}" class="size-full object-cover brightness-0 invert">
                             </div>
@@ -192,14 +204,19 @@
     </div>
 
     <script>
-        function previewFile(input, imgId) {
+        function previewFile(input, imgId, filenameId) {
             if (input.files && input.files[0]) {
+                const file = input.files[0];
+                if (filenameId) {
+                    const fnEl = document.getElementById(filenameId);
+                    if (fnEl) fnEl.textContent = file.name;
+                }
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const img = document.getElementById(imgId);
                     if (img) img.src = e.target.result;
                 };
-                reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(file);
             }
         }
     </script>

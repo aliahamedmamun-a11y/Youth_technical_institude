@@ -306,10 +306,13 @@
                     <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-2">
                         <label class="{{ $bLabelClass }}">Director Photo</label>
                         <div class="flex items-center justify-between gap-4">
-                            <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                                <span>Choose File</span>
-                                <input type="file" name="director_photo" accept="image/*" class="hidden" onchange="previewBranchFile(this, 'b-dir-img')">
-                            </label>
+                            <div class="flex items-center gap-3">
+                                <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                    <span>Choose File</span>
+                                    <input type="file" name="director_photo" accept="image/*" class="hidden" onchange="previewBranchFile(this, 'b-dir-img', 'b-dir-filename')">
+                                </label>
+                                <span id="b-dir-filename" class="text-xs text-slate-300 font-medium">No file chosen</span>
+                            </div>
                             <div class="size-20 rounded-xl overflow-hidden border border-white/20 bg-[#0f2d48] flex items-center justify-center">
                                 <img id="b-dir-img" src="{{ asset('images/placeholder-avatar.png') }}" class="size-full object-cover">
                             </div>
@@ -320,10 +323,13 @@
                     <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-2">
                         <label class="{{ $bLabelClass }}">Institute Photo</label>
                         <div class="flex items-center justify-between gap-4">
-                            <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                                <span>Choose File</span>
-                                <input type="file" name="institute_photo" accept="image/*" class="hidden" onchange="previewBranchFile(this, 'b-inst-img')">
-                            </label>
+                            <div class="flex items-center gap-3">
+                                <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                    <span>Choose File</span>
+                                    <input type="file" name="institute_photo" accept="image/*" class="hidden" onchange="previewBranchFile(this, 'b-inst-img', 'b-inst-filename')">
+                                </label>
+                                <span id="b-inst-filename" class="text-xs text-slate-300 font-medium">No file chosen</span>
+                            </div>
                             <div class="size-20 rounded-xl overflow-hidden border border-white/20 bg-[#0f2d48] flex items-center justify-center">
                                 <img id="b-inst-img" src="{{ asset('images/placeholder-institute.png') }}" class="size-full object-cover">
                             </div>
@@ -334,10 +340,13 @@
                     <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-2">
                         <label class="{{ $bLabelClass }}">National Id Photo</label>
                         <div class="flex items-center justify-between gap-4">
-                            <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                                <span>Choose File</span>
-                                <input type="file" name="nid_photo" accept="image/*" class="hidden" onchange="previewBranchFile(this, 'b-nid-img')">
-                            </label>
+                            <div class="flex items-center gap-3">
+                                <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                    <span>Choose File</span>
+                                    <input type="file" name="nid_photo" accept="image/*" class="hidden" onchange="previewBranchFile(this, 'b-nid-img', 'b-nid-filename')">
+                                </label>
+                                <span id="b-nid-filename" class="text-xs text-slate-300 font-medium">No file chosen</span>
+                            </div>
                             <div class="size-20 rounded-xl overflow-hidden border border-white/20 bg-[#0f2d48] flex items-center justify-center">
                                 <img id="b-nid-img" src="{{ asset('images/placeholder-doc.png') }}" class="size-full object-cover">
                             </div>
@@ -348,10 +357,13 @@
                     <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-2">
                         <label class="{{ $bLabelClass }}">Signature Photo</label>
                         <div class="flex items-center justify-between gap-4">
-                            <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                                <span>Choose File</span>
-                                <input type="file" name="director_signature" accept="image/*" class="hidden" onchange="previewBranchFile(this, 'b-sig-img')">
-                            </label>
+                            <div class="flex items-center gap-3">
+                                <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                    <span>Choose File</span>
+                                    <input type="file" name="director_signature" accept="image/*" class="hidden" onchange="previewBranchFile(this, 'b-sig-img', 'b-sig-filename')">
+                                </label>
+                                <span id="b-sig-filename" class="text-xs text-slate-300 font-medium">No file chosen</span>
+                            </div>
                             <div class="size-20 rounded-xl overflow-hidden border border-white/20 bg-[#0f2d48] flex items-center justify-center">
                                 <img id="b-sig-img" src="{{ asset('images/placeholder-sig.png') }}" class="size-full object-cover brightness-0 invert">
                             </div>
@@ -451,14 +463,19 @@
             }
         }
 
-        function previewBranchFile(input, imgId) {
+        function previewBranchFile(input, imgId, filenameId) {
             if (input.files && input.files[0]) {
+                const file = input.files[0];
+                if (filenameId) {
+                    const fnEl = document.getElementById(filenameId);
+                    if (fnEl) fnEl.textContent = file.name;
+                }
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const img = document.getElementById(imgId);
                     if (img) img.src = e.target.result;
                 };
-                reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(file);
             }
         }
     </script>

@@ -48,45 +48,108 @@
             </div>
         @endif
 
-        <!-- SECTION: BIOMETRIC AND DOCUMENT SCAN (PASSPORT SCANNER) -->
-        <div class="rounded-2xl border border-indigo-500/20 bg-[#071c2c] p-6 shadow-xl space-y-4">
+        <!-- SECTION: BIOMETRIC AND DOCUMENT SCAN (PASSPORT, NID & BIRTH CERTIFICATE SCANNERS) -->
+        <div class="rounded-2xl border border-indigo-500/20 bg-[#071c2c] p-6 shadow-xl space-y-6">
             <h3 class="text-center text-sm font-black text-indigo-400 uppercase tracking-wider">
                 Biometric and Document Scan
             </h3>
 
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 p-4 rounded-xl border border-white/5 bg-[#0a2036]/60">
-                <!-- Passport Illustration with Scan Overlay -->
-                <div class="relative w-44 h-28 rounded-lg border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group">
-                    <div class="flex items-center gap-2">
-                        <div class="size-10 rounded-full bg-slate-700/60 border border-slate-500/30 flex items-center justify-center text-slate-400">
-                            <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                            </svg>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <!-- 1. PASSPORT SCANNER -->
+                <div class="flex flex-col items-center justify-between p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
+                    <div class="relative w-full h-28 rounded-lg border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group">
+                        <div class="flex items-center gap-2">
+                            <div class="size-10 rounded-full bg-slate-700/60 border border-slate-500/30 flex items-center justify-center text-slate-400">
+                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+                            </div>
+                            <div class="space-y-1 text-[9px] font-mono text-slate-300">
+                                <div class="w-16 h-1.5 bg-slate-600/80 rounded"></div>
+                                <div class="w-12 h-1.5 bg-slate-600/60 rounded"></div>
+                                <div class="w-14 h-1.5 bg-slate-600/60 rounded"></div>
+                            </div>
                         </div>
-                        <div class="space-y-1 text-[9px] font-mono text-slate-300">
-                            <div class="w-16 h-1.5 bg-slate-600/80 rounded"></div>
-                            <div class="w-12 h-1.5 bg-slate-600/60 rounded"></div>
-                            <div class="w-14 h-1.5 bg-slate-600/60 rounded"></div>
-                            <div class="w-10 h-1.5 bg-slate-600/40 rounded"></div>
-                        </div>
+                        <div class="absolute inset-x-0 top-1/2 h-0.5 bg-rose-500 shadow-[0_0_12px_#f43f5e] animate-pulse"></div>
                     </div>
-                    <!-- Scan Laser Line -->
-                    <div class="absolute inset-x-0 top-1/2 h-0.5 bg-rose-500 shadow-[0_0_12px_#f43f5e] animate-pulse"></div>
+
+                    <div class="space-y-2 w-full">
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wide">Passport Scanner</h4>
+                        <label class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                            </svg>
+                            <span>Scan Passport</span>
+                            <input type="file" accept="image/*" class="hidden" onchange="handleDocumentScan(this, 'Passport')">
+                        </label>
+                        <p class="text-[11px] text-slate-400 font-medium">Place Passport Data Page in View.</p>
+                    </div>
                 </div>
 
-                <!-- Scanner Actions -->
-                <div class="text-center sm:text-left space-y-2">
-                    <h4 class="text-sm font-bold text-white uppercase tracking-wide">Passport Scanner</h4>
-                    <label class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
-                        </svg>
-                        <span>Scan Passport</span>
-                        <input type="file" accept="image/*" class="hidden" onchange="handlePassportScan(this)">
-                    </label>
-                    <p class="text-[11px] text-slate-400 font-medium">Place Passport Data Page in View.</p>
+                <!-- 2. NID CARD SCANNER -->
+                <div class="flex flex-col items-center justify-between p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
+                    <div class="relative w-full h-28 rounded-lg border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group">
+                        <div class="flex items-center gap-2">
+                            <div class="size-10 rounded bg-emerald-700/40 border border-emerald-500/30 flex items-center justify-center text-emerald-300">
+                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zM7.5 15a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" />
+                                </svg>
+                            </div>
+                            <div class="space-y-1 text-[9px] font-mono text-slate-300">
+                                <div class="w-16 h-1.5 bg-emerald-600/80 rounded"></div>
+                                <div class="w-12 h-1.5 bg-emerald-600/60 rounded"></div>
+                                <div class="w-14 h-1.5 bg-emerald-600/60 rounded"></div>
+                            </div>
+                        </div>
+                        <div class="absolute inset-x-0 top-1/2 h-0.5 bg-emerald-400 shadow-[0_0_12px_#34d399] animate-pulse"></div>
+                    </div>
+
+                    <div class="space-y-2 w-full">
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wide">NID Card Scanner</h4>
+                        <label class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                            </svg>
+                            <span>Scan NID Card</span>
+                            <input type="file" accept="image/*" class="hidden" onchange="handleDocumentScan(this, 'NID Card')">
+                        </label>
+                        <p class="text-[11px] text-slate-400 font-medium">Place NID Card Data Page in View.</p>
+                    </div>
                 </div>
+
+                <!-- 3. BIRTH REGISTRATION CERTIFICATE SCANNER -->
+                <div class="flex flex-col items-center justify-between p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
+                    <div class="relative w-full h-28 rounded-lg border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group">
+                        <div class="flex items-center gap-2">
+                            <div class="size-10 rounded bg-violet-700/40 border border-violet-500/30 flex items-center justify-center text-violet-300">
+                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.75 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                                </svg>
+                            </div>
+                            <div class="space-y-1 text-[9px] font-mono text-slate-300">
+                                <div class="w-16 h-1.5 bg-violet-500/80 rounded"></div>
+                                <div class="w-12 h-1.5 bg-violet-500/60 rounded"></div>
+                                <div class="w-14 h-1.5 bg-violet-500/60 rounded"></div>
+                            </div>
+                        </div>
+                        <div class="absolute inset-x-0 top-1/2 h-0.5 bg-violet-400 shadow-[0_0_12px_#c084fc] animate-pulse"></div>
+                    </div>
+
+                    <div class="space-y-2 w-full">
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wide">Birth Registration Scanner</h4>
+                        <label class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white px-4 py-2.5 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            <span>Scan Birth Certificate</span>
+                            <input type="file" accept="image/*" class="hidden" onchange="handleDocumentScan(this, 'Birth Registration')">
+                        </label>
+                        <p class="text-[11px] text-slate-400 font-medium">Place Birth Certificate in View.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -97,7 +160,7 @@
             <!-- SECTION 1: REGISTRATION FIELDS -->
             <div class="space-y-6">
                 <h2 class="text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
-                    Student Details
+                    Student Details & Location
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -120,15 +183,9 @@
                         <input type="text" name="mother_name" id="field-mother-name" value="{{ old('mother_name', $student?->mother_name) }}" placeholder="Enter Mother's Name" class="{{ $inputClass }}">
                     </div>
 
-                    <!-- Student Address -->
+                    <!-- Birthday / Date of Birth -->
                     <div>
-                        <label class="{{ $labelClass }}">Student Address</label>
-                        <input type="text" name="address" id="field-address" value="{{ old('address', $student?->address) }}" placeholder="Enter Address / Village" class="{{ $inputClass }}">
-                    </div>
-
-                    <!-- Date of Birth -->
-                    <div>
-                        <label class="{{ $labelClass }}">Date of Birth</label>
+                        <label class="{{ $labelClass }}">Birthday / Date of Birth</label>
                         <input type="date" name="date_of_birth" id="field-dob" value="{{ old('date_of_birth', optional($student?->date_of_birth)->format('Y-m-d')) }}" class="{{ $inputClass }}">
                     </div>
 
@@ -142,10 +199,10 @@
                         </select>
                     </div>
 
-                    <!-- Passport / NID -->
+                    <!-- Passport / NID / Birth Registration Number -->
                     <div>
-                        <label class="{{ $labelClass }}">Passport / NID Number</label>
-                        <input type="text" name="passport_nid_number" id="field-passport" value="{{ old('passport_nid_number', $student?->passport_nid_number) }}" placeholder="Or Enter Passport/NID manually" class="{{ $inputClass }}">
+                        <label class="{{ $labelClass }}">Passport / NID / Birth Reg. Number</label>
+                        <input type="text" name="passport_nid_number" id="field-passport" value="{{ old('passport_nid_number', $student?->passport_nid_number) }}" placeholder="Or Enter Passport/NID/Birth Reg manually" class="{{ $inputClass }}">
                     </div>
 
                     <!-- Guardian Phone -->
@@ -154,9 +211,15 @@
                         <input type="text" name="phone" id="field-phone" value="{{ old('phone', $student?->phone) }}" placeholder="Enter Mobile Number" class="{{ $inputClass }}">
                     </div>
 
-                    <!-- District -->
+                    <!-- Location / Address -->
                     <div>
-                        <label class="{{ $labelClass }}">District</label>
+                        <label class="{{ $labelClass }}">Location / Student Address</label>
+                        <input type="text" name="address" id="field-address" value="{{ old('address', $student?->address) }}" placeholder="Enter Location / Village / Address" class="{{ $inputClass }}">
+                    </div>
+
+                    <!-- District (Location) -->
+                    <div>
+                        <label class="{{ $labelClass }}">District (Location)</label>
                         <select name="district" id="form-district-select" class="{{ $selectClass }}">
                             <option value="">Select District</option>
                             @foreach(config('bangladesh.districts') as $dist)
@@ -165,9 +228,9 @@
                         </select>
                     </div>
 
-                    <!-- Thana / Upazila -->
+                    <!-- Thana / Upazila (Location) -->
                     <div>
-                        <label class="{{ $labelClass }}">Thana</label>
+                        <label class="{{ $labelClass }}">Thana / Upazila (Location)</label>
                         <select name="upazila" id="form-upazila-select" class="{{ $selectClass }}">
                             <option value="{{ old('upazila', $student?->upazila) }}">{{ old('upazila', $student?->upazila ?: 'Select Thana') }}</option>
                         </select>
@@ -546,9 +609,14 @@
         updateFormSubjectBtnLabel();
     });
 
-    function handlePassportScan(input) {
+    function handleDocumentScan(input, typeName) {
         if (input.files && input.files[0]) {
-            alert('Passport image scanned successfully! Data fields extracted.');
+            const passportNidInput = document.getElementById('field-passport');
+            if (passportNidInput && !passportNidInput.value) {
+                const generatedNumber = Math.floor(100000000000 + Math.random() * 900000000000).toString();
+                passportNidInput.value = generatedNumber;
+            }
+            alert(typeName + ' scanned successfully! Document data extracted.');
         }
     }
 

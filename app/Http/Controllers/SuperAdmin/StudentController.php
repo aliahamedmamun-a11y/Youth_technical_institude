@@ -163,11 +163,11 @@ class StudentController extends Controller
         $imagePath = $student->image_path;
         $student->delete();
 
-        if ($imagePath) {
+        if ($imagePath && ! str_starts_with($imagePath, 'http')) {
             Storage::disk('public')->delete($imagePath);
         }
 
-        return redirect()->route('super-admin.students.index')->with('status', 'Student deleted successfully.');
+        return back()->with('status', 'Student deleted successfully.');
     }
 
     /** @return Collection<int, Course> */

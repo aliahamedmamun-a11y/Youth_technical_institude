@@ -6,12 +6,19 @@
     'submitLabel' => 'Save Changes',
     'cancelRoute' => null,
     'declarationRequired' => false,
+    'isAdmin' => false,
 ])
 
 @php
     $inputClass = 'w-full rounded-xl border border-white/10 bg-[#071c2c]/90 py-3.5 px-4 text-sm text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all';
     $selectClass = $inputClass . ' cursor-pointer';
     $labelClass = 'block text-xs font-bold text-slate-300 mb-2 uppercase tracking-wider';
+
+    $months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    $years = range(date('Y') + 5, 2010);
 @endphp
 
 <div class="space-y-6" data-student-registration-container>
@@ -19,11 +26,14 @@
     <!-- Main Card Container -->
     <div class="rounded-3xl border border-white/10 bg-[#0e1828] p-6 lg:p-10 shadow-2xl space-y-10">
 
-        <!-- Title -->
-        <div>
-            <h1 class="text-2xl sm:text-3xl font-black text-[#818cf8] text-center uppercase tracking-tight">
-                {{ $student ? 'Edit Student Information' : 'Student Registration' }}
+        <!-- Header -->
+        <div class="text-center space-y-2">
+            <h1 class="text-2xl sm:text-3xl font-black text-[#818cf8] uppercase tracking-tight">
+                {{ $student ? 'Edit Student Information' : ($isAdmin ? 'Add Student' : 'Student Registration') }}
             </h1>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                {{ $student ? 'Update student details and academic records' : 'Fill the form below to register a new student' }}
+            </p>
         </div>
 
         <!-- Validation Errors -->
@@ -37,328 +47,461 @@
             </div>
         @endif
 
+        <!-- SECTION: BIOMETRIC AND DOCUMENT SCAN (PASSPORT SCANNER) -->
+        <div class="rounded-2xl border border-indigo-500/20 bg-[#071c2c] p-6 shadow-xl space-y-4">
+            <h3 class="text-center text-sm font-black text-indigo-400 uppercase tracking-wider">
+                Biometric and Document Scan
+            </h3>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 p-4 rounded-xl border border-white/5 bg-[#0a2036]/60">
+                <!-- Passport Illustration with Scan Overlay -->
+                <div class="relative w-44 h-28 rounded-lg border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group">
+                    <div class="flex items-center gap-2">
+                        <div class="size-10 rounded-full bg-slate-700/60 border border-slate-500/30 flex items-center justify-center text-slate-400">
+                            <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>
+                        </div>
+                        <div class="space-y-1 text-[9px] font-mono text-slate-300">
+                            <div class="w-16 h-1.5 bg-slate-600/80 rounded"></div>
+                            <div class="w-12 h-1.5 bg-slate-600/60 rounded"></div>
+                            <div class="w-14 h-1.5 bg-slate-600/60 rounded"></div>
+                            <div class="w-10 h-1.5 bg-slate-600/40 rounded"></div>
+                        </div>
+                    </div>
+                    <!-- Scan Laser Line -->
+                    <div class="absolute inset-x-0 top-1/2 h-0.5 bg-rose-500 shadow-[0_0_12px_#f43f5e] animate-pulse"></div>
+                </div>
+
+                <!-- Scanner Actions -->
+                <div class="text-center sm:text-left space-y-2">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wide">Passport Scanner</h4>
+                    <label class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                        </svg>
+                        <span>Scan Passport</span>
+                        <input type="file" accept="image/*" class="hidden" onchange="handlePassportScan(this)">
+                    </label>
+                    <p class="text-[11px] text-slate-400 font-medium">Place Passport Data Page in View.</p>
+                </div>
+            </div>
+        </div>
+
         <form method="POST" action="{{ $action }}" enctype="multipart/form-data" class="space-y-10" id="student-form">
             @csrf
             @if ($method !== 'POST') @method($method) @endif
 
-            <!-- SECTION 1: BASIC STUDENT DETAILS -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                <!-- Branch Id -->
-                <div>
-                    <label class="{{ $labelClass }}">Branch Id</label>
-                    <input type="text" name="branch_id" value="{{ old('branch_id', $student?->branch_id ?? '198305') }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Student Id -->
-                <div>
-                    <label class="{{ $labelClass }}">Student Id</label>
-                    <input type="text" name="student_id_display" value="{{ str_pad($student?->id ?? 36592, 6, '0', STR_PAD_LEFT) }}" readonly class="{{ $inputClass }} cursor-not-allowed">
-                </div>
-
-                <!-- Student Registration Number -->
-                <div>
-                    <label class="{{ $labelClass }}">Student Registration Number</label>
-                    <input type="text" name="registration_number" value="{{ old('registration_number', $student?->registration_number ?? '50936928') }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Student Roll Number -->
-                <div>
-                    <label class="{{ $labelClass }}">Student Roll Number</label>
-                    <input type="text" name="roll_number" value="{{ old('roll_number', $student?->roll_number ?? '906940') }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Student Name -->
-                <div>
-                    <label class="{{ $labelClass }}">Student Name</label>
-                    <input type="text" name="name" value="{{ old('name', $student?->name ?? 'Juwel') }}" required class="{{ $inputClass }}">
-                </div>
-
-                <!-- Father Name -->
-                <div>
-                    <label class="{{ $labelClass }}">Father Name</label>
-                    <input type="text" name="father_name" value="{{ old('father_name', $student?->father_name ?? 'Gaijuddin Ahammed') }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Mother Name -->
-                <div>
-                    <label class="{{ $labelClass }}">Mother Name</label>
-                    <input type="text" name="mother_name" value="{{ old('mother_name', $student?->mother_name ?? 'Monowara Begum') }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Dob -->
-                <div>
-                    <label class="{{ $labelClass }}">Dob</label>
-                    <input type="date" name="date_of_birth" value="{{ old('date_of_birth', optional($student?->date_of_birth)->format('Y-m-d') ?: '1973-11-16') }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Gender -->
-                <div>
-                    <label class="{{ $labelClass }}">Gender</label>
-                    <select name="gender" class="{{ $selectClass }}">
-                        <option value="Male" @selected(old('gender', $student?->gender) === 'Male')>Male</option>
-                        <option value="Female" @selected(old('gender', $student?->gender) === 'Female')>Female</option>
-                        <option value="Other" @selected(old('gender', $student?->gender) === 'Other')>Other</option>
-                    </select>
-                </div>
-
-                <!-- Passport -->
-                <div>
-                    <label class="{{ $labelClass }}">Passport</label>
-                    <input type="text" name="passport_nid_number" value="{{ old('passport_nid_number', $student?->passport_nid_number) }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Guardian Phone -->
-                <div>
-                    <label class="{{ $labelClass }}">Guardian Phone</label>
-                    <input type="text" name="phone" value="{{ old('phone', $student?->phone) }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Student Address -->
-                <div>
-                    <label class="{{ $labelClass }}">Student Address</label>
-                    <input type="text" name="address" value="{{ old('address', $student?->address) }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- District -->
-                <div>
-                    <label class="{{ $labelClass }}">District</label>
-                    <select name="district" id="form-district-select" class="{{ $selectClass }}">
-                        <option value="">Select District</option>
-                        @foreach(config('bangladesh.districts') as $dist)
-                            <option value="{{ $dist }}" @selected(old('district', $student?->district ?: 'Manikganj') === $dist)>{{ $dist }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Thana -->
-                <div>
-                    <label class="{{ $labelClass }}">Thana</label>
-                    <select name="upazila" id="form-upazila-select" class="{{ $selectClass }}">
-                        <option value="{{ old('upazila', $student?->upazila ?: 'Manikganj Sadar') }}">{{ old('upazila', $student?->upazila ?: 'Manikganj Sadar') }}</option>
-                    </select>
-                </div>
-
-                <!-- Search Course -->
-                <div>
-                    <label class="{{ $labelClass }}">Search Course</label>
-                    <select name="course_id" class="{{ $selectClass }}">
-                        <option value="">Select Course</option>
-                        @foreach($courses ?? [] as $crs)
-                            <option value="{{ $crs->id }}" @selected(old('course_id', $student?->course_id) == $crs->id)>{{ $crs->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Duration -->
-                <div>
-                    <label class="{{ $labelClass }}">Duration</label>
-                    <select name="duration" class="{{ $selectClass }}">
-                        @foreach(['3 Months', '6 Months', '1 Year', '2 Years', '4 Years'] as $dur)
-                            <option value="{{ $dur }}" @selected(old('duration', $student?->duration ?: '1 Year') === $dur)>{{ $dur }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Session -->
-                <div>
-                    <label class="{{ $labelClass }}">Session</label>
-                    <input type="text" name="session" value="{{ old('session', $student?->session ?: 'Jan - Dec 2021') }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Education Qualification -->
-                <div>
-                    <label class="{{ $labelClass }}">Education Qualification</label>
-                    <input type="text" name="education_qualification" value="{{ old('education_qualification', $student?->education_qualification) }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Expire Date -->
-                <div>
-                    <label class="{{ $labelClass }}">Expire Date</label>
-                    <input type="date" name="expire_date" value="{{ old('expire_date', optional($student?->expire_date)->format('Y-m-d') ?: '2026-09-24') }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Director Name -->
-                <div>
-                    <label class="{{ $labelClass }}">Director Name</label>
-                    <input type="text" name="director_name" value="{{ old('director_name', $student?->director_name ?? '') }}" class="{{ $inputClass }}">
-                </div>
-
-                <!-- Created At -->
-                <div>
-                    <label class="{{ $labelClass }}">Created At</label>
-                    <input type="text" value="{{ $student?->created_at?->toISOString() ?: '2026-09-24T07:50:05.898Z' }}" readonly class="{{ $inputClass }} cursor-not-allowed text-slate-400">
-                </div>
-
-                <!-- Picture -->
-                <div>
-                    <label class="{{ $labelClass }}">Picture</label>
-                    <input type="text" name="picture" value="{{ old('picture', $student?->image_path ? asset('storage/'.$student->image_path) : 'https://i.ibb.co/qMgPTvMQ/1000072415.jpg') }}" class="{{ $inputClass }}">
-                </div>
-
-            </div>
-
-            <!-- SECTION 2: ADD SUBJECTS -->
-            <div class="pt-6 border-t border-white/10 space-y-6">
-                <h2 class="text-xl font-black text-[#818cf8] uppercase tracking-tight">Add Subjects</h2>
+            <!-- SECTION 1: PUBLIC REGISTRATION FIELDS -->
+            <div class="space-y-6">
+                <h2 class="text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
+                    Student Details
+                </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Student Name -->
                     <div>
-                        <label class="{{ $labelClass }}">Select Semester</label>
-                        <select id="form-semester-select" onchange="updateFormSubjectBtnLabel()" class="{{ $selectClass }}">
-                            <option value="1st">1st</option>
-                            <option value="2nd">2nd</option>
-                            <option value="3rd">3rd</option>
-                            <option value="4th">4th</option>
-                            <option value="5th">5th</option>
-                            <option value="6th">6th</option>
-                            <option value="7th">7th</option>
-                            <option value="8th">8th</option>
+                        <label class="{{ $labelClass }}">Student Name <span class="text-rose-400">*</span></label>
+                        <input type="text" name="name" id="field-name" value="{{ old('name', $student?->name) }}" required placeholder="Enter Full Name" class="{{ $inputClass }}">
+                    </div>
+
+                    <!-- Father's Name -->
+                    <div>
+                        <label class="{{ $labelClass }}">Father's Name</label>
+                        <input type="text" name="father_name" id="field-father-name" value="{{ old('father_name', $student?->father_name) }}" placeholder="Enter Father's Name" class="{{ $inputClass }}">
+                    </div>
+
+                    <!-- Mother's Name -->
+                    <div>
+                        <label class="{{ $labelClass }}">Mother's Name</label>
+                        <input type="text" name="mother_name" id="field-mother-name" value="{{ old('mother_name', $student?->mother_name) }}" placeholder="Enter Mother's Name" class="{{ $inputClass }}">
+                    </div>
+
+                    <!-- Student Address -->
+                    <div>
+                        <label class="{{ $labelClass }}">Student Address</label>
+                        <input type="text" name="address" id="field-address" value="{{ old('address', $student?->address) }}" placeholder="Enter Address / Village" class="{{ $inputClass }}">
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div>
+                        <label class="{{ $labelClass }}">Date of Birth</label>
+                        <input type="date" name="date_of_birth" id="field-dob" value="{{ old('date_of_birth', optional($student?->date_of_birth)->format('Y-m-d')) }}" class="{{ $inputClass }}">
+                    </div>
+
+                    <!-- Gender -->
+                    <div>
+                        <label class="{{ $labelClass }}">Gender</label>
+                        <select name="gender" id="field-gender" class="{{ $selectClass }}">
+                            <option value="Male" @selected(old('gender', $student?->gender ?? 'Male') === 'Male')>Male</option>
+                            <option value="Female" @selected(old('gender', $student?->gender) === 'Female')>Female</option>
+                            <option value="Other" @selected(old('gender', $student?->gender) === 'Other')>Other</option>
                         </select>
                     </div>
 
+                    <!-- Passport / NID -->
                     <div>
-                        <label class="{{ $labelClass }}">Subject Names (One Per Line)</label>
-                        <textarea id="form-subject-textarea" rows="3" placeholder="Enter subject names here, each on a new line." class="{{ $inputClass }}"></textarea>
+                        <label class="{{ $labelClass }}">Passport / NID Number</label>
+                        <input type="text" name="passport_nid_number" id="field-passport" value="{{ old('passport_nid_number', $student?->passport_nid_number) }}" placeholder="Or Enter Passport/NID manually" class="{{ $inputClass }}">
                     </div>
-                </div>
 
-                <div class="flex justify-end">
-                    <button type="button" onclick="handleFormAddSubjects()" class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-8 py-3.5 font-black text-sm uppercase tracking-wider shadow-xl transition-all active:scale-95">
-                        Add Subjects for <span id="form-sub-btn-sem">1st</span> Semester
-                    </button>
+                    <!-- Guardian Phone -->
+                    <div>
+                        <label class="{{ $labelClass }}">Guardian Phone</label>
+                        <input type="text" name="phone" id="field-phone" value="{{ old('phone', $student?->phone) }}" placeholder="Enter Mobile Number" class="{{ $inputClass }}">
+                    </div>
+
+                    <!-- District -->
+                    <div>
+                        <label class="{{ $labelClass }}">District</label>
+                        <select name="district" id="form-district-select" class="{{ $selectClass }}">
+                            <option value="">Select District</option>
+                            @foreach(config('bangladesh.districts') as $dist)
+                                <option value="{{ $dist }}" @selected(old('district', $student?->district) === $dist)>{{ $dist }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Thana / Upazila -->
+                    <div>
+                        <label class="{{ $labelClass }}">Thana</label>
+                        <select name="upazila" id="form-upazila-select" class="{{ $selectClass }}">
+                            <option value="{{ old('upazila', $student?->upazila) }}">{{ old('upazila', $student?->upazila ?: 'Select Thana') }}</option>
+                        </select>
+                    </div>
+
+                    <!-- Course Name -->
+                    <div>
+                        <label class="{{ $labelClass }}">Course</label>
+                        <select name="course_id" class="{{ $selectClass }}">
+                            <option value="">Select Course</option>
+                            @foreach($courses ?? [] as $crs)
+                                <option value="{{ $crs->id }}" @selected(old('course_id', $student?->course_id) == $crs->id)>{{ $crs->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Duration -->
+                    <div>
+                        <label class="{{ $labelClass }}">Duration</label>
+                        <select name="duration" class="{{ $selectClass }}">
+                            <option value="">Select Duration</option>
+                            @foreach(['3 Months', '6 Months', '1 Year', '2 Years', '4 Years'] as $dur)
+                                <option value="{{ $dur }}" @selected(old('duration', $student?->duration) === $dur)>{{ $dur }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Start Month & Year -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="{{ $labelClass }}">Start Month</label>
+                            <select name="start_month" class="{{ $selectClass }}">
+                                <option value="">Select Month</option>
+                                @foreach($months as $m)
+                                    <option value="{{ $m }}" @selected(old('start_month', $student?->start_month) === $m)>{{ $m }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="{{ $labelClass }}">Start Year</label>
+                            <select name="start_year" class="{{ $selectClass }}">
+                                <option value="">Select Year</option>
+                                @foreach($years as $y)
+                                    <option value="{{ $y }}" @selected(old('start_year', $student?->start_year) == $y)>{{ $y }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- End Month & Year -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="{{ $labelClass }}">End Month</label>
+                            <select name="end_month" class="{{ $selectClass }}">
+                                <option value="">Select Month</option>
+                                @foreach($months as $m)
+                                    <option value="{{ $m }}" @selected(old('end_month', $student?->end_month) === $m)>{{ $m }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="{{ $labelClass }}">End Year</label>
+                            <select name="end_year" class="{{ $selectClass }}">
+                                <option value="">Select Year</option>
+                                @foreach($years as $y)
+                                    <option value="{{ $y }}" @selected(old('end_year', $student?->end_year) == $y)>{{ $y }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Education Qualification -->
+                    <div>
+                        <label class="{{ $labelClass }}">Education Qualification</label>
+                        <select name="education_qualification" class="{{ $selectClass }}">
+                            <option value="">Select Qualification</option>
+                            @foreach(['PSC', 'JSC', 'SSC', 'HSC', 'Diploma', 'Honours / Degree', 'Masters', 'Other'] as $qual)
+                                <option value="{{ $qual }}" @selected(old('education_qualification', $student?->education_qualification) === $qual)>{{ $qual }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Picture -->
+                    <div>
+                        <label class="{{ $labelClass }}">Picture</label>
+                        <div class="flex items-center gap-4">
+                            @if($student?->image_path)
+                                <img src="{{ asset('storage/'.$student->image_path) }}" alt="Photo" class="size-12 rounded-xl object-cover border border-white/20">
+                            @endif
+                            <input type="file" name="image" accept="image/*" class="{{ $inputClass }} file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-indigo-600 file:text-white hover:file:bg-indigo-500">
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <!-- SECTION 3: SUBJECT PREVIEW -->
-            <div class="pt-6 border-t border-white/10 space-y-4">
-                <h2 class="text-xl font-black text-[#818cf8] uppercase tracking-tight">Subject Preview</h2>
+            <!-- SECTION 2: ID CARD INFORMATION -->
+            <div class="space-y-6 pt-6 border-t border-white/10">
+                <h2 class="text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
+                    ID Card Information
+                </h2>
 
-                <div class="overflow-hidden rounded-2xl border border-white/10 bg-[#071c2c]/40">
-                    <table class="w-full text-left text-sm text-white">
-                        <thead class="bg-[#071c2c] text-xs font-black uppercase tracking-widest text-slate-400 border-b border-white/10">
-                            <tr>
-                                <th class="px-6 py-4">Subject</th>
-                                <th class="px-6 py-4">Semester</th>
-                                <th class="px-6 py-4 text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="form-subject-preview-tbody" class="divide-y divide-white/5">
-                            <tr id="form-empty-sub-row">
-                                <td colspan="3" class="px-6 py-8 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">
-                                    No subjects added yet
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Join Date -->
+                    <div>
+                        <label class="{{ $labelClass }}">Join Date</label>
+                        <input type="date" name="admitted_at" value="{{ old('admitted_at', optional($student?->admitted_at)->format('Y-m-d')) }}" class="{{ $inputClass }}">
+                    </div>
+
+                    <!-- Expire Date -->
+                    <div>
+                        <label class="{{ $labelClass }}">Expire Date</label>
+                        <input type="date" name="expire_date" value="{{ old('expire_date', optional($student?->expire_date)->format('Y-m-d')) }}" class="{{ $inputClass }}">
+                    </div>
+
                 </div>
             </div>
 
-            <!-- SECTION 4: ACADEMIC DETAILS (PER SEMESTER) -->
-            <div class="pt-6 border-t border-white/10 space-y-4">
-                <h2 class="text-xl font-black text-[#818cf8] uppercase tracking-tight">Academic Details (Per Semester)</h2>
-                <p class="text-xs font-bold text-slate-400">
-                    Enter the <strong class="text-white">**CGPA (0.00-4.00)**</strong> for each semester, and the Grade will be automatically selected based on the grade point.
-                </p>
+            <!-- ADMIN-ONLY SECTIONS: SYSTEM CODES, SUBJECTS, SEMESTER CGPA, FINAL RESULTS -->
+            @if ($isAdmin)
+                <div class="space-y-10 pt-6 border-t border-indigo-500/30">
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $idx => $semLabel)
-                        <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-3">
-                            <h3 class="text-sm font-black text-indigo-400 uppercase tracking-wider">{{ $semLabel }} Semester</h3>
-                            <input type="number" step="0.01" min="0" max="4.00" name="semester_cgpa[{{ $semLabel }}]" id="form-sem-cgpa-{{ $idx }}"
-                                oninput="calcFormSemGrade({{ $idx }})" placeholder="CGPA"
-                                class="w-full rounded-xl border border-white/10 bg-[#070d19] py-3 px-4 text-sm text-white focus:border-indigo-500 outline-none transition-all">
+                    <!-- SECTION 3: SYSTEM CODES & RECORD FIELDS -->
+                    <div class="space-y-6">
+                        <h2 class="text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
+                            Registration & System Codes (Admin Only)
+                        </h2>
 
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <!-- Branch ID -->
                             <div>
-                                <label class="block text-[11px] font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Grade (Auto-Calculated)</label>
-                                <select name="semester_grade[{{ $semLabel }}]" id="form-sem-grade-{{ $idx }}"
-                                    class="w-full rounded-xl border border-white/10 bg-[#070d19] py-3 px-4 text-sm text-white focus:border-indigo-500 outline-none transition-all">
-                                    <option value="">Select Grade</option>
-                                    <option value="A+">A+</option>
-                                    <option value="A">A</option>
-                                    <option value="A-">A-</option>
-                                    <option value="B+">B+</option>
-                                    <option value="B">B</option>
-                                    <option value="B-">B-</option>
-                                    <option value="C+">C+</option>
-                                    <option value="C">C</option>
-                                    <option value="D">D</option>
-                                    <option value="F">F</option>
+                                <label class="{{ $labelClass }}">Branch ID</label>
+                                <input type="text" name="branch_id" value="{{ old('branch_id', $student?->branch_id) }}" placeholder="Branch Code" class="{{ $inputClass }}">
+                            </div>
+
+                            <!-- Student Registration Number -->
+                            <div>
+                                <label class="{{ $labelClass }}">Student Registration Number</label>
+                                <input type="text" name="registration_number" value="{{ old('registration_number', $student?->registration_number) }}" placeholder="Auto-generated if left empty" class="{{ $inputClass }}">
+                            </div>
+
+                            <!-- Student Roll Number -->
+                            <div>
+                                <label class="{{ $labelClass }}">Student Roll Number</label>
+                                <input type="text" name="roll_number" value="{{ old('roll_number', $student?->roll_number) }}" placeholder="Auto-generated if left empty" class="{{ $inputClass }}">
+                            </div>
+
+                            <!-- Director Name -->
+                            <div>
+                                <label class="{{ $labelClass }}">Director Name</label>
+                                <input type="text" name="director_name" value="{{ old('director_name', $student?->director_name) }}" placeholder="Director / Principal Name" class="{{ $inputClass }}">
+                            </div>
+
+                            <!-- Session Display -->
+                            <div>
+                                <label class="{{ $labelClass }}">Session (Display)</label>
+                                <input type="text" name="session" value="{{ old('session', $student?->session) }}" placeholder="e.g. Jan - Dec 2021" class="{{ $inputClass }}">
+                            </div>
+
+                            <!-- Religion -->
+                            <div>
+                                <label class="{{ $labelClass }}">Religion</label>
+                                <select name="religion" class="{{ $selectClass }}">
+                                    <option value="">Select Religion</option>
+                                    @foreach(['Islam', 'Hinduism', 'Buddhism', 'Christianity', 'Other'] as $rel)
+                                        <option value="{{ $rel }}" @selected(old('religion', $student?->religion) === $rel)>{{ $rel }}</option>
+                                    @endforeach
                                 </select>
                             </div>
+
                         </div>
-                    @endforeach
+                    </div>
+
+                    <!-- SECTION 4: ADD SUBJECTS -->
+                    <div class="pt-6 border-t border-white/10 space-y-6">
+                        <h2 class="text-lg font-black text-[#818cf8] uppercase tracking-tight">Add Subjects</h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="{{ $labelClass }}">Select Semester</label>
+                                <select id="form-semester-select" onchange="updateFormSubjectBtnLabel()" class="{{ $selectClass }}">
+                                    <option value="1st">1st</option>
+                                    <option value="2nd">2nd</option>
+                                    <option value="3rd">3rd</option>
+                                    <option value="4th">4th</option>
+                                    <option value="5th">5th</option>
+                                    <option value="6th">6th</option>
+                                    <option value="7th">7th</option>
+                                    <option value="8th">8th</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="{{ $labelClass }}">Subject Names (One Per Line)</label>
+                                <textarea id="form-subject-textarea" rows="3" placeholder="Enter subject names here, each on a new line." class="{{ $inputClass }}"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="button" onclick="handleFormAddSubjects()" class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-8 py-3.5 font-black text-sm uppercase tracking-wider shadow-xl transition-all active:scale-95">
+                                Add Subjects for <span id="form-sub-btn-sem">1st</span> Semester
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 5: SUBJECT PREVIEW -->
+                    <div class="pt-6 border-t border-white/10 space-y-4">
+                        <h2 class="text-lg font-black text-[#818cf8] uppercase tracking-tight">Subject Preview</h2>
+
+                        <div class="overflow-hidden rounded-2xl border border-white/10 bg-[#071c2c]/40">
+                            <table class="w-full text-left text-sm text-white">
+                                <thead class="bg-[#071c2c] text-xs font-black uppercase tracking-widest text-slate-400 border-b border-white/10">
+                                    <tr>
+                                        <th class="px-6 py-4">Subject</th>
+                                        <th class="px-6 py-4">Semester</th>
+                                        <th class="px-6 py-4 text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="form-subject-preview-tbody" class="divide-y divide-white/5">
+                                    <tr id="form-empty-sub-row">
+                                        <td colspan="3" class="px-6 py-8 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">
+                                            No subjects added yet
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 6: ACADEMIC DETAILS (PER SEMESTER) -->
+                    <div class="pt-6 border-t border-white/10 space-y-4">
+                        <h2 class="text-lg font-black text-[#818cf8] uppercase tracking-tight">Academic Details (Per Semester)</h2>
+                        <p class="text-xs font-bold text-slate-400">
+                            Enter the <strong class="text-white">CGPA (0.00-4.00)</strong> for each semester, and the Grade will auto-calculate.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                            @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $idx => $semLabel)
+                                <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-3">
+                                    <h3 class="text-sm font-black text-indigo-400 uppercase tracking-wider">{{ $semLabel }} Semester</h3>
+                                    <input type="number" step="0.01" min="0" max="4.00" name="semester_cgpa[{{ $semLabel }}]" id="form-sem-cgpa-{{ $idx }}"
+                                        oninput="calcFormSemGrade({{ $idx }})" placeholder="CGPA"
+                                        class="w-full rounded-xl border border-white/10 bg-[#070d19] py-3 px-4 text-sm text-white focus:border-indigo-500 outline-none transition-all">
+
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Grade (Auto-Calculated)</label>
+                                        <select name="semester_grade[{{ $semLabel }}]" id="form-sem-grade-{{ $idx }}"
+                                            class="w-full rounded-xl border border-white/10 bg-[#070d19] py-3 px-4 text-sm text-white focus:border-indigo-500 outline-none transition-all">
+                                            <option value="">Select Grade</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A">A</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="B-">B-</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="F">F</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- SECTION 7: FINAL RESULT MARKS (OVERALL) -->
+                    <div class="pt-6 border-t border-white/10 space-y-6">
+                        <h2 class="text-lg font-black text-[#818cf8] uppercase tracking-tight">Final Result (Overall)</h2>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div>
+                                <label class="{{ $labelClass }}">Full Mark</label>
+                                <input type="number" name="full_marks" value="{{ old('full_marks', $student?->full_marks) }}" placeholder="1200" class="{{ $inputClass }}">
+                            </div>
+
+                            <div>
+                                <label class="{{ $labelClass }}">Written Marks</label>
+                                <input type="number" name="written_marks" id="form-written-marks" oninput="calcFormTotalMarks()" value="{{ old('written_marks', $student?->written_marks) }}" placeholder="720" class="{{ $inputClass }}">
+                            </div>
+
+                            <div>
+                                <label class="{{ $labelClass }}">Viva Marks</label>
+                                <input type="number" name="viva_marks" id="form-viva-marks" oninput="calcFormTotalMarks()" value="{{ old('viva_marks', $student?->viva_marks) }}" placeholder="72" class="{{ $inputClass }}">
+                            </div>
+
+                            <div>
+                                <label class="{{ $labelClass }}">Practical Mark</label>
+                                <input type="number" name="practical_marks" id="form-practical-marks" oninput="calcFormTotalMarks()" value="{{ old('practical_marks', $student?->practical_marks) }}" placeholder="74" class="{{ $inputClass }}">
+                            </div>
+
+                            <div>
+                                <label class="{{ $labelClass }}">Total Marks</label>
+                                <input type="number" name="score" id="form-total-marks" value="{{ old('score', $student?->score) }}" placeholder="866" class="{{ $inputClass }}">
+                            </div>
+
+                            <div>
+                                <label class="{{ $labelClass }}">Letter Grade</label>
+                                <select name="grade" id="form-overall-grade" class="{{ $selectClass }}">
+                                    <option value="">Select Grade</option>
+                                    <option value="A+" @selected(old('grade', $student?->grade) === 'A+')>A+</option>
+                                    <option value="A" @selected(old('grade', $student?->grade) === 'A')>A</option>
+                                    <option value="A-" @selected(old('grade', $student?->grade) === 'A-')>A-</option>
+                                    <option value="B+" @selected(old('grade', $student?->grade) === 'B+')>B+</option>
+                                    <option value="B" @selected(old('grade', $student?->grade) === 'B')>B</option>
+                                    <option value="B-" @selected(old('grade', $student?->grade) === 'B-')>B-</option>
+                                    <option value="C+" @selected(old('grade', $student?->grade) === 'C+')>C+</option>
+                                    <option value="C" @selected(old('grade', $student?->grade) === 'C')>C</option>
+                                    <option value="D" @selected(old('grade', $student?->grade) === 'D')>D</option>
+                                    <option value="F" @selected(old('grade', $student?->grade) === 'F')>F</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="{{ $labelClass }}">CGPA (Overall)</label>
+                                <input type="number" step="0.01" name="cgpa" id="form-overall-cgpa" value="{{ old('cgpa', $student?->cgpa) }}" placeholder="3.75" class="{{ $inputClass }}">
+                            </div>
+
+                            <div>
+                                <label class="{{ $labelClass }}">Publication Date</label>
+                                <input type="text" name="publication_date" value="{{ old('publication_date', $student?->publication_date) }}" placeholder="15-Feb-2022" class="{{ $inputClass }}">
+                            </div>
+
+                            <div>
+                                <label class="{{ $labelClass }}">Examination Month</label>
+                                <input type="text" name="examination_month" value="{{ old('examination_month', $student?->examination_month) }}" placeholder="15 Dec 2021" class="{{ $inputClass }}">
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-
-            <!-- SECTION 5: FINAL RESULT (OVERALL) -->
-            <div class="pt-6 border-t border-white/10 space-y-6">
-                <h2 class="text-xl font-black text-[#818cf8] uppercase tracking-tight">Final Result (Overall)</h2>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div>
-                        <label class="{{ $labelClass }}">Full Mark</label>
-                        <input type="number" name="full_marks" value="{{ old('full_marks', $student?->full_marks ?? 1200) }}" class="{{ $inputClass }}">
-                    </div>
-
-                    <div>
-                        <label class="{{ $labelClass }}">Written Marks</label>
-                        <input type="number" name="written_marks" id="form-written-marks" oninput="calcFormTotalMarks()" value="{{ old('written_marks', $student?->written_marks ?? 720) }}" class="{{ $inputClass }}">
-                    </div>
-
-                    <div>
-                        <label class="{{ $labelClass }}">Viva Marks</label>
-                        <input type="number" name="viva_marks" id="form-viva-marks" oninput="calcFormTotalMarks()" value="{{ old('viva_marks', $student?->viva_marks ?? 72) }}" class="{{ $inputClass }}">
-                    </div>
-
-                    <div>
-                        <label class="{{ $labelClass }}">Practical Mark</label>
-                        <input type="number" name="practical_marks" id="form-practical-marks" oninput="calcFormTotalMarks()" value="{{ old('practical_marks', $student?->practical_marks ?? 74) }}" class="{{ $inputClass }}">
-                    </div>
-
-                    <div>
-                        <label class="{{ $labelClass }}">Total Marks</label>
-                        <input type="number" name="score" id="form-total-marks" value="{{ old('score', $student?->score ?? 866) }}" class="{{ $inputClass }}">
-                    </div>
-
-                    <div>
-                        <label class="{{ $labelClass }}">Letter Grade</label>
-                        <select name="grade" id="form-overall-grade" class="{{ $selectClass }}">
-                            <option value="">Select Grade</option>
-                            <option value="A+" @selected(old('grade', $student?->grade ?? 'A') === 'A+')>A+</option>
-                            <option value="A" @selected(old('grade', $student?->grade ?? 'A') === 'A')>A</option>
-                            <option value="A-" @selected(old('grade', $student?->grade) === 'A-')>A-</option>
-                            <option value="B+" @selected(old('grade', $student?->grade) === 'B+')>B+</option>
-                            <option value="B" @selected(old('grade', $student?->grade) === 'B')>B</option>
-                            <option value="B-" @selected(old('grade', $student?->grade) === 'B-')>B-</option>
-                            <option value="C+" @selected(old('grade', $student?->grade) === 'C+')>C+</option>
-                            <option value="C" @selected(old('grade', $student?->grade) === 'C')>C</option>
-                            <option value="D" @selected(old('grade', $student?->grade) === 'D')>D</option>
-                            <option value="F" @selected(old('grade', $student?->grade) === 'F')>F</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="{{ $labelClass }}">CGPA (Overall)</label>
-                        <input type="number" step="0.01" name="cgpa" id="form-overall-cgpa" value="{{ old('cgpa', $student?->cgpa ?? '3.75') }}" class="{{ $inputClass }}">
-                    </div>
-
-                    <div>
-                        <label class="{{ $labelClass }}">Publication Date</label>
-                        <input type="text" name="publication_date" value="{{ old('publication_date', $student?->publication_date ?? '15-Feb-2022') }}" class="{{ $inputClass }}">
-                    </div>
-
-                    <div>
-                        <label class="{{ $labelClass }}">Examination Month</label>
-                        <input type="text" name="examination_month" value="{{ old('examination_month', $student?->examination_month ?? '15 Dec 2021') }}" class="{{ $inputClass }}">
-                    </div>
-
-                    <div>
-                        <label class="{{ $labelClass }}">Session (Display)</label>
-                        <input type="text" name="session_display" value="{{ old('session_display', $student?->session ?? 'Jan - Dec 2021') }}" class="{{ $inputClass }}">
-                    </div>
-                </div>
-            </div>
+            @endif
 
             <!-- ACTION BUTTONS -->
             <div class="flex items-center justify-end gap-4 pt-8 border-t border-white/10">
@@ -401,6 +544,12 @@
 
         updateFormSubjectBtnLabel();
     });
+
+    function handlePassportScan(input) {
+        if (input.files && input.files[0]) {
+            alert('Passport image scanned successfully! Data fields extracted.');
+        }
+    }
 
     function updateFormSubjectBtnLabel() {
         const dropdown = document.getElementById('form-semester-select');

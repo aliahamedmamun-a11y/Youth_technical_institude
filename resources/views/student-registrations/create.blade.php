@@ -41,12 +41,12 @@
 
         <main id="main-content" class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
             <div class="mt-7">
-                <x-student-form :courses="$courses" :action="route('student-registrations.store')" :cancel-route="route('home')" submit-label="Submit registration" declaration-required />
+                <x-student-form :courses="$courses" :action="route('student-registrations.store')" :cancel-route="route('home')" submit-label="Submit registration" declaration-required :is-admin="false" />
             </div>
         </main>
 
         <footer class="mt-12 border-t border-slate-300 bg-[#e1ecef] py-10 dark:bg-deep dark:border-white/10">
-            <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+            <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:grid-cols-2 sm:px-6 lg:px-8">
                 @foreach ([
                     ['Trusted & Verified', 'Government Registered', 'M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z'],
                     ['Quality Technical Education', 'Practical & Skill Based', 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z'],

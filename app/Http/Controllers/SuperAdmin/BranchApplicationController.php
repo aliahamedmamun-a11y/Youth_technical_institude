@@ -119,10 +119,17 @@ class BranchApplicationController extends Controller
         $validated = $request->validate([
             'institute_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
-            'director_name' => ['required', 'string', 'max:255'],
-            'mobile_number' => ['required', 'string', 'max:30'],
-            'district' => ['required', 'string'],
-            'upazila' => ['required', 'string'],
+            'director_name' => ['nullable', 'string', 'max:255'],
+            'father_name' => ['nullable', 'string', 'max:255'],
+            'mother_name' => ['nullable', 'string', 'max:255'],
+            'mobile_number' => ['nullable', 'string', 'max:30'],
+            'full_address' => ['nullable', 'string'],
+            'post_office' => ['nullable', 'string', 'max:255'],
+            'district' => ['nullable', 'string'],
+            'upazila' => ['nullable', 'string'],
+            'username' => ['nullable', 'string', 'max:255'],
+            'password' => ['nullable', 'string', 'max:255'],
+            'status' => ['nullable', 'string', 'max:50'],
             'director_photo' => ['nullable', 'image', 'max:2048'],
             'institute_photo' => ['nullable', 'image', 'max:2048'],
             'nid_photo' => ['nullable', 'image', 'max:2048'],
@@ -144,11 +151,22 @@ class BranchApplicationController extends Controller
 
         $branchApplication->update($validated);
 
-        // Update user name/email if they changed
-        \App\Models\User::query()->where('email', $branchApplication->getOriginal('email'))->update([
-            'name' => $branchApplication->director_name ?: $branchApplication->institute_name,
-            'email' => $branchApplication->email,
-        ]);
+        // Update user name/email/password if associated user exists
+        $userQuery = \App\Models\User::query()->where('email', $branchApplication->getOriginal('email'));
+        $user = $userQuery->first();
+
+        if ($user) {
+            $user->update([
+                'name' => $branchApplication->director_name ?: $branchApplication->institute_name,
+                'email' => $branchApplication->email,
+            ]);
+
+            if (!empty($validated['password'])) {
+                \App\Models\User::query()->whereKey($user->id)->update([
+                    'password' => $validated['password'],
+                ]);
+            }
+        }
 
         return redirect()->route('super-admin.all-branches')
             ->with('status', 'Branch details updated successfully.');

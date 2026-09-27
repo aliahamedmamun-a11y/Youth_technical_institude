@@ -54,27 +54,32 @@
 
                                     {{-- Action --}}
                                     <td class="px-4 py-5">
+                                        @php
+                                            $bJsonData = [
+                                                'branch_id' => str_pad($branch->id, 6, '0', STR_PAD_LEFT),
+                                                'institute_name' => $branch->institute_name,
+                                                'director_name' => $branch->director_name,
+                                                'father_name' => $branch->father_name,
+                                                'mother_name' => $branch->mother_name,
+                                                'email' => $branch->email,
+                                                'mobile_number' => $branch->mobile_number,
+                                                'full_address' => $branch->full_address,
+                                                'post_office' => $branch->post_office,
+                                                'upazila' => $branch->upazila,
+                                                'district' => $branch->district,
+                                                'username' => $branch->username,
+                                                'password' => $branch->password ?: 'Pa$$w0rd!',
+                                                'status' => is_string($branch->status) ? $branch->status : $branch->status?->value ?? 'pending',
+                                                'director_photo_url' => $branch->director_photo_path ? asset('storage/' . $branch->director_photo_path) : asset('images/placeholder-avatar.png'),
+                                                'institute_photo_url' => $branch->institute_photo_path ? asset('storage/' . $branch->institute_photo_path) : asset('images/placeholder-institute.png'),
+                                                'nid_photo_url' => $branch->nid_photo_path ? asset('storage/' . $branch->nid_photo_path) : asset('images/placeholder-doc.png'),
+                                                'signature_photo_url' => $branch->director_signature_path ? asset('storage/' . $branch->director_signature_path) : asset('images/placeholder-sig.png'),
+                                                'update_url' => route('super-admin.branch-applications.update-data', $branch),
+                                            ];
+                                        @endphp
                                         <div class="flex items-center gap-2">
                                             <a href="{{ route('super-admin.branch-applications.edit', $branch) }}"
-                                                data-branch-id="{{ str_pad($branch->id, 6, '0', STR_PAD_LEFT) }}"
-                                                data-institute-name="{{ $branch->institute_name }}"
-                                                data-director-name="{{ $branch->director_name }}"
-                                                data-father-name="{{ $branch->father_name }}"
-                                                data-mother-name="{{ $branch->mother_name }}"
-                                                data-email="{{ $branch->email }}"
-                                                data-mobile="{{ $branch->mobile_number }}"
-                                                data-address="{{ $branch->full_address }}"
-                                                data-post-office="{{ $branch->post_office }}"
-                                                data-upazila="{{ $branch->upazila }}"
-                                                data-district="{{ $branch->district }}"
-                                                data-username="{{ $branch->username }}"
-                                                data-password="{{ $branch->password ?: 'Pa$$w0rd!' }}"
-                                                data-status="{{ is_string($branch->status) ? $branch->status : $branch->status?->value ?? 'pending' }}"
-                                                data-director-photo="{{ $branch->director_photo_path ? asset('storage/' . $branch->director_photo_path) : asset('images/placeholder-avatar.png') }}"
-                                                data-institute-photo="{{ $branch->institute_photo_path ? asset('storage/' . $branch->institute_photo_path) : asset('images/placeholder-institute.png') }}"
-                                                data-nid-photo="{{ $branch->nid_photo_path ? asset('storage/' . $branch->nid_photo_path) : asset('images/placeholder-doc.png') }}"
-                                                data-signature-photo="{{ $branch->director_signature_path ? asset('storage/' . $branch->director_signature_path) : asset('images/placeholder-sig.png') }}"
-                                                data-update-url="{{ route('super-admin.branch-applications.update-data', $branch) }}"
+                                                data-branch="{{ json_encode($bJsonData) }}"
                                                 onclick="openBranchEditModalFromElement(event, this)"
                                                 class="rounded bg-[#6366f1] px-3 py-1.5 text-[9px] font-black uppercase text-white shadow-lg transition hover:bg-indigo-500 cursor-pointer">
                                                 Update
@@ -400,28 +405,12 @@
     <script>
         function openBranchEditModalFromElement(event, el) {
             event.preventDefault();
-            const data = {
-                branch_id: el.dataset.branchId,
-                institute_name: el.dataset.instituteName,
-                director_name: el.dataset.directorName,
-                father_name: el.dataset.fatherName,
-                mother_name: el.dataset.motherName,
-                email: el.dataset.email,
-                mobile_number: el.dataset.mobile,
-                full_address: el.dataset.address,
-                post_office: el.dataset.postOffice,
-                upazila: el.dataset.upazila,
-                district: el.dataset.district,
-                username: el.dataset.username,
-                password: el.dataset.password,
-                status: el.dataset.status,
-                director_photo_url: el.dataset.directorPhoto,
-                institute_photo_url: el.dataset.institutePhoto,
-                nid_photo_url: el.dataset.nidPhoto,
-                signature_photo_url: el.dataset.signaturePhoto,
-                update_url: el.dataset.updateUrl
-            };
-            openBranchEditModal(data);
+            try {
+                const data = JSON.parse(el.dataset.branch);
+                openBranchEditModal(data);
+            } catch (e) {
+                console.error("Error parsing branch data:", e);
+            }
         }
 
         function openBranchEditModal(data) {
@@ -452,6 +441,10 @@
             if (data.signature_photo_url) document.getElementById('b-sig-img').src = data.signature_photo_url;
 
             modal.classList.remove('hidden');
+            modal.scrollTop = 0;
+            const innerCard = modal.firstElementChild;
+            if (innerCard) innerCard.scrollTop = 0;
+
             document.body.classList.add('overflow-hidden');
         }
 

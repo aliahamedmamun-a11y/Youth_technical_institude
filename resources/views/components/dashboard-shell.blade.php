@@ -1,6 +1,6 @@
-@props(['title', 'eyebrow', 'description', 'breadcrumbs' => []])
-
-@php($isSuperAdmin = auth()->user()->hasRole(\App\Enums\UserRole::SuperAdmin))
+@php
+    $isSuperAdmin = auth()->user()?->hasRole(\App\Enums\UserRole::SuperAdmin) ?? false;
+@endphp
 
 <!DOCTYPE html>
 <html lang="en">

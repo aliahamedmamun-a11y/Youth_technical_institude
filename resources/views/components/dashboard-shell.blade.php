@@ -39,7 +39,24 @@
                     <nav class="flex-1 overflow-y-auto py-4 px-2 space-y-1 scrollbar-hide">
                         @foreach ($adminNavigation as $group)
                             @foreach ($group['items'] as $item)
-                                @php($isActive = collect($item['active'])->contains(fn (string $pattern): bool => request()->routeIs($pattern)))
+                                @php
+                                    $isActive = collect($item['active'])->contains(function (string $pattern) use ($item): bool {
+                                        if (! request()->routeIs($pattern)) {
+                                            return false;
+                                        }
+
+                                        if (! empty($item['parameters']) && is_array($item['parameters'])) {
+                                            foreach ($item['parameters'] as $paramKey => $paramValue) {
+                                                $currentVal = request()->route($paramKey) ?? request()->query($paramKey);
+                                                if ((string) $currentVal !== (string) $paramValue) {
+                                                    return false;
+                                                }
+                                            }
+                                        }
+
+                                        return true;
+                                    });
+                                @endphp
                                 <a href="{{ route($item['route'], $item['parameters'] ?? []) }}"
                                    @class([
                                        'group flex items-center gap-3 rounded-md px-3 py-2 text-[13px] font-bold transition-all',

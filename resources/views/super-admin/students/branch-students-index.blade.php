@@ -332,29 +332,6 @@
                                     </td>
                                 </tr>
                             @endforelse
-                                           onclick="downloadPdf(event, this.href)"
-                                           class="inline-block rounded-xl border border-teal-500/40 bg-teal-500/20 px-5 py-2.5 text-xs font-black text-teal-300 hover:bg-teal-500 hover:text-black shadow-lg transition">
-                                            NIDCard
-                                        </a>
-                                    </td>
-
-                                    <!-- CERTIFICATE -->
-                                    <td class="px-6 py-5 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'certificate']) }}"
-                                           onclick="downloadPdf(event, this.href)"
-                                           class="inline-block rounded-xl border border-blue-500/40 bg-blue-500/20 px-5 py-2.5 text-xs font-black text-blue-300 hover:bg-blue-500 hover:text-black shadow-lg transition">
-                                            Certificate
-                                        </a>
-                                    </td>
-
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="px-6 py-16 text-center text-sm font-bold text-slate-400">
-                                        No students found for this branch.
-                                    </td>
-                                </tr>
-                            @endforelse
                         </tbody>
                     </table>
                 </div>

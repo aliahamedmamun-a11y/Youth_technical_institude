@@ -79,7 +79,7 @@
                                                 class="rounded bg-[#6366f1] px-3 py-1.5 text-[9px] font-black uppercase text-white shadow-lg transition hover:bg-indigo-500 cursor-pointer">
                                                 Update
                                             </a>
-                                            <a href="{{ route('super-admin.branch-students.index', ['branch_id' => $branch->id]) }}"
+                                            <a href="{{ route('super-admin.students.index', ['branch_id' => $branch->id]) }}"
                                                 class="rounded bg-emerald-600 px-3 py-1.5 text-[9px] font-black uppercase text-white shadow-lg transition hover:bg-emerald-500">
                                                 Students
                                             </a>

@@ -263,20 +263,20 @@
 
 
 
-    <!-- Back Button -->
-
-
-    <div class="mt-6">
-
-
+    <!-- Action Buttons -->
+    <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
         <a href="{{ route('students.index') }}"
-        class="bg-gray-800 text-white px-6 py-3 rounded-xl font-bold">
-
+        class="bg-gray-800 text-white px-6 py-3 rounded-xl font-bold hover:bg-gray-700 transition">
             ← Back To Students
-
         </a>
 
-
+        <form action="{{ route('students.destroy', $student) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-red-700 transition">
+                Delete Student
+            </button>
+        </form>
     </div>
 
 

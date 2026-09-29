@@ -111,9 +111,9 @@
                                                class="text-blue-400 hover:text-blue-300 font-black uppercase text-[10px] tracking-wider cursor-pointer">
                                                 EDIT
                                             </a>
-                                            <form action="{{ route('super-admin.students.destroy', $student) }}" method="POST" onsubmit="return confirm('Delete this student?')">
+                                            <form action="{{ route('super-admin.students.destroy', $student) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this student?')">
                                                 @csrf @method('DELETE')
-                                                <button type="submit" class="text-rose-400 hover:text-rose-300 font-black uppercase text-[10px] tracking-wider">
+                                                <button type="submit" class="text-rose-400 hover:text-rose-300 font-black uppercase text-[10px] tracking-wider cursor-pointer bg-transparent border-0 p-0">
                                                     DELETE
                                                 </button>
                                             </form>

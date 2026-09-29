@@ -124,6 +124,10 @@
                     <th class="p-3 border">
                         Results
                     </th>
+
+                    <th class="p-3 border">
+                        Delete
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -238,11 +242,24 @@
                                 Results
                             </a>
                         </td>
+
+                        <!-- Delete -->
+                        <td class="p-3 border text-center">
+                            <form action="{{ route('students.destroy', $student) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?')">
+                                @csrf
+                                @method('DELETE')
+                                <button
+                                    type="submit"
+                                    class="bg-red-600 text-white px-3 py-2 rounded-lg text-xs font-bold hover:bg-red-700 transition">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
                     <tr>
                         <td
-                            colspan="10"
+                            colspan="11"
                             class="p-8 border text-center text-gray-500" >
                             @if(!empty($search))
 

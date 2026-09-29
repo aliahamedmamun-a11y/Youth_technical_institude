@@ -210,7 +210,16 @@
 
                                     {{-- DELETE SCORE --}}
                                     <td class="px-4 py-4 text-center">
-                                        <span class="rounded-full bg-pink-500/20 px-3 py-1 text-[9px] font-black uppercase text-pink-300">NOT ALLOWED</span>
+                                        @if($student->results()->exists() || $student->score !== null || $student->grade !== null)
+                                            <form action="{{ route('super-admin.students.destroy-score', $student) }}" method="POST" onsubmit="return confirm('Delete score/results for this student?')">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="rounded-full bg-rose-500/20 hover:bg-rose-500/40 px-3 py-1 text-[9px] font-black uppercase text-rose-300 transition cursor-pointer">
+                                                    DELETE SCORE
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span class="rounded-full bg-slate-500/20 px-3 py-1 text-[9px] font-black uppercase text-slate-400">NO SCORE</span>
+                                        @endif
                                     </td>
 
                                     {{-- STUDENT ID --}}

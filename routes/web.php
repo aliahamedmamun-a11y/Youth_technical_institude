@@ -149,6 +149,14 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->names('super-admin.semesters.subjects');
 
+    Route::get('/super-admin/branch-students', [StudentController::class, 'branchStudentsAdmin'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-students.index');
+
+    Route::delete('/super-admin/students/{student}/score', [StudentController::class, 'destroyScore'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.students.destroy-score');
+
     Route::resource('/super-admin/students', StudentController::class)
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->names('super-admin.students');
@@ -169,6 +177,10 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
             Route::put('/students/{student}', [BranchStudentController::class, 'update'])
                 ->middleware('role:'.UserRole::Branch->value)
                 ->name('students.update');
+
+            Route::delete('/students/{student}', [BranchStudentController::class, 'destroy'])
+                ->middleware('role:'.UserRole::Branch->value)
+                ->name('students.destroy');
 
             Route::get('/students/{student}/{document}',
                 [BranchStudentController::class, 'document'])

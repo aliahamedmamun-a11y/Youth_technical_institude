@@ -214,17 +214,6 @@ class StudentController extends Controller
 
         return back()->with('status', 'Student score deleted successfully.');
     }
-                'written_marks' => null,
-                'viva_marks' => null,
-                'practical_marks' => null,
-                'cgpa' => null,
-                'publication_date' => null,
-                'examination_month' => null,
-            ]);
-        });
-
-        return back()->with('status', 'Student score deleted successfully.');
-    }
 
     /** @return Collection<int, Course> */
     private function courses(): Collection

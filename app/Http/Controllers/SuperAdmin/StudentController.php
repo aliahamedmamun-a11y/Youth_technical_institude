@@ -162,15 +162,18 @@ class StudentController extends Controller
         Gate::authorize('delete', $student);
 
         DB::transaction(function () use ($student) {
-            foreach ($student->results as $result) {
-                $result->subjects()->delete();
-                $result->delete();
-            }
+            DB::table('student_result_subjects')
+                ->whereIn('student_result_id', function ($query) use ($student) {
+                    $query->select('id')->from('student_results')->where('student_id', $student->id);
+                })->delete();
 
-            foreach ($student->semesterEnrollments as $enrollment) {
-                $enrollment->subjects()->delete();
-                $enrollment->delete();
-            }
+            DB::table('student_semester_subjects')
+                ->whereIn('student_semester_enrollment_id', function ($query) use ($student) {
+                    $query->select('id')->from('student_semester_enrollments')->where('student_id', $student->id);
+                })->delete();
+
+            DB::table('student_results')->where('student_id', $student->id)->delete();
+            DB::table('student_semester_enrollments')->where('student_id', $student->id)->delete();
 
             $imagePath = $student->image_path;
             $student->delete();
@@ -188,16 +191,29 @@ class StudentController extends Controller
         Gate::authorize('update', $student);
 
         DB::transaction(function () use ($student) {
-            foreach ($student->results as $result) {
-                $result->subjects()->delete();
-                $result->delete();
-            }
+            DB::table('student_result_subjects')
+                ->whereIn('student_result_id', function ($query) use ($student) {
+                    $query->select('id')->from('student_results')->where('student_id', $student->id);
+                })->delete();
+
+            DB::table('student_results')->where('student_id', $student->id)->delete();
 
             $student->update([
                 'score' => null,
                 'grade' => null,
                 'result_status' => 'Pending',
                 'full_marks' => null,
+                'written_marks' => null,
+                'viva_marks' => null,
+                'practical_marks' => null,
+                'cgpa' => null,
+                'publication_date' => null,
+                'examination_month' => null,
+            ]);
+        });
+
+        return back()->with('status', 'Student score deleted successfully.');
+    }
                 'written_marks' => null,
                 'viva_marks' => null,
                 'practical_marks' => null,

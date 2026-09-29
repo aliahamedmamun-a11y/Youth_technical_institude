@@ -166,15 +166,18 @@ class BranchStudentController extends Controller
         Gate::authorize('delete', $student);
 
         DB::transaction(function () use ($student) {
-            foreach ($student->results as $result) {
-                $result->subjects()->delete();
-                $result->delete();
-            }
+            DB::table('student_result_subjects')
+                ->whereIn('student_result_id', function ($query) use ($student) {
+                    $query->select('id')->from('student_results')->where('student_id', $student->id);
+                })->delete();
 
-            foreach ($student->semesterEnrollments as $enrollment) {
-                $enrollment->subjects()->delete();
-                $enrollment->delete();
-            }
+            DB::table('student_semester_subjects')
+                ->whereIn('student_semester_enrollment_id', function ($query) use ($student) {
+                    $query->select('id')->from('student_semester_enrollments')->where('student_id', $student->id);
+                })->delete();
+
+            DB::table('student_results')->where('student_id', $student->id)->delete();
+            DB::table('student_semester_enrollments')->where('student_id', $student->id)->delete();
 
             $imagePath = $student->image_path;
             $student->delete();
@@ -184,8 +187,6 @@ class BranchStudentController extends Controller
             }
         });
 
-        return redirect()
-            ->route('students.index')
-            ->with('status', 'Student deleted successfully.');
+        return back()->with('status', 'Student deleted successfully.');
     }
 }

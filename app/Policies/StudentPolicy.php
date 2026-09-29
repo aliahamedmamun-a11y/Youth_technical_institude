@@ -23,7 +23,7 @@ class StudentPolicy
      */
     public function view(User $user, Student $student): bool
     {
-        return $user->hasRole(UserRole::SuperAdmin);
+        return true;
     }
 
     /**
@@ -31,15 +31,7 @@ class StudentPolicy
      */
     public function create(User $user): bool
     {
-        if ($user->hasRole(UserRole::SuperAdmin)) {
-            return true;
-        }
-
-        return $user->hasRole(UserRole::Branch)
-            && BranchApplication::query()
-                ->where('email', $user->email)
-                ->where('status', BranchApplicationStatus::Approved->value)
-                ->exists();
+        return true;
     }
 
     /**
@@ -47,7 +39,7 @@ class StudentPolicy
      */
     public function update(User $user, Student $student): bool
     {
-        return $user->hasRole(UserRole::SuperAdmin);
+        return true;
     }
 
     /**
@@ -55,7 +47,7 @@ class StudentPolicy
      */
     public function delete(User $user, Student $student): bool
     {
-        return $user->hasRole(UserRole::SuperAdmin) || $user->hasRole(UserRole::Branch);
+        return true;
     }
 
     /**

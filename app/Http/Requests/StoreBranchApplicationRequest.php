@@ -16,6 +16,27 @@ class StoreBranchApplicationRequest extends FormRequest
     }
 
     /**
+     * Prepare data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('username') && filled($this->input('username'))) {
+            $baseUsername = $this->input('username');
+            $username = $baseUsername;
+            $counter = 1;
+
+            while (\App\Models\BranchApplication::query()->where('username', $username)->exists()) {
+                $username = $baseUsername.'_'.$counter;
+                $counter++;
+            }
+
+            $this->merge([
+                'username' => $username,
+            ]);
+        }
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, list<mixed>>

@@ -9,6 +9,9 @@ use App\Services\ResultGradingService;
 use App\Services\ResultQrCodeService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class BranchStudentController extends Controller
@@ -152,5 +155,37 @@ class BranchStudentController extends Controller
             $resultQrCode,
             $qrCode
         );
+    }
+
+
+    /**
+     * Delete student.
+     */
+    public function destroy(Student $student): RedirectResponse
+    {
+        Gate::authorize('delete', $student);
+
+        DB::transaction(function () use ($student) {
+            foreach ($student->results as $result) {
+                $result->subjects()->delete();
+                $result->delete();
+            }
+
+            foreach ($student->semesterEnrollments as $enrollment) {
+                $enrollment->subjects()->delete();
+                $enrollment->delete();
+            }
+
+            $imagePath = $student->image_path;
+            $student->delete();
+
+            if ($imagePath && ! str_starts_with($imagePath, 'http')) {
+                Storage::disk('public')->delete($imagePath);
+            }
+        });
+
+        return redirect()
+            ->route('students.index')
+            ->with('status', 'Student deleted successfully.');
     }
 }

@@ -206,9 +206,13 @@ class BranchApplicationController extends Controller
     {
         Gate::authorize('delete', $branchApplication);
 
+        $email = $branchApplication->email;
         $branchApplication->delete();
 
-        return redirect()->route('super-admin.all-branches')
-            ->with('status', 'Branch deleted successfully.');
+        if ($email) {
+            \App\Models\User::query()->where('email', $email)->delete();
+        }
+
+        return back()->with('status', 'Branch deleted successfully.');
     }
 }

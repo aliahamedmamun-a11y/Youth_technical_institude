@@ -11,6 +11,7 @@ use App\Models\Student;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -160,17 +161,53 @@ class StudentController extends Controller
     {
         Gate::authorize('delete', $student);
 
-        $student->results()->delete();
-        $student->semesterEnrollments()->delete();
+        DB::transaction(function () use ($student) {
+            foreach ($student->results as $result) {
+                $result->subjects()->delete();
+                $result->delete();
+            }
 
-        $imagePath = $student->image_path;
-        $student->delete();
+            foreach ($student->semesterEnrollments as $enrollment) {
+                $enrollment->subjects()->delete();
+                $enrollment->delete();
+            }
 
-        if ($imagePath && ! str_starts_with($imagePath, 'http')) {
-            Storage::disk('public')->delete($imagePath);
-        }
+            $imagePath = $student->image_path;
+            $student->delete();
+
+            if ($imagePath && ! str_starts_with($imagePath, 'http')) {
+                Storage::disk('public')->delete($imagePath);
+            }
+        });
 
         return back()->with('status', 'Student deleted successfully.');
+    }
+
+    public function destroyScore(Student $student): RedirectResponse
+    {
+        Gate::authorize('update', $student);
+
+        DB::transaction(function () use ($student) {
+            foreach ($student->results as $result) {
+                $result->subjects()->delete();
+                $result->delete();
+            }
+
+            $student->update([
+                'score' => null,
+                'grade' => null,
+                'result_status' => 'Pending',
+                'full_marks' => null,
+                'written_marks' => null,
+                'viva_marks' => null,
+                'practical_marks' => null,
+                'cgpa' => null,
+                'publication_date' => null,
+                'examination_month' => null,
+            ]);
+        });
+
+        return back()->with('status', 'Student score deleted successfully.');
     }
 
     /** @return Collection<int, Course> */

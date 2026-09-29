@@ -55,7 +55,7 @@ class StudentPolicy
      */
     public function delete(User $user, Student $student): bool
     {
-        return $user->hasRole(UserRole::SuperAdmin);
+        return $user->hasRole(UserRole::SuperAdmin) || $user->hasRole(UserRole::Branch);
     }
 
     /**

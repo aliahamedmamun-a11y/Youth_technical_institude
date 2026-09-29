@@ -13,10 +13,10 @@
     <body class="min-h-screen overflow-x-hidden bg-stone-50 text-slate-900 antialiased dark:bg-ink dark:text-white">
         <header class="relative z-50 border-b border-slate-900/5 bg-stone-50/95 backdrop-blur-xl dark:border-white/10 dark:bg-ink/95">
             <div class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
-                <a href="{{ route('home') }}" class="group flex min-w-0 items-center gap-3" aria-label="BNYTI home">
-                    <img src="{{ asset('images/Logo.png') }}" alt="Bangladesh National Youth Technical Institute logo" class="brand-logo size-12 shrink-0 transition duration-300 group-hover:-rotate-3 sm:size-14">
-                    <span class="hidden min-w-0 sm:block"><span class="block truncate text-sm font-black tracking-tight text-slate-950 dark:text-white sm:text-[15px]"><span class="text-emerald-600 dark:text-emerald-400">BANGLADESH</span><span class="text-red-600 dark:text-red-400"> NATIONAL</span></span><span class="block truncate text-[10px] font-bold tracking-[0.17em] text-slate-600 dark:text-slate-300 sm:text-[11px]">YOUTH TECHNICAL INSTITUTE</span></span>
-                    <span class="sm:hidden"><span class="block text-base font-black tracking-tight text-slate-950 dark:text-white">BNYTI</span><span class="block text-[9px] font-bold tracking-[0.14em] text-slate-500 dark:text-slate-300">TECHNICAL INSTITUTE</span></span>
+                <a href="{{ route('home') }}" class="group flex min-w-0 items-center gap-3" aria-label="Home">
+                    <img src="{{ asset('images/Logo.png') }}" alt="South Asia National Technical Institute logo" class="brand-logo size-12 shrink-0 transition duration-300 group-hover:-rotate-3 sm:size-14">
+                    <span class="hidden min-w-0 sm:block"><span class="block truncate text-sm font-black tracking-tight text-slate-950 dark:text-white sm:text-[15px]"><span class="text-emerald-600 dark:text-emerald-400">SOUTH ASIA</span><span class="text-red-600 dark:text-red-400"> NATIONAL</span></span><span class="block truncate text-[10px] font-bold tracking-[0.17em] text-slate-600 dark:text-slate-300 sm:text-[11px]">TECHNICAL INSTITUTE</span></span>
+                    <span class="sm:hidden"><span class="block text-base font-black tracking-tight text-slate-950 dark:text-white">SOUTH ASIA</span><span class="block text-[9px] font-bold tracking-[0.14em] text-slate-500 dark:text-slate-300">TECHNICAL INSTITUTE</span></span>
                 </a>
                 <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary navigation">
                     <a href="{{ route('home') }}#home" class="nav-link">Home</a>

@@ -371,23 +371,11 @@ const revealElements = document.querySelectorAll('.reveal');
 document.querySelectorAll('[data-location-form]').forEach((locationForm) => {
     const districtSelect = locationForm.querySelector('[data-district-select]');
     const upazilaSelect = locationForm.querySelector('[data-upazila-select]');
-    const postOfficeSelect = locationForm.querySelector('[data-post-office-select]');
+    if (!districtSelect || !upazilaSelect) {
+        return;
+    }
     const upazilasByDistrict = JSON.parse(locationForm.dataset.upazilas || '{}');
     const oldUpazila = locationForm.dataset.oldUpazila || '';
-    const oldPostOffice = locationForm.dataset.oldPostOffice || '';
-
-    const updatePostOffices = () => {
-        if (!postOfficeSelect) {
-            return;
-        }
-
-        const postOffice = upazilaSelect.value ? `${upazilaSelect.value} Post Office` : '';
-        postOfficeSelect.replaceChildren(new Option(postOffice || 'Select upazila first', postOffice));
-        postOfficeSelect.disabled = !postOffice;
-        if (postOffice === oldPostOffice) {
-            postOfficeSelect.value = oldPostOffice;
-        }
-    };
 
     const updateUpazilas = () => {
         const upazilas = upazilasByDistrict[districtSelect.value] || [];
@@ -397,11 +385,9 @@ document.querySelectorAll('[data-location-form]').forEach((locationForm) => {
         if (upazilas.includes(oldUpazila)) {
             upazilaSelect.value = oldUpazila;
         }
-        updatePostOffices();
     };
 
     districtSelect.addEventListener('change', updateUpazilas);
-    upazilaSelect.addEventListener('change', updatePostOffices);
     updateUpazilas();
 });
 

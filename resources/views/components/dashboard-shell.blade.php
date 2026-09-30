@@ -1,5 +1,17 @@
 @php
-    $isSuperAdmin = auth()->user()?->hasRole(\App\Enums\UserRole::SuperAdmin) ?? false;
+    $user = auth()->user();
+    $isSuperAdmin = $user?->hasRole(\App\Enums\UserRole::SuperAdmin) ?? false;
+    $isBranchUser = $user?->hasRole(\App\Enums\UserRole::Branch) ?? false;
+
+    $branchNavigation = [
+        ['label' => 'Main', 'items' => [
+            ['label' => 'Profile', 'route' => 'dashboards.branch', 'active' => ['dashboards.branch'], 'icon' => 'overview'],
+            ['label' => 'Students List', 'route' => 'students.index', 'active' => ['students.*'], 'icon' => 'students'],
+            ['label' => 'Add Student', 'route' => 'student-registrations.create', 'active' => ['student-registrations.*'], 'icon' => 'courses'],
+            ['label' => 'Exam Document', 'route' => 'branch-messages.omr-sheet', 'active' => ['branch-messages.omr-sheet'], 'icon' => 'notices'],
+            ['label' => 'Contact admin', 'route' => 'branch-messages.contact-admin', 'active' => ['branch-messages.contact-admin'], 'icon' => 'about'],
+        ]],
+    ];
 @endphp
 
 <!DOCTYPE html>
@@ -17,12 +29,12 @@
             <div class="flex items-center gap-4">
                 <a href="/" class="flex items-center gap-3">
                     <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="size-9 brightness-0 invert">
-                    <span class="text-sm font-black uppercase tracking-wider hidden sm:inline">SAETI</span>
+                    <span class="text-sm font-black uppercase tracking-wider hidden sm:inline">BNTEI</span>
                 </a>
             </div>
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2 rounded-full bg-white/5 py-1.5 pl-4 pr-1.5 ring-1 ring-white/10">
-                    <span class="text-xs font-black uppercase tracking-wider opacity-80">Admin</span>
+                    <span class="text-xs font-black uppercase tracking-wider opacity-80">{{ $isBranchUser ? 'Branch Panel' : 'Admin' }}</span>
                     <div class="grid size-8 place-items-center rounded-full bg-slate-400 text-slate-900">
                         <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5">
                             <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
@@ -34,44 +46,53 @@
 
         <div class="flex">
             {{-- Sidebar Navigation --}}
-            @if ($isSuperAdmin)
+            @if ($isSuperAdmin || $isBranchUser)
+                @php
+                    $navigationGroups = $isSuperAdmin ? $adminNavigation : $branchNavigation;
+                @endphp
                 <aside class="sticky top-16 h-[calc(100vh-64px)] w-72 shrink-0 flex flex-col border-r border-white/10 bg-[#071c2c] shadow-sm">
                     <nav class="flex-1 overflow-y-auto py-4 px-2 space-y-1 scrollbar-hide">
-                        @foreach ($adminNavigation as $group)
+                        @foreach ($navigationGroups as $group)
                             @foreach ($group['items'] as $item)
                                 @php
-                                    $isActive = collect($item['active'])->contains(function (string $pattern) use ($item): bool {
-                                        if (! request()->routeIs($pattern)) {
-                                            return false;
-                                        }
+                                    $itemRoute = $item['route'] ?? null;
+                                    $itemUrl = $item['url'] ?? ($itemRoute ? route($itemRoute, $item['parameters'] ?? []) : '#');
+                                    $isActive = false;
 
-                                        $itemParams = $item['parameters'] ?? [];
-
-                                        if ($pattern === 'super-admin.students.index') {
-                                            $isBranchView = request()->has('show_branches') || request()->has('branch_id') || request()->has('branch');
-                                            $itemIsBranchView = ! empty($itemParams['show_branches']);
-
-                                            return $isBranchView === $itemIsBranchView;
-                                        }
-
-                                        if (! empty($itemParams)) {
-                                            foreach ($itemParams as $paramKey => $paramValue) {
-                                                $currentVal = request()->route($paramKey) ?? request()->query($paramKey);
-                                                if ((string) $currentVal !== (string) $paramValue) {
-                                                    return false;
-                                                }
+                                    if ($itemRoute) {
+                                        $isActive = collect($item['active'])->contains(function (string $pattern) use ($item): bool {
+                                            if (! request()->routeIs($pattern)) {
+                                                return false;
                                             }
+
+                                            $itemParams = $item['parameters'] ?? [];
+
+                                            if ($pattern === 'super-admin.students.index') {
+                                                $isBranchView = request()->has('show_branches') || request()->has('branch_id') || request()->has('branch');
+                                                $itemIsBranchView = ! empty($itemParams['show_branches']);
+
+                                                return $isBranchView === $itemIsBranchView;
+                                            }
+
+                                            if (! empty($itemParams)) {
+                                                foreach ($itemParams as $paramKey => $paramValue) {
+                                                    $currentVal = request()->route($paramKey) ?? request()->query($paramKey);
+                                                    if ((string) $currentVal !== (string) $paramValue) {
+                                                        return false;
+                                                    }
+                                                }
+                                                return true;
+                                            }
+
+                                            if (request()->routeIs('super-admin.branch-applications.index') && request()->has('status')) {
+                                                return false;
+                                            }
+
                                             return true;
-                                        }
-
-                                        if (request()->routeIs('super-admin.branch-applications.index') && request()->has('status')) {
-                                            return false;
-                                        }
-
-                                        return true;
-                                    });
+                                        });
+                                    }
                                 @endphp
-                                <a href="{{ route($item['route'], $item['parameters'] ?? []) }}"
+                                <a href="{{ $itemUrl }}"
                                    @class([
                                        'group flex items-center gap-3 rounded-md px-3 py-2 text-[13px] font-bold transition-all',
                                        'bg-blue-600 text-white shadow-lg shadow-blue-900/20' => $isActive,

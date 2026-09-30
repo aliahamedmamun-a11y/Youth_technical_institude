@@ -28,16 +28,14 @@ class ApproveBranchApplication
                 throw ValidationException::withMessages(['email' => 'A user account already exists for this email address.']);
             }
 
+            $rawPassword = $application->getRawOriginal('password') ?: $application->password;
+
             $user = User::query()->create([
                 'name' => $application->director_name ?: $application->institute_name,
                 'email' => $application->email,
                 'role' => UserRole::Branch,
                 'is_active' => true,
-                'password' => 'temporary-password',
-            ]);
-
-            User::query()->whereKey($user->getKey())->update([
-                'password' => $application->getRawOriginal('password'),
+                'password' => $rawPassword,
             ]);
 
             $application->update([

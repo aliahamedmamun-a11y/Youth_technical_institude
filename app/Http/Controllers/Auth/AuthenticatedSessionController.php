@@ -24,6 +24,15 @@ class AuthenticatedSessionController extends Controller
 
         $credentials['is_active'] = true;
 
+        // Automatically fix legacy plain text passwords in the database if necessary
+        $existingUser = \App\Models\User::query()->where('email', $request->email)->first();
+        if ($existingUser && $existingUser->password && ! str_starts_with($existingUser->password, '$2y$') && ! str_starts_with($existingUser->password, '$2a$') && ! str_starts_with($existingUser->password, '$2b$')) {
+            if ($existingUser->password === $request->password) {
+                $existingUser->password = $request->password;
+                $existingUser->save();
+            }
+        }
+
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             // Check if user exists but is blocked
             if (\App\Models\User::query()->where('email', $request->email)->where('is_active', false)->exists()) {

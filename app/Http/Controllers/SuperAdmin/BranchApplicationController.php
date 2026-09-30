@@ -156,16 +156,16 @@ class BranchApplicationController extends Controller
         $user = $userQuery->first();
 
         if ($user) {
-            $user->update([
+            $userData = [
                 'name' => $branchApplication->director_name ?: $branchApplication->institute_name,
                 'email' => $branchApplication->email,
-            ]);
+            ];
 
             if (!empty($validated['password'])) {
-                \App\Models\User::query()->whereKey($user->id)->update([
-                    'password' => $validated['password'],
-                ]);
+                $userData['password'] = $validated['password'];
             }
+
+            $user->update($userData);
         }
 
         return redirect()->route('super-admin.all-branches')

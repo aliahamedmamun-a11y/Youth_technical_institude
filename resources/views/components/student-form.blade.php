@@ -567,6 +567,17 @@
                 </div>
             @endif
 
+            @if ($declarationRequired)
+                <div class="rounded-2xl border border-indigo-500/20 bg-[#071c2c] p-5 space-y-2">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" name="declaration" value="1" @checked(old('declaration')) required class="mt-1 size-4 rounded border-white/20 bg-[#070d19] text-indigo-600 focus:ring-indigo-500">
+                        <span class="text-xs font-bold text-slate-300 leading-relaxed uppercase tracking-wider">
+                            I hereby declare that all the information provided above is true, complete, and accurate to the best of my knowledge and belief.
+                        </span>
+                    </label>
+                </div>
+            @endif
+
             <!-- ACTION BUTTONS -->
             <div class="flex items-center justify-end gap-4 pt-8 border-t border-white/10">
                 <a href="{{ $cancelRoute ?? route('super-admin.students.index') }}" class="rounded-xl bg-[#334155] hover:bg-[#475569] text-white px-8 py-3.5 font-bold text-sm uppercase tracking-wider transition-all">

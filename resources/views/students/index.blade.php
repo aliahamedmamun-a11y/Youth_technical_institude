@@ -2,9 +2,19 @@
     <div class="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
         <div class="rounded-3xl border border-white/20 bg-[#03224c]/40 p-6 shadow-2xl backdrop-blur-sm lg:p-8 space-y-8">
 
-            {{-- Title --}}
-            <div class="text-center">
-                <h1 class="text-3xl font-black tracking-tight text-white uppercase sm:text-4xl">Student Information Table</h1>
+            {{-- Title & Add Student Action --}}
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-white/10 pb-6">
+                <div>
+                    <h1 class="text-3xl font-black tracking-tight text-white uppercase sm:text-4xl">Student Information Table</h1>
+                    <p class="mt-1 text-xs font-bold text-slate-400 uppercase tracking-widest">Manage and view registered branch students</p>
+                </div>
+                <a href="{{ route('student-registrations.create') }}"
+                   class="inline-flex items-center gap-2 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 font-black text-xs uppercase tracking-wider shadow-xl transition-all active:scale-95">
+                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Add Student</span>
+                </a>
             </div>
 
             {{-- Search Bar --}}

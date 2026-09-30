@@ -43,9 +43,21 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function branch(): View
+    public function branch(Request $request): View
     {
-        return view('dashboards.branch');
+        $user = $request->user();
+        $branch = null;
+
+        if ($user) {
+            $branch = BranchApplication::query()
+                ->where('email', $user->email)
+                ->first();
+        }
+
+        return view('dashboards.branch', [
+            'user' => $user,
+            'branch' => $branch,
+        ]);
     }
 
     public function editor(): View

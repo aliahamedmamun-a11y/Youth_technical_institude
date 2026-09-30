@@ -45,7 +45,7 @@ class BranchApplicationPolicy
      */
     public function delete(User $user, BranchApplication $branchApplication): bool
     {
-        return false;
+        return $user->hasRole(UserRole::SuperAdmin);
     }
 
     /**

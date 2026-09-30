@@ -121,11 +121,40 @@ Route::middleware('guest')->group(function (): void {
 Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/student-registration', [StudentRegistrationController::class, 'create'])->name('student-registrations.create');
-    Route::post('/student-registration', [StudentRegistrationController::class, 'store'])->name('student-registrations.store');
-    Route::get('/student-registration', [StudentRegistrationController::class, 'create'])->name('student-registrations.create');
 
-Route::post('/student-registration', [StudentRegistrationController::class, 'store'])->name('student-registrations.store');
+    // Branch Admin Specific Routes (Role: Branch Access Only)
+    Route::middleware('role:'.UserRole::Branch->value)->group(function (): void {
+        // 1. Profile
+        Route::get('/dashboard/branch', [DashboardController::class, 'branch'])->name('dashboards.branch');
+        Route::get('/dashBoard/Profile', [DashboardController::class, 'branch']);
+        Route::get('/dashboard/Profile', [DashboardController::class, 'branch']);
+
+        // 2. Students List
+        Route::get('/students', [BranchStudentController::class, 'index'])->name('students.index');
+        Route::get('/dashBoard/BranchStudents', [BranchStudentController::class, 'index']);
+        Route::get('/dashboard/BranchStudents', [BranchStudentController::class, 'index']);
+
+        // 3. Add Student
+        Route::get('/student-registration', [StudentRegistrationController::class, 'create'])->name('student-registrations.create');
+        Route::post('/student-registration', [StudentRegistrationController::class, 'store'])->name('student-registrations.store');
+        Route::get('/dashBoard/BranchStudentsAdd', [StudentRegistrationController::class, 'create']);
+        Route::get('/dashboard/BranchStudentsAdd', [StudentRegistrationController::class, 'create']);
+
+        // 4. Exam Document
+        Route::get('/dashBoard/BeanseMessageOMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'board'])->name('branch-messages.omr-sheet');
+        Route::get('/dashboard/BeanseMessageOMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'board']);
+
+        // 5. Contact admin
+        Route::get('/dashBoard/OMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'contactAdmin'])->name('branch-messages.contact-admin');
+        Route::get('/dashboard/OMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'contactAdmin']);
+
+        // Branch student document and edit routes
+        Route::get('/students/{student}', [BranchStudentController::class, 'show'])->name('students.show');
+        Route::get('/students/{student}/edit', [BranchStudentController::class, 'edit'])->name('students.edit');
+        Route::put('/students/{student}', [BranchStudentController::class, 'update'])->name('students.update');
+        Route::delete('/students/{student}', [BranchStudentController::class, 'destroy'])->name('students.destroy');
+        Route::get('/students/{student}/{document}', [BranchStudentController::class, 'document'])->name('students.document');
+    });
 
     Route::get('/dashboard/super-admin', [DashboardController::class, 'superAdmin'])
         ->middleware('role:'.UserRole::SuperAdmin->value)
@@ -160,32 +189,6 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
     Route::resource('/super-admin/students', StudentController::class)
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->names('super-admin.students');
-
-        //  student list
-        Route::get('/students', [BranchStudentController::class, 'index'])
-                ->middleware('role:'.UserRole::Branch->value)
-                ->name('students.index');
-
-            Route::get('/students/{student}', [BranchStudentController::class, 'show'])
-                ->middleware('role:'.UserRole::Branch->value)
-                ->name('students.show');
-
-            Route::get('/students/{student}/edit', [BranchStudentController::class, 'edit'])
-                ->middleware('role:'.UserRole::Branch->value)
-                ->name('students.edit');
-
-            Route::put('/students/{student}', [BranchStudentController::class, 'update'])
-                ->middleware('role:'.UserRole::Branch->value)
-                ->name('students.update');
-
-            Route::delete('/students/{student}', [BranchStudentController::class, 'destroy'])
-                ->middleware('role:'.UserRole::Branch->value)
-                ->name('students.destroy');
-
-            Route::get('/students/{student}/{document}',
-                [BranchStudentController::class, 'document'])
-                ->middleware('role:'.UserRole::Branch->value)
-                ->name('students.document');
 
     Route::resource('/super-admin/students/{student}/semester-enrollments', StudentSemesterEnrollmentController::class)
         ->except(['show'])
@@ -250,12 +253,17 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
         ->name('super-admin.branch-messages.index');
     Route::get('/super-admin/branch-message-board', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'board'])
         ->name('super-admin.branch-messages.board');
-    Route::get('/dashBoard/BeanseMessageOMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'board'])
-        ->name('branch-messages.omr-sheet');
-    Route::get('/dashboard/BeanseMessageOMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'board']);
-    Route::get('/dashBoard/OMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'contactAdmin'])
-        ->name('branch-messages.contact-admin');
-    Route::get('/dashboard/OMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'contactAdmin']);
+    Route::get('/super-admin/admin-messaging-add', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'messagingAdd'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-messages.messaging-add');
+    Route::get('/super-admin/all-table-admin-add', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'allTableAdd'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-messages.all-table-add');
+    Route::post('/super-admin/branch-message-board', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'store'])
+        ->name('super-admin.branch-messages.store');
+    Route::delete('/super-admin/branch-messages/{branchMessage}', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'destroy'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-messages.destroy');
     Route::get('/super-admin/admin-messaging-add', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'messagingAdd'])
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->name('super-admin.branch-messages.messaging-add');

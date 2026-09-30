@@ -41,8 +41,19 @@ class StudentController extends Controller
                         ->orWhere('branch_id', sprintf('%06d', (int) $branchId));
 
                     if ($branch) {
-                        $query->orWhere('branch_id', $branch->username)
-                            ->orWhere('branch_id', $branch->institute_name);
+                        if ($branch->id) {
+                            $query->orWhere('branch_id', $branch->id)
+                                ->orWhere('branch_id', (string) $branch->id)
+                                ->orWhere('branch_id', sprintf('%06d', (int) $branch->id));
+                        }
+
+                        if (! empty($branch->username)) {
+                            $query->orWhere('branch_id', $branch->username);
+                        }
+
+                        if (! empty($branch->institute_name)) {
+                            $query->orWhere('branch_id', $branch->institute_name);
+                        }
                     }
                 })
                 ->when($search, fn ($query, string $term) => $query->where(fn ($nested) => $nested->where('name', 'like', "%{$term}%")->orWhere('registration_number', 'like', "%{$term}%")->orWhere('roll_number', 'like', "%{$term}%")));
@@ -65,11 +76,19 @@ class StudentController extends Controller
 
             $branches->getCollection()->transform(function (BranchApplication $branch) {
                 $branch->student_count = Student::query()
-                    ->where('branch_id', $branch->id)
-                    ->orWhere('branch_id', (string) $branch->id)
-                    ->orWhere('branch_id', sprintf('%06d', $branch->id))
-                    ->orWhere('branch_id', $branch->username)
-                    ->orWhere('branch_id', $branch->institute_name)
+                    ->where(function ($query) use ($branch) {
+                        $query->where('branch_id', $branch->id)
+                            ->orWhere('branch_id', (string) $branch->id)
+                            ->orWhere('branch_id', sprintf('%06d', (int) $branch->id));
+
+                        if (! empty($branch->username)) {
+                            $query->orWhere('branch_id', $branch->username);
+                        }
+
+                        if (! empty($branch->institute_name)) {
+                            $query->orWhere('branch_id', $branch->institute_name);
+                        }
+                    })
                     ->count();
 
                 return $branch;

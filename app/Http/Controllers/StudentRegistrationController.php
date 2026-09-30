@@ -26,25 +26,22 @@ class StudentRegistrationController extends Controller
     {
         $studentData = $request->safe()->except('image');
 
-
-        $studentData['registration_number'] =
-            $this->registrationNumber();
-
-
+        $studentData['registration_number'] = $this->registrationNumber();
         $studentData['result_status'] = 'Pending';
 
-
-        if ($request->hasFile('image')) {
-
-            $studentData['image_path'] =
-                $request->file('image')
-                ->store('students', 'public');
-
+        if ($request->user() && $request->user()->hasRole(\App\Enums\UserRole::Branch)) {
+            $branch = \App\Models\BranchApplication::query()->where('email', $request->user()->email)->first();
+            if ($branch) {
+                $studentData['branch_id'] = $studentData['branch_id'] ?? $branch->id;
+                $studentData['director_name'] = $studentData['director_name'] ?? $branch->director_name;
+            }
         }
 
+        if ($request->hasFile('image')) {
+            $studentData['image_path'] = $request->file('image')->store('students', 'public');
+        }
 
         Student::query()->create($studentData);
-
 
         return redirect()
             ->route('student-registrations.create')

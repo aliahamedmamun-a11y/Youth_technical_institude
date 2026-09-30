@@ -18,7 +18,21 @@ class BranchMessageController extends Controller
 
     public function board(): View
     {
-        return view('super-admin.branch-messages.board');
+        $messages = BranchMessage::latest()->get();
+
+        if ($messages->isEmpty()) {
+            $messages = \App\Models\Notice::query()->published()->latest()->get()->map(function ($notice) {
+                return (object) [
+                    'id' => $notice->id,
+                    'name' => $notice->title,
+                    'message' => $notice->message,
+                    'link' => $notice->link,
+                    'created_at' => $notice->created_at ?: now(),
+                ];
+            });
+        }
+
+        return view('super-admin.branch-messages.board', compact('messages'));
     }
 
     public function messagingAdd(): View
@@ -32,10 +46,17 @@ class BranchMessageController extends Controller
         return view('super-admin.branch-messages.all-table-add');
     }
 
+    public function contactAdmin(): View
+    {
+        return view('super-admin.branch-messages.contact-admin');
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:50',
             'message' => 'required|string|max:2000',
         ]);
 

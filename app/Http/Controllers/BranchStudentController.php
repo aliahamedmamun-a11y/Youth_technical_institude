@@ -22,9 +22,32 @@ class BranchStudentController extends Controller
     public function index(Request $request): View
     {
         $search = trim((string) $request->input('search'));
+        $user = $request->user();
 
-        $students = Student::query()
-            ->with('course')
+        $branch = null;
+        if ($user && $user->hasRole(\App\Enums\UserRole::Branch)) {
+            $branch = \App\Models\BranchApplication::query()->where('email', $user->email)->first();
+        }
+
+        $studentsQuery = Student::query()->with('course');
+
+        if ($branch) {
+            $studentsQuery->where(function ($query) use ($branch) {
+                $query->where('branch_id', $branch->id)
+                    ->orWhere('branch_id', (string) $branch->id)
+                    ->orWhere('branch_id', sprintf('%06d', (int) $branch->id));
+
+                if (! empty($branch->username)) {
+                    $query->orWhere('branch_id', $branch->username);
+                }
+
+                if (! empty($branch->institute_name)) {
+                    $query->orWhere('branch_id', $branch->institute_name);
+                }
+            });
+        }
+
+        $students = $studentsQuery
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($query) use ($search) {
                     $query->where('name', 'like', '%' . $search . '%')
@@ -33,10 +56,14 @@ class BranchStudentController extends Controller
                 });
             })
             ->latest()
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
+
+        $courses = \App\Models\Course::query()->where('is_active', true)->orderBy('name')->get();
 
         return view('students.index', [
             'students' => $students,
+            'courses' => $courses,
             'search' => $search,
         ]);
     }

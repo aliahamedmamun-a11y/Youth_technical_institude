@@ -119,7 +119,7 @@
                                     {{-- PICTURE --}}
                                     <td class="px-4 py-4 text-center">
                                         <div class="size-11 overflow-hidden rounded-xl border border-white/20 bg-slate-800 shadow-xl mx-auto">
-                                            <img src="{{ $studentImg }}" alt="{{ $student->name }}" class="size-full object-cover">
+                                            <img src="{{ $studentImg }}" alt="{{ $student->name }}" class="size-full object-cover" onerror="this.onerror=null; this.src='https://i.ibb.co/qMgPTvMQ/1000072415.jpg';">
                                         </div>
                                     </td>
 
@@ -312,7 +312,7 @@
                                     {{-- PICTURE --}}
                                     <td class="px-4 py-4 text-center">
                                         <div class="size-11 overflow-hidden rounded-xl border border-white/20 bg-slate-800 shadow-xl mx-auto">
-                                            <img src="{{ $studentImg }}" alt="{{ $student->name }}" class="size-full object-cover">
+                                            <img src="{{ $studentImg }}" alt="{{ $student->name }}" class="size-full object-cover" onerror="this.onerror=null; this.src='https://i.ibb.co/qMgPTvMQ/1000072415.jpg';">
                                         </div>
                                     </td>
 
@@ -373,7 +373,7 @@
                 <!-- CENTERED AVATAR PHOTO & CHANGE IMAGE BUTTON -->
                 <div class="flex flex-col items-center justify-center space-y-3 pb-4 border-b border-white/10">
                     <div class="size-28 sm:size-32 rounded-full overflow-hidden border-2 border-indigo-500/50 bg-[#071c2c] shadow-2xl flex items-center justify-center ring-4 ring-indigo-500/10">
-                        <img id="modal-avatar-preview" src="https://i.ibb.co/qMgPTvMQ/1000072415.jpg" alt="Student Photo" class="size-full object-cover">
+                        <img id="modal-avatar-preview" src="https://i.ibb.co/qMgPTvMQ/1000072415.jpg" alt="Student Photo" class="size-full object-cover" onerror="this.onerror=null; this.src='https://i.ibb.co/qMgPTvMQ/1000072415.jpg';">
                     </div>
                     <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
                         <span>Change Image</span>

@@ -1070,20 +1070,30 @@ document.querySelectorAll('form[data-confirm], form:has(input[name="_method"][va
             return;
         }
 
-        event.preventDefault();
-        pendingConfirmationForm = form;
-        confirmTitle.textContent = form.dataset.confirmTitle || 'Please confirm';
-        confirmMessage.textContent = form.dataset.confirm || 'Delete this record? This action cannot be undone.';
-        confirmDialog.showModal();
-        confirmCancel.focus();
+        if (confirmDialog && confirmTitle && confirmMessage && typeof confirmDialog.showModal === 'function') {
+            event.preventDefault();
+            pendingConfirmationForm = form;
+            confirmTitle.textContent = form.dataset.confirmTitle || 'Please confirm';
+            confirmMessage.textContent = form.dataset.confirm || 'Delete this record? This action cannot be undone.';
+            confirmDialog.showModal();
+            confirmCancel?.focus();
+            return;
+        }
+
+        if (!form.hasAttribute('onsubmit')) {
+            const msg = form.dataset.confirm || 'Delete this record? This action cannot be undone.';
+            if (!window.confirm(msg)) {
+                event.preventDefault();
+            }
+        }
     });
 });
 
-confirmCancel?.addEventListener('click', () => confirmDialog.close());
+confirmCancel?.addEventListener('click', () => confirmDialog?.close());
 confirmProceed?.addEventListener('click', () => {
     if (pendingConfirmationForm) {
         pendingConfirmationForm.dataset.confirmed = 'true';
-        confirmDialog.close();
+        confirmDialog?.close();
         pendingConfirmationForm.requestSubmit();
     }
 });

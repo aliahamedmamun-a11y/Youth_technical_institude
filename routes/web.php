@@ -249,8 +249,13 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->name('super-admin.branch-messages.index');
     Route::get('/super-admin/branch-message-board', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'board'])
-        ->middleware('role:'.UserRole::SuperAdmin->value)
         ->name('super-admin.branch-messages.board');
+    Route::get('/dashBoard/BeanseMessageOMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'board'])
+        ->name('branch-messages.omr-sheet');
+    Route::get('/dashboard/BeanseMessageOMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'board']);
+    Route::get('/dashBoard/OMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'contactAdmin'])
+        ->name('branch-messages.contact-admin');
+    Route::get('/dashboard/OMRSheet', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'contactAdmin']);
     Route::get('/super-admin/admin-messaging-add', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'messagingAdd'])
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->name('super-admin.branch-messages.messaging-add');
@@ -258,7 +263,6 @@ Route::post('/student-registration', [StudentRegistrationController::class, 'sto
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->name('super-admin.branch-messages.all-table-add');
     Route::post('/super-admin/branch-message-board', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'store'])
-        ->middleware('role:'.UserRole::SuperAdmin->value)
         ->name('super-admin.branch-messages.store');
     Route::delete('/super-admin/branch-messages/{branchMessage}', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'destroy'])
         ->middleware('role:'.UserRole::SuperAdmin->value)

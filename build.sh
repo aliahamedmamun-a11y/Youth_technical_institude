@@ -12,5 +12,3 @@ npm run build
 # Clear any existing cache
 php artisan optimize:clear
 
-# Run migrations (only in production)
-php artisan migrate --force

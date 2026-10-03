@@ -291,5 +291,118 @@
                 </div>
             </main>
         </div>
+
+        {{-- Login Welcome Modal Popup --}}
+        @if (session('show_welcome_modal'))
+            @php
+                $hour = (int) now()->timezone('Asia/Dhaka')->format('H');
+
+                if ($hour >= 5 && $hour < 12) {
+                    $greetingEmoji = '🌞';
+                    $greetingTitle = 'শুভ সকাল!';
+                    $greetingSubtitle = 'আপনার আজকের দিনটি সফল ও ফলপ্রসূ হোক।';
+                } elseif ($hour >= 12 && $hour < 16) {
+                    $greetingEmoji = '🌤️';
+                    $greetingTitle = 'শুভ দুপুর!';
+                    $greetingSubtitle = 'আপনার সকল কার্যক্রম সফলভাবে সম্পন্ন হোক।';
+                } elseif ($hour >= 16 && $hour < 18) {
+                    $greetingEmoji = '🌇';
+                    $greetingTitle = 'শুভ বিকেল!';
+                    $greetingSubtitle = 'নতুন উদ্যমে আপনার কাজ এগিয়ে নিন।';
+                } elseif ($hour >= 18 && $hour < 20) {
+                    $greetingEmoji = '🌆';
+                    $greetingTitle = 'শুভ সন্ধ্যা!';
+                    $greetingSubtitle = 'শেখার প্রতিটি মুহূর্ত হোক আনন্দময়।';
+                } else {
+                    $greetingEmoji = '🌙';
+                    $greetingTitle = 'শুভ রাত্রি!';
+                    $greetingSubtitle = 'আগামী দিনের জন্য আন্তরিক শুভকামনা।';
+                }
+
+                $userPhoto = null;
+                if ($isBranchUser) {
+                    $branchApp = \App\Models\BranchApplication::query()->where('email', $user?->email)->first();
+                    if ($branchApp?->director_photo_path) {
+                        $userPhoto = asset('storage/' . $branchApp->director_photo_path);
+                    }
+                }
+                if (!$userPhoto) {
+                    $userPhoto = 'https://i.ibb.co/qMgPTvMQ/1000072415.jpg';
+                }
+            @endphp
+
+            <div id="welcome-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md transition-all duration-500">
+                <div class="relative w-full max-w-xs sm:max-w-sm overflow-hidden rounded-[2.5rem] border-2 border-amber-400/50 bg-gradient-to-b from-[#061b2e] via-[#082a40] to-[#041220] p-6 text-white text-center shadow-[0_0_60px_rgba(234,179,8,0.3)] ring-1 ring-white/20 animate-[scaleIn_0.4s_ease-out]">
+
+                    {{-- Corner Decorative Borders --}}
+                    <div class="absolute top-3 left-3 size-6 border-t-2 border-l-2 border-amber-400/70 rounded-tl-lg pointer-events-none"></div>
+                    <div class="absolute top-3 right-3 size-6 border-t-2 border-r-2 border-amber-400/70 rounded-tr-lg pointer-events-none"></div>
+                    <div class="absolute bottom-3 left-3 size-6 border-b-2 border-l-2 border-amber-400/70 rounded-bl-lg pointer-events-none"></div>
+                    <div class="absolute bottom-3 right-3 size-6 border-b-2 border-r-2 border-amber-400/70 rounded-br-lg pointer-events-none"></div>
+
+                    {{-- Close Button --}}
+                    <button onclick="document.getElementById('welcome-modal').remove()" class="absolute top-4 right-4 z-20 grid size-8 place-items-center rounded-full bg-white/10 text-slate-300 hover:bg-white/20 hover:text-white transition">
+                        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+
+                    {{-- Top Portrait Photo inside Glowing Box --}}
+                    <div class="relative mt-2 mx-auto inline-block">
+                        <div class="size-36 sm:size-44 rounded-2xl p-1 bg-gradient-to-tr from-cyan-400 via-blue-500 to-amber-400 shadow-[0_0_25px_rgba(56,189,248,0.5)]">
+                            <div class="size-full overflow-hidden rounded-xl bg-slate-900 border border-white/30">
+                                <img src="{{ $userPhoto }}" alt="{{ $user?->name }}" class="size-full object-cover object-center">
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Logged in User Name --}}
+                    <h2 class="mt-4 text-xl sm:text-2xl font-serif font-black tracking-wide text-amber-300 drop-shadow-[0_0_12px_rgba(252,211,77,0.6)]">
+                        {{ $user?->name ?: 'আলী মামুন' }}
+                    </h2>
+
+                    {{-- Animated Handshake Graphic (Hands coming from left and right) --}}
+                    <div class="relative my-4 flex items-center justify-center h-20 overflow-hidden">
+                        {{-- Aura Glow Center --}}
+                        <div class="absolute size-24 rounded-full bg-amber-400/25 blur-xl animate-pulse"></div>
+
+                        {{-- Handshake Illustration --}}
+                        <div class="relative z-10 flex items-center justify-center text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.7)]">
+                            <svg viewBox="0 0 100 60" class="w-56 h-16">
+                                <defs>
+                                    <linearGradient id="welcomeGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#fef08a" />
+                                        <stop offset="50%" stop-color="#f59e0b" />
+                                        <stop offset="100%" stop-color="#d97706" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M0,35 Q20,35 35,30 L45,35 C42,40 35,42 25,42 Z" fill="url(#welcomeGold)" />
+                                <path d="M100,35 Q80,35 65,30 L55,35 C58,40 65,42 75,42 Z" fill="url(#welcomeGold)" />
+                                <path d="M35,30 C38,22 50,22 52,28 C55,24 62,25 62,32 C62,38 52,44 42,40 C38,38 35,34 35,30 Z" fill="url(#welcomeGold)" stroke="#fef3c7" stroke-width="1.5" />
+                                <path d="M42,28 Q48,32 52,38" fill="none" stroke="#78350f" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M46,26 Q52,30 56,36" fill="none" stroke="#78350f" stroke-width="1.5" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    {{-- Time-based Dynamic Greeting Message --}}
+                    <div class="space-y-1.5">
+                        <div class="inline-flex items-center gap-2 rounded-full bg-amber-400/10 border border-amber-400/40 px-4 py-1 text-lg sm:text-xl font-serif font-black text-amber-300 drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]">
+                            <span>{{ $greetingEmoji }}</span>
+                            <span>{{ $greetingTitle }}</span>
+                        </div>
+                        <p class="text-xs font-bold text-slate-200 max-w-xs mx-auto leading-relaxed">
+                            {{ $greetingSubtitle }}
+                        </p>
+                    </div>
+
+                    {{-- Enter Dashboard Button --}}
+                    <div class="mt-5">
+                        <button onclick="document.getElementById('welcome-modal').remove()" class="w-full rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 py-2.5 text-xs font-black uppercase tracking-wider text-slate-950 shadow-lg shadow-amber-500/30 transition-all hover:scale-[1.02] active:scale-95">
+                            ড্যাশবোর্ডে প্রবেশ করুন ➔
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        @endif
     </body>
 </html>

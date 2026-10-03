@@ -12,5 +12,5 @@ npm run build
 # Clear any existing cache
 php artisan optimize:clear
 
-# Run migrations (only in production)
-php artisan migrate --force
+# Run migrations safely if database connection is available
+php artisan migrate --force || echo "Migrations skipped during build phase"

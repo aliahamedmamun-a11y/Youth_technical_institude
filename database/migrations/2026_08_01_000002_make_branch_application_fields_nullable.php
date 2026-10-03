@@ -26,7 +26,6 @@ return new class extends Migration
             $table->string('director_signature_path')->nullable()->change();
             $table->string('nid_photo_path')->nullable()->change();
             $table->string('director_photo_path')->nullable()->change();
-            $table->string('institute_photo_path')->nullable()->change();
         });
     }
 

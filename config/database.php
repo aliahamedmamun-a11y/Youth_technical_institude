@@ -3,18 +3,6 @@
 use Illuminate\Support\Str;
 use Pdo\Mysql;
 
-$pgHost = env('DB_HOST', '127.0.0.1');
-$pgUrl = env('DATABASE_URL', env('DB_URL'));
-$sslMode = env('DB_SSLMODE');
-
-if (! $sslMode) {
-    if (str_contains((string) $pgHost, '.render.com') || str_contains((string) $pgUrl, '.render.com')) {
-        $sslMode = 'require';
-    } else {
-        $sslMode = 'prefer';
-    }
-}
-
 return [
 
     /*
@@ -108,7 +96,7 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'search_path' => 'public',
-            'sslmode' => $sslMode,
+            'sslmode' => env('DB_SSLMODE', 'prefer'),
         ],
 
         'sqlsrv' => [

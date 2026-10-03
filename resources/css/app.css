@@ -68,14 +68,14 @@
         position: fixed;
         inset-block: 0;
         left: 0;
-        z-index: 50;
+        z-index: 40;
         display: flex;
         width: 18rem;
         max-width: calc(100vw - 2rem);
         flex-direction: column;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        background: #071c2c;
-        box-shadow: 18px 0 50px rgb(15 23 42 / 0.5);
+        border-right: 1px solid #e2e8f0;
+        background: white;
+        box-shadow: 18px 0 50px rgb(15 23 42 / 0.12);
         transform: translateX(-105%);
         transition: transform 220ms ease;
     }

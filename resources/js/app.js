@@ -1042,6 +1042,8 @@ const adminMenuOpen = document.querySelector('[data-admin-menu-open]');
 const adminMenuClose = document.querySelector('[data-admin-menu-close]');
 
 const setAdminMenu = (isOpen) => {
+    adminSidebar?.classList.toggle('-translate-x-full', !isOpen);
+    adminSidebar?.classList.toggle('translate-x-0', isOpen);
     adminSidebar?.classList.toggle('is-open', isOpen);
     adminOverlay?.classList.toggle('hidden', !isOpen);
     adminMenuOpen?.setAttribute('aria-expanded', String(isOpen));
@@ -1055,6 +1057,14 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         setAdminMenu(false);
     }
+});
+
+adminSidebar?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+        if (window.innerWidth < 1024) {
+            setAdminMenu(false);
+        }
+    });
 });
 
 const confirmDialog = document.querySelector('[data-admin-confirm-dialog]');

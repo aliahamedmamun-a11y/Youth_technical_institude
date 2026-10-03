@@ -209,8 +209,8 @@
 
     <!-- UPDATE BRANCH MODAL OVERLAY -->
     <div id="update-branch-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/80 backdrop-blur-md">
-        <div class="min-h-full flex items-start justify-center p-4 sm:p-6">
-            <div class="relative w-full max-w-3xl my-6 sm:my-10 rounded-3xl border border-white/10 bg-[#0e1828] p-6 lg:p-10 shadow-2xl space-y-8">
+        <div class="min-h-full flex items-center justify-center p-2 sm:p-6">
+            <div class="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto my-auto rounded-3xl border border-white/10 bg-[#0e1828] p-4 sm:p-6 lg:p-10 shadow-2xl space-y-6 sm:space-y-8">
 
             <div class="text-center">
                 <h2 class="text-2xl sm:text-3xl font-black text-[#818cf8] uppercase tracking-tight">

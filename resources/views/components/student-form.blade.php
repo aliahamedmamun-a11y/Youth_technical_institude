@@ -25,7 +25,7 @@
 <div class="space-y-6" data-student-registration-container>
 
     <!-- Main Card Container -->
-    <div class="rounded-3xl border border-white/10 bg-[#0e1828] p-6 lg:p-10 shadow-2xl space-y-10">
+    <div class="rounded-3xl border border-white/10 bg-[#0e1828] p-4 sm:p-6 lg:p-10 shadow-2xl space-y-8 sm:space-y-10">
 
         <!-- Header -->
         <div class="text-center space-y-2">
@@ -579,11 +579,11 @@
             @endif
 
             <!-- ACTION BUTTONS -->
-            <div class="flex items-center justify-end gap-4 pt-8 border-t border-white/10">
-                <a href="{{ $cancelRoute ?? route('super-admin.students.index') }}" class="rounded-xl bg-[#334155] hover:bg-[#475569] text-white px-8 py-3.5 font-bold text-sm uppercase tracking-wider transition-all">
+            <div class="flex flex-col sm:flex-row items-center justify-end gap-3 sm:gap-4 pt-8 border-t border-white/10">
+                <a href="{{ $cancelRoute ?? route('super-admin.students.index') }}" class="w-full sm:w-auto text-center rounded-xl bg-[#334155] hover:bg-[#475569] text-white px-8 py-3.5 font-bold text-sm uppercase tracking-wider transition-all">
                     Cancel
                 </a>
-                <button type="submit" class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-10 py-3.5 font-black text-sm uppercase tracking-wider shadow-xl transition-all active:scale-95">
+                <button type="submit" class="w-full sm:w-auto text-center rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-10 py-3.5 font-black text-sm uppercase tracking-wider shadow-xl transition-all active:scale-95">
                     {{ $submitLabel }}
                 </button>
             </div>

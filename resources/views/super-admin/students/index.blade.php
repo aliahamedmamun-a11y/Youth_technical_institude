@@ -335,8 +335,8 @@
     </div>
 
     <!-- EDIT STUDENT INFORMATION MODAL OVERLAY -->
-    <div id="edit-student-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="relative w-full max-w-3xl rounded-3xl border border-white/10 bg-[#0e1828] p-6 lg:p-10 shadow-2xl space-y-8 my-8">
+    <div id="edit-student-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4">
+        <div class="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-3xl border border-white/10 bg-[#0e1828] p-4 sm:p-6 lg:p-10 shadow-2xl space-y-6 sm:space-y-8 my-auto">
 
             <div class="text-center">
                 <h2 class="text-2xl sm:text-3xl font-black text-[#818cf8] uppercase tracking-tight">

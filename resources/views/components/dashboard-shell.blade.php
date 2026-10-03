@@ -24,30 +24,19 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="min-h-screen bg-[#03224c] text-white antialiased">
-        {{-- Mobile Overlay Backdrop --}}
-        <div data-admin-overlay class="fixed inset-0 z-40 hidden bg-black/60 backdrop-blur-sm lg:hidden"></div>
-
         {{-- Top Navigation Bar --}}
-        <header class="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-white/10 bg-[#071c2c] px-4 sm:px-6 text-white shadow-md">
-            <div class="flex items-center gap-3 sm:gap-4">
-                @if ($isSuperAdmin || $isBranchUser)
-                    <button type="button" data-admin-menu-open class="flex size-10 items-center justify-center rounded-xl bg-white/10 text-white transition hover:bg-white/20 active:scale-95 lg:hidden" aria-label="Open sidebar menu">
-                        <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-                    </button>
-                @endif
-
-                <a href="/" class="flex items-center gap-2 sm:gap-3">
-                    <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="size-8 sm:size-9 brightness-0 invert">
-                    <span class="text-xs sm:text-sm font-black uppercase tracking-wider">BNTEI</span>
+        <header class="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-white/10 bg-[#071c2c] px-6 text-white shadow-md">
+            <div class="flex items-center gap-4">
+                <a href="/" class="flex items-center gap-3">
+                    <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="size-9 brightness-0 invert">
+                    <span class="text-sm font-black uppercase tracking-wider hidden sm:inline">BNTEI</span>
                 </a>
             </div>
-            <div class="flex items-center gap-2 sm:gap-4">
-                <div class="flex items-center gap-2 rounded-full bg-white/5 py-1 pl-3 pr-1 sm:py-1.5 sm:pl-4 sm:pr-1.5 ring-1 ring-white/10">
-                    <span class="text-[11px] sm:text-xs font-black uppercase tracking-wider opacity-80">{{ $isBranchUser ? 'Branch Panel' : 'Admin' }}</span>
-                    <div class="grid size-7 sm:size-8 place-items-center rounded-full bg-slate-400 text-slate-900">
-                        <svg viewBox="0 0 24 24" class="size-4 sm:size-5" fill="none" stroke="currentColor" stroke-width="2.5">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 rounded-full bg-white/5 py-1.5 pl-4 pr-1.5 ring-1 ring-white/10">
+                    <span class="text-xs font-black uppercase tracking-wider opacity-80">{{ $isBranchUser ? 'Branch Panel' : 'Admin' }}</span>
+                    <div class="grid size-8 place-items-center rounded-full bg-slate-400 text-slate-900">
+                        <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5">
                             <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
                         </svg>
                     </div>
@@ -61,19 +50,7 @@
                 @php
                     $navigationGroups = $isSuperAdmin ? $adminNavigation : $branchNavigation;
                 @endphp
-                <aside data-admin-sidebar class="fixed inset-y-0 left-0 z-50 flex h-full w-72 shrink-0 flex-col border-r border-white/10 bg-[#071c2c] shadow-2xl transition-transform duration-300 -translate-x-full lg:sticky lg:top-16 lg:z-auto lg:h-[calc(100vh-64px)] lg:translate-x-0 lg:shadow-sm">
-                    {{-- Mobile Menu Header --}}
-                    <div class="flex items-center justify-between border-b border-white/10 px-4 py-3.5 lg:hidden">
-                        <div class="flex items-center gap-2.5">
-                            <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="size-7 brightness-0 invert">
-                            <span class="text-xs font-black uppercase tracking-wider text-white">Navigation</span>
-                        </div>
-                        <button type="button" data-admin-menu-close class="rounded-lg p-1.5 text-slate-400 hover:bg-white/10 hover:text-white transition" aria-label="Close sidebar">
-                            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
+                <aside class="sticky top-16 h-[calc(100vh-64px)] w-72 shrink-0 flex flex-col border-r border-white/10 bg-[#071c2c] shadow-sm">
                     <nav class="flex-1 overflow-y-auto py-4 px-2 space-y-1 scrollbar-hide">
                         @foreach ($navigationGroups as $group)
                             @foreach ($group['items'] as $item)
@@ -155,7 +132,7 @@
             @endif
 
             {{-- Main Content Area --}}
-            <main class="min-w-0 flex-1 p-3 sm:p-6 lg:p-12">
+            <main class="min-w-0 flex-1 p-6 lg:p-12">
                 @if (session('status'))
                     <div id="status-popup" class="fixed top-24 right-6 z-50 transform transition-all duration-500 ease-out translate-x-[calc(100%+24px)]">
                         <div class="flex items-center gap-5 rounded-[2rem] border border-white/20 bg-[#03224c]/90 p-5 shadow-2xl backdrop-blur-xl ring-1 ring-white/10 min-w-[340px]">

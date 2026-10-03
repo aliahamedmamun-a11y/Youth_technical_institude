@@ -1,7 +1,7 @@
 <x-dashboard-shell title="User Profile">
     <div class="mx-auto max-w-5xl">
-        <div class="rounded-3xl border border-white/20 bg-[#071c2c]/50 p-8 shadow-2xl backdrop-blur-sm lg:p-12">
-            <h1 class="text-center text-4xl font-black tracking-tight text-[#4da6ff] uppercase lg:text-5xl">User Profile</h1>
+        <div class="rounded-2xl sm:rounded-3xl border border-white/20 bg-[#071c2c]/50 p-4 sm:p-8 shadow-2xl backdrop-blur-sm lg:p-12">
+            <h1 class="text-center text-2xl sm:text-4xl font-black tracking-tight text-[#4da6ff] uppercase lg:text-5xl">User Profile</h1>
 
             <div class="mt-12 grid gap-12 lg:grid-cols-[280px_1fr]">
                 {{-- Left Column: Logo/Avatar --}}

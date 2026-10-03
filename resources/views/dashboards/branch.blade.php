@@ -97,15 +97,16 @@
                     {{-- Left Box: Branch Code --}}
                     <div class="relative flex flex-col items-center justify-center rounded-[2rem] border border-teal-100 bg-white/95 p-6 text-center shadow-xl backdrop-blur-sm pt-9">
 
-                        {{-- Ribbon Badge Header --}}
-                        <div class="absolute -top-7 left-1/2 -translate-x-1/2 flex items-center justify-center">
-                            {{-- Ribbon Banner Behind --}}
-                            <div class="absolute -z-10 flex w-24 items-center justify-between">
-                                <div class="h-6 w-4 bg-[#0a4d5c] rounded-l-md transform -skew-y-6"></div>
-                                <div class="h-6 w-4 bg-[#0a4d5c] rounded-r-md transform skew-y-6"></div>
-                            </div>
+                        {{-- Ribbon Badge Header with Swallowtail Ribbon Banner --}}
+                        <div class="absolute -top-7 left-1/2 -translate-x-1/2 flex items-center justify-center w-full max-w-[200px]">
+                            {{-- Ribbon SVG Background with Swallowtail V-cut ends --}}
+                            <svg viewBox="0 0 200 46" class="absolute w-full h-11 text-[#126b7a] drop-shadow-md pointer-events-none">
+                                <path d="M10,8 L190,8 L180,23 L190,38 L10,38 L20,23 Z" fill="currentColor"/>
+                                <path d="M20,38 L20,44 L28,38 Z" fill="#09404c"/>
+                                <path d="M180,38 L180,44 L172,38 Z" fill="#09404c"/>
+                            </svg>
                             {{-- Circular Badge --}}
-                            <div class="flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-[#126b7a] to-[#0a4d5c] text-white shadow-lg ring-4 ring-white">
+                            <div class="relative z-10 flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-[#126b7a] to-[#0a4d5c] text-white shadow-lg ring-4 ring-white">
                                 <svg viewBox="0 0 24 24" class="size-7" fill="none" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5z" />
                                 </svg>
@@ -136,15 +137,16 @@
                     {{-- Right Box: Branch Name --}}
                     <div class="relative flex flex-col items-center justify-center rounded-[2rem] border border-teal-100 bg-white/95 p-6 text-center shadow-xl backdrop-blur-sm pt-9">
 
-                        {{-- Ribbon Badge Header --}}
-                        <div class="absolute -top-7 left-1/2 -translate-x-1/2 flex items-center justify-center">
-                            {{-- Ribbon Banner Behind --}}
-                            <div class="absolute -z-10 flex w-24 items-center justify-between">
-                                <div class="h-6 w-4 bg-[#0a4d5c] rounded-l-md transform -skew-y-6"></div>
-                                <div class="h-6 w-4 bg-[#0a4d5c] rounded-r-md transform skew-y-6"></div>
-                            </div>
+                        {{-- Ribbon Badge Header with Swallowtail Ribbon Banner --}}
+                        <div class="absolute -top-7 left-1/2 -translate-x-1/2 flex items-center justify-center w-full max-w-[200px]">
+                            {{-- Ribbon SVG Background with Swallowtail V-cut ends --}}
+                            <svg viewBox="0 0 200 46" class="absolute w-full h-11 text-[#126b7a] drop-shadow-md pointer-events-none">
+                                <path d="M10,8 L190,8 L180,23 L190,38 L10,38 L20,23 Z" fill="currentColor"/>
+                                <path d="M20,38 L20,44 L28,38 Z" fill="#09404c"/>
+                                <path d="M180,38 L180,44 L172,38 Z" fill="#09404c"/>
+                            </svg>
                             {{-- Circular Badge --}}
-                            <div class="flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-[#126b7a] to-[#0a4d5c] text-white shadow-lg ring-4 ring-white">
+                            <div class="relative z-10 flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-[#126b7a] to-[#0a4d5c] text-white shadow-lg ring-4 ring-white">
                                 <svg viewBox="0 0 24 24" class="size-7" fill="none" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.5M4.5 21V10.5" />
                                 </svg>

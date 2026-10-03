@@ -3,6 +3,13 @@
 # Create storage link if not present
 php artisan storage:link --force || true
 
+# Prepare SQLite database file if DB_CONNECTION is sqlite
+if [ "$DB_CONNECTION" = "sqlite" ] || [ -z "$DB_CONNECTION" ]; then
+    touch /var/www/html/database/database.sqlite
+    chown -R www-data:www-data /var/www/html/database || true
+    chmod -R 775 /var/www/html/database || true
+fi
+
 # Clear previous caches
 php artisan config:clear || true
 php artisan route:clear || true

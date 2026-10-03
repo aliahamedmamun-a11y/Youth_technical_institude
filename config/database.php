@@ -3,6 +3,38 @@
 use Illuminate\Support\Str;
 use Pdo\Mysql;
 
+$resolveRenderPostgresHost = function (?string $host): ?string {
+    if (! $host) {
+        return $host;
+    }
+
+    if (str_starts_with($host, 'dpg-') && ! str_contains($host, '.')) {
+        if (gethostbyname($host) === $host) {
+            return $host . '.oregon-postgres.render.com';
+        }
+    }
+
+    return $host;
+};
+
+$resolveRenderDatabaseUrl = function (?string $url): ?string {
+    if (! $url) {
+        return $url;
+    }
+
+    if (preg_match('/@dpg-[a-z0-9_-]+(?::|\/)/i', $url)) {
+        return preg_replace_callback('/(@)(dpg-[a-z0-9_-]+)(?=:|\/)/i', function ($matches) {
+            $host = $matches[2];
+            if (gethostbyname($host) === $host) {
+                return $matches[1] . $host . '.oregon-postgres.render.com';
+            }
+            return $matches[0];
+        }, $url);
+    }
+
+    return $url;
+};
+
 return [
 
     /*
@@ -86,8 +118,8 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL', env('DB_URL')),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'url' => $resolveRenderDatabaseUrl(env('DATABASE_URL', env('DB_URL'))),
+            'host' => $resolveRenderPostgresHost(env('DB_HOST', '127.0.0.1')),
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'laravel'),
             'username' => env('DB_USERNAME', 'root'),
@@ -96,7 +128,7 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'search_path' => 'public',
-            'sslmode' => env('DB_SSLMODE', 'prefer'),
+            'sslmode' => env('DB_SSLMODE', 'require'),
         ],
 
         'sqlsrv' => [

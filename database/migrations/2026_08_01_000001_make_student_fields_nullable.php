@@ -23,8 +23,6 @@ return new class extends Migration
             $table->string('passport_nid_number')->nullable()->change();
             $table->string('phone')->nullable()->change();
             $table->string('gender')->nullable()->change();
-            $table->string('end_month')->nullable()->change();
-            $table->string('end_year')->nullable()->change();
             $table->string('education_qualification')->nullable()->change();
             $table->string('duration')->nullable()->change();
             $table->string('session')->nullable()->change();

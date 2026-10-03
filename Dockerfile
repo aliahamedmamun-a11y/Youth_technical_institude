@@ -43,11 +43,13 @@ RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/apache2.conf
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache \
-    && chmod +x /var/www/html/docker-start.sh
+    && chmod -R 775 /var/www/html/bootstrap/cache
 
 # Expose port 80
 EXPOSE 80
 
-# Run entrypoint startup script
-CMD ["/var/www/html/docker-start.sh"]
+# The CMD will run migrations, seed the database, and start apache
+CMD php artisan storage:link --force && \
+    php artisan migrate --force && \
+    php artisan db:seed --force && \
+    apache2-foreground

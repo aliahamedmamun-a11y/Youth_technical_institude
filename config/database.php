@@ -3,6 +3,21 @@
 use Illuminate\Support\Str;
 use Pdo\Mysql;
 
+$dbConnection = env('DB_CONNECTION', 'sqlite');
+$dbHost = env('DB_HOST', '127.0.0.1');
+
+// Auto fallback to sqlite if pgsql host is unresolvable or dead
+if ($dbConnection === 'pgsql' && is_string($dbHost) && str_starts_with($dbHost, 'dpg-')) {
+    if (gethostbyname($dbHost) === $dbHost) {
+        $dbConnection = 'sqlite';
+    }
+}
+
+$sqlitePath = database_path('database.sqlite');
+if ($dbConnection === 'sqlite' && ! file_exists($sqlitePath)) {
+    @touch($sqlitePath);
+}
+
 return [
 
     /*
@@ -17,7 +32,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => $dbConnection,
 
     /*
     |--------------------------------------------------------------------------

@@ -35,7 +35,7 @@ class PublicResultController extends Controller
         return view('results.index', ['searched' => $rollNumber !== '', 'rollNumber' => $rollNumber]);
     }
 
-    public function show(string $verificationToken, ResultQrCodeService $qrCode, ResultGradingService $grading): View
+    public function show(string $verificationToken, ResultQrCodeService $qrCode, ResultGradingService $grading, Request $request): View
     {
         $result = StudentResult::query()
             ->where('verification_token', $verificationToken)
@@ -43,6 +43,8 @@ class PublicResultController extends Controller
             ->whereNotNull('published_at')
             ->with(['student.course', 'subjects'])
             ->firstOrFail();
+
+        $viewStyle = $request->query('style', $request->query('view', 'all')); // 'all' (Full Transcript) or 'single' (Single Semester)
 
         $semesterResults = StudentResult::query()
             ->whereBelongsTo($result->student)
@@ -63,6 +65,15 @@ class PublicResultController extends Controller
             $semesterResult->id => $qrCode->dataUri($semesterResult),
         ]);
 
-        return view('results.sheet', ['result' => $result, 'allResults' => $allResults, 'qrCodes' => $qrCodes, 'semesterResults' => $semesterResults, 'cumulativeGpa' => $grading->cumulativeGpa($result->student), 'qrCode' => $qrCode->dataUri($result), 'adminPreview' => false]);
+        return view('results.sheet', [
+            'result' => $result,
+            'allResults' => $allResults,
+            'qrCodes' => $qrCodes,
+            'semesterResults' => $semesterResults,
+            'cumulativeGpa' => $grading->cumulativeGpa($result->student),
+            'qrCode' => $qrCode->dataUri($result),
+            'adminPreview' => false,
+            'viewStyle' => $viewStyle,
+        ]);
     }
 }

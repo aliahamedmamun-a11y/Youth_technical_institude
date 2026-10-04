@@ -80,13 +80,34 @@ class StudentResultController extends Controller
         return redirect()->route('super-admin.results.edit', $result)->with('status', 'Marks saved successfully.');
     }
 
-    public function show(StudentResult $result, ResultQrCodeService $qrCode): View
+    public function show(StudentResult $result, ResultQrCodeService $qrCode, Request $request): View
     {
         Gate::authorize('view', $result);
 
         $result->load(['student.course', 'subjects']);
 
-        return view('results.sheet', ['result' => $result, 'cumulativeGpa' => app(ResultGradingService::class)->cumulativeGpa($result->student), 'qrCode' => $qrCode->dataUri($result), 'adminPreview' => true]);
+        $allResults = StudentResult::query()
+            ->whereBelongsTo($result->student)
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->with('subjects')
+            ->orderBy('semester')
+            ->get();
+
+        if ($allResults->isEmpty()) {
+            $allResults = collect([$result]);
+        }
+
+        $viewStyle = $request->query('style', $request->query('view', 'all'));
+
+        return view('results.sheet', [
+            'result' => $result,
+            'allResults' => $allResults,
+            'cumulativeGpa' => app(ResultGradingService::class)->cumulativeGpa($result->student),
+            'qrCode' => $qrCode->dataUri($result),
+            'adminPreview' => true,
+            'viewStyle' => $viewStyle,
+        ]);
     }
 
     public function store(StoreStudentResultRequest $request): RedirectResponse

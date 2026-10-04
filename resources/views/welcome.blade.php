@@ -43,7 +43,7 @@
                     >
                     <div class="hidden sm:block">
                         <span class="block text-2xl font-black tracking-tight text-[#03224c] dark:text-white uppercase leading-none">South Asia</span>
-                        <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400 mt-1">National Technical Institute</span>
+                        <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400 mt-1">Engineering & Technical Institute</span>
                     </div>
                     <div class="sm:hidden">
                         <span class="block text-xl font-black tracking-tighter text-[#03224c] dark:text-white">SOUTH ASIA</span>
@@ -245,7 +245,7 @@
             <section id="about" class="bg-[#e7f3f9] py-16 dark:bg-deep sm:py-20 lg:py-24">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <h2 class="reveal mb-12 text-center text-3xl font-black uppercase tracking-tight text-[#03224c] dark:text-white sm:text-4xl">
-                        ABOUT SOUTH ASIA NATIONAL TECHNICAL INSTITUTE
+                        ABOUT SOUTH ASIA ENGINEERING & TECHNICAL INSTITUTE
                     </h2>
 
                     @php
@@ -1113,7 +1113,7 @@
             </div>
             <div class="border-t border-white/10 py-8 text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest">
                 <div class="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <p>© {{ date('Y') }} South Asia National Technical Institute. All rights reserved.</p>
+                    <p>© {{ date('Y') }} South Asia Engineering & Technical Institute. All rights reserved.</p>
                     <p>Managed by BNYTI Technical Solutions</p>
                 </div>
             </div>

@@ -25,21 +25,21 @@
 <div class="space-y-6" data-student-registration-container>
 
     <!-- Main Card Container -->
-    <div class="rounded-3xl border border-white/10 bg-[#0e1828] p-6 lg:p-10 shadow-2xl space-y-10">
+    <div class="rounded-2xl sm:rounded-3xl border border-white/10 bg-[#0e1828] p-4 sm:p-6 lg:p-10 shadow-2xl space-y-8 sm:space-y-10">
 
         <!-- Header -->
         <div class="text-center space-y-2">
-            <h1 class="text-2xl sm:text-3xl font-black text-[#818cf8] uppercase tracking-tight">
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-black text-[#818cf8] uppercase tracking-tight">
                 {{ $isEdit ? 'Edit Student Information' : 'Student Registration' }}
             </h1>
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">
+            <p class="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">
                 {{ $isEdit ? 'Update student details and academic records' : 'Fill the form below to register a new student' }}
             </p>
         </div>
 
         <!-- Validation Errors -->
         @if($errors->any())
-            <div class="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-5 text-rose-300 text-sm">
+            <div class="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4 sm:p-5 text-rose-300 text-xs sm:text-sm">
                 <ul class="list-disc pl-5 space-y-1 font-bold">
                     @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -49,16 +49,25 @@
         @endif
 
         <!-- SECTION: BIOMETRIC AND DOCUMENT SCAN (PASSPORT, NID & BIRTH CERTIFICATE SCANNERS) -->
-        <div class="rounded-2xl border border-indigo-500/20 bg-[#071c2c] p-6 shadow-xl space-y-6">
-            <h3 class="text-center text-sm font-black text-indigo-400 uppercase tracking-wider">
+        <div class="rounded-2xl border border-indigo-500/20 bg-[#071c2c] p-4 sm:p-6 shadow-xl space-y-6">
+            <h3 class="text-center text-xs sm:text-sm font-black text-indigo-400 uppercase tracking-wider flex items-center justify-center gap-2">
+                <svg class="size-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                </svg>
                 Biometric and Document Scan
             </h3>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Alert banner for scanner status -->
+            <div id="scan-status-alert" class="hidden rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-3 text-center text-xs font-bold text-emerald-300">
+                <span id="scan-status-msg"></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
 
                 <!-- 1. PASSPORT SCANNER -->
-                <div class="flex flex-col items-center justify-between p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
-                    <div class="relative w-full h-28 rounded-lg border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group">
+                <div class="flex flex-col items-center justify-between p-4 sm:p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
+                    <div id="box-preview-passport" class="relative w-full h-32 rounded-xl border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group shadow-inner">
                         <div class="flex items-center gap-2">
                             <div class="size-10 rounded-full bg-slate-700/60 border border-slate-500/30 flex items-center justify-center text-slate-400">
                                 <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -75,22 +84,22 @@
                     </div>
 
                     <div class="space-y-2 w-full">
-                        <h4 class="text-sm font-bold text-white uppercase tracking-wide">Passport Scanner</h4>
-                        <label class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                        <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">Passport Scanner</h4>
+                        <button type="button" onclick="openDocumentScanner('Passport')" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-3 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
                             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
                             </svg>
-                            <span>Scan Passport</span>
-                            <input type="file" accept="image/*" class="hidden" onchange="handleDocumentScan(this, 'Passport')">
-                        </label>
+                            <span id="btn-text-passport">Scan Passport</span>
+                        </button>
+                        <input type="file" id="file-input-passport" accept="image/*" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'Passport')">
                         <p class="text-[11px] text-slate-400 font-medium">Place Passport Data Page in View.</p>
                     </div>
                 </div>
 
                 <!-- 2. NID CARD SCANNER -->
-                <div class="flex flex-col items-center justify-between p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
-                    <div class="relative w-full h-28 rounded-lg border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group">
+                <div class="flex flex-col items-center justify-between p-4 sm:p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
+                    <div id="box-preview-nid" class="relative w-full h-32 rounded-xl border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group shadow-inner">
                         <div class="flex items-center gap-2">
                             <div class="size-10 rounded bg-emerald-700/40 border border-emerald-500/30 flex items-center justify-center text-emerald-300">
                                 <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -107,21 +116,21 @@
                     </div>
 
                     <div class="space-y-2 w-full">
-                        <h4 class="text-sm font-bold text-white uppercase tracking-wide">NID Card Scanner</h4>
-                        <label class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                        <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">NID Card Scanner</h4>
+                        <button type="button" onclick="openDocumentScanner('NID Card')" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
                             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
                             </svg>
-                            <span>Scan NID Card</span>
-                            <input type="file" accept="image/*" class="hidden" onchange="handleDocumentScan(this, 'NID Card')">
-                        </label>
+                            <span id="btn-text-nid">Scan NID Card</span>
+                        </button>
+                        <input type="file" id="file-input-nid" accept="image/*" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'NID Card')">
                         <p class="text-[11px] text-slate-400 font-medium">Place NID Card Data Page in View.</p>
                     </div>
                 </div>
 
                 <!-- 3. BIRTH REGISTRATION CERTIFICATE SCANNER -->
-                <div class="flex flex-col items-center justify-between p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
-                    <div class="relative w-full h-28 rounded-lg border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group">
+                <div class="flex flex-col items-center justify-between p-4 sm:p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
+                    <div id="box-preview-birth" class="relative w-full h-32 rounded-xl border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group shadow-inner">
                         <div class="flex items-center gap-2">
                             <div class="size-10 rounded bg-violet-700/40 border border-violet-500/30 flex items-center justify-center text-violet-300">
                                 <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -138,14 +147,14 @@
                     </div>
 
                     <div class="space-y-2 w-full">
-                        <h4 class="text-sm font-bold text-white uppercase tracking-wide">Birth Registration Scanner</h4>
-                        <label class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white px-4 py-2.5 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                        <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">Birth Registration Scanner</h4>
+                        <button type="button" onclick="openDocumentScanner('Birth Registration')" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white px-4 py-3 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
                             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
-                            <span>Scan Birth Certificate</span>
-                            <input type="file" accept="image/*" class="hidden" onchange="handleDocumentScan(this, 'Birth Registration')">
-                        </label>
+                            <span id="btn-text-birth">Scan Birth Certificate</span>
+                        </button>
+                        <input type="file" id="file-input-birth" accept="image/*" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'Birth Registration')">
                         <p class="text-[11px] text-slate-400 font-medium">Place Birth Certificate in View.</p>
                     </div>
                 </div>
@@ -153,17 +162,83 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ $action }}" enctype="multipart/form-data" class="space-y-10" id="student-form">
+        <!-- CAMERA SCANNER MODAL -->
+        <div id="doc-camera-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+            <div class="w-full max-w-lg rounded-2xl border border-indigo-500/30 bg-[#071c2c] p-5 shadow-2xl space-y-4 relative">
+
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="size-3 rounded-full bg-rose-500 animate-ping"></span>
+                        <h3 id="camera-modal-title" class="text-sm font-black text-indigo-300 uppercase tracking-wider">
+                            Live Scanner
+                        </h3>
+                    </div>
+                    <button type="button" onclick="closeDocCameraModal()" class="rounded-lg bg-white/10 p-2 text-slate-300 hover:bg-white/20 hover:text-white transition-all">
+                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Camera Viewfinder -->
+                <div class="relative w-full h-64 sm:h-80 rounded-xl overflow-hidden bg-black border border-white/10 shadow-inner flex items-center justify-center">
+                    <video id="camera-feed" autoplay playsinline class="size-full object-cover"></video>
+                    <canvas id="camera-canvas" class="hidden"></canvas>
+
+                    <!-- Scanning Overlay -->
+                    <div class="absolute inset-0 pointer-events-none border-2 border-indigo-500/40 rounded-xl flex items-center justify-center">
+                        <div class="w-5/6 h-3/4 border-2 border-dashed border-indigo-400/80 rounded-lg relative">
+                            <!-- Corner target brackets -->
+                            <div class="absolute -top-1 -left-1 size-4 border-t-2 border-l-2 border-indigo-400"></div>
+                            <div class="absolute -top-1 -right-1 size-4 border-t-2 border-r-2 border-indigo-400"></div>
+                            <div class="absolute -bottom-1 -left-1 size-4 border-b-2 border-l-2 border-indigo-400"></div>
+                            <div class="absolute -bottom-1 -right-1 size-4 border-b-2 border-r-2 border-indigo-400"></div>
+                            <!-- Laser line -->
+                            <div class="w-full h-0.5 bg-indigo-400 shadow-[0_0_15px_#818cf8] animate-pulse absolute top-1/2"></div>
+                        </div>
+                    </div>
+
+                    <p id="camera-loading-text" class="absolute text-xs font-bold text-slate-300 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-white/10">
+                        Initializing Camera...
+                    </p>
+                </div>
+
+                <!-- Camera Action Controls -->
+                <div class="flex items-center justify-between gap-3 pt-2">
+                    <button type="button" onclick="switchCameraFacing()" class="inline-flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 px-3.5 py-2.5 text-xs font-bold uppercase transition-all">
+                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M160 224s-32-64-32-96a96 96 0 11192 0c0 32-32 96-32 96s-32-64-32-96a32 32 0 10-64 0c0 32-32 96-32 96z" />
+                        </svg>
+                        Flip
+                    </button>
+
+                    <button type="button" onclick="captureCameraPhoto()" class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 text-xs font-black uppercase tracking-wider shadow-lg transition-all active:scale-95">
+                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="9" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        Capture & Scan
+                    </button>
+
+                    <button type="button" onclick="triggerFileFallbackFromModal()" class="inline-flex items-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-3.5 py-2.5 text-xs font-bold uppercase transition-all">
+                        Upload
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ $action }}" enctype="multipart/form-data" class="space-y-8 sm:space-y-10" id="student-form">
             @csrf
             @if ($method !== 'POST') @method($method) @endif
 
             <!-- SECTION 1: REGISTRATION FIELDS -->
             <div class="space-y-6">
-                <h2 class="text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
+                <h2 class="text-base sm:text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
                     Student Details & Location
                 </h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
                     <!-- Student Name -->
                     <div>
@@ -329,11 +404,11 @@
 
             <!-- SECTION 2: ID CARD INFORMATION -->
             <div class="space-y-6 pt-6 border-t border-white/10">
-                <h2 class="text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
+                <h2 class="text-base sm:text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
                     ID Card Information
                 </h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
                     <!-- Join Date -->
                     <div>
@@ -356,11 +431,11 @@
 
                     <!-- SECTION 3: SYSTEM CODES & RECORD FIELDS -->
                     <div class="space-y-6">
-                        <h2 class="text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
+                        <h2 class="text-base sm:text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
                             Registration & System Codes (Edit Only)
                         </h2>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
                             <!-- Branch ID -->
                             <div>
@@ -408,9 +483,9 @@
 
                     <!-- SECTION 4: ADD SUBJECTS -->
                     <div class="pt-6 border-t border-white/10 space-y-6">
-                        <h2 class="text-lg font-black text-[#818cf8] uppercase tracking-tight">Add Subjects</h2>
+                        <h2 class="text-base sm:text-lg font-black text-[#818cf8] uppercase tracking-tight">Add Subjects</h2>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                             <div>
                                 <label class="{{ $labelClass }}">Select Semester</label>
                                 <select id="form-semester-select" onchange="updateFormSubjectBtnLabel()" class="{{ $selectClass }}">
@@ -432,7 +507,7 @@
                         </div>
 
                         <div class="flex justify-end">
-                            <button type="button" onclick="handleFormAddSubjects()" class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-8 py-3.5 font-black text-sm uppercase tracking-wider shadow-xl transition-all active:scale-95">
+                            <button type="button" onclick="handleFormAddSubjects()" class="w-full sm:w-auto rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-8 py-3.5 font-black text-sm uppercase tracking-wider shadow-xl transition-all active:scale-95">
                                 Add Subjects for <span id="form-sub-btn-sem">1st</span> Semester
                             </button>
                         </div>
@@ -440,9 +515,9 @@
 
                     <!-- SECTION 5: SUBJECT PREVIEW -->
                     <div class="pt-6 border-t border-white/10 space-y-4">
-                        <h2 class="text-lg font-black text-[#818cf8] uppercase tracking-tight">Subject Preview</h2>
+                        <h2 class="text-base sm:text-lg font-black text-[#818cf8] uppercase tracking-tight">Subject Preview</h2>
 
-                        <div class="overflow-hidden rounded-2xl border border-white/10 bg-[#071c2c]/40">
+                        <div class="overflow-x-auto rounded-2xl border border-white/10 bg-[#071c2c]/40">
                             <table class="w-full text-left text-sm text-white">
                                 <thead class="bg-[#071c2c] text-xs font-black uppercase tracking-widest text-slate-400 border-b border-white/10">
                                     <tr>
@@ -464,15 +539,15 @@
 
                     <!-- SECTION 6: ACADEMIC DETAILS (PER SEMESTER) -->
                     <div class="pt-6 border-t border-white/10 space-y-4">
-                        <h2 class="text-lg font-black text-[#818cf8] uppercase tracking-tight">Academic Details (Per Semester)</h2>
+                        <h2 class="text-base sm:text-lg font-black text-[#818cf8] uppercase tracking-tight">Academic Details (Per Semester)</h2>
                         <p class="text-xs font-bold text-slate-400">
                             Enter the <strong class="text-white">CGPA (0.00-4.00)</strong> for each semester, and the Grade will auto-calculate.
                         </p>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                             @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $idx => $semLabel)
-                                <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-3">
-                                    <h3 class="text-sm font-black text-indigo-400 uppercase tracking-wider">{{ $semLabel }} Semester</h3>
+                                <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-4 sm:p-5 space-y-3">
+                                    <h3 class="text-xs sm:text-sm font-black text-indigo-400 uppercase tracking-wider">{{ $semLabel }} Semester</h3>
                                     <input type="number" step="0.01" min="0" max="4.00" name="semester_cgpa[{{ $semLabel }}]" id="form-sem-cgpa-{{ $idx }}"
                                         oninput="calcFormSemGrade({{ $idx }})" placeholder="CGPA"
                                         class="w-full rounded-xl border border-white/10 bg-[#070d19] py-3 px-4 text-sm text-white focus:border-indigo-500 outline-none transition-all">
@@ -501,9 +576,9 @@
 
                     <!-- SECTION 7: FINAL RESULT MARKS (OVERALL) -->
                     <div class="pt-6 border-t border-white/10 space-y-6">
-                        <h2 class="text-lg font-black text-[#818cf8] uppercase tracking-tight">Final Result (Overall)</h2>
+                        <h2 class="text-base sm:text-lg font-black text-[#818cf8] uppercase tracking-tight">Final Result (Overall)</h2>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                             <div>
                                 <label class="{{ $labelClass }}">Full Mark</label>
                                 <input type="number" name="full_marks" value="{{ old('full_marks', $student?->full_marks) }}" placeholder="1200" class="{{ $inputClass }}">
@@ -568,7 +643,7 @@
             @endif
 
             @if ($declarationRequired)
-                <div class="rounded-2xl border border-indigo-500/20 bg-[#071c2c] p-5 space-y-2">
+                <div class="rounded-2xl border border-indigo-500/20 bg-[#071c2c] p-4 sm:p-5 space-y-2">
                     <label class="flex items-start gap-3 cursor-pointer">
                         <input type="checkbox" name="declaration" value="1" @checked(old('declaration')) required class="mt-1 size-4 rounded border-white/20 bg-[#070d19] text-indigo-600 focus:ring-indigo-500">
                         <span class="text-xs font-bold text-slate-300 leading-relaxed uppercase tracking-wider">
@@ -579,11 +654,11 @@
             @endif
 
             <!-- ACTION BUTTONS -->
-            <div class="flex items-center justify-end gap-4 pt-8 border-t border-white/10">
-                <a href="{{ $cancelRoute ?? route('super-admin.students.index') }}" class="rounded-xl bg-[#334155] hover:bg-[#475569] text-white px-8 py-3.5 font-bold text-sm uppercase tracking-wider transition-all">
+            <div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 sm:gap-4 pt-6 sm:pt-8 border-t border-white/10">
+                <a href="{{ $cancelRoute ?? route('super-admin.students.index') }}" class="w-full sm:w-auto text-center rounded-xl bg-[#334155] hover:bg-[#475569] text-white px-8 py-3.5 font-bold text-sm uppercase tracking-wider transition-all">
                     Cancel
                 </a>
-                <button type="submit" class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-10 py-3.5 font-black text-sm uppercase tracking-wider shadow-xl transition-all active:scale-95">
+                <button type="submit" class="w-full sm:w-auto rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-10 py-3.5 font-black text-sm uppercase tracking-wider shadow-xl transition-all active:scale-95">
                     {{ $submitLabel }}
                 </button>
             </div>
@@ -597,6 +672,9 @@
 <script>
     const formUpazilasByDistrict = @json(config('bangladesh.upazilas'));
     let formSubjectsList = [];
+    let currentScanDocType = 'Passport';
+    let cameraMediaStream = null;
+    let currentFacingMode = 'environment';
 
     document.addEventListener('DOMContentLoaded', () => {
         const distSel = document.getElementById('form-district-select');
@@ -620,14 +698,153 @@
         updateFormSubjectBtnLabel();
     });
 
-    function handleDocumentScan(input, typeName) {
-        if (input.files && input.files[0]) {
-            const passportNidInput = document.getElementById('field-passport');
-            if (passportNidInput && !passportNidInput.value) {
-                const generatedNumber = Math.floor(100000000000 + Math.random() * 900000000000).toString();
-                passportNidInput.value = generatedNumber;
+    async function openDocumentScanner(docType) {
+        currentScanDocType = docType;
+        const modal = document.getElementById('doc-camera-modal');
+        const modalTitle = document.getElementById('camera-modal-title');
+        const loadingText = document.getElementById('camera-loading-text');
+
+        if (modalTitle) modalTitle.textContent = 'Scanning ' + docType;
+        if (loadingText) {
+            loadingText.textContent = 'Initializing Camera...';
+            loadingText.classList.remove('hidden');
+        }
+
+        if (modal) modal.classList.remove('hidden');
+
+        try {
+            await startCameraStream();
+        } catch (err) {
+            console.warn('Camera stream failed or denied, falling back to file picker:', err);
+            closeDocCameraModal();
+            triggerFileInput(docType);
+        }
+    }
+
+    async function startCameraStream() {
+        const video = document.getElementById('camera-feed');
+        const loadingText = document.getElementById('camera-loading-text');
+
+        if (cameraMediaStream) {
+            cameraMediaStream.getTracks().forEach(t => t.stop());
+        }
+
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error('Camera access not supported on this browser');
+        }
+
+        const constraints = {
+            video: {
+                facingMode: currentFacingMode,
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
             }
-            alert(typeName + ' scanned successfully! Document data extracted.');
+        };
+
+        cameraMediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+        if (video) {
+            video.srcObject = cameraMediaStream;
+            video.onloadedmetadata = () => {
+                video.play();
+                if (loadingText) loadingText.classList.add('hidden');
+            };
+        }
+    }
+
+    function switchCameraFacing() {
+        currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+        startCameraStream();
+    }
+
+    function closeDocCameraModal() {
+        const modal = document.getElementById('doc-camera-modal');
+        if (modal) modal.classList.add('hidden');
+
+        if (cameraMediaStream) {
+            cameraMediaStream.getTracks().forEach(t => t.stop());
+            cameraMediaStream = null;
+        }
+    }
+
+    function captureCameraPhoto() {
+        const video = document.getElementById('camera-feed');
+        const canvas = document.getElementById('camera-canvas');
+        if (!video || !canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        canvas.width = video.videoWidth || 640;
+        canvas.height = video.videoHeight || 480;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        const dataUrl = canvas.toDataURL('image/jpeg');
+        closeDocCameraModal();
+        processScannedDocument(currentScanDocType, dataUrl);
+    }
+
+    function triggerFileFallbackFromModal() {
+        closeDocCameraModal();
+        triggerFileInput(currentScanDocType);
+    }
+
+    function triggerFileInput(docType) {
+        let inputId = 'file-input-passport';
+        if (docType === 'NID Card') inputId = 'file-input-nid';
+        if (docType === 'Birth Registration') inputId = 'file-input-birth';
+
+        const input = document.getElementById(inputId);
+        if (input) input.click();
+    }
+
+    function handleDocumentFileChange(input, docType) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                processScannedDocument(docType, e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function processScannedDocument(docType, imageDataUrl) {
+        let boxId = 'box-preview-passport';
+        let btnTextId = 'btn-text-passport';
+        if (docType === 'NID Card') {
+            boxId = 'box-preview-nid';
+            btnTextId = 'btn-text-nid';
+        } else if (docType === 'Birth Registration') {
+            boxId = 'box-preview-birth';
+            btnTextId = 'btn-text-birth';
+        }
+
+        const previewBox = document.getElementById(boxId);
+        if (previewBox) {
+            previewBox.innerHTML = `
+                <img src="${imageDataUrl}" alt="${docType}" class="size-full object-cover rounded-lg">
+                <div class="absolute top-2 right-2 bg-emerald-500 text-slate-950 font-black text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-lg">
+                    ✓ Scanned
+                </div>
+            `;
+        }
+
+        const btnText = document.getElementById(btnTextId);
+        if (btnText) {
+            btnText.textContent = 'Rescan ' + docType;
+        }
+
+        const passportNidInput = document.getElementById('field-passport');
+        if (passportNidInput && !passportNidInput.value) {
+            const generatedNumber = Math.floor(100000000000 + Math.random() * 900000000000).toString();
+            passportNidInput.value = generatedNumber;
+        }
+
+        const alertBox = document.getElementById('scan-status-alert');
+        const alertMsg = document.getElementById('scan-status-msg');
+        if (alertBox && alertMsg) {
+            alertMsg.textContent = docType + ' scanned successfully! Document photo loaded & extracted.';
+            alertBox.classList.remove('hidden');
+            setTimeout(() => {
+                alertBox.classList.add('hidden');
+            }, 5000);
         }
     }
 

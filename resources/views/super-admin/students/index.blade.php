@@ -73,6 +73,9 @@
                                     $studentImg = $student->image_path ? (str_starts_with($student->image_path, 'http') ? $student->image_path : asset('storage/' . $student->image_path)) : 'https://i.ibb.co/qMgPTvMQ/1000072415.jpg';
                                     $studentJsonData = [
                                         'id' => $student->id,
+                                        'branch_id' => $student->branch_id,
+                                        'registration_number' => $student->registration_number,
+                                        'roll_number' => $student->roll_number,
                                         'name' => $student->name,
                                         'father_name' => $student->father_name,
                                         'mother_name' => $student->mother_name,
@@ -370,13 +373,13 @@
                     <!-- Branch Id -->
                     <div>
                         <label class="{{ $modalLabelClass }}">Branch Id</label>
-                        <input type="text" id="modal-branch-id" readonly class="{{ $modalInputClass }} cursor-not-allowed text-slate-400">
+                        <input type="text" name="branch_id" id="modal-branch-id" placeholder="Branch Code / ID" class="{{ $modalInputClass }}">
                     </div>
 
                     <!-- Student Id -->
                     <div>
                         <label class="{{ $modalLabelClass }}">Student Id</label>
-                        <input type="text" id="modal-student-id" readonly class="{{ $modalInputClass }} cursor-not-allowed text-slate-400">
+                        <input type="text" name="student_id" id="modal-student-id" placeholder="Student ID" class="{{ $modalInputClass }}">
                     </div>
 
                     <!-- Student Registration Number -->
@@ -736,6 +739,10 @@
             form.action = student.update_url;
 
             document.getElementById('modal-avatar-preview').src = student.image_url || 'https://i.ibb.co/qMgPTvMQ/1000072415.jpg';
+            document.getElementById('modal-branch-id').value = student.branch_id || '';
+            document.getElementById('modal-student-id').value = student.id || student.student_id || '';
+            document.getElementById('modal-reg-no').value = student.registration_number || '';
+            document.getElementById('modal-roll-no').value = student.roll_number || '';
             document.getElementById('modal-name').value = student.name || '';
             document.getElementById('modal-father-name').value = student.father_name || '';
             document.getElementById('modal-mother-name').value = student.mother_name || '';

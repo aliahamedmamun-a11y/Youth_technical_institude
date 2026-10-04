@@ -94,6 +94,9 @@
                                     $studentImg = $student->image_path ? (str_starts_with($student->image_path, 'http') ? $student->image_path : asset('storage/' . $student->image_path)) : 'https://i.ibb.co/qMgPTvMQ/1000072415.jpg';
                                     $studentJsonData = [
                                         'id' => $student->id,
+                                        'branch_id' => $student->branch_id,
+                                        'registration_number' => $student->registration_number,
+                                        'roll_number' => $student->roll_number,
                                         'name' => $student->name,
                                         'father_name' => $student->father_name,
                                         'mother_name' => $student->mother_name,

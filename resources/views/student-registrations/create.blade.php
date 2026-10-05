@@ -17,26 +17,26 @@
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta name="theme-color" content="#15803d">
+            <meta name="theme-color" content="#03224c">
             <meta name="description" content="Register as a student at Bangladesh National Youth Technical Institute.">
             <title>Student Registration | BNYTI</title>
             <link rel="icon" href="{{ asset('images/Logo.png') }}" type="image/png">
             @fonts
             @vite(['resources/css/app.css', 'resources/js/app.js'])
         </head>
-        <body class="min-h-screen overflow-x-hidden bg-[#d9e7ed] text-slate-900 antialiased dark:bg-ink dark:text-white">
-            <a href="#main-content" class="fixed top-3 left-3 z-[100] -translate-y-20 rounded-full bg-emerald-500 px-5 py-3 text-sm font-bold text-ink transition focus:translate-y-0">Skip to content</a>
+        <body class="min-h-screen overflow-x-hidden bg-[#e7f3f9] text-slate-900 antialiased dark:bg-ink dark:text-white">
+            <a href="#main-content" class="fixed top-3 left-3 z-[100] -translate-y-20 rounded-full bg-[#03224c] px-5 py-3 text-sm font-bold text-white transition focus:translate-y-0">Skip to content</a>
 
             @if (session('status'))
                 <div id="status-popup" class="fixed top-8 right-6 z-[110] transform transition-all duration-500 ease-out translate-x-[calc(100%+24px)]">
                     <div class="flex items-center gap-5 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-2xl ring-1 ring-slate-900/5 min-w-[340px] dark:bg-deep dark:border-white/10">
-                        <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400">
+                        <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-400">
                             <svg viewBox="0 0 24 24" class="size-7" fill="none" stroke="currentColor" stroke-width="3">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 dark:text-[#6cb2eb]">Registration Success</h4>
+                            <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-[#6cb2eb]">Registration Success</h4>
                             <p class="mt-1 text-sm font-black text-slate-900 dark:text-white">{{ session('status') }}</p>
                         </div>
                         <button onclick="document.getElementById('status-popup').classList.add('translate-x-[calc(100%+24px)]')" class="text-slate-400 transition hover:text-slate-900 dark:hover:text-white">

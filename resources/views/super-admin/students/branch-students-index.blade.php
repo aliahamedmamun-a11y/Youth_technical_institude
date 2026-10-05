@@ -55,9 +55,8 @@
                                 <th class="px-4 py-4 text-center">TRANSCRIPTONE</th>
                                 <th class="px-4 py-4 text-center">TRANSCRIPTTWO</th>
                                 <th class="px-4 py-4 text-center">NIDCARD</th>
-                                <th class="px-4 py-4 text-center">CERT STATUS</th>
-                                <th class="px-4 py-4 text-center">TRANS-ONE STATUS</th>
-                                <th class="px-4 py-4 text-center">BRANCH PERM</th>
+                                <th class="px-4 py-4 text-center">RESULT 1</th>
+                                <th class="px-4 py-4 text-center">RESULT 2</th>
                                 <th class="px-4 py-4 text-center">DELETE SCORE</th>
                                 <th class="px-4 py-4 text-center">STUDENT ID</th>
                                 <th class="px-4 py-4 text-center">STUDENT REGISTRATION NUMBER</th>
@@ -97,6 +96,9 @@
                                         'branch_id' => $student->branch_id,
                                         'registration_number' => $student->registration_number,
                                         'roll_number' => $student->roll_number,
+                                        'certificate_serial' => $student->certificate_serial,
+                                        'institute_name' => $student->institute_name ?: ($student->branch?->institute_name ?? 'BNTEI'),
+                                        'director_name' => $student->director_name,
                                         'name' => $student->name,
                                         'father_name' => $student->father_name,
                                         'mother_name' => $student->mother_name,
@@ -205,31 +207,40 @@
                                     </td>
 
                                     {{-- NIDCARD --}}
+                                    {{-- NIDCARD --}}
                                     <td class="px-4 py-4 text-center">
                                         <a href="{{ route('super-admin.students.documents.show', [$student, 'student-id']) }}"
                                            onclick="downloadPdf(event, this.href)"
                                            class="inline-block rounded-lg bg-cyan-600 hover:bg-cyan-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
-                                            Transcript Two
-                                        </a>
-                                    </td>
-
-                                    {{-- CERT STATUS --}}
-                                    <td class="px-4 py-4 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'student-id']) }}"
-                                           onclick="downloadPdf(event, this.href)"
-                                           class="inline-block rounded-lg bg-purple-600 hover:bg-purple-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
                                             NIDCard
                                         </a>
                                     </td>
 
-                                    {{-- TRANS-ONE STATUS --}}
+                                    {{-- NIDCARD --}}
                                     <td class="px-4 py-4 text-center">
-                                        <span class="rounded-full bg-pink-500/20 px-3 py-1 text-[9px] font-black uppercase text-pink-300">NOT ALLOWED</span>
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'student-id']) }}"
+                                           onclick="downloadPdf(event, this.href)"
+                                           class="inline-block rounded-lg bg-cyan-600 hover:bg-cyan-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
+                                            NIDCard
+                                        </a>
                                     </td>
 
-                                    {{-- BRANCH PERM --}}
+                                    {{-- RESULT 1 --}}
                                     <td class="px-4 py-4 text-center">
-                                        <span class="rounded-full bg-pink-500/20 px-3 py-1 text-[9px] font-black uppercase text-pink-300">NOT ALLOWED</span>
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'results']) }}"
+                                           target="_blank"
+                                           class="inline-block rounded-lg bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
+                                            Result 1
+                                        </a>
+                                    </td>
+
+                                    {{-- RESULT 2 --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'results-2']) }}"
+                                           target="_blank"
+                                           class="inline-block rounded-lg bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
+                                            Result 2
+                                        </a>
                                     </td>
 
                                     {{-- DELETE SCORE --}}
@@ -392,6 +403,36 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+                    <!-- Branch Id -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Branch Id</label>
+                        <input type="text" name="branch_id" id="modal-branch-id" placeholder="Branch Code / ID" class="{{ $modalInputClass }}">
+                    </div>
+
+                    <!-- Student Id -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Student Id</label>
+                        <input type="text" name="student_id" id="modal-student-id" placeholder="Student ID" class="{{ $modalInputClass }}">
+                    </div>
+
+                    <!-- Student Registration Number -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Student Registration Number</label>
+                        <input type="text" name="registration_number" id="modal-reg-no" class="{{ $modalInputClass }}">
+                    </div>
+
+                    <!-- Student Roll Number -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Student Roll Number</label>
+                        <input type="text" name="roll_number" id="modal-roll-no" class="{{ $modalInputClass }}">
+                    </div>
+
+                    <!-- Certificate Serial Number -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Certificate Serial Number</label>
+                        <input type="text" name="certificate_serial" id="modal-cert-serial" placeholder="Certificate Serial Number" class="{{ $modalInputClass }}">
+                    </div>
+
                     <!-- Student Name -->
                     <div>
                         <label class="{{ $modalLabelClass }}">Student Name</label>
@@ -496,6 +537,18 @@
                         <input type="text" name="education_qualification" id="modal-education" placeholder="Education Qualification" class="{{ $modalInputClass }}">
                     </div>
 
+                    <!-- Institute -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Institute</label>
+                        <input type="text" name="institute_name" id="modal-institute" placeholder="Institute Name" class="{{ $modalInputClass }}">
+                    </div>
+
+                    <!-- Director Name -->
+                    <div>
+                        <label class="{{ $modalLabelClass }}">Director Name</label>
+                        <input type="text" name="director_name" id="modal-director-name" placeholder="Director Name" class="{{ $modalInputClass }}">
+                    </div>
+
                     <!-- Issue Date -->
                     <div>
                         <label class="{{ $modalLabelClass }}">Issue Date</label>
@@ -578,7 +631,28 @@
 
             form.action = student.update_url;
 
-            document.getElementById('modal-avatar-preview').src = student.image_url || 'https://i.ibb.co/qMgPTvMQ/1000072415.jpg';
+            document.getElementById('modal-avatar-preview').src = student.image_url || student.image || 'https://i.ibb.co/qMgPTvMQ/1000072415.jpg';
+            if (document.getElementById('modal-branch-id')) {
+                document.getElementById('modal-branch-id').value = student.branch_id || '';
+            }
+            if (document.getElementById('modal-student-id')) {
+                document.getElementById('modal-student-id').value = student.id || student.student_id || '';
+            }
+            if (document.getElementById('modal-reg-no')) {
+                document.getElementById('modal-reg-no').value = student.registration_number || '';
+            }
+            if (document.getElementById('modal-roll-no')) {
+                document.getElementById('modal-roll-no').value = student.roll_number || '';
+            }
+            if (document.getElementById('modal-cert-serial')) {
+                document.getElementById('modal-cert-serial').value = student.certificate_serial || '';
+            }
+            if (document.getElementById('modal-institute')) {
+                document.getElementById('modal-institute').value = student.institute_name || '';
+            }
+            if (document.getElementById('modal-director-name')) {
+                document.getElementById('modal-director-name').value = student.director_name || '';
+            }
             document.getElementById('modal-name').value = student.name || '';
             document.getElementById('modal-father-name').value = student.father_name || '';
             document.getElementById('modal-mother-name').value = student.mother_name || '';

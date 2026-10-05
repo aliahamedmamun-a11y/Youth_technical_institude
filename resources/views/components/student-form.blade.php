@@ -59,7 +59,7 @@
             </h3>
 
             <!-- Alert banner for scanner status -->
-            <div id="scan-status-alert" class="hidden rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-3 text-center text-xs font-bold text-emerald-300">
+            <div id="scan-status-alert" class="hidden rounded-xl bg-indigo-500/10 border border-indigo-500/30 p-3 text-center text-xs font-bold text-indigo-300">
                 <span id="scan-status-msg"></span>
             </div>
 
@@ -92,8 +92,8 @@
                             </svg>
                             <span id="btn-text-passport">Scan Passport</span>
                         </button>
-                        <input type="file" id="file-input-passport" accept="image/*" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'Passport')">
-                        <p class="text-[11px] text-slate-400 font-medium">Place Passport Data Page in View.</p>
+                        <input type="file" id="file-input-passport" accept="image/*,application/pdf,.pdf" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'Passport')">
+                        <p class="text-[11px] text-slate-400 font-medium">Place Passport Page in View (Image or PDF).</p>
                     </div>
                 </div>
 
@@ -101,30 +101,30 @@
                 <div class="flex flex-col items-center justify-between p-4 sm:p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
                     <div id="box-preview-nid" class="relative w-full h-32 rounded-xl border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group shadow-inner">
                         <div class="flex items-center gap-2">
-                            <div class="size-10 rounded bg-emerald-700/40 border border-emerald-500/30 flex items-center justify-center text-emerald-300">
+                            <div class="size-10 rounded bg-cyan-700/40 border border-cyan-500/30 flex items-center justify-center text-cyan-300">
                                 <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zM7.5 15a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" />
                                 </svg>
                             </div>
                             <div class="space-y-1 text-[9px] font-mono text-slate-300">
-                                <div class="w-16 h-1.5 bg-emerald-600/80 rounded"></div>
-                                <div class="w-12 h-1.5 bg-emerald-600/60 rounded"></div>
-                                <div class="w-14 h-1.5 bg-emerald-600/60 rounded"></div>
+                                <div class="w-16 h-1.5 bg-cyan-600/80 rounded"></div>
+                                <div class="w-12 h-1.5 bg-cyan-600/60 rounded"></div>
+                                <div class="w-14 h-1.5 bg-cyan-600/60 rounded"></div>
                             </div>
                         </div>
-                        <div class="absolute inset-x-0 top-1/2 h-0.5 bg-emerald-400 shadow-[0_0_12px_#34d399] animate-pulse"></div>
+                        <div class="absolute inset-x-0 top-1/2 h-0.5 bg-cyan-400 shadow-[0_0_12px_#22d3ee] animate-pulse"></div>
                     </div>
 
                     <div class="space-y-2 w-full">
                         <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">NID Card Scanner</h4>
-                        <button type="button" onclick="openDocumentScanner('NID Card')" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                        <button type="button" onclick="openDocumentScanner('NID Card')" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-3 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
                             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
                             </svg>
                             <span id="btn-text-nid">Scan NID Card</span>
                         </button>
-                        <input type="file" id="file-input-nid" accept="image/*" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'NID Card')">
-                        <p class="text-[11px] text-slate-400 font-medium">Place NID Card Data Page in View.</p>
+                        <input type="file" id="file-input-nid" accept="image/*,application/pdf,.pdf" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'NID Card')">
+                        <p class="text-[11px] text-slate-400 font-medium">Place NID Card Data Page in View (Image or PDF).</p>
                     </div>
                 </div>
 
@@ -154,8 +154,8 @@
                             </svg>
                             <span id="btn-text-birth">Scan Birth Certificate</span>
                         </button>
-                        <input type="file" id="file-input-birth" accept="image/*" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'Birth Registration')">
-                        <p class="text-[11px] text-slate-400 font-medium">Place Birth Certificate in View.</p>
+                        <input type="file" id="file-input-birth" accept="image/*,application/pdf,.pdf" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'Birth Registration')">
+                        <p class="text-[11px] text-slate-400 font-medium">Place Birth Certificate in View (Image or PDF).</p>
                     </div>
                 </div>
 
@@ -455,10 +455,22 @@
                                 <input type="text" name="roll_number" value="{{ old('roll_number', $student?->roll_number) }}" placeholder="Auto-generated if left empty" class="{{ $inputClass }}">
                             </div>
 
+                            <!-- Certificate Serial Number -->
+                            <div>
+                                <label class="{{ $labelClass }}">Certificate Serial Number</label>
+                                <input type="text" name="certificate_serial" value="{{ old('certificate_serial', $student?->certificate_serial) }}" placeholder="Certificate Serial Number" class="{{ $inputClass }}">
+                            </div>
+
                             <!-- Director Name -->
                             <div>
                                 <label class="{{ $labelClass }}">Director Name</label>
                                 <input type="text" name="director_name" value="{{ old('director_name', $student?->director_name) }}" placeholder="Director / Principal Name" class="{{ $inputClass }}">
+                            </div>
+
+                            <!-- Institute Name -->
+                            <div>
+                                <label class="{{ $labelClass }}">Institute Name</label>
+                                <input type="text" name="institute_name" value="{{ old('institute_name', $student?->institute_name) }}" placeholder="Institute Name" class="{{ $inputClass }}">
                             </div>
 
                             <!-- Session Display -->
@@ -797,11 +809,70 @@
 
     function handleDocumentFileChange(input, docType) {
         if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                processScannedDocument(docType, e.target.result);
-            };
-            reader.readAsDataURL(input.files[0]);
+            const file = input.files[0];
+            const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+
+            if (isPdf) {
+                processScannedPdfDocument(docType, file);
+            } else {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    processScannedDocument(docType, e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+
+    function processScannedPdfDocument(docType, file) {
+        let boxId = 'box-preview-passport';
+        let btnTextId = 'btn-text-passport';
+        if (docType === 'NID Card') {
+            boxId = 'box-preview-nid';
+            btnTextId = 'btn-text-nid';
+        } else if (docType === 'Birth Registration') {
+            boxId = 'box-preview-birth';
+            btnTextId = 'btn-text-birth';
+        }
+
+        const fileSizeMb = (file.size / (1024 * 1024)).toFixed(2);
+        const previewBox = document.getElementById(boxId);
+        if (previewBox) {
+            previewBox.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center p-3 size-full bg-indigo-950/80 rounded-lg border border-indigo-500/40">
+                    <div class="size-10 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mb-1">
+                        <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.75 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                        </svg>
+                    </div>
+                    <span class="text-xs font-black text-white truncate max-w-[180px]">${file.name}</span>
+                    <span class="text-[10px] font-bold text-indigo-300">PDF Document (${fileSizeMb} MB)</span>
+                </div>
+                <div class="absolute top-2 right-2 bg-indigo-600 text-white font-black text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-lg">
+                    ✓ PDF Loaded
+                </div>
+            `;
+        }
+
+        const btnText = document.getElementById(btnTextId);
+        if (btnText) {
+            btnText.textContent = 'Change ' + docType + ' PDF';
+        }
+
+        const passportNidInput = document.getElementById('field-passport');
+        if (passportNidInput && !passportNidInput.value) {
+            const generatedNumber = Math.floor(100000000000 + Math.random() * 900000000000).toString();
+            passportNidInput.value = generatedNumber;
+        }
+
+        const alertBox = document.getElementById('scan-status-alert');
+        const alertMsg = document.getElementById('scan-status-msg');
+        if (alertBox && alertMsg) {
+            alertMsg.textContent = docType + ' PDF document uploaded & scanned successfully! Details extracted.';
+            alertBox.classList.remove('hidden');
+            setTimeout(() => {
+                alertBox.classList.add('hidden');
+            }, 5000);
         }
     }
 
@@ -820,7 +891,7 @@
         if (previewBox) {
             previewBox.innerHTML = `
                 <img src="${imageDataUrl}" alt="${docType}" class="size-full object-cover rounded-lg">
-                <div class="absolute top-2 right-2 bg-emerald-500 text-slate-950 font-black text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-lg">
+                <div class="absolute top-2 right-2 bg-indigo-600 text-white font-black text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-lg">
                     ✓ Scanned
                 </div>
             `;

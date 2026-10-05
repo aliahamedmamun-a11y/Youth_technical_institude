@@ -292,31 +292,55 @@
             </main>
         </div>
 
-        {{-- Login Welcome Modal Popup --}}
+        {{-- Login Welcome Modal Popup (Full Screen Experience with Time-Based 3D Visual Effects) --}}
         @if (session('show_welcome_modal'))
             @php
                 $hour = (int) now()->timezone('Asia/Dhaka')->format('H');
 
                 if ($hour >= 5 && $hour < 12) {
+                    $timePeriod = 'morning';
                     $greetingEmoji = '🌞';
                     $greetingTitle = 'শুভ সকাল!';
-                    $greetingSubtitle = 'আপনার আজকের দিনটি সফল ও ফলপ্রসূ হোক।';
+                    $greetingSubtitle = 'আপনার আজকের দিনটি সফল, আনন্দময় ও নতুন সম্ভাবনাময় হোক।';
+                    $bgGradient = 'from-amber-950/95 via-[#1b122c]/95 to-[#030914]/95';
+                    $borderColor = 'border-amber-400/60';
+                    $glowShadow = 'shadow-[0_0_100px_rgba(251,191,36,0.45)]';
+                    $accentText = 'text-amber-300';
+                    $badgeBg = 'bg-amber-400/10 border-amber-400/40 text-amber-300';
+                    $btnGradient = 'from-amber-500 via-amber-400 to-amber-500 text-slate-950 shadow-amber-500/30';
                 } elseif ($hour >= 12 && $hour < 16) {
+                    $timePeriod = 'afternoon';
                     $greetingEmoji = '🌤️';
                     $greetingTitle = 'শুভ দুপুর!';
-                    $greetingSubtitle = 'আপনার সকল কার্যক্রম সফলভাবে সম্পন্ন হোক।';
-                } elseif ($hour >= 16 && $hour < 18) {
-                    $greetingEmoji = '🌇';
-                    $greetingTitle = 'শুভ বিকেল!';
-                    $greetingSubtitle = 'নতুন উদ্যমে আপনার কাজ এগিয়ে নিন।';
-                } elseif ($hour >= 18 && $hour < 20) {
+                    $greetingSubtitle = 'আপনার সকল কর্মপরিকল্পনা ও শিক্ষা উদ্যোগ সফলভাবে সম্পন্ন হোক।';
+                    $bgGradient = 'from-[#032338]/95 via-[#08304b]/95 to-[#020b18]/95';
+                    $borderColor = 'border-sky-400/60';
+                    $glowShadow = 'shadow-[0_0_100px_rgba(56,189,248,0.45)]';
+                    $accentText = 'text-sky-300';
+                    $badgeBg = 'bg-sky-400/10 border-sky-400/40 text-sky-300';
+                    $btnGradient = 'from-sky-500 via-sky-400 to-cyan-500 text-slate-950 shadow-sky-500/30';
+                } elseif ($hour >= 16 && $hour < 20) {
+                    $timePeriod = 'evening';
                     $greetingEmoji = '🌆';
                     $greetingTitle = 'শুভ সন্ধ্যা!';
-                    $greetingSubtitle = 'শেখার প্রতিটি মুহূর্ত হোক আনন্দময়।';
+                    $greetingSubtitle = 'শেখার প্রতিটি মুহূর্ত হোক আনন্দময় ও সফলতার নতুন পদচিহ্ন।';
+                    $bgGradient = 'from-[#2a0e2a]/95 via-[#1a1030]/95 to-[#050614]/95';
+                    $borderColor = 'border-amber-400/60';
+                    $glowShadow = 'shadow-[0_0_100px_rgba(245,158,11,0.45)]';
+                    $accentText = 'text-amber-300';
+                    $badgeBg = 'bg-amber-400/10 border-amber-400/40 text-amber-300';
+                    $btnGradient = 'from-amber-500 via-amber-400 to-orange-500 text-slate-950 shadow-amber-500/30';
                 } else {
+                    $timePeriod = 'night';
                     $greetingEmoji = '🌙';
                     $greetingTitle = 'শুভ রাত্রি!';
-                    $greetingSubtitle = 'আগামী দিনের জন্য আন্তরিক শুভকামনা।';
+                    $greetingSubtitle = 'শান্তিময় রাত্রি ও আগামী দিনের শুভসূচনার জন্য আন্তরিক শুভকামনা।';
+                    $bgGradient = 'from-[#0a0f29]/95 via-[#111638]/95 to-[#020412]/95';
+                    $borderColor = 'border-indigo-400/60';
+                    $glowShadow = 'shadow-[0_0_100px_rgba(129,140,248,0.45)]';
+                    $accentText = 'text-indigo-300';
+                    $badgeBg = 'bg-indigo-400/10 border-indigo-400/40 text-indigo-300';
+                    $btnGradient = 'from-indigo-500 via-amber-400 to-indigo-500 text-slate-950 shadow-indigo-500/30';
                 }
 
                 $userPhoto = null;
@@ -329,106 +353,112 @@
                 if (! $userPhoto) {
                     $userPhoto = asset('images/principal-portrait.webp');
                 }
+
+                $userRoleTitle = $isSuperAdmin ? 'Super Admin' : ($isBranchUser ? 'Branch Director' : 'Panel User');
             @endphp
 
-            <div id="welcome-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md transition-all duration-500">
-                <div class="relative w-full max-w-sm sm:max-w-md overflow-hidden rounded-[2.5rem] border-2 border-amber-400/50 bg-gradient-to-b from-[#031525] via-[#082336] to-[#020b18] p-6 text-white text-center shadow-[0_0_60px_rgba(234,179,8,0.35)] ring-1 ring-white/20">
+            <div id="welcome-modal" class="fixed inset-0 z-[100] flex flex-col items-center justify-center p-4 sm:p-8 bg-slate-950/90 backdrop-blur-2xl transition-all duration-700 overflow-y-auto">
+                {{-- Ambient Background Light Particles --}}
+                <div class="pointer-events-none fixed inset-0 overflow-hidden">
+                    <div class="absolute -top-32 -left-32 size-96 rounded-full bg-amber-500/15 blur-[120px] animate-pulse"></div>
+                    <div class="absolute -bottom-32 -right-32 size-96 rounded-full bg-indigo-500/15 blur-[120px] animate-pulse"></div>
+                </div>
 
-                    {{-- Corner Decorative Border Frame --}}
-                    <div class="absolute top-3 left-3 size-7 border-t-2 border-l-2 border-amber-400/80 rounded-tl-lg pointer-events-none"></div>
-                    <div class="absolute top-3 right-3 size-7 border-t-2 border-r-2 border-amber-400/80 rounded-tr-lg pointer-events-none"></div>
-                    <div class="absolute bottom-3 left-3 size-7 border-b-2 border-l-2 border-amber-400/80 rounded-bl-lg pointer-events-none"></div>
-                    <div class="absolute bottom-3 right-3 size-7 border-b-2 border-r-2 border-amber-400/80 rounded-br-lg pointer-events-none"></div>
+                <div class="relative w-full max-w-lg sm:max-w-xl overflow-hidden rounded-[3rem] border-2 {{ $borderColor }} bg-gradient-to-b {{ $bgGradient }} p-6 sm:p-10 text-white text-center {{ $glowShadow }} ring-1 ring-white/20 backdrop-blur-3xl transition-all my-auto">
+
+                    {{-- Corner Decorative Frames --}}
+                    <div class="absolute top-4 left-4 size-8 border-t-2 border-l-2 border-amber-400/80 rounded-tl-xl pointer-events-none"></div>
+                    <div class="absolute top-4 right-4 size-8 border-t-2 border-r-2 border-amber-400/80 rounded-tr-xl pointer-events-none"></div>
+                    <div class="absolute bottom-4 left-4 size-8 border-b-2 border-l-2 border-amber-400/80 rounded-bl-xl pointer-events-none"></div>
+                    <div class="absolute bottom-4 right-4 size-8 border-b-2 border-r-2 border-amber-400/80 rounded-br-xl pointer-events-none"></div>
 
                     {{-- Close Button --}}
-                    <button onclick="document.getElementById('welcome-modal').remove()" class="absolute top-4 right-4 z-20 grid size-8 place-items-center rounded-full bg-white/10 text-slate-300 hover:bg-white/20 hover:text-white transition">
-                        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
+                    <button onclick="document.getElementById('welcome-modal').remove()" class="absolute top-5 right-5 z-30 grid size-10 place-items-center rounded-full bg-white/10 text-slate-300 hover:bg-white/20 hover:text-white transition shadow-lg">
+                        <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
 
-                    {{-- Top Portrait Photo inside Glowing Border Frame --}}
+                    {{-- User Portrait Photo with 3D Glowing Ring --}}
                     <div class="relative mt-2 mx-auto inline-block">
-                        <div class="size-40 sm:size-48 rounded-2xl p-1 bg-gradient-to-tr from-cyan-400 via-blue-500 to-amber-400 shadow-[0_0_30px_rgba(56,189,248,0.6)]">
-                            <div class="size-full overflow-hidden rounded-xl bg-slate-900 border-2 border-white/30">
-                                <img src="{{ $userPhoto }}" onerror="this.onerror=null; this.src='{{ asset('images/Logo.png') }}';" alt="{{ $user?->name }}" class="size-full object-cover object-center">
+                        <div class="relative size-36 sm:size-44 rounded-3xl p-1 bg-gradient-to-tr from-cyan-400 via-amber-400 to-indigo-500 shadow-[0_0_40px_rgba(251,191,36,0.6)]">
+                            <div class="size-full overflow-hidden rounded-[1.3rem] bg-slate-900 border-2 border-white/40 shadow-inner">
+                                <img src="{{ $userPhoto }}" onerror="this.onerror=null; this.src='{{ asset('images/Logo.png') }}';" alt="{{ $user?->name }}" class="size-full object-cover object-center transform transition duration-500 hover:scale-105">
                             </div>
                         </div>
+                        <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-slate-900/90 border border-amber-400/60 px-4 py-0.5 text-[10px] font-black uppercase tracking-widest text-amber-300 shadow-lg backdrop-blur-md">
+                            {{ $userRoleTitle }}
+                        </span>
                     </div>
 
-                    {{-- Logged in User Name in Glowing Gold Font --}}
-                    <h2 class="mt-4 text-2xl sm:text-3xl font-serif font-black tracking-wide text-[#fce080] drop-shadow-[0_0_15px_rgba(252,224,128,0.7)]">
+                    {{-- User Name --}}
+                    <h2 class="mt-6 text-2xl sm:text-4xl font-serif font-black tracking-wide text-[#fce080] drop-shadow-[0_0_20px_rgba(252,224,128,0.8)]">
                         {{ $user?->name ?: 'আলী মামুন' }}
                     </h2>
 
-                    {{-- Realistic Handshake Graphic Extending Full-Width from Left to Right --}}
-                    <div class="relative my-6 w-full flex items-center justify-center h-28 overflow-hidden">
-                        {{-- Golden Aura Radial Burst --}}
-                        <div class="absolute size-32 rounded-full bg-amber-400/30 blur-2xl animate-pulse"></div>
+                    {{-- DYNAMIC 3D TIME-BASED VISUAL EFFECT DISPLAY CONTAINER --}}
+                    <div class="relative my-6 mx-auto w-full max-w-sm h-32 sm:h-36 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md overflow-hidden flex items-center justify-center p-4 shadow-2xl">
 
-                        {{-- Handshake Graphic Extending Across the Screen --}}
-                        <div class="relative z-10 w-full flex items-center justify-between px-1">
-                            <svg viewBox="0 0 400 120" class="w-full h-28 drop-shadow-[0_0_20px_rgba(251,191,36,0.8)]">
-                                <defs>
-                                    <linearGradient id="skinLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#e29871" />
-                                        <stop offset="50%" stop-color="#f5ba9e" />
-                                        <stop offset="100%" stop-color="#d48356" />
-                                    </linearGradient>
-                                    <linearGradient id="skinRight" x1="100%" y1="0%" x2="0%" y2="100%">
-                                        <stop offset="0%" stop-color="#e29871" />
-                                        <stop offset="50%" stop-color="#f5ba9e" />
-                                        <stop offset="100%" stop-color="#d48356" />
-                                    </linearGradient>
-                                    <linearGradient id="centerBurst" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" stop-color="#fbbf24" stop-opacity="0" />
-                                        <stop offset="50%" stop-color="#fef08a" stop-opacity="0.9" />
-                                        <stop offset="100%" stop-color="#fbbf24" stop-opacity="0" />
-                                    </linearGradient>
-                                </defs>
+                        @if ($timePeriod === 'morning')
+                            {{-- 3D MORNING SUN & RAYS EFFECT --}}
+                            <div class="relative size-28 flex items-center justify-center">
+                                <div class="absolute inset-0 rounded-full bg-amber-400/30 blur-xl animate-pulse"></div>
+                                {{-- Rotating Solar Ray Ring --}}
+                                <div class="absolute size-24 rounded-full border-2 border-dashed border-amber-300/60 animate-[spin_20s_linear_infinite]"></div>
+                                <div class="absolute size-28 rounded-full border border-amber-400/30 animate-[spin_35s_linear_infinite_reverse]"></div>
+                                {{-- 3D Sun Sphere --}}
+                                <div class="size-16 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-yellow-100 shadow-[0_0_35px_rgba(251,191,36,0.9)] flex items-center justify-center">
+                                    <div class="size-12 rounded-full bg-gradient-to-br from-yellow-200 to-amber-500 opacity-90"></div>
+                                </div>
+                            </div>
+                        @elseif ($timePeriod === 'afternoon')
+                            {{-- 3D AFTERNOON CRYSTAL & SOLAR FLARE EFFECT --}}
+                            <div class="relative size-28 flex items-center justify-center">
+                                <div class="absolute inset-0 rounded-full bg-sky-400/30 blur-xl animate-pulse"></div>
+                                <div class="absolute size-24 rounded-full border-2 border-dashed border-cyan-300/60 animate-[spin_15s_linear_infinite]"></div>
+                                {{-- Floating 3D Diamond Prism --}}
+                                <div class="size-16 rotate-45 rounded-2xl bg-gradient-to-tr from-cyan-500 via-sky-300 to-white shadow-[0_0_35px_rgba(56,189,248,0.9)] flex items-center justify-center transform transition duration-1000 animate-[bounce_4s_easeInOut_infinite]">
+                                    <div class="size-10 rotate-12 rounded-xl bg-white/80 backdrop-blur-sm"></div>
+                                </div>
+                            </div>
+                        @elseif ($timePeriod === 'evening')
+                            {{-- 3D EVENING SUNSET & COSMIC AURORA EFFECT --}}
+                            <div class="relative size-28 flex items-center justify-center">
+                                <div class="absolute inset-0 rounded-full bg-orange-500/30 blur-xl animate-pulse"></div>
+                                <div class="absolute size-24 rounded-full border-2 border-amber-400/50 animate-[spin_25s_linear_infinite]"></div>
+                                <div class="absolute size-28 rounded-full border border-purple-400/40 animate-[spin_40s_linear_infinite_reverse]"></div>
+                                {{-- 3D Sunset Glow Orb --}}
+                                <div class="size-16 rounded-full bg-gradient-to-tr from-orange-600 via-rose-400 to-amber-200 shadow-[0_0_35px_rgba(245,158,11,0.9)] flex items-center justify-center">
+                                    <div class="size-12 rounded-full bg-gradient-to-b from-amber-300 to-rose-600 opacity-90"></div>
+                                </div>
+                            </div>
+                        @else
+                            {{-- 3D NIGHT GALAXY & MOON EFFECT --}}
+                            <div class="relative size-28 flex items-center justify-center">
+                                <div class="absolute inset-0 rounded-full bg-indigo-500/30 blur-xl animate-pulse"></div>
+                                {{-- Saturn Ring --}}
+                                <div class="absolute size-28 rounded-full border-2 border-indigo-400/40 rotate-[60deg] animate-[spin_30s_linear_infinite]"></div>
+                                {{-- 3D Moon Crescent --}}
+                                <div class="relative size-16 rounded-full bg-gradient-to-tr from-indigo-300 via-slate-100 to-amber-200 shadow-[0_0_35px_rgba(165,180,252,0.9)] flex items-center justify-center">
+                                    <div class="absolute top-1 right-1 size-12 rounded-full bg-[#0d1335]"></div>
+                                </div>
+                            </div>
+                        @endif
 
-                                {{-- Left Arm extending from far-left --}}
-                                <g>
-                                    <path d="M0 45 L70 42 L72 78 L0 75 Z" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
-                                    <path d="M70 42 L80 41 L82 79 L72 78 Z" fill="#f8fafc" />
-                                    <path d="M80 41 Q120 40 160 48 L190 52 Q180 62 165 65 L130 68 Q100 75 82 79 Z" fill="url(#skinLeft)"/>
-                                </g>
-
-                                {{-- Right Arm extending from far-right --}}
-                                <g>
-                                    <path d="M400 45 L330 42 L328 78 L400 75 Z" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
-                                    <path d="M330 42 L320 41 L318 79 L328 78 Z" fill="#f8fafc" />
-                                    <path d="M320 41 Q280 40 240 48 L210 52 Q220 62 235 65 L270 68 Q300 75 318 79 Z" fill="url(#skinRight)"/>
-                                </g>
-
-                                {{-- Interlocked Shaking Hands in Center --}}
-                                <g>
-                                    <path d="M165 48 Q185 35 205 45 Q215 52 200 62 Q180 60 165 52 Z" fill="url(#skinLeft)" stroke="#9a3412" stroke-width="1"/>
-                                    <path d="M235 48 Q215 35 195 45 Q185 52 200 62 Q220 60 235 52 Z" fill="url(#skinRight)" stroke="#9a3412" stroke-width="1"/>
-                                    <path d="M185 45 Q200 48 215 45" stroke="#7c2d12" stroke-width="2" stroke-linecap="round" fill="none"/>
-                                    <path d="M188 52 Q200 55 212 52" stroke="#7c2d12" stroke-width="2" stroke-linecap="round" fill="none"/>
-                                    <path d="M192 58 Q200 60 208 58" stroke="#7c2d12" stroke-width="2" stroke-linecap="round" fill="none"/>
-                                </g>
-
-                                {{-- Gold Light Burst at Handshake Center --}}
-                                <circle cx="200" cy="52" r="28" fill="url(#centerBurst)" />
-                                <polygon points="200,18 204,45 232,52 204,59 200,86 196,59 168,52 196,45" fill="#fef08a" opacity="0.9"/>
-                            </svg>
-                        </div>
                     </div>
 
                     {{-- Dynamic Time-Based Greeting Message --}}
                     <div class="space-y-2">
-                        <div class="inline-flex items-center gap-2 rounded-full bg-amber-400/10 border border-amber-400/40 px-5 py-1.5 text-xl sm:text-2xl font-serif font-black text-[#fce080] drop-shadow-[0_0_12px_rgba(252,224,128,0.6)]">
-                            <span>{{ $greetingEmoji }}</span>
+                        <div class="inline-flex items-center gap-2.5 rounded-full {{ $badgeBg }} px-6 py-2 text-xl sm:text-2xl font-serif font-black shadow-lg backdrop-blur-md">
+                            <span class="text-2xl sm:text-3xl">{{ $greetingEmoji }}</span>
                             <span>{{ $greetingTitle }}</span>
                         </div>
-                        <p class="text-xs sm:text-sm font-bold text-slate-200 max-w-xs mx-auto leading-relaxed">
+                        <p class="text-xs sm:text-base font-bold text-slate-200 max-w-sm mx-auto leading-relaxed mt-2">
                             {{ $greetingSubtitle }}
                         </p>
                     </div>
 
                     {{-- Enter Dashboard Action Button --}}
-                    <div class="mt-6">
-                        <button onclick="document.getElementById('welcome-modal').remove()" class="w-full rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 py-3 text-xs sm:text-sm font-black uppercase tracking-wider text-slate-950 shadow-xl shadow-amber-500/30 transition-all hover:scale-[1.02] active:scale-95">
+                    <div class="mt-8">
+                        <button onclick="document.getElementById('welcome-modal').remove()" class="w-full rounded-2xl bg-gradient-to-r {{ $btnGradient }} py-4 text-sm sm:text-base font-black uppercase tracking-wider shadow-2xl transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer">
                             ড্যাশবোর্ডে প্রবেশ করুন ➔
                         </button>
                     </div>

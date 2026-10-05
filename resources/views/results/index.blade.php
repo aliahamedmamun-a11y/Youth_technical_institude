@@ -38,7 +38,7 @@
                     <a href="{{ route('results.index') }}" class="text-emerald-400 font-bold text-sm border-b-2 border-emerald-400 pb-1" aria-current="page">Result Search</a>
                     <a href="{{ route('home') }}#about" class="text-slate-300 hover:text-white font-bold text-sm transition">About</a>
                     <a href="{{ route('login') }}" class="text-slate-300 hover:text-white font-bold text-sm transition">Login</a>
-                    <a href="{{ route('home') }}#latest-news-contact" class="text-slate-300 hover:text-white font-bold text-sm transition">Contact</a>
+                    <a href="{{ route('home') }}#contact" class="text-slate-300 hover:text-white font-bold text-sm transition">Contact</a>
                 </nav>
 
                 <div class="flex shrink-0 items-center gap-2">
@@ -64,7 +64,7 @@
                     <a href="{{ route('results.index') }}" class="block rounded-xl px-4 py-2.5 text-sm font-bold bg-emerald-500/10 text-emerald-400">Result Search</a>
                     <a href="{{ route('home') }}#about" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">About</a>
                     <a href="{{ route('login') }}" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Login</a>
-                    <a href="{{ route('home') }}#latest-news-contact" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Contact</a>
+                    <a href="{{ route('home') }}#contact" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Contact</a>
                 </nav>
             </div>
         </header>

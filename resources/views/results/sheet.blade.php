@@ -34,14 +34,14 @@
                     'bg-indigo-600 text-white shadow' => ($viewStyle ?? 'all') === 'all' || ($viewStyle ?? 'all') === 'transcript',
                     'text-slate-600 hover:text-slate-900' => ($viewStyle ?? 'all') !== 'all' && ($viewStyle ?? 'all') !== 'transcript'
                 ])>
-                    📜 Subject Transcript (Style 1)
+                    📜 Result 1 (Style 1)
                 </a>
                 <a href="?style=summary" @class([
                     'rounded-lg px-3 py-1.5 text-xs font-bold transition',
                     'bg-indigo-600 text-white shadow' => ($viewStyle ?? 'all') === 'summary' || ($viewStyle ?? 'all') === 'style2',
                     'text-slate-600 hover:text-slate-900' => ($viewStyle ?? 'all') !== 'summary' && ($viewStyle ?? 'all') !== 'style2'
                 ])>
-                    📊 Semester & Course Summary (Style 2)
+                    📊 Result 2 (Style 2)
                 </a>
                 <a href="?style=single" @class([
                     'rounded-lg px-3 py-1.5 text-xs font-bold transition',

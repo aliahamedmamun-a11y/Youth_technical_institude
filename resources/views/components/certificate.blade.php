@@ -8,7 +8,7 @@
 
 @php
     $certificateGpa = $cumulativeGpa ?? $latestResult?->gpa;
-    $verificationQr = $qrCode ?? $student->qr_code ?? (app(\App\Services\QrCodeService::class)->dataUri(route('home')));
+    $verificationQr = $qrCode ?? $student->qr_code ?? (app(\App\Services\QrCodeService::class)->dataUri(route('results.index', ['roll_number' => $student->roll_number])));
 @endphp
 
 @vite(['resources/css/app.css', 'resources/css/certificate.css', 'resources/js/app.js'])
@@ -42,7 +42,7 @@
     </div>
 
     <nav class="certificate-actions print:hidden" aria-label="Certificate actions">
-        <button type="button" data-print-document class="rounded-full bg-emerald-700 px-5 py-3 font-black text-white transition hover:bg-emerald-600">
+        <button type="button" data-print-document class="rounded-full bg-[#03224c] px-5 py-3 font-black text-white transition hover:bg-slate-800">
             Print certificate
         </button>
         <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-full border border-slate-300 bg-white px-5 py-3 font-black text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">

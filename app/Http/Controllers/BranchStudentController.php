@@ -104,6 +104,9 @@ class BranchStudentController extends Controller
     {
         $validated = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
+            'registration_number' => ['nullable', 'string', 'max:255'],
+            'roll_number' => ['nullable', 'string', 'max:255'],
+            'certificate_serial' => ['nullable', 'string', 'max:255'],
             'father_name' => ['nullable', 'string', 'max:255'],
             'mother_name' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:50'],
@@ -120,7 +123,6 @@ class BranchStudentController extends Controller
             'start_year' => ['nullable', 'string', 'max:10'],
             'end_year' => ['nullable', 'string', 'max:10'],
             'session' => ['nullable', 'string', 'max:255'],
-            'roll_number' => ['nullable', 'string', 'max:255'],
             'admitted_at' => ['nullable', 'date'],
             'expire_date' => ['nullable', 'date'],
             'result_status' => ['nullable', 'string', 'max:255'],
@@ -128,6 +130,7 @@ class BranchStudentController extends Controller
             'score' => ['nullable', 'numeric'],
             'branch_id' => ['nullable', 'string', 'max:255'],
             'director_name' => ['nullable', 'string', 'max:255'],
+            'institute_name' => ['nullable', 'string', 'max:255'],
             'full_marks' => ['nullable', 'numeric'],
             'written_marks' => ['nullable', 'numeric'],
             'viva_marks' => ['nullable', 'numeric'],
@@ -138,6 +141,10 @@ class BranchStudentController extends Controller
             'course_id' => ['nullable', 'integer'],
             'duration' => ['nullable', 'string', 'max:255'],
         ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image_path'] = $request->file('image')->store('students', 'public');
+        }
 
         $student->update($validated);
 

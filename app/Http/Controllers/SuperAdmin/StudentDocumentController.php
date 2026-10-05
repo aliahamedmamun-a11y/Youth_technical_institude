@@ -35,6 +35,7 @@ class StudentDocumentController extends Controller
         'transcript-two' => 'Transcript Two',
         'forwarding-letter' => 'Forwarding Letter',
         'results' => 'Results',
+        'results-2' => 'Result 2',
     ];
 
     public function show(
@@ -48,12 +49,24 @@ class StudentDocumentController extends Controller
 
         abort_unless(array_key_exists($document, self::DOCUMENTS), 404);
 
-        if ($document === 'results') {
+        if ($document === 'results' || $document === 'results-2') {
             $result = $student->results()->latest('published_at')->first();
 
-            if ($result) {
-                return redirect()->route('super-admin.results.show', $result);
+            if (! $result) {
+                $result = $student->results()->create([
+                    'semester' => '1st Semester',
+                    'session' => $student->session ?: '2023-2024',
+                    'status' => 'published',
+                    'verification_token' => \Illuminate\Support\Str::random(48),
+                    'published_at' => now(),
+                    'gpa' => $student->cgpa ?: 3.75,
+                    'overall_grade' => $student->grade ?: 'A',
+                ]);
             }
+
+            $style = $document === 'results-2' ? 'summary' : 'all';
+
+            return redirect()->route('super-admin.results.show', [$result, 'style' => $style]);
         }
 
         $student->load('course');
@@ -71,7 +84,7 @@ class StudentDocumentController extends Controller
             'documentTitle' => self::DOCUMENTS[$document],
             'latestResult' => $latestResult,
             'cumulativeGpa' => $cumulativeGpa,
-            'certificateSerial' => $latestResult ? sprintf('%06d', $latestResult->id) : null,
+            'certificateSerial' => $student->certificate_serial ?: ($latestResult ? sprintf('%06d', $latestResult->id) : null),
         ];
 
         if ($document === 'admit-card') {
@@ -80,6 +93,14 @@ class StudentDocumentController extends Controller
 
         if ($document === 'registration-card' || $document === 'student-id' || $document === 'certificate' || $document === 'certificate-one') {
             $documentData = [...$documentData, ...$this->registrationCardData($student, $qrCode)];
+        }
+
+        if ($document === 'certificate' || $document === 'certificate-one' || $document === 'testimonial') {
+            if ($latestResult) {
+                $documentData['qrCode'] = $resultQrCode->dataUri($latestResult);
+            } else {
+                $documentData['qrCode'] = $qrCode->dataUri(route('results.index', ['roll_number' => $student->roll_number]));
+            }
         }
 
         if ($document === 'transcript' || $document === 'transcript-one' || $document === 'transcript-two') {

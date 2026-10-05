@@ -24,10 +24,10 @@
         @fonts
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="overflow-x-hidden bg-stone-50 text-slate-900 antialiased transition-colors duration-300 dark:bg-ink dark:text-white">
+    <body class="overflow-x-hidden bg-[#e7f3f9] text-slate-900 antialiased transition-colors duration-300 dark:bg-ink dark:text-white">
         <a
             href="#main-content"
-            class="fixed top-3 left-3 z-[100] -translate-y-20 rounded-full bg-emerald-500 px-5 py-3 text-sm font-bold text-ink transition focus:translate-y-0"
+            class="fixed top-3 left-3 z-[100] -translate-y-20 rounded-full bg-[#03224c] px-5 py-3 text-sm font-bold text-white transition focus:translate-y-0"
             data-i18n="skip"
         >
             Skip to content
@@ -78,7 +78,7 @@
                         <a href="#verified-branches" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Verified Branches</a>
                         <a href="{{ route('results.index') }}" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Result Search</a>
                         <a href="#about" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">About</a>
-                        <a href="#latest-news-contact" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Contact</a>
+                        <a href="#contact" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Contact</a>
                     </div>
                     <a href="{{ route('login') }}" class="rounded bg-amber-500 px-6 py-1.5 text-xs font-black text-[#03224c] uppercase transition hover:bg-amber-400">
                         Login
@@ -111,7 +111,7 @@
                         <p class="mobile-menu-label mt-6">Services & account</p>
                         <div class="space-y-1">
                             <a href="{{ route('login') }}" class="mobile-nav-link"><span class="mobile-nav-icon">L</span><span>Login</span></a>
-                            <a href="#latest-news-contact" class="mobile-nav-link" data-mobile-nav-link><span class="mobile-nav-icon">C</span><span>Contact</span></a>
+                            <a href="#contact" class="mobile-nav-link" data-mobile-nav-link><span class="mobile-nav-icon">C</span><span>Contact</span></a>
                         </div>
                     </nav>
 
@@ -190,9 +190,9 @@
                 </div>
             </section>
 
-            <section id="notice-bar" class="border-b border-emerald-900/10 bg-white dark:border-white/10 dark:bg-deep" aria-label="Institute notices">
+            <section id="notice-bar" class="border-b border-sky-900/10 bg-white dark:border-white/10 dark:bg-deep" aria-label="Institute notices">
                 <div class="flex min-h-12 items-stretch overflow-hidden">
-                    <div class="notice-label relative flex shrink-0 items-center gap-2 bg-emerald-700 py-3 pr-7 pl-4 text-[11px] font-black tracking-[0.2em] text-white sm:pl-8" aria-hidden="true">
+                    <div class="notice-label relative flex shrink-0 items-center gap-2 bg-[#03224c] py-3 pr-7 pl-4 text-[11px] font-black tracking-[0.2em] text-white sm:pl-8" aria-hidden="true">
                         <span class="size-2 rounded-full bg-white"></span>
                         <span class="relative flex size-2"><span class="absolute inline-flex size-full animate-ping rounded-full bg-amber-300 opacity-75 motion-reduce:animate-none"></span><span class="relative inline-flex size-2 rounded-full bg-amber-300"></span></span>
                         <span>NOTICE</span>
@@ -200,9 +200,9 @@
                     <div class="min-w-0 flex-1 overflow-hidden py-3" aria-live="polite">
                         <div class="notice-track flex gap-12 whitespace-nowrap px-8 text-xs font-bold text-slate-700 motion-reduce:transform-none dark:text-slate-200">
                             @forelse ($noticeItems as $notice)
-                                <a href="{{ $notice['link'] ?: '#notice-bar' }}" class="transition hover:text-emerald-700 dark:hover:text-emerald-400">{{ $notice['title'] }} <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> {{ $notice['message'] }}</a>
+                                <a href="{{ $notice['link'] ?: '#notice-bar' }}" class="transition hover:text-sky-700 dark:hover:text-sky-400">{{ $notice['title'] }} <span class="mx-2 text-amber-500" aria-hidden="true">•</span> {{ $notice['message'] }}</a>
                             @empty
-                                <span>Admission for the July 2026 session is now open <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> Branch applications are being accepted nationwide <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> Contact us for course counselling</span>
+                                <span>Admission for the July 2026 session is now open <span class="mx-2 text-amber-500" aria-hidden="true">•</span> Branch applications are being accepted nationwide <span class="mx-2 text-amber-500" aria-hidden="true">•</span> Contact us for course counselling</span>
                             @endforelse
                         </div>
                     </div>
@@ -225,8 +225,8 @@
                             default => 'M4 7.5 12 3l8 4.5-8 4.5-8-4.5Zm3 2.2V15c3 2.3 7 2.3 10 0V9.7M20 8v6m-1 2h2',
                             };
                         @endphp
-                        <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-emerald-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-emerald-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0 {{ $item->stable_key === 'practical-lab' ? 'bg-[#f0fcf9] dark:bg-emerald-400/5' : '' }}">
-                            <span class="grid h-8 place-items-center text-[#159b63] transition-transform duration-200 group-hover:-translate-y-0.5 dark:text-emerald-400">
+                        <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-sky-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-sky-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0 {{ $item->stable_key === 'practical-lab' ? 'bg-sky-50 dark:bg-sky-400/5' : '' }}">
+                            <span class="grid h-8 place-items-center text-[#03224c] transition-transform duration-200 group-hover:-translate-y-0.5 dark:text-sky-400">
                                 <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55">
                                     <path d="{{ $icon }}" />
                                 </svg>
@@ -292,14 +292,14 @@
                                                 'WFIS and & Accobers Program'
                                             ] as $item)
                                                 <li class="flex items-center gap-3 text-slate-800 dark:text-slate-200">
-                                                    <span class="size-2.5 shrink-0 rounded-full bg-[#3e5b6d] dark:bg-emerald-500"></span>
+                                                    <span class="size-2.5 shrink-0 rounded-full bg-[#03224c] dark:bg-amber-400"></span>
                                                     <span class="text-sm font-bold">{{ $item }}</span>
                                                 </li>
                                             @endforeach
                                         </ul>
 
-                                        <div class="shrink-0 w-full rounded-xl border-2 border-[#3e5b6d]/30 bg-white/40 p-5 text-center sm:w-52 dark:border-white/10 dark:bg-white/5">
-                                            <h4 class="border-b-2 border-[#3e5b6d]/30 pb-2 text-lg font-black text-[#3e5b6d] dark:text-emerald-400 uppercase tracking-tighter">
+                                        <div class="shrink-0 w-full rounded-xl border-2 border-[#03224c]/30 bg-white/40 p-5 text-center sm:w-52 dark:border-white/10 dark:bg-white/5">
+                                            <h4 class="border-b-2 border-[#03224c]/30 pb-2 text-lg font-black text-[#03224c] dark:text-amber-400 uppercase tracking-tighter">
                                                 On-line Value
                                             </h4>
                                             <p class="mt-4 text-[10px] font-bold leading-tight text-slate-600 dark:text-slate-400">
@@ -353,7 +353,7 @@
             @endif
 
 
-            <section id="courses" class="bg-[#f0f8f7] py-16 dark:bg-ink sm:py-20">
+            <section id="courses" class="bg-[#e7f3f9] py-16 dark:bg-ink sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="mb-12 text-center">
                         <h2 class="text-2xl font-black uppercase tracking-[0.2em] text-slate-800 dark:text-white sm:text-3xl">Popular Courses</h2>
@@ -362,10 +362,10 @@
                     <div class="relative group" data-course-carousel data-course-interval="5000">
                         <!-- Navigation Arrows -->
                         <div class="hidden lg:block">
-                            <button type="button" class="absolute -left-5 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-lg border border-slate-50 transition hover:bg-emerald-500 hover:text-white focus:outline-none dark:bg-deep dark:border-white/10 dark:text-white/60" data-course-prev aria-label="Previous courses">
+                            <button type="button" class="absolute -left-5 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-lg border border-slate-50 transition hover:bg-[#03224c] hover:text-white focus:outline-none dark:bg-deep dark:border-white/10 dark:text-white/60" data-course-prev aria-label="Previous courses">
                                 <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
                             </button>
-                            <button type="button" class="absolute -right-5 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-lg border border-slate-50 transition hover:bg-emerald-500 hover:text-white focus:outline-none dark:bg-deep dark:border-white/10 dark:text-white/60" data-course-next aria-label="Next courses">
+                            <button type="button" class="absolute -right-5 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-400 shadow-lg border border-slate-50 transition hover:bg-[#03224c] hover:text-white focus:outline-none dark:bg-deep dark:border-white/10 dark:text-white/60" data-course-next aria-label="Next courses">
                                 <svg viewBox="0 0 20 20" fill="currentColor" class="size-6"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
                             </button>
                         </div>
@@ -415,7 +415,7 @@
                                     </div>
 
                                     <div class="mt-6">
-                                        <a href="#latest-news-contact" class="block w-full rounded-xl bg-[#f5a623] py-3 text-center text-sm font-black text-white transition hover:bg-[#e69516]">
+                                        <a href="#contact" class="block w-full rounded-xl bg-[#f5a623] py-3 text-center text-sm font-black text-white transition hover:bg-[#e69516]">
                                             Learn More
                                         </a>
                                     </div>
@@ -430,11 +430,11 @@
 
                         <!-- Mobile controls & status -->
                         <div class="mt-4 flex items-center justify-center gap-4 lg:hidden">
-                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-course-prev aria-label="Previous courses">
+                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-[#03224c] hover:text-[#03224c] dark:border-white/15 dark:bg-deep dark:text-white" data-course-prev aria-label="Previous courses">
                                 <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12.5 15-5-5 5-5" /></svg>
                             </button>
                             <p class="min-w-24 text-center text-xs font-black text-slate-600 dark:text-slate-300" aria-live="polite">Page <span data-course-current>1</span> of <span data-course-total>1</span></p>
-                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-emerald-500 hover:text-emerald-700 dark:border-white/15 dark:bg-deep dark:text-white" data-course-next aria-label="Next courses">
+                            <button type="button" class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-[#03224c] hover:text-[#03224c] dark:border-white/15 dark:bg-deep dark:text-white" data-course-next aria-label="Next courses">
                                 <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m7.5 5 5 5-5 5" /></svg>
                             </button>
                         </div>
@@ -523,12 +523,12 @@
             </section>
 
             <!-- VERIFIED BRANCHES CARDS SECTION -->
-            <section id="verified-branches" class="bg-stone-100 py-16 dark:bg-[#071c2c] sm:py-20">
+            <section id="verified-branches" class="bg-[#e7f3f9] py-16 dark:bg-[#071c2c] sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="mb-12 text-center">
-                        <span class="text-xs font-black uppercase tracking-[0.2em] text-[#125359] dark:text-emerald-400">Official Branch Network</span>
+                        <span class="text-xs font-black uppercase tracking-[0.2em] text-[#03224c] dark:text-amber-400">Official Branch Network</span>
                         <h2 class="mt-1 text-3xl font-black uppercase tracking-tight text-slate-900 dark:text-white sm:text-4xl">Verified Branches</h2>
-                        <div class="mx-auto mt-3 h-1 w-16 rounded-full bg-[#125359] dark:bg-emerald-500"></div>
+                        <div class="mx-auto mt-3 h-1 w-16 rounded-full bg-[#03224c] dark:bg-amber-400"></div>
                     </div>
 
                     @php
@@ -583,27 +583,27 @@
                                 $branchLocation = ($branch->upazila ? $branch->upazila . ', ' : '') . ($branch->district ?: 'Bangladesh');
                             @endphp
 
-                            <!-- VERIFIED BRANCH CARD (EXACT MATCH TO UPLOADED SCREENSHOT) -->
+                            <!-- VERIFIED BRANCH CARD -->
                             <div class="relative w-full rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl text-center space-y-4 overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-3xl">
 
                                 <!-- TOP LEFT RIBBON BADGE -->
-                                <div class="absolute top-0 left-5 w-10 h-14 bg-[#125359] text-white flex flex-col items-center justify-start pt-1.5 rounded-b-lg shadow-md z-10">
+                                <div class="absolute top-0 left-5 w-10 h-14 bg-[#03224c] text-white flex flex-col items-center justify-start pt-1.5 rounded-b-lg shadow-md z-10">
                                     <div class="flex gap-0.5 text-amber-300 text-[8px]">
                                         <span>★</span><span>★</span><span>★</span>
                                     </div>
-                                    <svg class="size-4 text-emerald-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg class="size-4 text-amber-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                     </svg>
                                 </div>
 
                                 <!-- DIRECTOR PHOTO FRAME -->
                                 <div class="relative pt-2">
-                                    <div class="size-32 sm:size-36 rounded-full border-4 border-[#125359] overflow-hidden mx-auto shadow-xl ring-4 ring-[#125359]/20 bg-slate-100">
+                                    <div class="size-32 sm:size-36 rounded-full border-4 border-[#03224c] overflow-hidden mx-auto shadow-xl ring-4 ring-[#03224c]/20 bg-slate-100">
                                         <img src="{{ $directorPhoto }}" alt="{{ $directorName }}" class="size-full object-cover object-center" onerror="this.onerror=null; this.src='https://i.ibb.co/qMgPTvMQ/1000072415.jpg';">
                                     </div>
                                     <!-- BRANCH DIRECTOR BADGE -->
                                     <div class="relative -mt-4 inline-block">
-                                        <span class="bg-[#125359] text-white text-[9px] font-black uppercase tracking-widest px-4 py-1 rounded-full shadow-lg border border-white/30">
+                                        <span class="bg-[#03224c] text-white text-[9px] font-black uppercase tracking-widest px-4 py-1 rounded-full shadow-lg border border-white/30">
                                             • BRANCH DIRECTOR •
                                         </span>
                                     </div>
@@ -611,13 +611,13 @@
 
                                 <!-- DIRECTOR NAME -->
                                 <div class="space-y-1">
-                                    <h3 class="text-xl sm:text-2xl font-serif font-black text-[#0c2e36] tracking-wide truncate">
+                                    <h3 class="text-xl sm:text-2xl font-serif font-black text-[#03224c] tracking-wide truncate">
                                         {{ $directorName }}
                                     </h3>
-                                    <div class="flex items-center justify-center gap-2 text-[#125359]">
-                                        <span class="h-0.5 w-10 bg-[#125359]/30 rounded-full"></span>
+                                    <div class="flex items-center justify-center gap-2 text-[#03224c]">
+                                        <span class="h-0.5 w-10 bg-[#03224c]/30 rounded-full"></span>
                                         <span class="text-[10px]">❖</span>
-                                        <span class="h-0.5 w-10 bg-[#125359]/30 rounded-full"></span>
+                                        <span class="h-0.5 w-10 bg-[#03224c]/30 rounded-full"></span>
                                     </div>
                                 </div>
 
@@ -626,28 +626,28 @@
 
                                     <!-- LEFT: BRANCH CODE -->
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 text-center space-y-1 shadow-sm">
-                                        <div class="size-9 rounded-full bg-[#125359] text-white flex items-center justify-center mx-auto shadow">
+                                        <div class="size-9 rounded-full bg-[#03224c] text-white flex items-center justify-center mx-auto shadow">
                                             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
                                             </svg>
                                         </div>
                                         <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">BRANCH CODE</p>
-                                        <p class="text-lg sm:text-xl font-black text-[#125359] tracking-wider">{{ $branchCode }}</p>
+                                        <p class="text-lg sm:text-xl font-black text-[#03224c] tracking-wider">{{ $branchCode }}</p>
                                     </div>
 
                                     <!-- RIGHT: BRANCH NAME -->
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 text-center space-y-1 shadow-sm flex flex-col justify-between">
                                         <div>
-                                            <div class="size-9 rounded-full bg-[#125359] text-white flex items-center justify-center mx-auto shadow">
+                                            <div class="size-9 rounded-full bg-[#03224c] text-white flex items-center justify-center mx-auto shadow">
                                                 <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.5h-15V21" />
                                                 </svg>
                                             </div>
                                             <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mt-1">BRANCH NAME</p>
-                                            <p class="text-xs font-black text-[#125359] leading-tight line-clamp-2 mt-0.5">{{ $branchName }}</p>
+                                            <p class="text-xs font-black text-[#03224c] leading-tight line-clamp-2 mt-0.5">{{ $branchName }}</p>
                                         </div>
                                         <p class="text-[9px] font-semibold text-slate-500 flex items-center justify-center gap-1 mt-1 truncate">
-                                            <svg class="size-3 text-[#125359] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <svg class="size-3 text-[#03224c] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                                             </svg>
@@ -658,9 +658,9 @@
                                 </div>
 
                                 <!-- FOOTER WITH CENTER SEAL & 4 PILLARS -->
-                                <div class="-mx-6 -mb-6 mt-4 bg-[#072d33] text-white p-3 pt-5 relative rounded-b-3xl">
+                                <div class="-mx-6 -mb-6 mt-4 bg-[#031735] text-white p-3 pt-5 relative rounded-b-3xl">
                                     <!-- CENTER SEAL EMBLEM -->
-                                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 size-9 rounded-full bg-white p-0.5 shadow-xl border-2 border-[#125359] flex items-center justify-center">
+                                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 size-9 rounded-full bg-white p-0.5 shadow-xl border-2 border-[#03224c] flex items-center justify-center">
                                         <img src="{{ asset('images/Logo.png') }}" alt="BNYTI Seal" class="size-full object-contain">
                                     </div>
 
@@ -672,7 +672,7 @@
                                             <span class="line-clamp-1">SKILL</span>
                                         </div>
                                         <div class="flex flex-col items-center gap-0.5">
-                                            <svg class="size-3.5 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <svg class="size-3.5 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253" />
                                             </svg>
                                             <span class="line-clamp-1">QUALITY</span>
@@ -698,7 +698,7 @@
                 </div>
             </section>
 
-            <section id="branch-application-promo" class="bg-stone-50 pb-12 dark:bg-ink sm:pb-16">
+            <section id="branch-application-promo" class="bg-[#e7f3f9] pb-12 dark:bg-ink sm:pb-16">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="relative isolate overflow-hidden rounded-[1.4rem] bg-[#03224c] px-5 py-6 text-white shadow-[0_16px_40px_rgba(3,34,76,.22)] sm:px-8 sm:py-8 lg:px-9">
                         <div class="absolute inset-0 -z-10 opacity-40 [background-image:radial-gradient(circle,rgba(250,204,21,.85)_1px,transparent_1.5px)] [background-size:78px_72px]"></div>
@@ -751,7 +751,7 @@
                                         Apply as a Branch
                                         <span aria-hidden="true">→</span>
                                     </a>
-                                    <a href="#latest-news-contact" class="inline-flex min-h-11 items-center justify-center gap-3 rounded-xl border border-slate-300/35 px-6 text-sm font-bold text-white transition hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-white/15">
+                                    <a href="#contact" class="inline-flex min-h-11 items-center justify-center gap-3 rounded-xl border border-slate-300/35 px-6 text-sm font-bold text-white transition hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-white/15">
                                         Download Prospectus
                                         <span aria-hidden="true">↓</span>
                                     </a>
@@ -881,11 +881,11 @@
                 </div>
             </section>
 
-            <section id="student-success-stories" class="bg-[#f8fafc] py-16 dark:bg-ink sm:py-20">
+            <section id="student-success-stories" class="bg-[#e7f3f9] py-16 dark:bg-ink sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="mb-12 text-center">
                         <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Student Success Stories</h2>
-                        <div class="mx-auto mt-2 h-1 w-16 rounded-full bg-emerald-500"></div>
+                        <div class="mx-auto mt-2 h-1 w-16 rounded-full bg-amber-400"></div>
                     </div>
 
                     @php
@@ -911,7 +911,7 @@
 
                                 <div class="flex flex-1 flex-col justify-center px-5 py-6">
                                     <h3 class="text-lg font-black leading-tight text-[#0b2447] dark:text-white">{{ $name }}</h3>
-                                    <p class="mt-0.5 text-[11px] font-bold text-[#16a34a] dark:text-emerald-400">{{ $position }}</p>
+                                    <p class="mt-0.5 text-[11px] font-bold text-indigo-600 dark:text-cyan-400">{{ $position }}</p>
 
                                     <div class="mt-4 space-y-2">
                                         <div class="flex flex-col">
@@ -978,7 +978,7 @@
                                         <p class="mt-3 text-[13px] font-medium leading-relaxed text-slate-600 dark:text-slate-400">{{ $description }}</p>
                                     </div>
                                     <div class="mt-6 flex items-center justify-between border-t border-slate-50 pt-4 dark:border-white/5">
-                                        <span class="text-[12px] font-black text-emerald-600 dark:text-emerald-400">Learn more</span>
+                                        <span class="text-[12px] font-black text-indigo-600 dark:text-cyan-400">Learn more</span>
                                         <time class="text-[11px] font-bold text-slate-400">{{ $date }}</time>
                                     </div>
                                 </a>
@@ -1002,11 +1002,11 @@
                                  <h3 class="text-lg font-black text-[#0b2447] dark:text-white">Visit Our Campus</h3>
                                  <div class="mt-4 space-y-3">
                                      <div class="flex items-start gap-3">
-                                         <svg viewBox="0 0 20 20" class="mt-0.5 size-4 shrink-0 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 18s6-5 6-10A6 6 0 1 0 4 8c0 5 6 10 6 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
+                                         <svg viewBox="0 0 20 20" class="mt-0.5 size-4 shrink-0 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 18s6-5 6-10A6 6 0 1 0 4 8c0 5 6 10 6 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
                                          <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['address'] ?? 'Haji Hossain Plaza, Demra Bazar Road, Dhaka-1360' }}</p>
                                      </div>
                                      <div class="flex items-center gap-3">
-                                         <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h3l1 4-2 1c1 2.5 2.5 4 5 5l1-2 4 1v3c0 1.1-.9 2-2 2C8.4 17 3 11.6 3 5a2 2 0 0 1 2-2Z"/></svg>
+                                         <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h3l1 4-2 1c1 2.5 2.5 4 5 5l1-2 4 1v3c0 1.1-.9 2-2 2C8.4 17 3 11.6 3 5a2 2 0 0 1 2-2Z"/></svg>
                                          <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['phone'] ?? '+880 9696-481628' }}</p>
                                      </div>
                                  </div>
@@ -1016,7 +1016,7 @@
                 </div>
             </section>
 
-            <section id="contact-section" class="bg-[#f8fafc] py-16 dark:bg-ink sm:py-20">
+            <section id="contact" class="bg-[#e7f3f9] py-16 dark:bg-ink sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="mb-12 text-center">
                         <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Contact Section</h2>
@@ -1281,7 +1281,7 @@
                             <a href="#about" class="hover:text-emerald-400 transition">General Info</a>
                             <a href="#branch-application-promo" class="hover:text-emerald-400 transition">Branches Info</a>
                             <a href="#notice-bar" class="hover:text-emerald-400 transition">Notice</a>
-                            <a href="#latest-news-contact" class="hover:text-emerald-400 transition">Contact Details</a>
+                            <a href="#contact" class="hover:text-emerald-400 transition">Contact Details</a>
                             <a href="#" class="hover:text-emerald-400 transition">Careers</a>
                         </div>
                     </div>

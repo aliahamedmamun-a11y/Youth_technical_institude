@@ -31,22 +31,14 @@
                     </span>
                 </a>
 
-                <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary navigation">
+                <nav class="hidden items-center gap-6 lg:flex" aria-label="Primary navigation">
                     <a href="{{ route('home') }}#home" class="text-slate-300 hover:text-white font-bold text-sm transition">Home</a>
-                    <a href="{{ route('home') }}#courses" class="text-slate-300 hover:text-white font-bold text-sm transition">Courses</a>
+                    <a href="{{ route('home') }}#courses" class="text-slate-300 hover:text-white font-bold text-sm transition">Course List</a>
+                    <a href="{{ route('home') }}#verified-branches" class="text-slate-300 hover:text-white font-bold text-sm transition">Verified Branches</a>
+                    <a href="{{ route('results.index') }}" class="text-emerald-400 font-bold text-sm border-b-2 border-emerald-400 pb-1" aria-current="page">Result Search</a>
                     <a href="{{ route('home') }}#about" class="text-slate-300 hover:text-white font-bold text-sm transition">About</a>
-                    <a href="{{ route('home') }}#branch-application-promo" class="text-slate-300 hover:text-white font-bold text-sm transition">Branches</a>
-                    <a href="{{ route('results.index') }}" class="text-emerald-400 font-bold text-sm border-b-2 border-emerald-400 pb-1" aria-current="page">Results</a>
-                    <details class="group relative">
-                        <summary class="flex cursor-pointer list-none items-center gap-1 text-slate-300 hover:text-white font-bold text-sm transition">
-                            Apply Now
-                            <svg viewBox="0 0 24 24" class="size-4 transition group-open:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>
-                        </summary>
-                        <div class="absolute right-0 top-full z-30 mt-3 w-52 rounded-2xl border border-white/10 bg-[#061527] p-2 shadow-2xl">
-                            <a href="{{ route('student-registrations.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-200 transition hover:bg-emerald-500/10 hover:text-emerald-400">Student Registration</a>
-                            <a href="{{ route('branch-applications.create') }}" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-200 transition hover:bg-emerald-500/10 hover:text-emerald-400">Branch Registration</a>
-                        </div>
-                    </details>
+                    <a href="{{ route('login') }}" class="text-slate-300 hover:text-white font-bold text-sm transition">Login</a>
+                    <a href="{{ route('home') }}#latest-news-contact" class="text-slate-300 hover:text-white font-bold text-sm transition">Contact</a>
                 </nav>
 
                 <div class="flex shrink-0 items-center gap-2">
@@ -67,13 +59,12 @@
             <div id="results-mobile-menu" class="border-t border-white/10 bg-[#061527] px-4 py-5 shadow-2xl lg:hidden" data-mobile-menu hidden>
                 <nav class="mx-auto grid max-w-7xl gap-1" aria-label="Mobile navigation">
                     <a href="{{ route('home') }}#home" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Home</a>
-                    <a href="{{ route('home') }}#courses" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Courses</a>
+                    <a href="{{ route('home') }}#courses" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Course List</a>
+                    <a href="{{ route('home') }}#verified-branches" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Verified Branches</a>
+                    <a href="{{ route('results.index') }}" class="block rounded-xl px-4 py-2.5 text-sm font-bold bg-emerald-500/10 text-emerald-400">Result Search</a>
                     <a href="{{ route('home') }}#about" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">About</a>
-                    <a href="{{ route('home') }}#branch-application-promo" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Branches</a>
-                    <a href="{{ route('results.index') }}" class="block rounded-xl px-4 py-2.5 text-sm font-bold bg-emerald-500/10 text-emerald-400">Results</a>
-                    <p class="px-4 pt-3 text-xs font-black uppercase tracking-widest text-emerald-400">Apply Now</p>
-                    <a href="{{ route('student-registrations.create') }}" class="block rounded-xl pl-8 py-2 text-sm font-bold text-slate-300 hover:bg-white/5">Student Registration</a>
-                    <a href="{{ route('branch-applications.create') }}" class="block rounded-xl pl-8 py-2 text-sm font-bold text-slate-300 hover:bg-white/5">Branch Registration</a>
+                    <a href="{{ route('login') }}" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Login</a>
+                    <a href="{{ route('home') }}#latest-news-contact" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Contact</a>
                 </nav>
             </div>
         </header>

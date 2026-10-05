@@ -59,7 +59,7 @@
             </h3>
 
             <!-- Alert banner for scanner status -->
-            <div id="scan-status-alert" class="hidden rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-3 text-center text-xs font-bold text-emerald-300">
+            <div id="scan-status-alert" class="hidden rounded-xl bg-indigo-500/10 border border-indigo-500/30 p-3 text-center text-xs font-bold text-indigo-300">
                 <span id="scan-status-msg"></span>
             </div>
 
@@ -101,23 +101,23 @@
                 <div class="flex flex-col items-center justify-between p-4 sm:p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
                     <div id="box-preview-nid" class="relative w-full h-32 rounded-xl border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 group shadow-inner">
                         <div class="flex items-center gap-2">
-                            <div class="size-10 rounded bg-emerald-700/40 border border-emerald-500/30 flex items-center justify-center text-emerald-300">
+                            <div class="size-10 rounded bg-cyan-700/40 border border-cyan-500/30 flex items-center justify-center text-cyan-300">
                                 <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zM7.5 15a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" />
                                 </svg>
                             </div>
                             <div class="space-y-1 text-[9px] font-mono text-slate-300">
-                                <div class="w-16 h-1.5 bg-emerald-600/80 rounded"></div>
-                                <div class="w-12 h-1.5 bg-emerald-600/60 rounded"></div>
-                                <div class="w-14 h-1.5 bg-emerald-600/60 rounded"></div>
+                                <div class="w-16 h-1.5 bg-cyan-600/80 rounded"></div>
+                                <div class="w-12 h-1.5 bg-cyan-600/60 rounded"></div>
+                                <div class="w-14 h-1.5 bg-cyan-600/60 rounded"></div>
                             </div>
                         </div>
-                        <div class="absolute inset-x-0 top-1/2 h-0.5 bg-emerald-400 shadow-[0_0_12px_#34d399] animate-pulse"></div>
+                        <div class="absolute inset-x-0 top-1/2 h-0.5 bg-cyan-400 shadow-[0_0_12px_#22d3ee] animate-pulse"></div>
                     </div>
 
                     <div class="space-y-2 w-full">
                         <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">NID Card Scanner</h4>
-                        <button type="button" onclick="openDocumentScanner('NID Card')" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                        <button type="button" onclick="openDocumentScanner('NID Card')" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-3 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
                             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
                             </svg>
@@ -820,7 +820,7 @@
         if (previewBox) {
             previewBox.innerHTML = `
                 <img src="${imageDataUrl}" alt="${docType}" class="size-full object-cover rounded-lg">
-                <div class="absolute top-2 right-2 bg-emerald-500 text-slate-950 font-black text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-lg">
+                <div class="absolute top-2 right-2 bg-indigo-600 text-white font-black text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-lg">
                     ✓ Scanned
                 </div>
             `;

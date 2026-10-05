@@ -121,7 +121,7 @@
                         </button>
 
                         <!-- Icon Badge -->
-                        <div class="mx-auto flex size-20 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 shadow-xl shadow-emerald-500/20 ring-8 ring-emerald-50 dark:bg-emerald-500/20 dark:text-emerald-400 dark:ring-emerald-500/10">
+                        <div class="mx-auto flex size-20 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 shadow-xl shadow-indigo-500/20 ring-8 ring-indigo-50 dark:bg-indigo-500/20 dark:text-indigo-400 dark:ring-indigo-500/10">
                             <svg viewBox="0 0 24 24" class="size-10" fill="none" stroke="currentColor" stroke-width="3">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                             </svg>
@@ -131,11 +131,11 @@
                         <h3 class="mt-6 text-2xl font-black tracking-tight text-slate-900 dark:text-white sm:text-3xl">
                             Branch Registration Successful!
                         </h3>
-                        <p class="mt-2 text-sm font-bold text-emerald-600 dark:text-emerald-400 sm:text-base">
+                        <p class="mt-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 sm:text-base">
                             শাখা আবেদন সফলভাবে সম্পন্ন হয়েছে!
                         </p>
 
-                        <div class="mt-4 rounded-2xl bg-emerald-50/80 p-4 text-xs font-semibold text-slate-700 dark:bg-emerald-900/20 dark:text-emerald-200 sm:text-sm">
+                        <div class="mt-4 rounded-2xl bg-indigo-50/80 p-4 text-xs font-semibold text-slate-700 dark:bg-indigo-900/20 dark:text-indigo-200 sm:text-sm">
                             {{ session('status') }}
                         </div>
 
@@ -172,7 +172,7 @@
             <div class="mx-auto grid max-w-7xl gap-4 px-4 py-7 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
                 @foreach ([['Trusted & Verified', 'Government Registered'], ['Quality Technical Education', 'Practical & Skill Based'], ['Nationwide Network', '250+ branches across Bangladesh'], ['Support 24/7', '+880 9696-481628']] as [$title, $body])
                     <div class="flex items-center gap-3 border-white/15 sm:border-r sm:last:border-r-0">
-                        <span class="grid size-10 shrink-0 place-items-center rounded-full bg-emerald-600 text-white">✓</span>
+                        <span class="grid size-10 shrink-0 place-items-center rounded-full bg-[#03224c] text-amber-300">✓</span>
                         <span>
                             <strong class="block text-sm">{{ $title }}</strong>
                             <small class="text-slate-300">{{ $body }}</small>

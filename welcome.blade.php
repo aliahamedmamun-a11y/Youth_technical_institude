@@ -190,9 +190,9 @@
                 </div>
             </section>
 
-            <section id="notice-bar" class="border-b border-emerald-900/10 bg-white dark:border-white/10 dark:bg-deep" aria-label="Institute notices">
+            <section id="notice-bar" class="border-b border-sky-900/10 bg-white dark:border-white/10 dark:bg-deep" aria-label="Institute notices">
                 <div class="flex min-h-12 items-stretch overflow-hidden">
-                    <div class="notice-label relative flex shrink-0 items-center gap-2 bg-emerald-700 py-3 pr-7 pl-4 text-[11px] font-black tracking-[0.2em] text-white sm:pl-8" aria-hidden="true">
+                    <div class="notice-label relative flex shrink-0 items-center gap-2 bg-[#03224c] py-3 pr-7 pl-4 text-[11px] font-black tracking-[0.2em] text-white sm:pl-8" aria-hidden="true">
                         <span class="size-2 rounded-full bg-white"></span>
                         <span class="relative flex size-2"><span class="absolute inline-flex size-full animate-ping rounded-full bg-amber-300 opacity-75 motion-reduce:animate-none"></span><span class="relative inline-flex size-2 rounded-full bg-amber-300"></span></span>
                         <span>NOTICE</span>
@@ -200,9 +200,9 @@
                     <div class="min-w-0 flex-1 overflow-hidden py-3" aria-live="polite">
                         <div class="notice-track flex gap-12 whitespace-nowrap px-8 text-xs font-bold text-slate-700 motion-reduce:transform-none dark:text-slate-200">
                             @forelse ($noticeItems as $notice)
-                                <a href="{{ $notice['link'] ?: '#notice-bar' }}" class="transition hover:text-emerald-700 dark:hover:text-emerald-400">{{ $notice['title'] }} <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> {{ $notice['message'] }}</a>
+                                <a href="{{ $notice['link'] ?: '#notice-bar' }}" class="transition hover:text-sky-700 dark:hover:text-sky-400">{{ $notice['title'] }} <span class="mx-2 text-amber-500" aria-hidden="true">•</span> {{ $notice['message'] }}</a>
                             @empty
-                                <span>Admission for the July 2026 session is now open <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> Branch applications are being accepted nationwide <span class="mx-2 text-emerald-500" aria-hidden="true">•</span> Contact us for course counselling</span>
+                                <span>Admission for the July 2026 session is now open <span class="mx-2 text-amber-500" aria-hidden="true">•</span> Branch applications are being accepted nationwide <span class="mx-2 text-amber-500" aria-hidden="true">•</span> Contact us for course counselling</span>
                             @endforelse
                         </div>
                     </div>
@@ -225,8 +225,12 @@
                             default => 'M4 7.5 12 3l8 4.5-8 4.5-8-4.5Zm3 2.2V15c3 2.3 7 2.3 10 0V9.7M20 8v6m-1 2h2',
                             };
                         @endphp
-                        <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-emerald-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-emerald-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0 {{ $item->stable_key === 'practical-lab' ? 'bg-[#f0fcf9] dark:bg-emerald-400/5' : '' }}">
-                            <span class="grid h-8 place-items-center text-[#159b63] transition-transform duration-200 group-hover:-translate-y-0.5 dark:text-emerald-400">
+                        <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-sky-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-sky-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0 {{ $item->stable_key === 'practical-lab' ? 'bg-[#f0fcf9] dark:bg-sky-400/5' : '' }}">
+                            <span class="grid h-8 place-items-center text-[#159b63] transition-transform duration-200 group-hover:-translate-y-0.5 dark:text-sky-400">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55">
+                                    <path d="{{ $icon }}" />
+                                </svg>
+                            </span>
                                 <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55">
                                     <path d="{{ $icon }}" />
                                 </svg>
@@ -885,7 +889,7 @@
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="mb-12 text-center">
                         <h2 class="text-3xl font-black uppercase tracking-tight text-[#0b2447] dark:text-white sm:text-4xl">Student Success Stories</h2>
-                        <div class="mx-auto mt-2 h-1 w-16 rounded-full bg-emerald-500"></div>
+                        <div class="mx-auto mt-2 h-1 w-16 rounded-full bg-amber-400"></div>
                     </div>
 
                     @php
@@ -911,7 +915,7 @@
 
                                 <div class="flex flex-1 flex-col justify-center px-5 py-6">
                                     <h3 class="text-lg font-black leading-tight text-[#0b2447] dark:text-white">{{ $name }}</h3>
-                                    <p class="mt-0.5 text-[11px] font-bold text-[#16a34a] dark:text-emerald-400">{{ $position }}</p>
+                                    <p class="mt-0.5 text-[11px] font-bold text-indigo-600 dark:text-cyan-400">{{ $position }}</p>
 
                                     <div class="mt-4 space-y-2">
                                         <div class="flex flex-col">
@@ -978,7 +982,7 @@
                                         <p class="mt-3 text-[13px] font-medium leading-relaxed text-slate-600 dark:text-slate-400">{{ $description }}</p>
                                     </div>
                                     <div class="mt-6 flex items-center justify-between border-t border-slate-50 pt-4 dark:border-white/5">
-                                        <span class="text-[12px] font-black text-emerald-600 dark:text-emerald-400">Learn more</span>
+                                        <span class="text-[12px] font-black text-indigo-600 dark:text-cyan-400">Learn more</span>
                                         <time class="text-[11px] font-bold text-slate-400">{{ $date }}</time>
                                     </div>
                                 </a>
@@ -1002,11 +1006,11 @@
                                  <h3 class="text-lg font-black text-[#0b2447] dark:text-white">Visit Our Campus</h3>
                                  <div class="mt-4 space-y-3">
                                      <div class="flex items-start gap-3">
-                                         <svg viewBox="0 0 20 20" class="mt-0.5 size-4 shrink-0 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 18s6-5 6-10A6 6 0 1 0 4 8c0 5 6 10 6 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
+                                         <svg viewBox="0 0 20 20" class="mt-0.5 size-4 shrink-0 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 18s6-5 6-10A6 6 0 1 0 4 8c0 5 6 10 6 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
                                          <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['address'] ?? 'Haji Hossain Plaza, Demra Bazar Road, Dhaka-1360' }}</p>
                                      </div>
                                      <div class="flex items-center gap-3">
-                                         <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h3l1 4-2 1c1 2.5 2.5 4 5 5l1-2 4 1v3c0 1.1-.9 2-2 2C8.4 17 3 11.6 3 5a2 2 0 0 1 2-2Z"/></svg>
+                                         <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h3l1 4-2 1c1 2.5 2.5 4 5 5l1-2 4 1v3c0 1.1-.9 2-2 2C8.4 17 3 11.6 3 5a2 2 0 0 1 2-2Z"/></svg>
                                          <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['phone'] ?? '+880 9696-481628' }}</p>
                                      </div>
                                  </div>

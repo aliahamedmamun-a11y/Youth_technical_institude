@@ -758,6 +758,11 @@
                             </div>
                         </div>
 
+                        <!-- SAVED ALERT NOTIFICATION -->
+                        <div id="modal-course-save-note" class="hidden rounded-xl bg-emerald-500/20 border border-emerald-500/40 p-3 text-emerald-800 font-bold text-xs text-center transition-all">
+                            ✓ Subject saved successfully for this semester! Click "SAVE CHANGES" below to persist all updates.
+                        </div>
+
                         <!-- COURSE LIST TABLE -->
                         <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
                             <table class="w-full text-left text-xs border-collapse">
@@ -768,7 +773,8 @@
                                         <th class="px-3 py-3 border-r border-slate-400/30 text-center">CREDIT</th>
                                         <th class="px-3 py-3 border-r border-slate-400/30 text-center">MARKS</th>
                                         <th class="px-3 py-3 border-r border-slate-400/30 text-center">LETTER GRADE</th>
-                                        <th class="px-3 py-3 text-center">GRADE POINT</th>
+                                        <th class="px-3 py-3 border-r border-slate-400/30 text-center">GRADE POINT</th>
+                                        <th class="px-3 py-3 text-center">ACTION</th>
                                     </tr>
                                 </thead>
                                 <tbody id="modal-result2-course-tbody" class="divide-y divide-slate-200 font-bold text-slate-800">
@@ -776,6 +782,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div id="modal-course-hidden-inputs"></div>
 
                         <!-- SUMMARY FOOTER -->
                         <div class="flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-slate-100 p-4 border border-slate-200 text-slate-900">
@@ -1004,18 +1011,26 @@
             }
         }
 
-        let modalResult2Courses = [
-            { code: 'CSE101', name: 'Intro to Computing', credit: 3.0, marks: '80 - 100', grade: 'A+', point: '4.00' },
-            { code: 'CSE102', name: 'Discrete Math', credit: 3.0, marks: '75 - 79', grade: 'B+', point: '3.75' },
-            { code: 'ENG103', name: 'Comm. English', credit: 3.0, marks: '70 - 74', grade: 'A-', point: '3.50' },
-            { code: 'CSE102', name: 'Comm. English', credit: 3.0, marks: '65 - 69', grade: 'B+', point: '3.25' },
-            { code: 'CSE104', name: 'Engineering English', credit: 3.0, marks: '60 - 64', grade: 'B', point: '3.00' },
-            { code: 'CSE104', name: 'Engineering English', credit: 3.0, marks: '55 - 59', grade: 'B-', point: '2.75' },
-            { code: 'CSE105', name: 'Comm. English', credit: 3.0, marks: '50 - 54', grade: 'C+', point: '2.50' },
-            { code: 'CSE106', name: 'Mathmatiic English', credit: 3.0, marks: '45 - 49', grade: 'C', point: '2.25' },
-            { code: 'CSE103', name: 'Programming English', credit: 3.0, marks: '40 - 44', grade: 'D', point: '2.00' },
-            { code: 'CSE103', name: 'Comm. English', credit: 3.0, marks: '0 - 39', grade: 'F', point: '0.00' }
-        ];
+        let modalSemesterCourses = {
+            '1st': [
+                { code: 'CSE101', name: 'Intro to Computing', credit: 3.0, marks: '80 - 100', grade: 'A+', point: '4.00' },
+                { code: 'CSE102', name: 'Discrete Math', credit: 3.0, marks: '75 - 79', grade: 'A', point: '3.75' },
+                { code: 'ENG103', name: 'Comm. English', credit: 3.0, marks: '70 - 74', grade: 'A-', point: '3.50' },
+                { code: 'CSE102', name: 'Comm. English', credit: 3.0, marks: '65 - 69', grade: 'B+', point: '3.25' },
+                { code: 'CSE104', name: 'Engineering English', credit: 3.0, marks: '60 - 64', grade: 'B', point: '3.00' },
+                { code: 'CSE104', name: 'Engineering English', credit: 3.0, marks: '55 - 59', grade: 'B-', point: '2.75' },
+                { code: 'CSE105', name: 'Comm. English', credit: 3.0, marks: '50 - 54', grade: 'C+', point: '2.50' },
+                { code: 'CSE106', name: 'Mathmatiic English', credit: 3.0, marks: '45 - 49', grade: 'C', point: '2.25' },
+                { code: 'CSE103', name: 'Programming English', credit: 3.0, marks: '40 - 44', grade: 'D', point: '2.00' },
+                { code: 'CSE103', name: 'Comm. English', credit: 3.0, marks: '0 - 39', grade: 'F', point: '0.00' }
+            ],
+            '2nd': [], '3rd': [], '4th': [], '5th': [], '6th': [], '7th': [], '8th': []
+        };
+
+        function getActiveSemKey() {
+            const sel = document.getElementById('modal-result2-sem-select');
+            return sel ? sel.value : '1st';
+        }
 
         function switchModalResultMode(mode) {
             const btn1 = document.getElementById('modal-btn-result-mode-1');
@@ -1038,47 +1053,70 @@
         }
 
         function renderModalCourseList() {
+            const sem = getActiveSemKey();
             const tbody = document.getElementById('modal-result2-course-tbody');
+            const hiddenBox = document.getElementById('modal-course-hidden-inputs');
             if (!tbody) return;
 
+            const list = modalSemesterCourses[sem] || [];
             let html = '';
             let totalCredit = 0;
             let totalPointCredit = 0;
 
-            modalResult2Courses.forEach((item, idx) => {
-                const credit = parseFloat(item.credit) || 0;
-                const point = parseFloat(item.point) || 0;
-                totalCredit += credit;
-                totalPointCredit += credit * point;
-
-                let badgeClass = 'bg-emerald-100 text-emerald-800';
-                if (item.grade === 'B' || item.grade === 'B-') badgeClass = 'bg-amber-100 text-amber-800';
-                if (item.grade === 'C+' || item.grade === 'C') badgeClass = 'bg-orange-100 text-orange-800';
-                if (item.grade === 'D' || item.grade === 'F') badgeClass = 'bg-rose-100 text-rose-800';
-
-                html += `
-                    <tr class="border-b border-slate-200 hover:bg-slate-50 transition">
-                        <td class="px-3 py-2 border-r border-slate-200">
-                            <input type="text" value="${item.code}" onchange="updateCourseItem(${idx}, 'code', this.value)" class="w-full bg-transparent outline-none font-mono">
-                        </td>
-                        <td class="px-3 py-2 border-r border-slate-200">
-                            <input type="text" value="${item.name}" onchange="updateCourseItem(${idx}, 'name', this.value)" class="w-full bg-transparent outline-none font-bold">
-                        </td>
-                        <td class="px-3 py-2 border-r border-slate-200 text-center">
-                            <input type="number" step="0.5" value="${item.credit}" onchange="updateCourseItem(${idx}, 'credit', this.value)" class="w-12 text-center bg-transparent outline-none font-bold">
-                        </td>
-                        <td class="px-3 py-2 border-r border-slate-200 text-center">
-                            <input type="text" value="${item.marks}" onchange="updateCourseItem(${idx}, 'marks', this.value)" class="w-20 text-center bg-transparent outline-none">
-                        </td>
-                        <td class="px-3 py-2 border-r border-slate-200 text-center">
-                            <span class="inline-block px-2 py-0.5 rounded font-black text-xs ${badgeClass}">${item.grade}</span>
-                        </td>
-                        <td class="px-3 py-2 text-center">
-                            <input type="number" step="0.01" value="${item.point}" onchange="updateCourseItem(${idx}, 'point', this.value)" class="w-14 text-center bg-transparent outline-none font-bold">
+            if (list.length === 0) {
+                html = `
+                    <tr>
+                        <td colspan="7" class="px-4 py-8 text-center text-slate-400 font-bold uppercase tracking-wider">
+                            No subjects added for ${sem} semester. Click "ADD PAGE +" to add a subject.
                         </td>
                     </tr>
                 `;
-            });
+            } else {
+                list.forEach((item, idx) => {
+                    const credit = parseFloat(item.credit) || 0;
+                    const point = parseFloat(item.point) || 0;
+                    totalCredit += credit;
+                    totalPointCredit += credit * point;
+
+                    let badgeClass = 'bg-emerald-100 text-emerald-800';
+                    if (item.grade === 'B' || item.grade === 'B-') badgeClass = 'bg-amber-100 text-amber-800';
+                    if (item.grade === 'C+' || item.grade === 'C') badgeClass = 'bg-orange-100 text-orange-800';
+                    if (item.grade === 'D' || item.grade === 'F') badgeClass = 'bg-rose-100 text-rose-800';
+
+                    html += `
+                        <tr class="border-b border-slate-200 hover:bg-slate-50 transition">
+                            <td class="px-3 py-2 border-r border-slate-200">
+                                <input type="text" value="${item.code || ''}" onchange="updateCourseItem('${sem}', ${idx}, 'code', this.value)" class="w-full bg-slate-50 border border-slate-200 rounded px-2 py-1 outline-none font-mono font-bold text-xs focus:bg-white focus:border-indigo-500">
+                            </td>
+                            <td class="px-3 py-2 border-r border-slate-200">
+                                <input type="text" value="${item.name || ''}" onchange="updateCourseItem('${sem}', ${idx}, 'name', this.value)" class="w-full bg-slate-50 border border-slate-200 rounded px-2 py-1 outline-none font-bold text-xs focus:bg-white focus:border-indigo-500">
+                            </td>
+                            <td class="px-3 py-2 border-r border-slate-200 text-center">
+                                <input type="number" step="0.5" min="0" value="${item.credit ?? 3.0}" onchange="updateCourseItem('${sem}', ${idx}, 'credit', this.value)" class="w-14 text-center bg-slate-50 border border-slate-200 rounded px-1 py-1 outline-none font-bold text-xs focus:bg-white focus:border-indigo-500">
+                            </td>
+                            <td class="px-3 py-2 border-r border-slate-200 text-center">
+                                <input type="text" value="${item.marks || ''}" onchange="updateCourseItem('${sem}', ${idx}, 'marks', this.value)" class="w-20 text-center bg-slate-50 border border-slate-200 rounded px-1 py-1 outline-none text-xs focus:bg-white focus:border-indigo-500">
+                            </td>
+                            <td class="px-3 py-2 border-r border-slate-200 text-center">
+                                <span class="inline-block px-2.5 py-0.5 rounded font-black text-xs ${badgeClass}">${item.grade || 'A+'}</span>
+                            </td>
+                            <td class="px-3 py-2 border-r border-slate-200 text-center">
+                                <input type="number" step="0.01" min="0" max="4.00" value="${item.point ?? '4.00'}" onchange="updateCourseItem('${sem}', ${idx}, 'point', this.value)" class="w-16 text-center bg-slate-50 border border-slate-200 rounded px-1 py-1 outline-none font-bold text-xs focus:bg-white focus:border-indigo-500">
+                            </td>
+                            <td class="px-3 py-2 text-center whitespace-nowrap">
+                                <div class="flex items-center justify-center gap-1.5">
+                                    <button type="button" onclick="saveCourseRow('${sem}', ${idx})" title="Save Subject" class="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 font-black text-[10px] uppercase tracking-wider shadow transition active:scale-95 cursor-pointer">
+                                        Save
+                                    </button>
+                                    <button type="button" onclick="deleteCourseRow('${sem}', ${idx})" title="Delete Subject" class="rounded-lg bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 font-black text-[10px] uppercase tracking-wider shadow transition active:scale-95 cursor-pointer">
+                                        Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
 
             tbody.innerHTML = html;
 
@@ -1088,30 +1126,49 @@
 
             if (totalCreditEl) totalCreditEl.textContent = totalCredit.toFixed(1);
             if (finalCgpaEl) finalCgpaEl.textContent = finalCgpa;
+
+            // Generate hidden inputs for form submission
+            if (hiddenBox) {
+                let hHtml = '';
+                Object.keys(modalSemesterCourses).forEach(sKey => {
+                    (modalSemesterCourses[sKey] || []).forEach((cItem, cIdx) => {
+                        hHtml += `<input type="hidden" name="course_list[${sKey}][${cIdx}][code]" value="${cItem.code || ''}">`;
+                        hHtml += `<input type="hidden" name="course_list[${sKey}][${cIdx}][name]" value="${cItem.name || ''}">`;
+                        hHtml += `<input type="hidden" name="course_list[${sKey}][${cIdx}][credit]" value="${cItem.credit || 3.0}">`;
+                        hHtml += `<input type="hidden" name="course_list[${sKey}][${cIdx}][marks]" value="${cItem.marks || ''}">`;
+                        hHtml += `<input type="hidden" name="course_list[${sKey}][${cIdx}][grade]" value="${cItem.grade || 'A+'}">`;
+                        hHtml += `<input type="hidden" name="course_list[${sKey}][${cIdx}][point]" value="${cItem.point || '4.00'}">`;
+                    });
+                });
+                hiddenBox.innerHTML = hHtml;
+            }
         }
 
-        function updateCourseItem(idx, key, val) {
-            if (modalResult2Courses[idx]) {
-                modalResult2Courses[idx][key] = val;
+        function updateCourseItem(sem, idx, key, val) {
+            if (modalSemesterCourses[sem] && modalSemesterCourses[sem][idx]) {
+                modalSemesterCourses[sem][idx][key] = val;
                 if (key === 'point') {
                     const pt = parseFloat(val);
-                    if (pt >= 4.0) modalResult2Courses[idx].grade = 'A+';
-                    else if (pt >= 3.75) modalResult2Courses[idx].grade = 'B+';
-                    else if (pt >= 3.5) modalResult2Courses[idx].grade = 'A-';
-                    else if (pt >= 3.0) modalResult2Courses[idx].grade = 'B';
-                    else if (pt >= 2.75) modalResult2Courses[idx].grade = 'B-';
-                    else if (pt >= 2.5) modalResult2Courses[idx].grade = 'C+';
-                    else if (pt >= 2.25) modalResult2Courses[idx].grade = 'C';
-                    else if (pt >= 2.0) modalResult2Courses[idx].grade = 'D';
-                    else modalResult2Courses[idx].grade = 'F';
+                    if (pt >= 4.00) modalSemesterCourses[sem][idx].grade = 'A+';
+                    else if (pt >= 3.75) modalSemesterCourses[sem][idx].grade = 'A';
+                    else if (pt >= 3.50) modalSemesterCourses[sem][idx].grade = 'A-';
+                    else if (pt >= 3.25) modalSemesterCourses[sem][idx].grade = 'B+';
+                    else if (pt >= 3.00) modalSemesterCourses[sem][idx].grade = 'B';
+                    else if (pt >= 2.75) modalSemesterCourses[sem][idx].grade = 'B-';
+                    else if (pt >= 2.50) modalSemesterCourses[sem][idx].grade = 'C+';
+                    else if (pt >= 2.25) modalSemesterCourses[sem][idx].grade = 'C';
+                    else if (pt >= 2.00) modalSemesterCourses[sem][idx].grade = 'D';
+                    else modalSemesterCourses[sem][idx].grade = 'F';
                 }
                 renderModalCourseList();
             }
         }
 
         function addModalCourseRow() {
-            modalResult2Courses.push({
-                code: 'NEW101',
+            const sem = getActiveSemKey();
+            if (!modalSemesterCourses[sem]) modalSemesterCourses[sem] = [];
+            modalSemesterCourses[sem].push({
+                code: 'CSE10' + (modalSemesterCourses[sem].length + 1),
                 name: 'New Course Name',
                 credit: 3.0,
                 marks: '80 - 100',
@@ -1119,6 +1176,22 @@
                 point: '4.00'
             });
             renderModalCourseList();
+        }
+
+        function saveCourseRow(sem, idx) {
+            renderModalCourseList();
+            const alertNote = document.getElementById('modal-course-save-note');
+            if (alertNote) {
+                alertNote.classList.remove('hidden');
+                setTimeout(() => alertNote.classList.add('hidden'), 3000);
+            }
+        }
+
+        function deleteCourseRow(sem, idx) {
+            if (modalSemesterCourses[sem] && modalSemesterCourses[sem][idx] !== undefined) {
+                modalSemesterCourses[sem].splice(idx, 1);
+                renderModalCourseList();
+            }
         }
 
         function closeEditModal() {

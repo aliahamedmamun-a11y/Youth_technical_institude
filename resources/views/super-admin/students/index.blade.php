@@ -94,6 +94,16 @@
                                         'education_qualification' => $student->education_qualification,
                                         'admitted_at' => optional($student->admitted_at)->format('Y-m-d'),
                                         'expire_date' => optional($student->expire_date)->format('Y-m-d'),
+                                        'full_marks' => $student->full_marks,
+                                        'written_marks' => $student->written_marks,
+                                        'viva_marks' => $student->viva_marks,
+                                        'practical_marks' => $student->practical_marks,
+                                        'score' => $student->score,
+                                        'grade' => $student->grade,
+                                        'cgpa' => $student->cgpa,
+                                        'publication_date' => $student->publication_date,
+                                        'examination_month' => $student->examination_month,
+                                        'semesters' => $student->results->mapWithKeys(fn($r) => [$r->semester => ['cgpa' => $r->gpa, 'grade' => $r->overall_grade]]),
                                         'created_at' => $student->created_at?->toISOString(),
                                         'image' => $studentImg,
                                         'update_url' => route('super-admin.students.update', $student),
@@ -648,44 +658,52 @@
 
                     <!-- FINAL RESULT (OVERALL) -->
                     <div class="space-y-4 pt-6 border-t border-white/10">
-                        <h3 class="text-base font-black text-slate-200 uppercase tracking-wide">Final Result (Overall)</h3>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <h3 class="text-base font-black text-slate-200 uppercase tracking-wide">Final Result (Overall)</h3>
+                            <button type="button" onclick="calcModalOverallResult()" class="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-4 py-2 font-black text-xs uppercase tracking-wider shadow transition active:scale-95">
+                                ✨ Auto-Calculate Overall Result
+                            </button>
+                        </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                             <div>
                                 <label class="{{ $modalLabelClass }}">Full Mark</label>
-                                <input type="text" name="full_mark" id="modal-full-mark" placeholder="Full Mark" class="{{ $modalInputClass }}">
+                                <input type="number" name="full_mark" id="modal-full-mark" placeholder="e.g. 4800" class="{{ $modalInputClass }}">
                             </div>
                             <div>
                                 <label class="{{ $modalLabelClass }}">Written Marks</label>
-                                <input type="text" name="written_marks" id="modal-written-marks" placeholder="Written Marks" class="{{ $modalInputClass }}">
+                                <input type="number" name="written_marks" id="modal-written-marks" oninput="calcModalOverallResult()" placeholder="e.g. 3320" class="{{ $modalInputClass }}">
                             </div>
                             <div>
                                 <label class="{{ $modalLabelClass }}">Viva Marks</label>
-                                <input type="text" name="viva_marks" id="modal-viva-marks" placeholder="Viva Marks" class="{{ $modalInputClass }}">
+                                <input type="number" name="viva_marks" id="modal-viva-marks" oninput="calcModalOverallResult()" placeholder="e.g. 250" class="{{ $modalInputClass }}">
                             </div>
                             <div>
                                 <label class="{{ $modalLabelClass }}">Practical Mark</label>
-                                <input type="text" name="practical_mark" id="modal-practical-mark" placeholder="Practical Mark" class="{{ $modalInputClass }}">
+                                <input type="number" name="practical_mark" id="modal-practical-mark" oninput="calcModalOverallResult()" placeholder="e.g. 270" class="{{ $modalInputClass }}">
                             </div>
                             <div>
-                                <label class="{{ $modalLabelClass }}">Total Marks</label>
-                                <input type="text" name="total_marks" id="modal-total-marks" value="0" class="{{ $modalInputClass }}">
+                                <label class="{{ $modalLabelClass }}">Total Marks (Auto)</label>
+                                <input type="number" name="total_marks" id="modal-total-marks" value="0" class="{{ $modalInputClass }} font-bold text-indigo-300">
                             </div>
                             <div>
-                                <label class="{{ $modalLabelClass }}">Letter Grade</label>
+                                <label class="{{ $modalLabelClass }}">Letter Grade (Auto)</label>
                                 <select name="letter_grade" id="modal-letter-grade" class="{{ $modalSelectClass }}">
                                     <option value="">Select Grade</option>
                                     <option value="A+">A+</option>
                                     <option value="A">A</option>
                                     <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
                                     <option value="B">B</option>
+                                    <option value="B-">B-</option>
+                                    <option value="C+">C+</option>
                                     <option value="C">C</option>
                                     <option value="D">D</option>
                                     <option value="F">F</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="{{ $modalLabelClass }}">CGPA (Overall)</label>
-                                <input type="text" name="cgpa" id="modal-cgpa" placeholder="CGPA" class="{{ $modalInputClass }}">
+                                <label class="{{ $modalLabelClass }}">CGPA (Overall Auto)</label>
+                                <input type="number" step="0.01" name="cgpa" id="modal-cgpa" placeholder="e.g. 3.75" class="{{ $modalInputClass }} font-bold text-emerald-400">
                             </div>
                             <div>
                                 <label class="{{ $modalLabelClass }}">Publication Date</label>
@@ -693,7 +711,7 @@
                             </div>
                             <div>
                                 <label class="{{ $modalLabelClass }}">Examination Month</label>
-                                <input type="text" name="examination_month" id="modal-exam-month" placeholder="Examination Month" class="{{ $modalInputClass }}">
+                                <input type="text" name="examination_month" id="modal-exam-month" placeholder="e.g. July 2025" class="{{ $modalInputClass }}">
                             </div>
                             <div>
                                 <label class="{{ $modalLabelClass }}">Session (Display)</label>
@@ -886,6 +904,30 @@
             document.getElementById('modal-expire-date').value = student.expire_date || '';
             document.getElementById('modal-created-at').value = student.created_at || '2026-07-22T15:47:56.202Z';
 
+            if (document.getElementById('modal-full-mark')) document.getElementById('modal-full-mark').value = student.full_marks || '';
+            if (document.getElementById('modal-written-marks')) document.getElementById('modal-written-marks').value = student.written_marks || '';
+            if (document.getElementById('modal-viva-marks')) document.getElementById('modal-viva-marks').value = student.viva_marks || '';
+            if (document.getElementById('modal-practical-mark')) document.getElementById('modal-practical-mark').value = student.practical_marks || '';
+            if (document.getElementById('modal-total-marks')) document.getElementById('modal-total-marks').value = student.score || '';
+            if (document.getElementById('modal-letter-grade')) document.getElementById('modal-letter-grade').value = student.grade || '';
+            if (document.getElementById('modal-cgpa')) document.getElementById('modal-cgpa').value = student.cgpa || '';
+            if (document.getElementById('modal-pub-date')) document.getElementById('modal-pub-date').value = student.publication_date || '';
+            if (document.getElementById('modal-exam-month')) document.getElementById('modal-exam-month').value = student.examination_month || '';
+            if (document.getElementById('modal-session-disp')) document.getElementById('modal-session-disp').value = student.session || '';
+
+            if (student.semesters) {
+                const semKeys = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'];
+                semKeys.forEach((sem, idx) => {
+                    const semData = student.semesters[`${sem} Semester`] || student.semesters[sem] || student.semesters[`${sem} semester`];
+                    if (semData) {
+                        const cgpaIn = document.getElementById(`modal-sem-cgpa-${idx}`);
+                        const gradeIn = document.getElementById(`modal-sem-grade-${idx}`);
+                        if (cgpaIn) cgpaIn.value = semData.cgpa || '';
+                        if (gradeIn) gradeIn.value = semData.grade || '';
+                    }
+                });
+            }
+
             modal.classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
         }
@@ -901,16 +943,65 @@
                 return;
             }
 
-            if (val >= 3.75) gradeSelect.value = 'A+';
-            else if (val >= 3.50) gradeSelect.value = 'A';
-            else if (val >= 3.25) gradeSelect.value = 'A-';
-            else if (val >= 3.00) gradeSelect.value = 'B+';
-            else if (val >= 2.75) gradeSelect.value = 'B';
-            else if (val >= 2.50) gradeSelect.value = 'B-';
-            else if (val >= 2.25) gradeSelect.value = 'C+';
-            else if (val >= 2.00) gradeSelect.value = 'C';
-            else if (val >= 1.00) gradeSelect.value = 'D';
+            if (val >= 4.00) gradeSelect.value = 'A+';
+            else if (val >= 3.75) gradeSelect.value = 'A';
+            else if (val >= 3.50) gradeSelect.value = 'A-';
+            else if (val >= 3.25) gradeSelect.value = 'B+';
+            else if (val >= 3.00) gradeSelect.value = 'B';
+            else if (val >= 2.75) gradeSelect.value = 'B-';
+            else if (val >= 2.50) gradeSelect.value = 'C+';
+            else if (val >= 2.25) gradeSelect.value = 'C';
+            else if (val >= 2.00) gradeSelect.value = 'D';
             else gradeSelect.value = 'F';
+
+            calcModalOverallResult();
+        }
+
+        function calcModalOverallResult() {
+            const written = parseFloat(document.getElementById('modal-written-marks')?.value || 0);
+            const viva = parseFloat(document.getElementById('modal-viva-marks')?.value || 0);
+            const practical = parseFloat(document.getElementById('modal-practical-mark')?.value || 0);
+
+            // 1. Total Marks Sum
+            const total = written + viva + practical;
+            const totalInput = document.getElementById('modal-total-marks');
+            if (totalInput) totalInput.value = total > 0 ? total : 0;
+
+            // 2. Average CGPA from all 8 Semester CGPAs
+            let totalCgpa = 0;
+            let count = 0;
+            for (let i = 0; i < 8; i++) {
+                const semCgpaInput = document.getElementById(`modal-sem-cgpa-${i}`);
+                if (semCgpaInput && semCgpaInput.value) {
+                    const val = parseFloat(semCgpaInput.value);
+                    if (!isNaN(val) && val > 0) {
+                        totalCgpa += val;
+                        count++;
+                    }
+                }
+            }
+
+            if (count > 0) {
+                const avgCgpa = (totalCgpa / count).toFixed(2);
+                const overallCgpaInput = document.getElementById('modal-cgpa');
+                const gradeSelect = document.getElementById('modal-letter-grade');
+
+                if (overallCgpaInput) overallCgpaInput.value = avgCgpa;
+
+                if (gradeSelect) {
+                    const cg = parseFloat(avgCgpa);
+                    if (cg >= 4.00) gradeSelect.value = 'A+';
+                    else if (cg >= 3.75) gradeSelect.value = 'A';
+                    else if (cg >= 3.50) gradeSelect.value = 'A-';
+                    else if (cg >= 3.25) gradeSelect.value = 'B+';
+                    else if (cg >= 3.00) gradeSelect.value = 'B';
+                    else if (cg >= 2.75) gradeSelect.value = 'B-';
+                    else if (cg >= 2.50) gradeSelect.value = 'C+';
+                    else if (cg >= 2.25) gradeSelect.value = 'C';
+                    else if (cg >= 2.00) gradeSelect.value = 'D';
+                    else gradeSelect.value = 'F';
+                }
+            }
         }
 
         let modalResult2Courses = [

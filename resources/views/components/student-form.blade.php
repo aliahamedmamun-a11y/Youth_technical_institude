@@ -1098,15 +1098,15 @@
             return;
         }
 
-        if (val >= 3.75) gradeSelect.value = 'A+';
-        else if (val >= 3.50) gradeSelect.value = 'A';
-        else if (val >= 3.25) gradeSelect.value = 'A-';
-        else if (val >= 3.00) gradeSelect.value = 'B+';
-        else if (val >= 2.75) gradeSelect.value = 'B';
-        else if (val >= 2.50) gradeSelect.value = 'B-';
-        else if (val >= 2.25) gradeSelect.value = 'C+';
-        else if (val >= 2.00) gradeSelect.value = 'C';
-        else if (val >= 1.00) gradeSelect.value = 'D';
+        if (val >= 4.00) gradeSelect.value = 'A+';
+        else if (val >= 3.75) gradeSelect.value = 'A';
+        else if (val >= 3.50) gradeSelect.value = 'A-';
+        else if (val >= 3.25) gradeSelect.value = 'B+';
+        else if (val >= 3.00) gradeSelect.value = 'B';
+        else if (val >= 2.75) gradeSelect.value = 'B-';
+        else if (val >= 2.50) gradeSelect.value = 'C+';
+        else if (val >= 2.25) gradeSelect.value = 'C';
+        else if (val >= 2.00) gradeSelect.value = 'D';
         else gradeSelect.value = 'F';
 
         updateFormOverallCgpaAndGrade();
@@ -1159,15 +1159,15 @@
             if (overallCgpaInput) overallCgpaInput.value = avgCgpa;
 
             if (overallGradeSelect) {
-                if (avgCgpa >= 3.75) overallGradeSelect.value = 'A+';
-                else if (avgCgpa >= 3.50) overallGradeSelect.value = 'A';
-                else if (avgCgpa >= 3.25) overallGradeSelect.value = 'A-';
-                else if (avgCgpa >= 3.00) overallGradeSelect.value = 'B+';
-                else if (avgCgpa >= 2.75) overallGradeSelect.value = 'B';
-                else if (avgCgpa >= 2.50) overallGradeSelect.value = 'B-';
-                else if (avgCgpa >= 2.25) overallGradeSelect.value = 'C+';
-                else if (avgCgpa >= 2.00) overallGradeSelect.value = 'C';
-                else if (avgCgpa >= 1.00) overallGradeSelect.value = 'D';
+                if (avgCgpa >= 4.00) overallGradeSelect.value = 'A+';
+                else if (avgCgpa >= 3.75) overallGradeSelect.value = 'A';
+                else if (avgCgpa >= 3.50) overallGradeSelect.value = 'A-';
+                else if (avgCgpa >= 3.25) overallGradeSelect.value = 'B+';
+                else if (avgCgpa >= 3.00) overallGradeSelect.value = 'B';
+                else if (avgCgpa >= 2.75) overallGradeSelect.value = 'B-';
+                else if (avgCgpa >= 2.50) overallGradeSelect.value = 'C+';
+                else if (avgCgpa >= 2.25) overallGradeSelect.value = 'C';
+                else if (avgCgpa >= 2.00) overallGradeSelect.value = 'D';
                 else overallGradeSelect.value = 'F';
             }
         }

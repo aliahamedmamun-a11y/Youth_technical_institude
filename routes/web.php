@@ -272,6 +272,12 @@ Route::middleware('auth')->group(function (): void {
         ->name('super-admin.branch-messages.all-table-add');
     Route::post('/super-admin/branch-message-board', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'store'])
         ->name('super-admin.branch-messages.store');
+    Route::get('/super-admin/branch-messages/{branchMessage}/edit', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'edit'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-messages.edit');
+    Route::put('/super-admin/branch-messages/{branchMessage}', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'update'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.branch-messages.update');
     Route::delete('/super-admin/branch-messages/{branchMessage}', [\App\Http\Controllers\SuperAdmin\BranchMessageController::class, 'destroy'])
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->name('super-admin.branch-messages.destroy');
@@ -288,6 +294,15 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/super-admin/notice-board-suggestions', [\App\Http\Controllers\SuperAdmin\NoticeBoardSuggestionController::class, 'store'])
         ->middleware('role:'.UserRole::SuperAdmin->value)
         ->name('super-admin.notice-board-suggestions.store');
+    Route::get('/super-admin/notice-board-suggestions/{noticeBoardSuggestion}/edit', [\App\Http\Controllers\SuperAdmin\NoticeBoardSuggestionController::class, 'edit'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.notice-board-suggestions.edit');
+    Route::put('/super-admin/notice-board-suggestions/{noticeBoardSuggestion}', [\App\Http\Controllers\SuperAdmin\NoticeBoardSuggestionController::class, 'update'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.notice-board-suggestions.update');
+    Route::delete('/super-admin/notice-board-suggestions/{noticeBoardSuggestion}', [\App\Http\Controllers\SuperAdmin\NoticeBoardSuggestionController::class, 'destroy'])
+        ->middleware('role:'.UserRole::SuperAdmin->value)
+        ->name('super-admin.notice-board-suggestions.destroy');
 
     Route::get('/super-admin/homepage/{section}/items', [HomepageContentController::class, 'index'])->name('super-admin.homepage.items.index');
     Route::patch('/super-admin/homepage/sections/{section}', [HomepageContentController::class, 'updateSection'])->name('super-admin.homepage.sections.update');
@@ -306,6 +321,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/super-admin/all-branches', [SuperAdminBranchApplicationController::class, 'allBranches'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.all-branches');
     Route::get('/super-admin/branch-applications/{branchApplication}/edit', [SuperAdminBranchApplicationController::class, 'edit'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.edit');
     Route::put('/super-admin/branch-applications/{branchApplication}/update-data', [SuperAdminBranchApplicationController::class, 'updateData'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.update-data');
+    Route::patch('/super-admin/branch-applications/{branchApplication}/permission', [SuperAdminBranchApplicationController::class, 'togglePermission'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.toggle-permission');
     Route::patch('/super-admin/branch-applications/{branchApplication}/toggle', [SuperAdminBranchApplicationController::class, 'toggleStatus'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.toggle');
     Route::get('/super-admin/branch-applications/{branchApplication}', [SuperAdminBranchApplicationController::class, 'show'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.show');
     Route::delete('/super-admin/branch-applications/{branchApplication}', [SuperAdminBranchApplicationController::class, 'destroy'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.branch-applications.destroy');

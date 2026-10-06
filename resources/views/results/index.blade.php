@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#061527">
-        <meta name="description" content="Find and verify your official Bangladesh National Youth Technical Institute examination result.">
+        <meta name="theme-color" content="#e7f3f9">
+        <meta name="description" content="Find and verify your official South Asia Engineering & Technical Institute examination result.">
         <title>Student Result Portal | BNYTI</title>
         <link rel="icon" href="{{ asset('images/Logo.png') }}" type="image/png">
         @fonts
@@ -12,59 +12,59 @@
         <!-- HTML5 QR CODE SCANNER LIBRARY -->
         <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     </head>
-    <body class="min-h-screen overflow-x-hidden bg-[#03224c] text-white antialiased font-sans">
+    <body class="min-h-screen overflow-x-hidden bg-[#e7f3f9] text-slate-900 antialiased font-sans">
 
         <!-- HEADER NAVIGATION BAR -->
-        <header class="relative z-50 border-b border-white/10 bg-[#021838]/95 backdrop-blur-xl">
+        <header class="relative z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
             <div class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
                 <a href="{{ route('home') }}" class="group flex min-w-0 items-center gap-3" aria-label="Home">
-                    <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="brand-logo size-12 shrink-0 transition duration-300 group-hover:-rotate-3 sm:size-14">
+                    <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="brand-logo size-12 shrink-0 transition duration-300 group-hover:-rotate-3 sm:size-14">
                     <span class="hidden min-w-0 sm:block">
-                        <span class="block truncate text-sm font-black tracking-tight text-white sm:text-[15px]">
-                            <span class="text-emerald-400">SOUTH ASIA</span> <span class="text-rose-500">NATIONAL</span>
+                        <span class="block truncate text-sm font-black tracking-tight text-[#03224c] sm:text-[15px]">
+                            <span class="text-[#03224c]">SOUTH ASIA</span> <span class="text-rose-600">ENGINEERING &</span>
                         </span>
-                        <span class="block truncate text-[10px] font-bold tracking-[0.17em] text-slate-300 sm:text-[11px]">TECHNICAL INSTITUTE</span>
+                        <span class="block truncate text-[10px] font-bold tracking-[0.17em] text-slate-500 sm:text-[11px]">TECHNICAL INSTITUTE</span>
                     </span>
                     <span class="sm:hidden">
-                        <span class="block text-base font-black tracking-tight text-white">SOUTH ASIA</span>
-                        <span class="block text-[9px] font-bold tracking-[0.14em] text-slate-300">TECHNICAL INSTITUTE</span>
+                        <span class="block text-base font-black tracking-tight text-[#03224c]">SOUTH ASIA</span>
+                        <span class="block text-[9px] font-bold tracking-[0.14em] text-slate-500">TECHNICAL INSTITUTE</span>
                     </span>
                 </a>
 
                 <nav class="hidden items-center gap-6 lg:flex" aria-label="Primary navigation">
-                    <a href="{{ route('home') }}#home" class="text-slate-300 hover:text-white font-bold text-sm transition">Home</a>
-                    <a href="{{ route('home') }}#courses" class="text-slate-300 hover:text-white font-bold text-sm transition">Course List</a>
-                    <a href="{{ route('home') }}#verified-branches" class="text-slate-300 hover:text-white font-bold text-sm transition">Verified Branches</a>
-                    <a href="{{ route('results.index') }}" class="text-emerald-400 font-bold text-sm border-b-2 border-emerald-400 pb-1" aria-current="page">Result Search</a>
-                    <a href="{{ route('home') }}#about" class="text-slate-300 hover:text-white font-bold text-sm transition">About</a>
-                    <a href="{{ route('login') }}" class="text-slate-300 hover:text-white font-bold text-sm transition">Login</a>
-                    <a href="{{ route('home') }}#contact" class="text-slate-300 hover:text-white font-bold text-sm transition">Contact</a>
+                    <a href="{{ route('home') }}#home" class="text-slate-700 hover:text-[#03224c] font-bold text-sm transition">Home</a>
+                    <a href="{{ route('home') }}#courses" class="text-slate-700 hover:text-[#03224c] font-bold text-sm transition">Course List</a>
+                    <a href="{{ route('home') }}#verified-branches" class="text-slate-700 hover:text-[#03224c] font-bold text-sm transition">Verified Branches</a>
+                    <a href="{{ route('results.index') }}" class="text-[#03224c] font-bold text-sm border-b-2 border-[#03224c] pb-1" aria-current="page">Result Search</a>
+                    <a href="{{ route('home') }}#about" class="text-slate-700 hover:text-[#03224c] font-bold text-sm transition">About</a>
+                    <a href="{{ route('login') }}" class="text-slate-700 hover:text-[#03224c] font-bold text-sm transition">Login</a>
+                    <a href="{{ route('home') }}#contact" class="text-slate-700 hover:text-[#03224c] font-bold text-sm transition">Contact</a>
                 </nav>
 
                 <div class="flex shrink-0 items-center gap-2">
-                    <button type="button" class="icon-button border border-white/10 bg-white/5 text-white hover:bg-white/10 rounded-xl px-3 py-1.5" data-locale-toggle aria-label="Switch language">
+                    <button type="button" class="icon-button border border-slate-200 bg-slate-100 text-slate-800 hover:bg-slate-200 rounded-xl px-3 py-1.5" data-locale-toggle aria-label="Switch language">
                         <span class="text-xs font-black" data-locale-label>বাংলা</span>
                     </button>
-                    <button type="button" class="icon-button border border-white/10 bg-white/5 text-white hover:bg-white/10 rounded-xl p-2" data-theme-toggle aria-label="Toggle color theme">
+                    <button type="button" class="icon-button border border-slate-200 bg-slate-100 text-slate-800 hover:bg-slate-200 rounded-xl p-2" data-theme-toggle aria-label="Toggle color theme">
                         <svg data-theme-sun viewBox="0 0 24 24" aria-hidden="true" class="size-5"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/></svg>
                         <svg data-theme-moon viewBox="0 0 24 24" aria-hidden="true" class="hidden size-5"><path d="M20 15.1A8.5 8.5 0 0 1 8.9 4a8.5 8.5 0 1 0 11.1 11.1Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/></svg>
                     </button>
-                    <button type="button" class="icon-button lg:hidden border border-white/10 bg-white/5 text-white hover:bg-white/10 rounded-xl p-2" data-menu-toggle aria-expanded="false" aria-controls="results-mobile-menu" aria-label="Open menu">
+                    <button type="button" class="icon-button lg:hidden border border-slate-200 bg-slate-100 text-slate-800 hover:bg-slate-200 rounded-xl p-2" data-menu-toggle aria-expanded="false" aria-controls="results-mobile-menu" aria-label="Open menu">
                         <svg data-menu-open viewBox="0 0 24 24" aria-hidden="true" class="size-6"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>
                         <svg data-menu-close viewBox="0 0 24 24" aria-hidden="true" class="hidden size-6"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>
                     </button>
                 </div>
             </div>
 
-            <div id="results-mobile-menu" class="border-t border-white/10 bg-[#061527] px-4 py-5 shadow-2xl lg:hidden" data-mobile-menu hidden>
+            <div id="results-mobile-menu" class="border-t border-slate-200 bg-white px-4 py-5 shadow-2xl lg:hidden" data-mobile-menu hidden>
                 <nav class="mx-auto grid max-w-7xl gap-1" aria-label="Mobile navigation">
-                    <a href="{{ route('home') }}#home" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Home</a>
-                    <a href="{{ route('home') }}#courses" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Course List</a>
-                    <a href="{{ route('home') }}#verified-branches" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Verified Branches</a>
-                    <a href="{{ route('results.index') }}" class="block rounded-xl px-4 py-2.5 text-sm font-bold bg-emerald-500/10 text-emerald-400">Result Search</a>
-                    <a href="{{ route('home') }}#about" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">About</a>
-                    <a href="{{ route('login') }}" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Login</a>
-                    <a href="{{ route('home') }}#contact" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-200 hover:bg-white/5">Contact</a>
+                    <a href="{{ route('home') }}#home" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-100">Home</a>
+                    <a href="{{ route('home') }}#courses" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-100">Course List</a>
+                    <a href="{{ route('home') }}#verified-branches" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-100">Verified Branches</a>
+                    <a href="{{ route('results.index') }}" class="block rounded-xl px-4 py-2.5 text-sm font-bold bg-[#03224c] text-white">Result Search</a>
+                    <a href="{{ route('home') }}#about" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-100">About</a>
+                    <a href="{{ route('login') }}" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-100">Login</a>
+                    <a href="{{ route('home') }}#contact" class="block rounded-xl px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-100">Contact</a>
                 </nav>
             </div>
         </header>
@@ -74,25 +74,25 @@
 
             <!-- HERO HEADER -->
             <header class="text-center space-y-3">
-                <a href="{{ route('home') }}" class="group inline-flex flex-col items-center" aria-label="Back to BNYTI home">
-                    <div class="relative size-24 sm:size-32 rounded-full p-1 bg-gradient-to-tr from-amber-400 via-emerald-400 to-cyan-400 shadow-2xl">
-                        <div class="size-full overflow-hidden rounded-full bg-[#061527] p-1 flex items-center justify-center border-2 border-white/20">
-                            <img src="{{ asset('images/Logo.png') }}" alt="Bangladesh National Youth Technical Institute logo" class="brand-logo size-full object-contain transition duration-300 group-hover:-rotate-3">
+                <a href="{{ route('home') }}" class="group inline-flex flex-col items-center" aria-label="Back to home">
+                    <div class="relative size-24 sm:size-32 rounded-full p-1 bg-gradient-to-tr from-[#03224c] via-cyan-500 to-amber-400 shadow-2xl">
+                        <div class="size-full overflow-hidden rounded-full bg-white p-1 flex items-center justify-center border-2 border-slate-200">
+                            <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="brand-logo size-full object-contain transition duration-300 group-hover:-rotate-3">
                         </div>
                     </div>
-                    <h1 class="mt-4 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#10b981] drop-shadow-md">
+                    <h1 class="mt-4 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#03224c] drop-shadow-sm">
                         South Asia Engineering & Technical Institute
                     </h1>
-                    <div class="flex items-center justify-center gap-3 text-xs sm:text-sm font-semibold text-slate-300">
-                        <span class="hidden h-px w-10 bg-emerald-500 sm:block"></span>
+                    <div class="flex items-center justify-center gap-3 text-xs sm:text-sm font-semibold text-slate-600">
+                        <span class="hidden h-px w-10 bg-[#03224c]/40 sm:block"></span>
                         Skill for Today, Success for Tomorrow
-                        <span class="hidden h-px w-10 bg-emerald-500 sm:block"></span>
+                        <span class="hidden h-px w-10 bg-[#03224c]/40 sm:block"></span>
                     </div>
                 </a>
             </header>
 
             <!-- MAIN RESULT SEARCH CARD (DESIGN MATCHING SECOND IMAGE) -->
-            <section class="mt-8 sm:mt-10 rounded-3xl border border-white/10 bg-[#071c2c] p-6 sm:p-10 lg:p-12 shadow-[0_20px_70px_rgba(0,0,0,0.6)] text-center relative overflow-hidden">
+            <section class="mt-8 sm:mt-10 rounded-3xl border border-cyan-500/20 bg-[#0c2035] p-6 sm:p-10 lg:p-12 shadow-[0_20px_70px_rgba(0,0,0,0.4)] text-center relative overflow-hidden">
 
                 <div class="mx-auto max-w-2xl space-y-6">
 
@@ -196,7 +196,7 @@
                     <div class="flex flex-col items-center text-center p-3 space-y-2 pt-6 sm:pt-3">
                         <div class="size-12 rounded-full bg-[#0c2035] text-cyan-400 flex items-center justify-center shadow-lg">
                             <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0110.43-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 0110.43 3.296A3.745 3.745 0 0121 12z" />
                             </svg>
                         </div>
                         <h3 class="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider">100% OFFICIAL</h3>
@@ -235,7 +235,7 @@
                 <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
                     <div class="size-10 sm:size-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white shrink-0 shadow-inner">
                         <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0110.43-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 0110.43 3.296A3.745 3.745 0 0121 12z" />
                         </svg>
                     </div>
                     <div>
@@ -259,22 +259,22 @@
 
             <!-- FOOTER -->
             <footer class="mt-auto pt-12 text-center space-y-4">
-                <a href="{{ route('home') }}" class="inline-flex items-center gap-3 text-sm font-black text-white hover:text-emerald-400 transition">
-                    <span class="h-px w-12 bg-emerald-500"></span>
-                    <img src="{{ asset('images/Logo.png') }}" alt="BNYTI Logo" class="size-10">
-                    <span class="h-px w-12 bg-emerald-500"></span>
+                <a href="{{ route('home') }}" class="inline-flex items-center gap-3 text-sm font-black text-slate-800 hover:text-[#03224c] transition">
+                    <span class="h-px w-12 bg-[#03224c]"></span>
+                    <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="size-10">
+                    <span class="h-px w-12 bg-[#03224c]"></span>
                 </a>
-                <p class="text-xs sm:text-sm font-medium text-slate-300">
+                <p class="text-xs sm:text-sm font-medium text-slate-600">
                     © {{ date('Y') }} South Asia Engineering & Technical Institute. All Rights Reserved.
                 </p>
-                <p class="text-emerald-400 text-xs tracking-widest" aria-hidden="true">★ ★ ★</p>
+                <p class="text-[#03224c] text-xs tracking-widest" aria-hidden="true">★ ★ ★</p>
             </footer>
 
         </main>
 
         <!-- QR SCANNER MODAL -->
         <div id="qr-scanner-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
-            <div class="w-full max-w-md rounded-3xl border border-cyan-500/30 bg-[#071c2c] p-6 shadow-2xl space-y-5 relative text-center">
+            <div class="w-full max-w-md rounded-3xl border border-cyan-500/30 bg-[#071c2c] p-6 shadow-2xl space-y-5 relative text-center text-white">
 
                 <!-- Header -->
                 <div class="flex items-center justify-between border-b border-white/10 pb-3">

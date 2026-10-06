@@ -605,98 +605,177 @@
                     </div>
                 </div>
 
-                <!-- ACADEMIC DETAILS (PER SEMESTER) -->
-                <div class="space-y-4 pt-6 border-t border-white/10">
-                    <div>
-                        <h3 class="text-base font-black text-slate-200 uppercase tracking-wide">Academic Details (Per Semester)</h3>
-                        <p class="text-xs text-slate-400 font-medium">Enter the CGPA (0.00-4.00) for each semester, and the Grade will auto-calculate.</p>
+                <!-- SECTION RESULT 1 MODE: ACADEMIC DETAILS & FINAL RESULT -->
+                <div id="modal-section-result-1" class="space-y-6">
+                    <!-- ACADEMIC DETAILS (PER SEMESTER) -->
+                    <div class="space-y-4 pt-6 border-t border-white/10">
+                        <div>
+                            <h3 class="text-base font-black text-slate-200 uppercase tracking-wide">Academic Details (Per Semester)</h3>
+                            <p class="text-xs text-slate-400 font-medium">Enter the CGPA (0.00-4.00) for each semester, and the Grade will auto-calculate.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                            @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $idx => $sem)
+                                <div class="rounded-2xl border border-white/10 bg-[#071c2c]/80 p-4 space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="text-xs font-black text-[#818cf8] uppercase tracking-wider">{{ $sem }} Semester</h4>
+                                        <span class="text-[9px] font-bold text-slate-300 uppercase">CGPA</span>
+                                    </div>
+                                    <input type="number" step="0.01" min="0" max="4.00" name="semesters[{{ $sem }}][cgpa]" id="modal-sem-cgpa-{{ $idx }}"
+                                        oninput="calcModalSemGrade({{ $idx }})" placeholder="e.g. 3.75"
+                                        class="w-full rounded-xl border border-white/20 bg-[#070d19] py-2.5 px-3 text-xs font-bold text-white placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-300 mb-1 uppercase tracking-wider">Grade (Auto-Calculated)</label>
+                                        <select name="semesters[{{ $sem }}][grade]" id="modal-sem-grade-{{ $idx }}" class="{{ $modalSelectClass }} py-2 text-xs">
+                                            <option value="">Select Grade</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A">A</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="B-">B-</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="F">F</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                        @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $idx => $sem)
-                            <div class="rounded-2xl border border-white/10 bg-[#071c2c]/80 p-4 space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <h4 class="text-xs font-black text-[#818cf8] uppercase tracking-wider">{{ $sem }} Semester</h4>
-                                    <span class="text-[9px] font-bold text-slate-300 uppercase">CGPA</span>
-                                </div>
-                                <input type="number" step="0.01" min="0" max="4.00" name="semesters[{{ $sem }}][cgpa]" id="modal-sem-cgpa-{{ $idx }}"
-                                    oninput="calcModalSemGrade({{ $idx }})" placeholder="e.g. 3.75"
-                                    class="w-full rounded-xl border border-white/20 bg-[#070d19] py-2.5 px-3 text-xs font-bold text-white placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
-
-                                <div>
-                                    <label class="block text-[10px] font-bold text-slate-300 mb-1 uppercase tracking-wider">Grade (Auto-Calculated)</label>
-                                    <select name="semesters[{{ $sem }}][grade]" id="modal-sem-grade-{{ $idx }}" class="{{ $modalSelectClass }} py-2 text-xs">
-                                        <option value="">Select Grade</option>
-                                        <option value="A+">A+</option>
-                                        <option value="A">A</option>
-                                        <option value="A-">A-</option>
-                                        <option value="B+">B+</option>
-                                        <option value="B">B</option>
-                                        <option value="B-">B-</option>
-                                        <option value="C+">C+</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
-                                        <option value="F">F</option>
-                                    </select>
-                                </div>
+                    <!-- FINAL RESULT (OVERALL) -->
+                    <div class="space-y-4 pt-6 border-t border-white/10">
+                        <h3 class="text-base font-black text-slate-200 uppercase tracking-wide">Final Result (Overall)</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                            <div>
+                                <label class="{{ $modalLabelClass }}">Full Mark</label>
+                                <input type="text" name="full_mark" id="modal-full-mark" placeholder="Full Mark" class="{{ $modalInputClass }}">
                             </div>
-                        @endforeach
+                            <div>
+                                <label class="{{ $modalLabelClass }}">Written Marks</label>
+                                <input type="text" name="written_marks" id="modal-written-marks" placeholder="Written Marks" class="{{ $modalInputClass }}">
+                            </div>
+                            <div>
+                                <label class="{{ $modalLabelClass }}">Viva Marks</label>
+                                <input type="text" name="viva_marks" id="modal-viva-marks" placeholder="Viva Marks" class="{{ $modalInputClass }}">
+                            </div>
+                            <div>
+                                <label class="{{ $modalLabelClass }}">Practical Mark</label>
+                                <input type="text" name="practical_mark" id="modal-practical-mark" placeholder="Practical Mark" class="{{ $modalInputClass }}">
+                            </div>
+                            <div>
+                                <label class="{{ $modalLabelClass }}">Total Marks</label>
+                                <input type="text" name="total_marks" id="modal-total-marks" value="0" class="{{ $modalInputClass }}">
+                            </div>
+                            <div>
+                                <label class="{{ $modalLabelClass }}">Letter Grade</label>
+                                <select name="letter_grade" id="modal-letter-grade" class="{{ $modalSelectClass }}">
+                                    <option value="">Select Grade</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A">A</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="F">F</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="{{ $modalLabelClass }}">CGPA (Overall)</label>
+                                <input type="text" name="cgpa" id="modal-cgpa" placeholder="CGPA" class="{{ $modalInputClass }}">
+                            </div>
+                            <div>
+                                <label class="{{ $modalLabelClass }}">Publication Date</label>
+                                <input type="date" name="publication_date" id="modal-pub-date" class="{{ $modalInputClass }}">
+                            </div>
+                            <div>
+                                <label class="{{ $modalLabelClass }}">Examination Month</label>
+                                <input type="text" name="examination_month" id="modal-exam-month" placeholder="Examination Month" class="{{ $modalInputClass }}">
+                            </div>
+                            <div>
+                                <label class="{{ $modalLabelClass }}">Session (Display)</label>
+                                <input type="text" name="session_display" id="modal-session-disp" placeholder="Jan 2024 - Dec 2024" class="{{ $modalInputClass }}">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- FINAL RESULT (OVERALL) -->
-                <div class="space-y-4 pt-6 border-t border-white/10">
-                    <h3 class="text-base font-black text-slate-200 uppercase tracking-wide">Final Result (Overall)</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                        <div>
-                            <label class="{{ $modalLabelClass }}">Full Mark</label>
-                            <input type="text" name="full_mark" id="modal-full-mark" placeholder="Full Mark" class="{{ $modalInputClass }}">
+                <!-- SECTION RESULT 2 MODE: COURSE LIST SHOW SECTION (MATCHING SCREENSHOT 2) -->
+                <div id="modal-section-result-2" class="hidden space-y-6 pt-6 border-t border-white/10">
+                    <div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-7 text-slate-900 shadow-2xl space-y-5">
+
+                        <!-- HEADER -->
+                        <div class="text-center space-y-1">
+                            <div class="inline-flex size-10 rounded-xl bg-indigo-50 text-indigo-600 items-center justify-center shadow-sm mx-auto mb-1">
+                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                                </svg>
+                            </div>
+                            <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900">
+                                COURSE LIST SHOW
+                            </h2>
                         </div>
-                        <div>
-                            <label class="{{ $modalLabelClass }}">Written Marks</label>
-                            <input type="text" name="written_marks" id="modal-written-marks" placeholder="Written Marks" class="{{ $modalInputClass }}">
+
+                        <!-- SUB HEADER CONTROLS BAR -->
+                        <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-[#375267] p-3 text-white shadow-md">
+                            <button type="button" onclick="addModalCourseRow()" class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs uppercase tracking-wider px-4 py-2 transition shadow active:scale-95">
+                                <span>ADD PAGE +</span>
+                            </button>
+                            <div class="flex items-center gap-2 font-black text-sm">
+                                <span>(</span>
+                                <select id="modal-result2-sem-select" onchange="renderModalCourseList()" class="bg-transparent text-white font-bold outline-none cursor-pointer">
+                                    <option value="1st" class="text-slate-900">1st semester</option>
+                                    <option value="2nd" class="text-slate-900">2nd semester</option>
+                                    <option value="3rd" class="text-slate-900">3rd semester</option>
+                                    <option value="4th" class="text-slate-900">4th semester</option>
+                                    <option value="5th" class="text-slate-900">5th semester</option>
+                                    <option value="6th" class="text-slate-900">6th semester</option>
+                                    <option value="7th" class="text-slate-900">7th semester</option>
+                                    <option value="8th" class="text-slate-900">8th semester</option>
+                                </select>
+                                <span>)</span>
+                            </div>
                         </div>
-                        <div>
-                            <label class="{{ $modalLabelClass }}">Viva Marks</label>
-                            <input type="text" name="viva_marks" id="modal-viva-marks" placeholder="Viva Marks" class="{{ $modalInputClass }}">
+
+                        <!-- COURSE LIST TABLE -->
+                        <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead class="bg-[#416279] text-white font-black uppercase tracking-wider">
+                                    <tr>
+                                        <th class="px-3 py-3 border-r border-slate-400/30">COURSE CODE</th>
+                                        <th class="px-3 py-3 border-r border-slate-400/30">COURSE NAME</th>
+                                        <th class="px-3 py-3 border-r border-slate-400/30 text-center">CREDIT</th>
+                                        <th class="px-3 py-3 border-r border-slate-400/30 text-center">MARKS</th>
+                                        <th class="px-3 py-3 border-r border-slate-400/30 text-center">LETTER GRADE</th>
+                                        <th class="px-3 py-3 text-center">GRADE POINT</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="modal-result2-course-tbody" class="divide-y divide-slate-200 font-bold text-slate-800">
+                                    <!-- Dynamic course rows -->
+                                </tbody>
+                            </table>
                         </div>
-                        <div>
-                            <label class="{{ $modalLabelClass }}">Practical Mark</label>
-                            <input type="text" name="practical_mark" id="modal-practical-mark" placeholder="Practical Mark" class="{{ $modalInputClass }}">
+
+                        <!-- SUMMARY FOOTER -->
+                        <div class="flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-slate-100 p-4 border border-slate-200 text-slate-900">
+                            <div>
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">TOTAL CREDIT:</span>
+                                <span id="modal-result2-total-credit" class="text-2xl font-black text-slate-900">9.0</span>
+                            </div>
+
+                            <div class="rounded-xl bg-[#375267] text-white px-6 py-2 text-xs font-black uppercase tracking-widest shadow">
+                                CREDIT
+                            </div>
+
+                            <div class="text-right">
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">FINAL CGPA:</span>
+                                <span id="modal-result2-final-cgpa" class="text-2xl font-black text-indigo-700">4.00</span>
+                            </div>
                         </div>
-                        <div>
-                            <label class="{{ $modalLabelClass }}">Total Marks</label>
-                            <input type="text" name="total_marks" id="modal-total-marks" value="0" class="{{ $modalInputClass }}">
-                        </div>
-                        <div>
-                            <label class="{{ $modalLabelClass }}">Letter Grade</label>
-                            <select name="letter_grade" id="modal-letter-grade" class="{{ $modalSelectClass }}">
-                                <option value="">Select Grade</option>
-                                <option value="A+">A+</option>
-                                <option value="A">A</option>
-                                <option value="A-">A-</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="F">F</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="{{ $modalLabelClass }}">CGPA (Overall)</label>
-                            <input type="text" name="cgpa" id="modal-cgpa" placeholder="CGPA" class="{{ $modalInputClass }}">
-                        </div>
-                        <div>
-                            <label class="{{ $modalLabelClass }}">Publication Date</label>
-                            <input type="date" name="publication_date" id="modal-pub-date" class="{{ $modalInputClass }}">
-                        </div>
-                        <div>
-                            <label class="{{ $modalLabelClass }}">Examination Month</label>
-                            <input type="text" name="examination_month" id="modal-exam-month" placeholder="Examination Month" class="{{ $modalInputClass }}">
-                        </div>
-                        <div>
-                            <label class="{{ $modalLabelClass }}">Session (Display)</label>
-                            <input type="text" name="session_display" id="modal-session-disp" placeholder="Jan 2024 - Dec 2024" class="{{ $modalInputClass }}">
-                        </div>
+
                     </div>
                 </div>
 
@@ -834,16 +913,121 @@
             else gradeSelect.value = 'F';
         }
 
+        let modalResult2Courses = [
+            { code: 'CSE101', name: 'Intro to Computing', credit: 3.0, marks: '80 - 100', grade: 'A+', point: '4.00' },
+            { code: 'CSE102', name: 'Discrete Math', credit: 3.0, marks: '75 - 79', grade: 'B+', point: '3.75' },
+            { code: 'ENG103', name: 'Comm. English', credit: 3.0, marks: '70 - 74', grade: 'A-', point: '3.50' },
+            { code: 'CSE102', name: 'Comm. English', credit: 3.0, marks: '65 - 69', grade: 'B+', point: '3.25' },
+            { code: 'CSE104', name: 'Engineering English', credit: 3.0, marks: '60 - 64', grade: 'B', point: '3.00' },
+            { code: 'CSE104', name: 'Engineering English', credit: 3.0, marks: '55 - 59', grade: 'B-', point: '2.75' },
+            { code: 'CSE105', name: 'Comm. English', credit: 3.0, marks: '50 - 54', grade: 'C+', point: '2.50' },
+            { code: 'CSE106', name: 'Mathmatiic English', credit: 3.0, marks: '45 - 49', grade: 'C', point: '2.25' },
+            { code: 'CSE103', name: 'Programming English', credit: 3.0, marks: '40 - 44', grade: 'D', point: '2.00' },
+            { code: 'CSE103', name: 'Comm. English', credit: 3.0, marks: '0 - 39', grade: 'F', point: '0.00' }
+        ];
+
         function switchModalResultMode(mode) {
             const btn1 = document.getElementById('modal-btn-result-mode-1');
             const btn2 = document.getElementById('modal-btn-result-mode-2');
+            const sec1 = document.getElementById('modal-section-result-1');
+            const sec2 = document.getElementById('modal-section-result-2');
+
             if (mode === 'result1') {
-                if (btn1) btn1.className = 'flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-emerald-600 text-white ring-2 ring-emerald-400';
+                if (btn1) btn1.className = 'flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-indigo-600 text-white ring-2 ring-indigo-400';
                 if (btn2) btn2.className = 'flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]';
+                if (sec1) sec1.classList.remove('hidden');
+                if (sec2) sec2.classList.add('hidden');
             } else {
                 if (btn1) btn1.className = 'flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]';
                 if (btn2) btn2.className = 'flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-indigo-600 text-white ring-2 ring-indigo-400';
+                if (sec1) sec1.classList.add('hidden');
+                if (sec2) sec2.classList.remove('hidden');
+                renderModalCourseList();
             }
+        }
+
+        function renderModalCourseList() {
+            const tbody = document.getElementById('modal-result2-course-tbody');
+            if (!tbody) return;
+
+            let html = '';
+            let totalCredit = 0;
+            let totalPointCredit = 0;
+
+            modalResult2Courses.forEach((item, idx) => {
+                const credit = parseFloat(item.credit) || 0;
+                const point = parseFloat(item.point) || 0;
+                totalCredit += credit;
+                totalPointCredit += credit * point;
+
+                let badgeClass = 'bg-emerald-100 text-emerald-800';
+                if (item.grade === 'B' || item.grade === 'B-') badgeClass = 'bg-amber-100 text-amber-800';
+                if (item.grade === 'C+' || item.grade === 'C') badgeClass = 'bg-orange-100 text-orange-800';
+                if (item.grade === 'D' || item.grade === 'F') badgeClass = 'bg-rose-100 text-rose-800';
+
+                html += `
+                    <tr class="border-b border-slate-200 hover:bg-slate-50 transition">
+                        <td class="px-3 py-2 border-r border-slate-200">
+                            <input type="text" value="${item.code}" onchange="updateCourseItem(${idx}, 'code', this.value)" class="w-full bg-transparent outline-none font-mono">
+                        </td>
+                        <td class="px-3 py-2 border-r border-slate-200">
+                            <input type="text" value="${item.name}" onchange="updateCourseItem(${idx}, 'name', this.value)" class="w-full bg-transparent outline-none font-bold">
+                        </td>
+                        <td class="px-3 py-2 border-r border-slate-200 text-center">
+                            <input type="number" step="0.5" value="${item.credit}" onchange="updateCourseItem(${idx}, 'credit', this.value)" class="w-12 text-center bg-transparent outline-none font-bold">
+                        </td>
+                        <td class="px-3 py-2 border-r border-slate-200 text-center">
+                            <input type="text" value="${item.marks}" onchange="updateCourseItem(${idx}, 'marks', this.value)" class="w-20 text-center bg-transparent outline-none">
+                        </td>
+                        <td class="px-3 py-2 border-r border-slate-200 text-center">
+                            <span class="inline-block px-2 py-0.5 rounded font-black text-xs ${badgeClass}">${item.grade}</span>
+                        </td>
+                        <td class="px-3 py-2 text-center">
+                            <input type="number" step="0.01" value="${item.point}" onchange="updateCourseItem(${idx}, 'point', this.value)" class="w-14 text-center bg-transparent outline-none font-bold">
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
+
+            const finalCgpa = totalCredit > 0 ? (totalPointCredit / totalCredit).toFixed(2) : '0.00';
+            const totalCreditEl = document.getElementById('modal-result2-total-credit');
+            const finalCgpaEl = document.getElementById('modal-result2-final-cgpa');
+
+            if (totalCreditEl) totalCreditEl.textContent = totalCredit.toFixed(1);
+            if (finalCgpaEl) finalCgpaEl.textContent = finalCgpa;
+        }
+
+        function updateCourseItem(idx, key, val) {
+            if (modalResult2Courses[idx]) {
+                modalResult2Courses[idx][key] = val;
+                if (key === 'point') {
+                    const pt = parseFloat(val);
+                    if (pt >= 4.0) modalResult2Courses[idx].grade = 'A+';
+                    else if (pt >= 3.75) modalResult2Courses[idx].grade = 'B+';
+                    else if (pt >= 3.5) modalResult2Courses[idx].grade = 'A-';
+                    else if (pt >= 3.0) modalResult2Courses[idx].grade = 'B';
+                    else if (pt >= 2.75) modalResult2Courses[idx].grade = 'B-';
+                    else if (pt >= 2.5) modalResult2Courses[idx].grade = 'C+';
+                    else if (pt >= 2.25) modalResult2Courses[idx].grade = 'C';
+                    else if (pt >= 2.0) modalResult2Courses[idx].grade = 'D';
+                    else modalResult2Courses[idx].grade = 'F';
+                }
+                renderModalCourseList();
+            }
+        }
+
+        function addModalCourseRow() {
+            modalResult2Courses.push({
+                code: 'NEW101',
+                name: 'New Course Name',
+                credit: 3.0,
+                marks: '80 - 100',
+                grade: 'A+',
+                point: '4.00'
+            });
+            renderModalCourseList();
         }
 
         function closeEditModal() {

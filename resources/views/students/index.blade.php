@@ -266,8 +266,8 @@
     </div>
 
     <!-- EDIT STUDENT INFORMATION MODAL OVERLAY -->
-    <div id="edit-student-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="relative w-full max-w-3xl rounded-3xl border border-white/10 bg-[#0e1828] p-6 lg:p-10 shadow-2xl space-y-8 my-8 text-white">
+    <div id="edit-student-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md overflow-y-auto p-3 sm:p-6 flex items-start justify-center">
+        <div class="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto my-auto rounded-3xl border border-white/10 bg-[#0e1828] p-6 lg:p-10 shadow-2xl space-y-8 text-white">
 
             <div class="text-center">
                 <h2 class="text-2xl sm:text-3xl font-black text-[#818cf8] uppercase tracking-tight">

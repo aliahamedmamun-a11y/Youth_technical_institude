@@ -339,8 +339,8 @@
     </div>
 
     <!-- EDIT STUDENT INFORMATION MODAL OVERLAY -->
-    <div id="edit-student-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/80 backdrop-blur-md p-4 sm:p-6 lg:p-8">
-        <div class="relative w-full max-w-3xl mx-auto my-6 sm:my-10 rounded-3xl border border-white/10 bg-[#0e1828] p-6 lg:p-10 shadow-2xl space-y-8">
+    <div id="edit-student-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md overflow-y-auto p-3 sm:p-6 flex items-start justify-center">
+        <div class="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto my-auto rounded-3xl border border-white/10 bg-[#0e1828] p-6 lg:p-10 shadow-2xl space-y-8">
 
             <div class="text-center">
                 <h2 class="text-2xl sm:text-3xl font-black text-[#818cf8] uppercase tracking-tight">
@@ -609,21 +609,31 @@
                 <div class="space-y-4 pt-6 border-t border-white/10">
                     <div>
                         <h3 class="text-base font-black text-slate-200 uppercase tracking-wide">Academic Details (Per Semester)</h3>
-                        <p class="text-xs text-slate-400 font-medium">Enter the **CGPA (0.00-4.00)** for each semester, and the Grade will be automatically selected based on the grade point.</p>
+                        <p class="text-xs text-slate-400 font-medium">Enter the CGPA (0.00-4.00) for each semester, and the Grade will auto-calculate.</p>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                        @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $sem)
+                        @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $idx => $sem)
                             <div class="rounded-2xl border border-white/10 bg-[#071c2c]/80 p-4 space-y-3">
-                                <h4 class="text-xs font-black text-[#818cf8] uppercase tracking-wider">{{ $sem }} Semester</h4>
+                                <div class="flex items-center justify-between">
+                                    <h4 class="text-xs font-black text-[#818cf8] uppercase tracking-wider">{{ $sem }} Semester</h4>
+                                    <span class="text-[9px] font-bold text-slate-300 uppercase">CGPA</span>
+                                </div>
+                                <input type="number" step="0.01" min="0" max="4.00" name="semesters[{{ $sem }}][cgpa]" id="modal-sem-cgpa-{{ $idx }}"
+                                    oninput="calcModalSemGrade({{ $idx }})" placeholder="e.g. 3.75"
+                                    class="w-full rounded-xl border border-white/20 bg-[#070d19] py-2.5 px-3 text-xs font-bold text-white placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+
                                 <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 mb-1">Grade (Auto-Calculated)</label>
-                                    <select name="semesters[{{ $sem }}][grade]" class="{{ $modalSelectClass }} py-2 text-xs">
+                                    <label class="block text-[10px] font-bold text-slate-300 mb-1 uppercase tracking-wider">Grade (Auto-Calculated)</label>
+                                    <select name="semesters[{{ $sem }}][grade]" id="modal-sem-grade-{{ $idx }}" class="{{ $modalSelectClass }} py-2 text-xs">
                                         <option value="">Select Grade</option>
                                         <option value="A+">A+</option>
                                         <option value="A">A</option>
                                         <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
                                         <option value="B">B</option>
+                                        <option value="B-">B-</option>
+                                        <option value="C+">C+</option>
                                         <option value="C">C</option>
                                         <option value="D">D</option>
                                         <option value="F">F</option>
@@ -799,6 +809,29 @@
 
             modal.classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
+        }
+
+        function calcModalSemGrade(idx) {
+            const cgpaInput = document.getElementById(`modal-sem-cgpa-${idx}`);
+            const gradeSelect = document.getElementById(`modal-sem-grade-${idx}`);
+            if (!cgpaInput || !gradeSelect) return;
+
+            const val = parseFloat(cgpaInput.value);
+            if (isNaN(val)) {
+                gradeSelect.value = '';
+                return;
+            }
+
+            if (val >= 3.75) gradeSelect.value = 'A+';
+            else if (val >= 3.50) gradeSelect.value = 'A';
+            else if (val >= 3.25) gradeSelect.value = 'A-';
+            else if (val >= 3.00) gradeSelect.value = 'B+';
+            else if (val >= 2.75) gradeSelect.value = 'B';
+            else if (val >= 2.50) gradeSelect.value = 'B-';
+            else if (val >= 2.25) gradeSelect.value = 'C+';
+            else if (val >= 2.00) gradeSelect.value = 'C';
+            else if (val >= 1.00) gradeSelect.value = 'D';
+            else gradeSelect.value = 'F';
         }
 
         function switchModalResultMode(mode) {

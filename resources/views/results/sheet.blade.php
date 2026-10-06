@@ -29,24 +29,24 @@
 
             <!-- VIEW STYLE TOGGLE BUTTONS -->
             <div class="inline-flex rounded-xl bg-slate-100 p-1 border border-slate-200">
-                <a href="?style=all" @class([
-                    'rounded-lg px-3 py-1.5 text-xs font-bold transition',
-                    'bg-indigo-600 text-white shadow' => ($viewStyle ?? 'all') === 'all' || ($viewStyle ?? 'all') === 'transcript',
-                    'text-slate-600 hover:text-slate-900' => ($viewStyle ?? 'all') !== 'all' && ($viewStyle ?? 'all') !== 'transcript'
-                ])>
-                    📜 Result 1 (Style 1)
-                </a>
                 <a href="?style=summary" @class([
                     'rounded-lg px-3 py-1.5 text-xs font-bold transition',
-                    'bg-indigo-600 text-white shadow' => ($viewStyle ?? 'all') === 'summary' || ($viewStyle ?? 'all') === 'style2',
-                    'text-slate-600 hover:text-slate-900' => ($viewStyle ?? 'all') !== 'summary' && ($viewStyle ?? 'all') !== 'style2'
+                    'bg-indigo-600 text-white shadow' => ($viewStyle ?? 'summary') === 'summary' || ($viewStyle ?? 'summary') === 'style2',
+                    'text-slate-600 hover:text-slate-900' => ($viewStyle ?? 'summary') !== 'summary' && ($viewStyle ?? 'summary') !== 'style2'
                 ])>
                     📊 Result 2 (Style 2)
                 </a>
+                <a href="?style=all" @class([
+                    'rounded-lg px-3 py-1.5 text-xs font-bold transition',
+                    'bg-indigo-600 text-white shadow' => ($viewStyle ?? 'summary') === 'all' || ($viewStyle ?? 'summary') === 'transcript',
+                    'text-slate-600 hover:text-slate-900' => ($viewStyle ?? 'summary') !== 'all' && ($viewStyle ?? 'summary') !== 'transcript'
+                ])>
+                    📜 Result 1 (Style 1)
+                </a>
                 <a href="?style=single" @class([
                     'rounded-lg px-3 py-1.5 text-xs font-bold transition',
-                    'bg-indigo-600 text-white shadow' => ($viewStyle ?? 'all') === 'single',
-                    'text-slate-600 hover:text-slate-900' => ($viewStyle ?? 'all') !== 'single'
+                    'bg-indigo-600 text-white shadow' => ($viewStyle ?? 'summary') === 'single',
+                    'text-slate-600 hover:text-slate-900' => ($viewStyle ?? 'summary') !== 'single'
                 ])>
                     📄 Single Semester
                 </a>
@@ -82,23 +82,25 @@
         </header>
 
         <!-- STUDENT INFORMATION GRID -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 border border-slate-400 bg-slate-50/30 p-2.5 text-[11px] rounded">
-            <div class="grid grid-cols-[120px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Name of Student</span>: <strong class="text-slate-900">{{ $result->student->name }}</strong></div>
-            <div class="grid grid-cols-[120px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Roll</span>: <strong class="text-slate-900">{{ $result->student->roll_number ?? '—' }}</strong></div>
-            <div class="grid grid-cols-[120px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Father's Name</span>: <strong>{{ $result->student->father_name ?? '—' }}</strong></div>
-            <div class="grid grid-cols-[120px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Registration No</span>: <strong>{{ $result->student->registration_number ?? '—' }}</strong></div>
-            <div class="grid grid-cols-[120px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Mother's Name</span>: <strong>{{ $result->student->mother_name ?? '—' }}</strong></div>
-            <div class="grid grid-cols-[120px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Subject name</span>: <strong>{{ $result->student->course?->name ?? 'Computer Science & Engineering' }}</strong></div>
-            <div class="grid grid-cols-[120px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Date of Birth</span>: <strong>{{ optional($result->student->date_of_birth)->format('d/m/Y') ?? '02/10/2006' }}</strong></div>
-            <div class="grid grid-cols-[120px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Nid/ Passport No</span>: <strong>{{ $result->student->passport_nid_number ?: '—' }}</strong></div>
-            <div class="grid grid-cols-[120px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Institute Name</span>: <strong>{{ $result->student->institute_name ?: ($result->student->branch?->institute_name ?? 'South Asia Engineering & Technical Institute') }}</strong></div>
-            <div class="grid grid-cols-[120px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">CGPA</span>: <strong class="text-indigo-900">{{ number_format((float)($cumulativeGpa ?? $result->student->cgpa ?? $result->gpa ?? 3.75), 2) }}</strong></div>
-            <div class="grid grid-cols-[120px_1fr] py-1"><span class="font-bold text-slate-700">Session</span>: <strong>{{ $result->student->session ?: $result->session ?: '2024 - 2025' }}</strong></div>
-            <div class="grid grid-cols-[120px_1fr] py-1"><span class="font-bold text-slate-700">Overall Grade</span>: <strong class="text-emerald-800">{{ $result->student->grade ?: $result->overall_grade ?: 'A' }}</strong></div>
+        <section class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 border border-slate-400 bg-slate-50/30 p-2.5 text-[11px] rounded shadow-sm">
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Name of Student</span>: <strong class="text-slate-900">{{ $result->student->name }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Roll</span>: <strong class="text-slate-900">{{ $result->student->roll_number ?? '—' }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Father's Name</span>: <strong>{{ $result->student->father_name ?? '—' }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Registration No</span>: <strong>{{ $result->student->registration_number ?? '—' }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Mother's Name</span>: <strong>{{ $result->student->mother_name ?? '—' }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Certificate Serial No</span>: <strong class="text-indigo-900">{{ $result->student->certificate_serial ?: ($certificateSerial ?? '—') }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Subject / Course</span>: <strong>{{ $result->student->course?->name ?? 'Computer Science & Engineering' }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Branch ID</span>: <strong class="text-slate-900">{{ $result->student->branch_id ?: '—' }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Date of Birth</span>: <strong>{{ optional($result->student->date_of_birth)->format('d/m/Y') ?? '02/10/2006' }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Nid/ Passport No</span>: <strong>{{ $result->student->passport_nid_number ?: '—' }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">Institute Name</span>: <strong>{{ $result->student->institute_name ?: ($result->student->branch?->institute_name ?? 'South Asia Engineering & Technical Institute') }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] border-b border-slate-300 py-1"><span class="font-bold text-slate-700">CGPA</span>: <strong class="text-indigo-900">{{ number_format((float)($cumulativeGpa ?? $result->student->cgpa ?? $result->gpa ?? 3.75), 2) }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] py-1"><span class="font-bold text-slate-700">Session</span>: <strong>{{ $result->student->session ?: $result->session ?: '2024 - 2025' }}</strong></div>
+            <div class="grid grid-cols-[130px_1fr] py-1"><span class="font-bold text-slate-700">Overall Grade</span>: <strong class="text-emerald-800">{{ $result->student->grade ?: $result->overall_grade ?: 'A' }}</strong></div>
         </section>
 
         @php
-            $currentStyle = $viewStyle ?? 'all';
+            $currentStyle = $viewStyle ?? 'summary';
             $isSummaryStyle = $currentStyle === 'summary' || $currentStyle === 'style2';
             $isSingleStyle = $currentStyle === 'single';
 
@@ -384,8 +386,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
                 @foreach ($all8Semesters as $semKey => $semBlock)
                     @php
-                        $studentSemRecord = ($allResults ?? collect())->first(function($r) use ($semBlock) {
-                            return str_contains(strtolower($r->semester), strtolower($semBlock['sem_label'])) || str_contains(strtolower($r->semester), strtolower($semKey));
+                        $studentSemRecord = ($allResults ?? collect())->first(function($r) use ($semBlock, $semKey) {
+                            return str_contains(strtolower((string) $r->semester), strtolower($semBlock['sem_label'])) || str_contains(strtolower((string) $r->semester), (string) $semKey);
                         });
                         $subjects = ($studentSemRecord && $studentSemRecord->subjects->count() > 0) ? $studentSemRecord->subjects : $semBlock['subjects'];
                         $gpaVal = $studentSemRecord?->gpa ?? $semBlock['gpa'];

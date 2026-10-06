@@ -37,9 +37,11 @@
                                 <th class="px-4 py-4 text-center">RESULT 1</th>
                                 <th class="px-4 py-4 text-center">RESULT 2</th>
                                 <th class="px-4 py-4 text-center">DELETE SCORE</th>
+                                <th class="px-4 py-4 text-center">BRANCH ID</th>
                                 <th class="px-4 py-4 text-center">STUDENT ID</th>
                                 <th class="px-4 py-4 text-center">STUDENT REGISTRATION NUMBER</th>
                                 <th class="px-4 py-4 text-center">STUDENT ROLL NUMBER</th>
+                                <th class="px-4 py-4 text-center">CERTIFICATE SERIAL NUMBER</th>
                                 <th class="px-4 py-4 text-center">STUDENT NAME</th>
                                 <th class="px-4 py-4 text-center">FATHER NAME</th>
                                 <th class="px-4 py-4 text-center">MOTHER NAME</th>
@@ -236,6 +238,9 @@
                                         @endif
                                     </td>
 
+                                    {{-- BRANCH ID --}}
+                                    <td class="px-4 py-4 text-slate-300 font-mono">{{ $student->branch_id ?: 'N/A' }}</td>
+
                                     {{-- STUDENT ID --}}
                                     <td class="px-4 py-4 text-slate-300 font-mono">{{ str_pad($student->id, 6, '0', STR_PAD_LEFT) }}</td>
 
@@ -244,6 +249,9 @@
 
                                     {{-- STUDENT ROLL NUMBER --}}
                                     <td class="px-4 py-4 text-slate-300 font-mono">{{ $student->roll_number }}</td>
+
+                                    {{-- CERTIFICATE SERIAL NUMBER --}}
+                                    <td class="px-4 py-4 text-amber-300 font-mono font-bold">{{ $student->certificate_serial ?: '—' }}</td>
 
                                     {{-- STUDENT NAME --}}
                                     <td class="px-4 py-4 text-white font-bold">{{ $student->name }}</td>
@@ -547,8 +555,9 @@
 
                     <!-- Picture -->
                     <div>
-                        <label class="{{ $modalLabelClass }}">Picture</label>
-                        <input type="text" id="modal-picture-url" readonly class="{{ $modalInputClass }} cursor-not-allowed text-slate-400">
+                        <label class="{{ $modalLabelClass }}">Picture Upload / Photo</label>
+                        <input type="file" name="image" accept="image/*" class="{{ $modalInputClass }} file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-indigo-600 file:text-white">
+                        <input type="text" id="modal-picture-url" readonly class="{{ $modalInputClass }} mt-1 cursor-not-allowed text-slate-400 text-xs truncate">
                     </div>
 
                 </div>

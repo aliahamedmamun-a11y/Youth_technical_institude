@@ -44,9 +44,11 @@
                                 <th class="px-4 py-4 text-center">NIDCARD</th>
                                 <th class="px-4 py-4 text-center">CERTIFICATE</th>
                                 <th class="px-4 py-4 text-center">TRANSCRIPT</th>
+                                <th class="px-4 py-4 text-center">BRANCH ID</th>
                                 <th class="px-4 py-4 text-center">STUDENT ID</th>
                                 <th class="px-4 py-4 text-center">STUDENT REGISTRATION NUMBER</th>
                                 <th class="px-4 py-4 text-center">STUDENT ROLL NUMBER</th>
+                                <th class="px-4 py-4 text-center">CERTIFICATE SERIAL NUMBER</th>
                                 <th class="px-4 py-4 text-center">STUDENT NAME</th>
                                 <th class="px-4 py-4 text-center">FATHER NAME</th>
                                 <th class="px-4 py-4 text-center">MOTHER NAME</th>
@@ -160,6 +162,9 @@
                                         <span class="rounded-full bg-pink-500/10 px-3 py-1 text-[10px] font-black uppercase text-pink-400 border border-pink-500/20">Not Allowed</span>
                                     </td>
 
+                                    {{-- BRANCH ID --}}
+                                    <td class="px-4 py-4 text-slate-300 font-mono">{{ $student->branch_id ?: 'N/A' }}</td>
+
                                     {{-- STUDENT ID --}}
                                     <td class="px-4 py-4 text-center">
                                         <span class="rounded-full bg-pink-500/10 px-3 py-1 text-[10px] font-black uppercase text-pink-400 border border-pink-500/20">Not Allowed</span>
@@ -170,6 +175,9 @@
 
                                     {{-- STUDENT ROLL NUMBER --}}
                                     <td class="px-4 py-4 text-slate-300 font-mono">{{ $student->roll_number }}</td>
+
+                                    {{-- CERTIFICATE SERIAL NUMBER --}}
+                                    <td class="px-4 py-4 text-amber-300 font-mono font-bold">{{ $student->certificate_serial ?: '—' }}</td>
 
                                     {{-- STUDENT NAME --}}
                                     <td class="px-4 py-4 text-white font-bold">{{ $student->name }}</td>

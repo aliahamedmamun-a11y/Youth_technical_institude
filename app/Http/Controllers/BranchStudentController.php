@@ -146,6 +146,15 @@ class BranchStudentController extends Controller
             $validated['image_path'] = $request->file('image')->store('students', 'public');
         }
 
+        $user = $request->user();
+        if ($user && $user->hasRole(\App\Enums\UserRole::Branch)) {
+            $branch = \App\Models\BranchApplication::query()->where('email', $user->email)->first();
+
+            if ($branch && isset($validated['result_status']) && in_array(strtolower((string) $validated['result_status']), ['published', 'passed'], true) && ! ($branch->allow_result_publish ?? true)) {
+                return back()->with('error', 'Result publishing is disabled for your branch by Super Admin.');
+            }
+        }
+
         $student->update($validated);
 
         return redirect()
@@ -181,6 +190,23 @@ class BranchStudentController extends Controller
             in_array($document, $allowedDocuments, true),
             404
         );
+
+        $user = auth()->user();
+        if ($user && $user->hasRole(\App\Enums\UserRole::Branch)) {
+            $branch = \App\Models\BranchApplication::query()->where('email', $user->email)->first();
+
+            if ($branch) {
+                if ($document === 'certificate' && ! ($branch->allow_certificate ?? true)) {
+                    return back()->with('error', 'Certificate access is disabled for your branch by Super Admin.');
+                }
+                if ($document === 'testimonial' && ! ($branch->allow_testimonial ?? true)) {
+                    return back()->with('error', 'Testimonial access is disabled for your branch by Super Admin.');
+                }
+                if (($document === 'transcript' || $document === 'transcript-one' || $document === 'transcript-two') && ! ($branch->allow_transcript ?? true)) {
+                    return back()->with('error', 'Transcript access is disabled for your branch by Super Admin.');
+                }
+            }
+        }
 
         return $documentController->show(
             $student,

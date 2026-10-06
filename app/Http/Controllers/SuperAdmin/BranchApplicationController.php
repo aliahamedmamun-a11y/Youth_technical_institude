@@ -130,11 +130,20 @@ class BranchApplicationController extends Controller
             'username' => ['nullable', 'string', 'max:255'],
             'password' => ['nullable', 'string', 'max:255'],
             'status' => ['nullable', 'string', 'max:50'],
+            'allow_certificate' => ['nullable', 'boolean'],
+            'allow_testimonial' => ['nullable', 'boolean'],
+            'allow_transcript' => ['nullable', 'boolean'],
+            'allow_result_publish' => ['nullable', 'boolean'],
             'director_photo' => ['nullable', 'image', 'max:2048'],
             'institute_photo' => ['nullable', 'image', 'max:2048'],
             'nid_photo' => ['nullable', 'image', 'max:2048'],
             'director_signature' => ['nullable', 'image', 'max:2048'],
         ]);
+
+        $validated['allow_certificate'] = $request->boolean('allow_certificate');
+        $validated['allow_testimonial'] = $request->boolean('allow_testimonial');
+        $validated['allow_transcript'] = $request->boolean('allow_transcript');
+        $validated['allow_result_publish'] = $request->boolean('allow_result_publish');
 
         if ($request->hasFile('director_photo')) {
             $validated['director_photo_path'] = $request->file('director_photo')->store('branch-applications/directors', 'public');
@@ -170,6 +179,22 @@ class BranchApplicationController extends Controller
 
         return redirect()->route('super-admin.all-branches')
             ->with('status', 'Branch details updated successfully.');
+    }
+
+    public function togglePermission(Request $request, BranchApplication $branchApplication): RedirectResponse
+    {
+        Gate::authorize('update', $branchApplication);
+
+        $permission = $request->string('permission')->toString();
+        $allowedPermissions = ['allow_certificate', 'allow_testimonial', 'allow_transcript', 'allow_result_publish'];
+
+        if (in_array($permission, $allowedPermissions, true)) {
+            $branchApplication->update([
+                $permission => ! $branchApplication->{$permission},
+            ]);
+        }
+
+        return back()->with('status', 'Branch permission updated successfully.');
     }
 
     public function update(UpdateBranchApplicationStatusRequest $request, BranchApplication $branchApplication, ApproveBranchApplication $approve): RedirectResponse

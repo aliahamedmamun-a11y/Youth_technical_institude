@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class StudentController extends Controller
@@ -34,7 +35,7 @@ class StudentController extends Controller
                 ->first();
 
             $studentsQuery = Student::query()
-                ->with('course:id,name')
+                ->with(['course:id,name', 'results'])
                 ->where(function ($query) use ($branchId, $branch) {
                     $query->where('branch_id', $branchId)
                         ->orWhere('branch_id', (string) $branchId)
@@ -102,7 +103,7 @@ class StudentController extends Controller
 
         return view('super-admin.students.index', [
             'students' => Student::query()
-                ->with('course:id,name')
+                ->with(['course:id,name', 'results'])
                 ->when($search, fn ($query, string $term) => $query->where(fn ($nested) => $nested->where('name', 'like', "%{$term}%")->orWhere('registration_number', 'like', "%{$term}%")->orWhere('roll_number', 'like', "%{$term}%")))
                 ->latest()
                 ->paginate(12)
@@ -167,13 +168,76 @@ class StudentController extends Controller
             $studentData['image_path'] = $request->file('image')->store('students', 'public');
         }
 
+        // Field mappings from modal input names to Student model attributes
+        if ($request->filled('full_marks')) {
+            $studentData['full_marks'] = $request->input('full_marks');
+        } elseif ($request->filled('full_mark')) {
+            $studentData['full_marks'] = $request->input('full_mark');
+        }
+
+        if ($request->filled('practical_marks')) {
+            $studentData['practical_marks'] = $request->input('practical_marks');
+        } elseif ($request->filled('practical_mark')) {
+            $studentData['practical_marks'] = $request->input('practical_mark');
+        }
+
+        if ($request->filled('score')) {
+            $studentData['score'] = $request->input('score');
+        } elseif ($request->filled('total_marks')) {
+            $studentData['score'] = $request->input('total_marks');
+        }
+
+        if ($request->filled('grade')) {
+            $studentData['grade'] = $request->input('grade');
+        } elseif ($request->filled('letter_grade')) {
+            $studentData['grade'] = $request->input('letter_grade');
+        }
+
+        if ($request->filled('session')) {
+            $studentData['session'] = $request->input('session');
+        } elseif ($request->filled('session_display')) {
+            $studentData['session'] = $request->input('session_display');
+        }
+
+        if ($request->filled('publication_date')) {
+            $studentData['publication_date'] = $request->input('publication_date');
+        }
+        if ($request->filled('examination_month')) {
+            $studentData['examination_month'] = $request->input('examination_month');
+        }
+        if ($request->filled('cgpa')) {
+            $studentData['cgpa'] = $request->input('cgpa');
+        }
+
         $student->update($studentData);
+
+        // Update semester-wise GPAs & Grades in student_results
+        if ($request->has('semesters') && is_array($request->input('semesters'))) {
+            foreach ($request->input('semesters') as $semKey => $semData) {
+                if (! empty($semData['cgpa']) || ! empty($semData['grade'])) {
+                    $semTitle = str_contains((string) $semKey, 'Semester') ? $semKey : $semKey.' Semester';
+                    $student->results()->updateOrCreate(
+                        ['semester' => $semTitle],
+                        [
+                            'session' => $student->session ?: '2024 - 2025',
+                            'total_credit' => 28,
+                            'credit_earned' => 28,
+                            'gpa' => ! empty($semData['cgpa']) ? (float) $semData['cgpa'] : null,
+                            'overall_grade' => $semData['grade'] ?? null,
+                            'status' => 'published',
+                            'published_at' => now(),
+                            'verification_token' => Str::random(48),
+                        ]
+                    );
+                }
+            }
+        }
 
         if ($request->hasFile('image') && $previousImagePath) {
             Storage::disk('public')->delete($previousImagePath);
         }
 
-        return redirect()->route('super-admin.students.show', $student)->with('status', 'Student updated successfully.');
+        return back()->with('status', 'Student information and result updated successfully.');
     }
 
     public function destroy(Student $student): RedirectResponse

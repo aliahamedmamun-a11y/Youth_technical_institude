@@ -339,8 +339,8 @@
     </div>
 
     <!-- EDIT STUDENT INFORMATION MODAL OVERLAY -->
-    <div id="edit-student-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="relative w-full max-w-3xl rounded-3xl border border-white/10 bg-[#0e1828] p-6 lg:p-10 shadow-2xl space-y-8 my-8">
+    <div id="edit-student-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/80 backdrop-blur-md p-4 sm:p-6 lg:p-8">
+        <div class="relative w-full max-w-3xl mx-auto my-6 sm:my-10 rounded-3xl border border-white/10 bg-[#0e1828] p-6 lg:p-10 shadow-2xl space-y-8">
 
             <div class="text-center">
                 <h2 class="text-2xl sm:text-3xl font-black text-[#818cf8] uppercase tracking-tight">
@@ -799,6 +799,18 @@
 
             modal.classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
+        }
+
+        function switchModalResultMode(mode) {
+            const btn1 = document.getElementById('modal-btn-result-mode-1');
+            const btn2 = document.getElementById('modal-btn-result-mode-2');
+            if (mode === 'result1') {
+                if (btn1) btn1.className = 'flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-emerald-600 text-white ring-2 ring-emerald-400';
+                if (btn2) btn2.className = 'flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]';
+            } else {
+                if (btn1) btn1.className = 'flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]';
+                if (btn2) btn2.className = 'flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-indigo-600 text-white ring-2 ring-indigo-400';
+            }
         }
 
         function closeEditModal() {

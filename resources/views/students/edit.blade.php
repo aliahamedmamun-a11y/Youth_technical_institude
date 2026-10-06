@@ -350,35 +350,60 @@
             </div>
 
             <!-- SECTION 4: ACADEMIC DETAILS (PER SEMESTER) -->
+            @php
+                $semDefaults = [
+                    '1st' => ['cgpa' => '3.75', 'grade' => 'A+'],
+                    '2nd' => ['cgpa' => '3.50', 'grade' => 'A'],
+                    '3rd' => ['cgpa' => '4.00', 'grade' => 'A+'],
+                    '4th' => ['cgpa' => '3.50', 'grade' => 'A'],
+                    '5th' => ['cgpa' => '3.75', 'grade' => 'A+'],
+                    '6th' => ['cgpa' => '4.00', 'grade' => 'A+'],
+                    '7th' => ['cgpa' => '3.75', 'grade' => 'A+'],
+                    '8th' => ['cgpa' => '3.75', 'grade' => 'A+'],
+                ];
+                $savedSemResults = isset($student) && $student->relationLoaded('results') ? $student->results->keyBy('semester') : collect();
+            @endphp
             <div class="pt-6 border-t border-white/10 space-y-4">
-                <h2 class="text-xl font-black text-[#818cf8] uppercase tracking-tight">Academic Details (Per Semester)</h2>
-                <p class="text-xs font-bold text-slate-400">
-                    Enter the <strong class="text-white">**CGPA (0.00-4.00)**</strong> for each semester, and the Grade will be automatically selected based on the grade point.
-                </p>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-xl font-black text-[#818cf8] uppercase tracking-tight">Academic Details (Per Semester)</h2>
+                        <p class="text-xs font-bold text-slate-400">
+                            Enter the <strong class="text-white">CGPA (0.00-4.00)</strong> for each semester, and the Grade will be automatically selected based on the grade point.
+                        </p>
+                    </div>
+                    <button type="button" onclick="autoFillAllSemesterCgpa()"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider shadow-lg transition-all active:scale-95 shrink-0">
+                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                        </svg>
+                        ✨ Auto-Fill CGPAs
+                    </button>
+                </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                     @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $idx => $semLabel)
+                        @php
+                            $resObj = $savedSemResults->get($semLabel.' Semester') ?? $savedSemResults->get($semLabel);
+                            $valCgpa = old('semester_cgpa.'.$semLabel, $resObj?->gpa ?? $semDefaults[$semLabel]['cgpa'] ?? '3.75');
+                            $valGrade = old('semester_grade.'.$semLabel, $resObj?->overall_grade ?? $semDefaults[$semLabel]['grade'] ?? 'A+');
+                        @endphp
                         <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-3">
-                            <h3 class="text-sm font-black text-indigo-400 uppercase tracking-wider">{{ $semLabel }} Semester</h3>
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-sm font-black text-indigo-400 uppercase tracking-wider">{{ $semLabel }} Semester</h3>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase">CGPA</span>
+                            </div>
                             <input type="number" step="0.01" min="0" max="4.00" name="semester_cgpa[{{ $semLabel }}]" id="sem-cgpa-{{ $idx }}"
-                                oninput="autoCalculateSemesterGrade({{ $idx }})" placeholder="CGPA"
-                                class="w-full rounded-xl border border-white/10 bg-[#070d19] py-3 px-4 text-sm text-white focus:border-indigo-500 outline-none transition-all">
+                                value="{{ $valCgpa }}" oninput="autoCalculateSemesterGrade({{ $idx }})" placeholder="3.75"
+                                class="w-full rounded-xl border border-white/10 bg-[#070d19] py-3 px-4 text-sm font-bold text-white focus:border-indigo-500 outline-none transition-all">
 
                             <div>
                                 <label class="block text-[11px] font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Grade (Auto-Calculated)</label>
                                 <select name="semester_grade[{{ $semLabel }}]" id="sem-grade-{{ $idx }}"
-                                    class="w-full rounded-xl border border-white/10 bg-[#070d19] py-3 px-4 text-sm text-white focus:border-indigo-500 outline-none transition-all">
+                                    class="w-full rounded-xl border border-white/10 bg-[#070d19] py-3 px-4 text-sm font-bold text-white focus:border-indigo-500 outline-none transition-all">
                                     <option value="">Select Grade</option>
-                                    <option value="A+">A+</option>
-                                    <option value="A">A</option>
-                                    <option value="A-">A-</option>
-                                    <option value="B+">B+</option>
-                                    <option value="B">B</option>
-                                    <option value="B-">B-</option>
-                                    <option value="C+">C+</option>
-                                    <option value="C">C</option>
-                                    <option value="D">D</option>
-                                    <option value="F">F</option>
+                                    @foreach(['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D', 'F'] as $gOpt)
+                                        <option value="{{ $gOpt }}" @selected($valGrade === $gOpt)>{{ $gOpt }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -652,6 +677,19 @@
         else overallGradeSelect.value = 'F';
     }
 
+    function autoFillAllSemesterCgpa() {
+        const defaultCgpas = ['3.75', '3.50', '4.00', '3.50', '3.75', '4.00', '3.75', '3.75'];
+        for (let i = 0; i < 8; i++) {
+            const input = document.getElementById(`sem-cgpa-${i}`) || document.getElementById(`form-sem-cgpa-${i}`);
+            if (input) {
+                input.value = defaultCgpas[i] || '3.75';
+                autoCalculateSemesterGrade(i);
+                if (typeof calcFormSemGrade === 'function') calcFormSemGrade(i);
+            }
+        }
+        updateOverallCgpaAndGrade();
+    }
+
     function updateOverallCgpaAndGrade() {
         let totalCgpa = 0;
         let count = 0;
@@ -704,14 +742,19 @@
         const sec2 = document.getElementById('section-result-2');
 
         if (mode === 'result1') {
-            if (btn1) btn1.className = 'flex-1 sm:flex-none rounded-xl px-6 py-3 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-emerald-600 text-white ring-2 ring-emerald-400';
-            if (btn2) btn2.className = 'flex-1 sm:flex-none rounded-xl px-6 py-3 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]';
+            if (btn1) btn1.className = 'flex-1 sm:flex-none rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 font-black text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg bg-emerald-600 text-white ring-2 ring-emerald-400';
+            if (btn2) btn2.className = 'flex-1 sm:flex-none rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 font-black text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]';
             if (sec2) sec2.classList.add('hidden');
         } else {
-            if (btn1) btn1.className = 'flex-1 sm:flex-none rounded-xl px-6 py-3 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]';
-            if (btn2) btn2.className = 'flex-1 sm:flex-none rounded-xl px-6 py-3 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-indigo-600 text-white ring-2 ring-indigo-400';
-            if (sec2) sec2.classList.remove('hidden');
-            renderCourseListShow();
+            if (btn1) btn1.className = 'flex-1 sm:flex-none rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 font-black text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]';
+            if (btn2) btn2.className = 'flex-1 sm:flex-none rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 font-black text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg bg-indigo-600 text-white ring-2 ring-indigo-400';
+            if (sec2) {
+                sec2.classList.remove('hidden');
+                renderCourseListShow();
+                setTimeout(() => {
+                    sec2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
         }
     }
 

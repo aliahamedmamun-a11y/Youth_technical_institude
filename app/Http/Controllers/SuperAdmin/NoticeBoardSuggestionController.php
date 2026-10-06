@@ -50,4 +50,29 @@ class NoticeBoardSuggestionController extends Controller
 
         return back()->with('status', 'Suggestion added to notice board successfully!');
     }
+
+    public function edit(NoticeBoardSuggestion $noticeBoardSuggestion): View
+    {
+        return view('super-admin.notices.board-edit', ['suggestion' => $noticeBoardSuggestion]);
+    }
+
+    public function update(Request $request, NoticeBoardSuggestion $noticeBoardSuggestion): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name' => 'nullable|string|max:255',
+            'suggestion' => 'required|string|max:2000',
+        ]);
+
+        $noticeBoardSuggestion->update($validated);
+
+        return redirect()->route('super-admin.notice-board-suggestions.index')
+            ->with('status', 'Notice board suggestion updated successfully!');
+    }
+
+    public function destroy(NoticeBoardSuggestion $noticeBoardSuggestion): RedirectResponse
+    {
+        $noticeBoardSuggestion->delete();
+
+        return back()->with('status', 'Suggestion deleted successfully!');
+    }
 }

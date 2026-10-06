@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css'])
 </head>
 
-<body class="bg-[#070d19] min-h-screen p-4 sm:p-8 text-white font-sans">
+<body class="bg-[#03224c] min-h-screen p-4 sm:p-8 text-white font-sans">
 
 <div class="max-w-6xl mx-auto">
 
@@ -238,11 +238,90 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+                    <!-- RED MARKED POSITION: TWO BUTTONS FOR RESULT 1 & RESULT 2 -->
+                    <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                        <button type="button" id="btn-result-mode-1" onclick="switchResultMode('result1')"
+                            class="flex-1 sm:flex-none rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 font-black text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg bg-emerald-600 text-white ring-2 ring-emerald-400">
+                            📜 Result 1
+                        </button>
+                        <button type="button" id="btn-result-mode-2" onclick="switchResultMode('result2')"
+                            class="flex-1 sm:flex-none rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 font-black text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]">
+                            📊 Result 2
+                        </button>
+                    </div>
+
                     <button type="button" onclick="handleAddSubjectClick()"
-                        class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-8 py-3.5 font-black text-sm uppercase tracking-wider shadow-xl transition-all active:scale-95">
+                        class="w-full sm:w-auto rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-6 sm:px-8 py-3.5 font-black text-xs sm:text-sm uppercase tracking-wider shadow-xl transition-all active:scale-95">
                         Add Subjects for <span id="add-sub-btn-sem">1st</span> Semester
                     </button>
+                </div>
+            </div>
+
+            <!-- RESULT 2: COURSE LIST SHOW SECTION (IMAGE 5 FORMAT - MOBILE FRIENDLY) -->
+            <div id="section-result-2" class="hidden pt-6 border-t border-white/10 space-y-6">
+                <div class="rounded-3xl border border-cyan-500/30 bg-[#061826] p-4 sm:p-6 shadow-2xl space-y-6">
+
+                    <!-- HEADER BAR MATCHING IMAGE 5 -->
+                    <div class="text-center space-y-3">
+                        <h2 class="text-xl sm:text-3xl font-black uppercase tracking-wider text-white drop-shadow">
+                            COURSE LIST SHOW
+                        </h2>
+
+                        <!-- ADD PAGE + | ( 1st semester ) BAR -->
+                        <div class="inline-flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-cyan-500/40 bg-[#0c2a40] px-4 sm:px-5 py-2.5 shadow-lg">
+                            <button type="button" onclick="addCourseListRow()" class="flex items-center gap-2 text-xs sm:text-sm font-black uppercase text-cyan-300 hover:text-cyan-100 transition">
+                                ADD PAGE <span class="text-lg font-black text-emerald-400">+</span>
+                            </button>
+                            <span class="hidden sm:inline text-cyan-500/50">|</span>
+                            <select id="course-list-sem-select" onchange="renderCourseListShow()" class="bg-transparent text-xs sm:text-sm font-black text-cyan-200 outline-none cursor-pointer">
+                                <option value="1st">( 1st semester )</option>
+                                <option value="2nd">( 2nd semester )</option>
+                                <option value="3rd">( 3rd semester )</option>
+                                <option value="4th">( 4th semester )</option>
+                                <option value="5th">( 5th semester )</option>
+                                <option value="6th">( 6th semester )</option>
+                                <option value="7th">( 7th semester )</option>
+                                <option value="8th">( 8th semester )</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- COURSE LIST TABLE (IMAGE 5 MATCH) -->
+                    <div class="overflow-x-auto rounded-2xl border border-cyan-500/20 bg-[#091e2e]">
+                        <table class="w-full min-w-[620px] text-left text-xs sm:text-sm text-white">
+                            <thead class="bg-[#0f2d44] text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-cyan-300 border-b border-white/10">
+                                <tr>
+                                    <th class="px-3 sm:px-4 py-3.5">COURSE CORD</th>
+                                    <th class="px-3 sm:px-4 py-3.5">COURSE NAME</th>
+                                    <th class="px-2 sm:px-3 py-3.5 text-center">CREDIT</th>
+                                    <th class="px-2 sm:px-3 py-3.5 text-center">MARKS</th>
+                                    <th class="px-2 sm:px-3 py-3.5 text-center">LETTER GRADE</th>
+                                    <th class="px-2 sm:px-3 py-3.5 text-center">GRADE POINT</th>
+                                    <th class="px-2 sm:px-3 py-3.5 text-center">ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody id="course-list-tbody" class="divide-y divide-white/5">
+                                <!-- Dynamically populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- BOTTOM TOTAL CREDIT & FINAL CGPA FOOTER BAR -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 rounded-2xl border border-cyan-500/30 bg-[#0c2a40] p-4 text-xs sm:text-sm font-black uppercase tracking-wider text-center sm:text-left">
+                        <div class="flex items-center gap-2">
+                            <span class="text-slate-300">TOTAL CREDIT:</span>
+                            <span id="course-list-total-credit" class="text-cyan-400 text-base sm:text-lg">9.0</span>
+                        </div>
+                        <div class="inline-flex items-center gap-2 rounded-xl bg-cyan-500/10 px-4 py-1.5 border border-cyan-500/30">
+                            <span class="text-cyan-300 text-xs">CREDIT</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-slate-300">FINAL CGPA:</span>
+                            <span id="course-list-final-cgpa" class="text-emerald-400 text-base sm:text-xl">4.00</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -372,7 +451,7 @@
                     <!-- CGPA (Overall) -->
                     <div>
                         <label class="block text-xs font-bold text-slate-300 mb-2 uppercase tracking-wider">CGPA (Overall)</label>
-                        <input type="number" step="0.01" name="cgpa" id="overall-cgpa-input" value="{{ old('cgpa', $student->cgpa ?? '3.75') }}"
+                        <input type="number" step="0.01" name="cgpa" id="overall-cgpa-input" oninput="autoCalculateGradeFromCgpa(this.value)" value="{{ old('cgpa', $student->cgpa ?? '3.75') }}"
                             class="w-full rounded-xl border border-white/10 bg-[#071c2c]/90 py-3.5 px-4 text-sm text-white focus:border-indigo-500 outline-none transition-all">
                     </div>
 
@@ -546,14 +625,31 @@
     }
 
     function calculateTotalMarks() {
-        const written = parseFloat(document.getElementById('written-marks-input')?.value || 0);
-        const viva = parseFloat(document.getElementById('viva-marks-input')?.value || 0);
-        const practical = parseFloat(document.getElementById('practical-marks-input')?.value || 0);
+        const written = parseFloat(document.getElementById('written-marks-input')?.value || document.getElementById('form-written-marks')?.value || 0);
+        const viva = parseFloat(document.getElementById('viva-marks-input')?.value || document.getElementById('form-viva-marks')?.value || 0);
+        const practical = parseFloat(document.getElementById('practical-marks-input')?.value || document.getElementById('form-practical-marks')?.value || 0);
 
-        const totalInput = document.getElementById('total-marks-input');
+        const totalInput = document.getElementById('total-marks-input') || document.getElementById('form-total-marks');
         if (totalInput) {
             totalInput.value = written + viva + practical;
         }
+    }
+
+    function autoCalculateGradeFromCgpa(valStr) {
+        const val = parseFloat(valStr);
+        const overallGradeSelect = document.getElementById('overall-grade-select') || document.getElementById('form-overall-grade');
+        if (!overallGradeSelect || isNaN(val)) return;
+
+        if (val >= 3.75) overallGradeSelect.value = 'A+';
+        else if (val >= 3.50) overallGradeSelect.value = 'A';
+        else if (val >= 3.25) overallGradeSelect.value = 'A-';
+        else if (val >= 3.00) overallGradeSelect.value = 'B+';
+        else if (val >= 2.75) overallGradeSelect.value = 'B';
+        else if (val >= 2.50) overallGradeSelect.value = 'B-';
+        else if (val >= 2.25) overallGradeSelect.value = 'C+';
+        else if (val >= 2.00) overallGradeSelect.value = 'C';
+        else if (val >= 1.00) overallGradeSelect.value = 'D';
+        else overallGradeSelect.value = 'F';
     }
 
     function updateOverallCgpaAndGrade() {
@@ -591,6 +687,141 @@
                 else overallGradeSelect.value = 'F';
             }
         }
+    }
+
+    // RESULT 1 & RESULT 2 MODE SWITCHING & COURSE LIST SHOW (IMAGE 5) LOGIC
+    let currentResultMode = 'result1';
+    let courseListItems = [
+        { code: 'CSE101', name: 'Intro to Computing', credit: '3.0', marks: '80 - 100', grade: 'A+', point: '4.00', semester: '1st' },
+        { code: 'CSE102', name: 'Discrete Math', credit: '3.0', marks: '75 - 79', grade: 'B+', point: '3.75', semester: '1st' },
+        { code: 'ENG103', name: 'Comm. English', credit: '3.0', marks: '70 - 74', grade: 'A-', point: '3.50', semester: '1st' }
+    ];
+
+    function switchResultMode(mode) {
+        currentResultMode = mode;
+        const btn1 = document.getElementById('btn-result-mode-1');
+        const btn2 = document.getElementById('btn-result-mode-2');
+        const sec2 = document.getElementById('section-result-2');
+
+        if (mode === 'result1') {
+            if (btn1) btn1.className = 'flex-1 sm:flex-none rounded-xl px-6 py-3 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-emerald-600 text-white ring-2 ring-emerald-400';
+            if (btn2) btn2.className = 'flex-1 sm:flex-none rounded-xl px-6 py-3 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]';
+            if (sec2) sec2.classList.add('hidden');
+        } else {
+            if (btn1) btn1.className = 'flex-1 sm:flex-none rounded-xl px-6 py-3 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]';
+            if (btn2) btn2.className = 'flex-1 sm:flex-none rounded-xl px-6 py-3 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-indigo-600 text-white ring-2 ring-indigo-400';
+            if (sec2) sec2.classList.remove('hidden');
+            renderCourseListShow();
+        }
+    }
+
+    function addCourseListRow() {
+        const sem = document.getElementById('course-list-sem-select')?.value || '1st';
+        courseListItems.push({
+            code: 'CSE10' + (courseListItems.length + 1),
+            name: 'Engineering Course',
+            credit: '3.0',
+            marks: '80 - 100',
+            grade: 'A+',
+            point: '4.00',
+            semester: sem
+        });
+        renderCourseListShow();
+    }
+
+    function removeCourseListRow(index) {
+        courseListItems.splice(index, 1);
+        renderCourseListShow();
+    }
+
+    function renderCourseListShow() {
+        const tbody = document.getElementById('course-list-tbody');
+        if (!tbody) return;
+
+        const currentSem = document.getElementById('course-list-sem-select')?.value || '1st';
+        const filtered = courseListItems.filter(item => item.semester === currentSem);
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="px-4 py-8 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">
+                        No course subjects added for ${currentSem} semester. Click ADD PAGE + to add.
+                    </td>
+                </tr>`;
+            updateCourseListTotals('0.0', '0.00');
+            return;
+        }
+
+        let html = '';
+        let totalCredit = 0;
+        let totalPointScore = 0;
+
+        filtered.forEach((item, idx) => {
+            const realIdx = courseListItems.indexOf(item);
+            const cr = parseFloat(item.credit) || 0;
+            const pt = parseFloat(item.point) || 0;
+            totalCredit += cr;
+            totalPointScore += (cr * pt);
+
+            html += `
+                <tr class="hover:bg-white/5 transition-colors">
+                    <td class="px-4 py-3 font-mono font-bold text-cyan-300">
+                        <input type="text" value="${item.code}" onchange="updateCourseItem(${realIdx}, 'code', this.value)"
+                            class="w-24 rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs font-mono text-cyan-300 outline-none">
+                    </td>
+                    <td class="px-4 py-3 font-bold text-white">
+                        <input type="text" value="${item.name}" onchange="updateCourseItem(${realIdx}, 'name', this.value)"
+                            class="w-full min-w-[160px] rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs text-white outline-none">
+                    </td>
+                    <td class="px-3 py-3 text-center">
+                        <input type="number" step="0.5" value="${item.credit}" onchange="updateCourseItem(${realIdx}, 'credit', this.value)"
+                            class="w-16 text-center rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs font-bold text-slate-200 outline-none">
+                    </td>
+                    <td class="px-3 py-3 text-center">
+                        <input type="text" value="${item.marks}" onchange="updateCourseItem(${realIdx}, 'marks', this.value)"
+                            class="w-24 text-center rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs font-bold text-amber-300 outline-none">
+                    </td>
+                    <td class="px-3 py-3 text-center">
+                        <input type="text" value="${item.grade}" onchange="updateCourseItem(${realIdx}, 'grade', this.value)"
+                            class="w-16 text-center rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs font-black text-emerald-400 outline-none">
+                    </td>
+                    <td class="px-3 py-3 text-center">
+                        <input type="number" step="0.01" value="${item.point}" onchange="updateCourseItem(${realIdx}, 'point', this.value)"
+                            class="w-20 text-center rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs font-black text-cyan-300 outline-none">
+                    </td>
+                    <td class="px-3 py-3 text-center">
+                        <input type="hidden" name="course_subjects[${realIdx}][code]" value="${item.code}">
+                        <input type="hidden" name="course_subjects[${realIdx}][title]" value="${item.name}">
+                        <input type="hidden" name="course_subjects[${realIdx}][credit]" value="${item.credit}">
+                        <input type="hidden" name="course_subjects[${realIdx}][marks]" value="${item.marks}">
+                        <input type="hidden" name="course_subjects[${realIdx}][grade]" value="${item.grade}">
+                        <input type="hidden" name="course_subjects[${realIdx}][grade_point]" value="${item.point}">
+                        <input type="hidden" name="course_subjects[${realIdx}][semester]" value="${item.semester}">
+                        <button type="button" onclick="removeCourseListRow(${realIdx})" class="text-rose-400 hover:text-rose-300 font-bold text-xs uppercase">
+                            Delete
+                        </button>
+                    </td>
+                </tr>`;
+        });
+
+        tbody.innerHTML = html;
+
+        const finalCgpa = totalCredit > 0 ? (totalPointScore / totalCredit).toFixed(2) : '0.00';
+        updateCourseListTotals(totalCredit.toFixed(1), finalCgpa);
+    }
+
+    function updateCourseItem(index, field, value) {
+        if (courseListItems[index]) {
+            courseListItems[index][field] = value;
+            renderCourseListShow();
+        }
+    }
+
+    function updateCourseListTotals(credit, cgpa) {
+        const crEl = document.getElementById('course-list-total-credit');
+        const cgEl = document.getElementById('course-list-final-cgpa');
+        if (crEl) crEl.textContent = credit;
+        if (cgEl) cgEl.textContent = cgpa;
     }
 </script>
 

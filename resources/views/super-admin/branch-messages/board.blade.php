@@ -48,10 +48,19 @@
                             @endif
                         </div>
 
-                        <div class="text-right border-t border-white/5 pt-3">
+                        <div class="flex items-center justify-between border-t border-white/5 pt-3">
                             <span class="text-[10px] font-bold text-slate-500">
                                 {{ $msg->created_at?->format('n/j/Y, g:i:s A') ?? '9/30/2026, 11:54:53 AM' }}
                             </span>
+                            @if(isset($msg->id))
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('super-admin.branch-messages.edit', $msg->id) }}" class="rounded bg-blue-600 px-2.5 py-1 text-[10px] font-black uppercase text-white hover:bg-blue-500 transition">Edit</a>
+                                    <form action="{{ route('super-admin.branch-messages.destroy', $msg->id) }}" method="POST" onsubmit="return confirm('Delete this message?')" class="inline">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="rounded bg-rose-600 px-2.5 py-1 text-[10px] font-black uppercase text-white hover:bg-rose-500 transition">Delete</button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @empty

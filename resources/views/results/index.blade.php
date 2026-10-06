@@ -12,10 +12,10 @@
         <!-- HTML5 QR CODE SCANNER LIBRARY -->
         <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     </head>
-    <body class="min-h-screen overflow-x-hidden bg-[#04101e] text-white antialiased font-sans">
+    <body class="min-h-screen overflow-x-hidden bg-[#03224c] text-white antialiased font-sans">
 
         <!-- HEADER NAVIGATION BAR -->
-        <header class="relative z-50 border-b border-white/10 bg-[#061527]/95 backdrop-blur-xl">
+        <header class="relative z-50 border-b border-white/10 bg-[#021838]/95 backdrop-blur-xl">
             <div class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
                 <a href="{{ route('home') }}" class="group flex min-w-0 items-center gap-3" aria-label="Home">
                     <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="brand-logo size-12 shrink-0 transition duration-300 group-hover:-rotate-3 sm:size-14">
@@ -92,7 +92,7 @@
             </header>
 
             <!-- MAIN RESULT SEARCH CARD (DESIGN MATCHING SECOND IMAGE) -->
-            <section class="mt-8 sm:mt-10 rounded-3xl border border-cyan-500/20 bg-[#0c2035] p-6 sm:p-10 lg:p-12 shadow-[0_20px_70px_rgba(0,0,0,0.6)] text-center relative overflow-hidden">
+            <section class="mt-8 sm:mt-10 rounded-3xl border border-white/10 bg-[#071c2c] p-6 sm:p-10 lg:p-12 shadow-[0_20px_70px_rgba(0,0,0,0.6)] text-center relative overflow-hidden">
 
                 <div class="mx-auto max-w-2xl space-y-6">
 

@@ -565,8 +565,20 @@
                             <textarea id="modal-sub-names" rows="3" placeholder="Enter subject names here, each on a new line." class="{{ $modalInputClass }} resize-none"></textarea>
                         </div>
                     </div>
-                    <div class="flex justify-end">
-                        <button type="button" onclick="addModalSubjects()" class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-6 py-2.5 font-bold text-xs uppercase tracking-wider shadow-lg transition-all active:scale-95">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <!-- RED MARKED POSITION: TWO BUTTONS FOR RESULT 1 & RESULT 2 -->
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <button type="button" id="modal-btn-result-mode-1" onclick="switchModalResultMode('result1')"
+                                class="flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-emerald-600 text-white ring-2 ring-emerald-400">
+                                📜 Result 1
+                            </button>
+                            <button type="button" id="modal-btn-result-mode-2" onclick="switchModalResultMode('result2')"
+                                class="flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]">
+                                📊 Result 2
+                            </button>
+                        </div>
+
+                        <button type="button" onclick="addModalSubjects()" class="w-full sm:w-auto rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-6 py-2.5 font-bold text-xs uppercase tracking-wider shadow-lg transition-all active:scale-95">
                             <span id="add-sub-btn-text">Add Subjects for 1st Semester</span>
                         </button>
                     </div>

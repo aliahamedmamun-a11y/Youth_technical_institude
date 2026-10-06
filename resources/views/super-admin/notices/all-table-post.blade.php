@@ -28,13 +28,15 @@
                         </div>
                     </div>
 
-                    {{-- Action Button --}}
-                    <div class="mt-10">
-                        <form action="{{ route('super-admin.subject-suggestions.destroy', $notice) }}" method="POST" onsubmit="return confirm('Delete this notice?')">
+                    {{-- Action Buttons (Edit + Delete) --}}
+                    <div class="mt-10 flex items-center gap-3">
+                        <a href="{{ route('super-admin.notice-board-suggestions.edit', $notice) }}" class="flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 py-3 text-sm font-black text-white shadow-xl transition hover:bg-indigo-500 active:scale-95">
+                            Edit
+                        </a>
+                        <form action="{{ route('super-admin.notice-board-suggestions.destroy', $notice) }}" method="POST" onsubmit="return confirm('Delete this notice?')" class="flex-1">
                             @csrf @method('DELETE')
                             <button type="submit" class="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3 text-sm font-black text-white shadow-xl transition hover:bg-red-500 active:scale-95">
-                                <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="3"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                                (Delete)
+                                Delete
                             </button>
                         </form>
                     </div>

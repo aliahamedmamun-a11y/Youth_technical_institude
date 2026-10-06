@@ -28,10 +28,13 @@
                             Submitted: {{ $msg->created_at->format('m/d/Y, h:i:s A') }}
                         </p>
 
-                        <div class="pt-4">
-                            <form action="{{ route('super-admin.branch-messages.destroy', $msg) }}" method="POST" onsubmit="return confirm('Delete this message?')">
+                        <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                            <a href="{{ route('super-admin.branch-messages.edit', $msg) }}" class="flex-1 text-center rounded-xl bg-blue-600 hover:bg-blue-500 py-2.5 text-xs font-black uppercase text-white shadow-lg transition">
+                                Edit
+                            </a>
+                            <form action="{{ route('super-admin.branch-messages.destroy', $msg) }}" method="POST" onsubmit="return confirm('Delete this message?')" class="flex-1">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="w-full rounded-xl bg-[#243b55] py-2.5 text-sm font-black text-slate-300 transition hover:bg-[#2c4b6b] hover:text-white shadow-lg">
+                                <button type="submit" class="w-full rounded-xl bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white py-2.5 text-xs font-black uppercase shadow-lg transition">
                                     Delete
                                 </button>
                             </form>

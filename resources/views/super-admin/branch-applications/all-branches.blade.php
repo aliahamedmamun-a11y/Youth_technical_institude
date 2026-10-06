@@ -38,6 +38,7 @@
                                 <th class="px-4 py-4">upazila</th>
                                 <th class="px-4 py-4">district</th>
                                 <th class="px-4 py-4">username</th>
+                                <th class="px-4 py-4 text-center">Allow Permissions (Cert, Testi, Trans, Result)</th>
                                 <th class="px-4 py-4 text-center">directorPhoto</th>
                                 <th class="px-4 py-4 text-center">institutePhoto</th>
                                 <th class="px-4 py-4 text-center">nationalIdPhoto</th>
@@ -70,6 +71,10 @@
                                                 'username' => $branch->username,
                                                 'password' => $branch->password ?: 'Pa$$w0rd!',
                                                 'status' => is_string($branch->status) ? $branch->status : $branch->status?->value ?? 'pending',
+                                                'allow_certificate' => (bool) ($branch->allow_certificate ?? true),
+                                                'allow_testimonial' => (bool) ($branch->allow_testimonial ?? true),
+                                                'allow_transcript' => (bool) ($branch->allow_transcript ?? true),
+                                                'allow_result_publish' => (bool) ($branch->allow_result_publish ?? true),
                                                 'director_photo_url' => $branch->director_photo_path ? asset('storage/' . $branch->director_photo_path) : asset('images/placeholder-avatar.png'),
                                                 'institute_photo_url' => $branch->institute_photo_path ? asset('storage/' . $branch->institute_photo_path) : asset('images/placeholder-institute.png'),
                                                 'nid_photo_url' => $branch->nid_photo_path ? asset('storage/' . $branch->nid_photo_path) : asset('images/placeholder-doc.png'),
@@ -155,6 +160,59 @@
                                     {{-- username --}}
                                     <td class="px-4 py-5 text-slate-400">
                                         {{ $branch->username }}
+                                    </td>
+
+                                    {{-- Allow Permissions --}}
+                                    <td class="px-4 py-5">
+                                        <div class="flex flex-wrap items-center justify-center gap-1.5 min-w-[210px]">
+                                            <form action="{{ route('super-admin.branch-applications.toggle-permission', $branch) }}" method="POST" class="inline">
+                                                @csrf @method('PATCH')
+                                                <input type="hidden" name="permission" value="allow_certificate">
+                                                <button type="submit" @class([
+                                                    'rounded px-2 py-1 text-[9px] font-black uppercase transition shadow-sm',
+                                                    'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-600/50' => $branch->allow_certificate ?? true,
+                                                    'bg-rose-600/30 text-rose-300 border border-rose-500/40 hover:bg-rose-600/50' => !($branch->allow_certificate ?? true),
+                                                ]) title="Toggle Certificate Permission">
+                                                    Cert: {{ ($branch->allow_certificate ?? true) ? 'ALLOW' : 'DENY' }}
+                                                </button>
+                                            </form>
+
+                                            <form action="{{ route('super-admin.branch-applications.toggle-permission', $branch) }}" method="POST" class="inline">
+                                                @csrf @method('PATCH')
+                                                <input type="hidden" name="permission" value="allow_testimonial">
+                                                <button type="submit" @class([
+                                                    'rounded px-2 py-1 text-[9px] font-black uppercase transition shadow-sm',
+                                                    'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-600/50' => $branch->allow_testimonial ?? true,
+                                                    'bg-rose-600/30 text-rose-300 border border-rose-500/40 hover:bg-rose-600/50' => !($branch->allow_testimonial ?? true),
+                                                ]) title="Toggle Testimonial Permission">
+                                                    Testi: {{ ($branch->allow_testimonial ?? true) ? 'ALLOW' : 'DENY' }}
+                                                </button>
+                                            </form>
+
+                                            <form action="{{ route('super-admin.branch-applications.toggle-permission', $branch) }}" method="POST" class="inline">
+                                                @csrf @method('PATCH')
+                                                <input type="hidden" name="permission" value="allow_transcript">
+                                                <button type="submit" @class([
+                                                    'rounded px-2 py-1 text-[9px] font-black uppercase transition shadow-sm',
+                                                    'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-600/50' => $branch->allow_transcript ?? true,
+                                                    'bg-rose-600/30 text-rose-300 border border-rose-500/40 hover:bg-rose-600/50' => !($branch->allow_transcript ?? true),
+                                                ]) title="Toggle Transcript Permission">
+                                                    Trans: {{ ($branch->allow_transcript ?? true) ? 'ALLOW' : 'DENY' }}
+                                                </button>
+                                            </form>
+
+                                            <form action="{{ route('super-admin.branch-applications.toggle-permission', $branch) }}" method="POST" class="inline">
+                                                @csrf @method('PATCH')
+                                                <input type="hidden" name="permission" value="allow_result_publish">
+                                                <button type="submit" @class([
+                                                    'rounded px-2 py-1 text-[9px] font-black uppercase transition shadow-sm',
+                                                    'bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 hover:bg-indigo-600/50' => $branch->allow_result_publish ?? true,
+                                                    'bg-rose-600/30 text-rose-300 border border-rose-500/40 hover:bg-rose-600/50' => !($branch->allow_result_publish ?? true),
+                                                ]) title="Toggle Result Publish Permission">
+                                                    Result: {{ ($branch->allow_result_publish ?? true) ? 'ALLOW' : 'DENY' }}
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
 
                                     {{-- Photos --}}
@@ -390,6 +448,59 @@
                     <input type="text" name="role" value="admin" class="{{ $bInputClass }}">
                 </div>
 
+                <!-- BRANCH ALLOW PERMISSIONS (ADMIN ALLOW BUTTONS) -->
+                <div class="space-y-4 pt-6 border-t border-white/10">
+                    <h3 class="text-sm font-black text-amber-400 uppercase tracking-wide flex items-center gap-2">
+                        <svg class="size-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+                        </svg>
+                        Branch Permissions (Admin Allow Buttons)
+                    </h3>
+                    <p class="text-xs text-slate-400">Toggle permissions allowed for this branch:</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Certificate Allow Toggle -->
+                        <label class="flex items-center justify-between p-4 rounded-2xl border border-white/10 bg-[#071c2c]/80 cursor-pointer hover:bg-[#0b2742] transition">
+                            <div>
+                                <span class="block text-xs font-black uppercase text-white">Certificate</span>
+                                <span class="block text-[10px] text-slate-400">Allow Branch to view/download Certificate</span>
+                            </div>
+                            <input type="hidden" name="allow_certificate" value="0">
+                            <input type="checkbox" name="allow_certificate" value="1" id="b-allow-cert" class="size-5 rounded border-white/20 bg-slate-900 text-indigo-500 focus:ring-indigo-500">
+                        </label>
+
+                        <!-- Testimonial Allow Toggle -->
+                        <label class="flex items-center justify-between p-4 rounded-2xl border border-white/10 bg-[#071c2c]/80 cursor-pointer hover:bg-[#0b2742] transition">
+                            <div>
+                                <span class="block text-xs font-black uppercase text-white">Testimonial</span>
+                                <span class="block text-[10px] text-slate-400">Allow Branch to view/download Testimonial</span>
+                            </div>
+                            <input type="hidden" name="allow_testimonial" value="0">
+                            <input type="checkbox" name="allow_testimonial" value="1" id="b-allow-testi" class="size-5 rounded border-white/20 bg-slate-900 text-indigo-500 focus:ring-indigo-500">
+                        </label>
+
+                        <!-- Transcript Allow Toggle -->
+                        <label class="flex items-center justify-between p-4 rounded-2xl border border-white/10 bg-[#071c2c]/80 cursor-pointer hover:bg-[#0b2742] transition">
+                            <div>
+                                <span class="block text-xs font-black uppercase text-white">Transcript</span>
+                                <span class="block text-[10px] text-slate-400">Allow Branch to view/download Transcript</span>
+                            </div>
+                            <input type="hidden" name="allow_transcript" value="0">
+                            <input type="checkbox" name="allow_transcript" value="1" id="b-allow-trans" class="size-5 rounded border-white/20 bg-slate-900 text-indigo-500 focus:ring-indigo-500">
+                        </label>
+
+                        <!-- Result Publish Allow Toggle -->
+                        <label class="flex items-center justify-between p-4 rounded-2xl border border-white/10 bg-[#071c2c]/80 cursor-pointer hover:bg-[#0b2742] transition">
+                            <div>
+                                <span class="block text-xs font-black uppercase text-emerald-400">Result Publish</span>
+                                <span class="block text-[10px] text-slate-400">Allow Branch to Publish Student Results</span>
+                            </div>
+                            <input type="hidden" name="allow_result_publish" value="0">
+                            <input type="checkbox" name="allow_result_publish" value="1" id="b-allow-pub" class="size-5 rounded border-white/20 bg-slate-900 text-emerald-500 focus:ring-emerald-500">
+                        </label>
+                    </div>
+                </div>
+
                 <!-- Action Buttons -->
                 <div class="flex items-center justify-end gap-4 pt-6 border-t border-white/10">
                     <button type="button" onclick="closeBranchEditModal()" class="rounded-xl bg-[#334155] hover:bg-[#475569] text-white px-8 py-3.5 font-bold text-sm uppercase tracking-wider transition-all">
@@ -441,6 +552,11 @@
             if (data.institute_photo_url) document.getElementById('b-inst-img').src = data.institute_photo_url;
             if (data.nid_photo_url) document.getElementById('b-nid-img').src = data.nid_photo_url;
             if (data.signature_photo_url) document.getElementById('b-sig-img').src = data.signature_photo_url;
+
+            if (document.getElementById('b-allow-cert')) document.getElementById('b-allow-cert').checked = data.allow_certificate !== false;
+            if (document.getElementById('b-allow-testi')) document.getElementById('b-allow-testi').checked = data.allow_testimonial !== false;
+            if (document.getElementById('b-allow-trans')) document.getElementById('b-allow-trans').checked = data.allow_transcript !== false;
+            if (document.getElementById('b-allow-pub')) document.getElementById('b-allow-pub').checked = data.allow_result_publish !== false;
 
             modal.classList.remove('hidden');
             modal.scrollTop = 0;

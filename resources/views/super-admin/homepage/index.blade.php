@@ -11,13 +11,18 @@
             <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 @foreach($items as $item)
                     <article class="group relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#0f2d44]/60 p-8 shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-blue-500/30">
-                        {{-- Delete Button (Top Right) --}}
-                        <form action="{{ route('super-admin.homepage.items.destroy', $item) }}" method="POST" class="absolute right-6 top-6 z-10" onsubmit="return confirm('Delete this review?')">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="grid size-10 place-items-center rounded-xl bg-red-600/10 text-red-500 transition-all hover:bg-red-600 hover:text-white active:scale-95 shadow-lg">
-                                <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                            </button>
-                        </form>
+                        <!-- Edit & Delete Buttons (Top Right) -->
+                        <div class="absolute right-6 top-6 z-10 flex items-center gap-2">
+                            <a href="{{ route('super-admin.homepage.items.edit', $item) }}" class="grid size-10 place-items-center rounded-xl bg-blue-600/20 text-blue-400 transition-all hover:bg-blue-600 hover:text-white active:scale-95 shadow-lg" title="Edit Review">
+                                <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            </a>
+                            <form action="{{ route('super-admin.homepage.items.destroy', $item) }}" method="POST" onsubmit="return confirm('Delete this review?')">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="grid size-10 place-items-center rounded-xl bg-red-600/10 text-red-500 transition-all hover:bg-red-600 hover:text-white active:scale-95 shadow-lg" title="Delete Review">
+                                    <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                </button>
+                            </form>
+                        </div>
 
                         {{-- Card Header: User Info --}}
                         <div class="flex items-center gap-5">

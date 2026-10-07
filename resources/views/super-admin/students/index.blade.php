@@ -1104,7 +1104,7 @@
                                 <input type="number" step="0.5" min="0" value="${item.credit ?? 3.0}" onchange="updateCourseItem('${sem}', ${idx}, 'credit', this.value)" class="w-14 text-center bg-slate-50 border border-slate-200 rounded px-1 py-1 outline-none font-bold text-xs focus:bg-white focus:border-indigo-500">
                             </td>
                             <td class="px-3 py-2 border-r border-slate-200 text-center">
-                                <input type="text" value="${item.marks || ''}" onchange="updateCourseItem('${sem}', ${idx}, 'marks', this.value)" class="w-20 text-center bg-slate-50 border border-slate-200 rounded px-1 py-1 outline-none text-xs focus:bg-white focus:border-indigo-500">
+                                <input type="text" value="${item.marks || ''}" oninput="updateCourseItem('${sem}', ${idx}, 'marks', this.value)" class="w-20 text-center bg-slate-50 border border-slate-200 rounded px-1 py-1 outline-none text-xs focus:bg-white focus:border-indigo-500 font-bold">
                             </td>
                             <td class="px-3 py-2 border-r border-slate-200 text-center">
                                 <span class="inline-block px-2.5 py-0.5 rounded font-black text-xs ${badgeClass}">${item.grade || 'A+'}</span>
@@ -1153,10 +1153,40 @@
             }
         }
 
+        function getGradeAndPointFromMarks(val) {
+            if (!val) return { grade: 'A+', point: '4.00' };
+
+            let num = parseFloat(val);
+            if (isNaN(num)) {
+                const matches = val.match(/\d+/g);
+                if (matches && matches.length > 0) {
+                    num = parseFloat(matches[0]);
+                }
+            }
+
+            if (isNaN(num)) return { grade: 'A+', point: '4.00' };
+
+            if (num >= 80) return { grade: 'A+', point: '4.00' };
+            if (num >= 75) return { grade: 'A', point: '3.75' };
+            if (num >= 70) return { grade: 'A-', point: '3.50' };
+            if (num >= 65) return { grade: 'B+', point: '3.25' };
+            if (num >= 60) return { grade: 'B', point: '3.00' };
+            if (num >= 55) return { grade: 'B-', point: '2.75' };
+            if (num >= 50) return { grade: 'C+', point: '2.50' };
+            if (num >= 45) return { grade: 'C', point: '2.25' };
+            if (num >= 40) return { grade: 'D', point: '2.00' };
+            return { grade: 'F', point: '0.00' };
+        }
+
         function updateCourseItem(sem, idx, key, val) {
             if (modalSemesterCourses[sem] && modalSemesterCourses[sem][idx]) {
                 modalSemesterCourses[sem][idx][key] = val;
-                if (key === 'point') {
+
+                if (key === 'marks') {
+                    const res = getGradeAndPointFromMarks(val);
+                    modalSemesterCourses[sem][idx].grade = res.grade;
+                    modalSemesterCourses[sem][idx].point = res.point;
+                } else if (key === 'point') {
                     const pt = parseFloat(val);
                     if (pt >= 4.00) modalSemesterCourses[sem][idx].grade = 'A+';
                     else if (pt >= 3.75) modalSemesterCourses[sem][idx].grade = 'A';
@@ -1169,6 +1199,7 @@
                     else if (pt >= 2.00) modalSemesterCourses[sem][idx].grade = 'D';
                     else modalSemesterCourses[sem][idx].grade = 'F';
                 }
+
                 renderModalCourseList();
             }
         }

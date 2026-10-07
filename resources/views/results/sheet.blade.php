@@ -98,7 +98,7 @@
 
             <div class="text-center space-y-0.5">
                 <p class="text-[8px] font-bold uppercase tracking-[.2em] text-slate-500">Government of the People's Republic of Bangladesh</p>
-                <h1 class="text-sm sm:text-lg font-black uppercase tracking-wide text-slate-900">{{ $result->student->institute_name ?: ($result->student->branch?->institute_name ?? 'BANGLADESH NATIONAL YOUTH TECHNICAL INSTITUTE') }}</h1>
+                <h1 class="text-sm sm:text-lg font-black uppercase tracking-wide text-slate-900">{{ ($result->student->institute_name && !in_array(strtoupper($result->student->institute_name), ['BNTEI', 'BNTI'])) ? $result->student->institute_name : 'SOUTH ASIA ENGINEERING & TECHNICAL INSTITUTE' }}</h1>
                 <p class="text-base sm:text-xl font-black tracking-[.15em] text-slate-900 border-t border-slate-200 pt-1 mt-1 inline-block px-4">RESULT SHEET</p>
             </div>
 
@@ -139,7 +139,7 @@
                     </tr>
                     <tr class="divide-x divide-slate-300">
                         <td class="bg-blue-50/80 px-3 py-1.5 font-bold text-slate-800">Institute Name</td>
-                        <td class="px-3 py-1.5 font-bold text-slate-900">: {{ $result->student->institute_name ?: ($result->student->branch?->institute_name ?? 'South Asia Engineering & Technical Institute') }}</td>
+                        <td class="px-3 py-1.5 font-bold text-slate-900">: {{ ($result->student->institute_name && !in_array(strtoupper($result->student->institute_name), ['BNTEI', 'BNTI'])) ? $result->student->institute_name : ($result->student->branch?->institute_name ?: 'South Asia Engineering & Technical Institute') }}</td>
                         <td class="bg-blue-50/80 px-3 py-1.5 font-bold text-slate-800">CGPA</td>
                         <td class="px-3 py-1.5 font-bold text-indigo-900">: {{ number_format((float)($cumulativeGpa ?? $result->student->cgpa ?? $result->gpa ?? 3.75), 2) }}</td>
                     </tr>

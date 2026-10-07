@@ -99,7 +99,7 @@
                                         'registration_number' => $student->registration_number,
                                         'roll_number' => $student->roll_number,
                                         'certificate_serial' => $student->certificate_serial,
-                                        'institute_name' => $student->institute_name ?: ($student->branch?->institute_name ?? 'BNTEI'),
+                                        'institute_name' => ($student->institute_name && !in_array(strtoupper($student->institute_name), ['BNTEI', 'BNTI'])) ? $student->institute_name : ($student->branch?->institute_name ?? 'South Asia Engineering & Technical Institute'),
                                         'director_name' => $student->director_name,
                                         'name' => $student->name,
                                         'father_name' => $student->father_name,
@@ -575,6 +575,79 @@
                         <input type="text" id="modal-created-at" readonly class="{{ $modalInputClass }} cursor-not-allowed text-slate-400">
                     </div>
 
+                </div>
+
+                <!-- ADD SUBJECTS SECTION -->
+                <div class="space-y-4 pt-6 border-t border-white/10">
+                    <h3 class="text-base font-black text-[#818cf8] uppercase tracking-wide">Add Subjects</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Select Semester</label>
+                            <select id="modal-sub-semester" onchange="updateAddSubButtonText(this.value)" class="{{ $modalSelectClass }}">
+                                <option value="1st">1st</option>
+                                <option value="2nd">2nd</option>
+                                <option value="3rd">3rd</option>
+                                <option value="4th">4th</option>
+                                <option value="5th">5th</option>
+                                <option value="6th">6th</option>
+                                <option value="7th">7th</option>
+                                <option value="8th">8th</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="{{ $modalLabelClass }}">Subject Names (One Per Line)</label>
+                            <textarea id="modal-sub-names" rows="3" placeholder="Enter subject names here, each on a new line." class="{{ $modalInputClass }} resize-none"></textarea>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <!-- RESULT 1 & RESULT 2 BUTTONS -->
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <button type="button" id="modal-btn-result-mode-1" onclick="switchModalResultMode('result1')"
+                                class="flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-emerald-600 text-white ring-2 ring-emerald-400">
+                                📜 Result 1
+                            </button>
+                            <button type="button" id="modal-btn-result-mode-2" onclick="switchModalResultMode('result2')"
+                                class="flex-1 sm:flex-none rounded-xl px-5 py-2.5 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-[#071c2c] text-slate-300 border border-white/10 hover:bg-[#0f2d44]">
+                                📊 Result 2
+                            </button>
+                        </div>
+
+                        <button type="button" onclick="addModalSubjects()" class="w-full sm:w-auto rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-6 py-2.5 font-bold text-xs uppercase tracking-wider shadow-lg transition-all active:scale-95">
+                            <span id="add-sub-btn-text">Add Subjects for 1st Semester</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ACADEMIC DETAILS (PER SEMESTER) -->
+                <div class="space-y-4 pt-6 border-t border-white/10">
+                    <div>
+                        <h3 class="text-base font-black text-slate-200 uppercase tracking-wide">Academic Details (Per Semester)</h3>
+                        <p class="text-xs text-slate-400 font-medium">Enter the CGPA (0.00-4.00) for each semester, and the Grade will auto-calculate.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                        @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $idx => $sem)
+                            <div class="rounded-2xl border border-white/10 bg-[#071c2c]/80 p-4 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <h4 class="text-xs font-black text-[#818cf8] uppercase tracking-wider">{{ $sem }} Semester</h4>
+                                    <span class="text-[9px] font-bold text-slate-300 uppercase">CGPA</span>
+                                </div>
+                                <input type="number" step="0.01" min="0" max="4.00" name="semesters[{{ $sem }}][cgpa]" id="modal-sem-cgpa-{{ $idx }}"
+                                    oninput="calcModalSemGrade({{ $idx }})" placeholder="e.g. 3.75"
+                                    class="w-full rounded-xl border border-white/20 bg-[#070d19] py-2.5 px-3 text-xs font-bold text-white placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-300 mb-1 uppercase tracking-wider">Grade (Auto-Calculated)</label>
+                                    <select name="semesters[{{ $sem }}][grade]" id="modal-sem-grade-{{ $idx }}" class="{{ $modalSelectClass }} py-2 text-xs">
+                                        <option value="">Select Grade</option>
+                                        @foreach(['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D', 'F'] as $gOpt)
+                                            <option value="{{ $gOpt }}">{{ $gOpt }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
 
                 <!-- ACTION BUTTONS -->

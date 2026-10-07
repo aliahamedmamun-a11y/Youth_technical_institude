@@ -78,7 +78,7 @@
                                         'registration_number' => $student->registration_number,
                                         'roll_number' => $student->roll_number,
                                         'certificate_serial' => $student->certificate_serial,
-                                        'institute_name' => $student->institute_name ?: ($student->branch?->institute_name ?? 'BNTEI'),
+                                        'institute_name' => ($student->institute_name && !in_array(strtoupper($student->institute_name), ['BNTEI', 'BNTI'])) ? $student->institute_name : ($student->branch?->institute_name ?? 'South Asia Engineering & Technical Institute'),
                                         'director_name' => $student->director_name,
                                         'name' => $student->name,
                                         'father_name' => $student->father_name,

@@ -537,23 +537,19 @@
                         </div>
                     </div>
 
-                    <!-- RESULT 2: COURSE LIST SHOW SECTION (IMAGE 5 FORMAT - MOBILE FRIENDLY) -->
+                    <!-- RESULT 2: COURSE LIST SHOW SECTION (EXACT MATCHING SCREENSHOT) -->
                     <div id="form-section-result-2" class="hidden pt-6 border-t border-white/10 space-y-6">
-                        <div class="rounded-3xl border border-cyan-500/30 bg-[#061826] p-4 sm:p-6 shadow-2xl space-y-6">
+                        <div class="rounded-3xl border border-slate-200 bg-white p-4 sm:p-8 shadow-2xl space-y-6 text-slate-800">
 
-                            <!-- HEADER BAR MATCHING IMAGE 5 -->
-                            <div class="text-center space-y-3">
-                                <h2 class="text-xl sm:text-3xl font-black uppercase tracking-wider text-white drop-shadow">
-                                    COURSE LIST SHOW
-                                </h2>
+                            <!-- TOP HEADER BAR MATCHING SCREENSHOT -->
+                            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-slate-200 pb-4">
+                                <button type="button" onclick="addFormCourseListRow()"
+                                    class="inline-flex items-center gap-2 rounded-2xl bg-[#00a884] hover:bg-[#008f6c] text-white px-6 py-3 font-black text-xs uppercase tracking-wider shadow-lg transition active:scale-95">
+                                    ADD PAGE <span class="text-base font-black">+</span>
+                                </button>
 
-                                <!-- ADD PAGE + | ( 1st semester ) BAR -->
-                                <div class="inline-flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-cyan-500/40 bg-[#0c2a40] px-4 sm:px-5 py-2.5 shadow-lg">
-                                    <button type="button" onclick="addFormCourseListRow()" class="flex items-center gap-2 text-xs sm:text-sm font-black uppercase text-cyan-300 hover:text-cyan-100 transition">
-                                        ADD PAGE <span class="text-lg font-black text-emerald-400">+</span>
-                                    </button>
-                                    <span class="hidden sm:inline text-cyan-500/50">|</span>
-                                    <select id="form-course-list-sem-select" onchange="renderFormCourseListShow()" class="bg-transparent text-xs sm:text-sm font-black text-cyan-200 outline-none cursor-pointer">
+                                <div class="inline-flex items-center gap-2 rounded-2xl bg-[#1c2e42] px-5 py-2.5 shadow-md">
+                                    <select id="form-course-list-sem-select" onchange="renderFormCourseListShow()" class="bg-transparent text-xs font-black text-white outline-none cursor-pointer">
                                         <option value="1st">( 1st semester )</option>
                                         <option value="2nd">( 2nd semester )</option>
                                         <option value="3rd">( 3rd semester )</option>
@@ -566,38 +562,38 @@
                                 </div>
                             </div>
 
-                            <!-- COURSE LIST TABLE (IMAGE 5 MATCH) -->
-                            <div class="overflow-x-auto rounded-2xl border border-cyan-500/20 bg-[#091e2e]">
-                                <table class="w-full min-w-[620px] text-left text-xs sm:text-sm text-white">
-                                    <thead class="bg-[#0f2d44] text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-cyan-300 border-b border-white/10">
+                            <!-- COURSE LIST TABLE (EXACT MATCHING SCREENSHOT) -->
+                            <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-slate-50">
+                                <table class="w-full min-w-[700px] text-left text-xs sm:text-sm text-slate-800 border-collapse">
+                                    <thead class="bg-[#2c3e50] text-[11px] font-black uppercase tracking-wider text-white border-b border-slate-300">
                                         <tr>
-                                            <th class="px-3 sm:px-4 py-3.5">COURSE CORD</th>
-                                            <th class="px-3 sm:px-4 py-3.5">COURSE NAME</th>
-                                            <th class="px-2 sm:px-3 py-3.5 text-center">CREDIT</th>
-                                            <th class="px-2 sm:px-3 py-3.5 text-center">MARKS</th>
-                                            <th class="px-2 sm:px-3 py-3.5 text-center">LETTER GRADE</th>
-                                            <th class="px-2 sm:px-3 py-3.5 text-center">GRADE POINT</th>
-                                            <th class="px-2 sm:px-3 py-3.5 text-center">ACTION</th>
+                                            <th class="px-4 py-3.5">COURSE CODE</th>
+                                            <th class="px-4 py-3.5">COURSE NAME</th>
+                                            <th class="px-3 py-3.5 text-center">CREDIT</th>
+                                            <th class="px-3 py-3.5 text-center">MARKS</th>
+                                            <th class="px-3 py-3.5 text-center">LETTER GRADE</th>
+                                            <th class="px-3 py-3.5 text-center">GRADE POINT</th>
+                                            <th class="px-3 py-3.5 text-center">ACTION</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="form-course-list-tbody" class="divide-y divide-white/5">
+                                    <tbody id="form-course-list-tbody" class="divide-y divide-slate-200 bg-white">
                                         <!-- Dynamically populated by JS -->
                                     </tbody>
                                 </table>
                             </div>
 
                             <!-- BOTTOM TOTAL CREDIT & FINAL CGPA FOOTER BAR -->
-                            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 rounded-2xl border border-cyan-500/30 bg-[#0c2a40] p-4 text-xs sm:text-sm font-black uppercase tracking-wider text-center sm:text-left">
+                            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-[#eef2f6] p-4 text-xs sm:text-sm font-black uppercase tracking-wider text-slate-800">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-slate-300">TOTAL CREDIT:</span>
-                                    <span id="form-course-list-total-credit" class="text-cyan-400 text-base sm:text-lg">9.0</span>
+                                    <span class="text-slate-600">TOTAL CREDIT:</span>
+                                    <span id="form-course-list-total-credit" class="text-slate-900 text-lg sm:text-xl font-black">30.0</span>
                                 </div>
-                                <div class="inline-flex items-center gap-2 rounded-xl bg-cyan-500/10 px-4 py-1.5 border border-cyan-500/30">
-                                    <span class="text-cyan-300 text-xs">CREDIT</span>
+                                <div class="inline-flex items-center justify-center rounded-2xl bg-[#2c3e50] px-8 py-2.5 text-white font-black text-xs shadow-md">
+                                    CREDIT
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-slate-300">FINAL CGPA:</span>
-                                    <span id="form-course-list-final-cgpa" class="text-emerald-400 text-base sm:text-xl">4.00</span>
+                                    <span class="text-slate-600">FINAL CGPA:</span>
+                                    <span id="form-course-list-final-cgpa" class="text-[#6366f1] text-xl sm:text-2xl font-black">2.70</span>
                                 </div>
                             </div>
 
@@ -1203,18 +1199,13 @@
             }
         }
     }
-            if (btn2) btn2.className = 'flex-1 sm:flex-none rounded-xl px-6 py-3 font-black text-xs uppercase tracking-wider transition-all shadow-lg bg-indigo-600 text-white ring-2 ring-indigo-400';
-            if (sec2) sec2.classList.remove('hidden');
-            renderFormCourseListShow();
-        }
-    }
 
     function addFormCourseListRow() {
         const sem = document.getElementById('form-course-list-sem-select')?.value || '1st';
         formCourseListItems.push({
             code: 'CSE10' + (formCourseListItems.length + 1),
             name: 'Engineering Course',
-            credit: '3.0',
+            credit: '3',
             marks: '80 - 100',
             grade: 'A+',
             point: '4.00',
@@ -1226,6 +1217,10 @@
     function removeFormCourseListRow(index) {
         formCourseListItems.splice(index, 1);
         renderFormCourseListShow();
+    }
+
+    function saveFormCourseRow(index) {
+        alert('Course row saved!');
     }
 
     function renderFormCourseListShow() {
@@ -1257,43 +1252,52 @@
             totalCredit += cr;
             totalPointScore += (cr * pt);
 
+            const gColor = item.grade === 'A+' ? 'text-[#00a884]'
+                : (item.grade === 'A' || item.grade === 'A-') ? 'text-[#00a884]'
+                : (item.grade === 'B+' || item.grade === 'B') ? 'text-[#d97706]'
+                : (item.grade === 'B-' || item.grade === 'C+' || item.grade === 'C') ? 'text-[#ea580c]'
+                : 'text-[#dc2626]';
+
             html += `
-                <tr class="hover:bg-white/5 transition-colors">
-                    <td class="px-4 py-3 font-mono font-bold text-cyan-300">
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-4 py-3 font-mono font-bold text-slate-800">
                         <input type="text" value="${item.code}" onchange="updateFormCourseItem(${realIdx}, 'code', this.value)"
-                            class="w-24 rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs font-mono text-cyan-300 outline-none">
+                            class="w-24 rounded border border-slate-300 bg-slate-100 px-2 py-1 text-xs font-mono font-bold text-slate-800 outline-none focus:border-emerald-500">
                     </td>
-                    <td class="px-4 py-3 font-bold text-white">
+                    <td class="px-4 py-3 font-bold text-slate-800">
                         <input type="text" value="${item.name}" onchange="updateFormCourseItem(${realIdx}, 'name', this.value)"
-                            class="w-full min-w-[160px] rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs text-white outline-none">
+                            class="w-full min-w-[140px] rounded border border-slate-300 bg-slate-100 px-2 py-1 text-xs font-bold text-slate-800 outline-none focus:border-emerald-500">
                     </td>
                     <td class="px-3 py-3 text-center">
                         <input type="number" step="0.5" value="${item.credit}" onchange="updateFormCourseItem(${realIdx}, 'credit', this.value)"
-                            class="w-16 text-center rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs font-bold text-slate-200 outline-none">
+                            class="w-12 text-center rounded border border-slate-300 bg-slate-100 px-1 py-1 text-xs font-bold text-slate-800 outline-none focus:border-emerald-500">
                     </td>
                     <td class="px-3 py-3 text-center">
-                        <input type="text" value="${item.marks}" onchange="updateFormCourseItem(${realIdx}, 'marks', this.value)"
-                            class="w-24 text-center rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs font-bold text-amber-300 outline-none">
+                        <input type="text" value="${item.marks}" oninput="updateFormCourseItem(${realIdx}, 'marks', this.value)"
+                            class="w-28 text-center rounded border border-slate-300 bg-slate-100 px-2 py-1 text-xs font-bold text-slate-800 outline-none focus:border-emerald-500">
+                    </td>
+                    <td class="px-3 py-3 text-center font-black text-sm ${gColor}">
+                        ${item.grade}
+                    </td>
+                    <td class="px-3 py-3 text-center font-bold text-xs text-slate-800">
+                        ${parseFloat(item.point).toFixed(2)}
                     </td>
                     <td class="px-3 py-3 text-center">
-                        <input type="text" value="${item.grade}" onchange="updateFormCourseItem(${realIdx}, 'grade', this.value)"
-                            class="w-16 text-center rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs font-black text-emerald-400 outline-none">
-                    </td>
-                    <td class="px-3 py-3 text-center">
-                        <input type="number" step="0.01" value="${item.point}" onchange="updateFormCourseItem(${realIdx}, 'point', this.value)"
-                            class="w-20 text-center rounded border border-white/10 bg-[#071320] px-2 py-1 text-xs font-black text-cyan-300 outline-none">
-                    </td>
-                    <td class="px-3 py-3 text-center">
-                        <input type="hidden" name="course_subjects[${realIdx}][code]" value="${item.code}">
-                        <input type="hidden" name="course_subjects[${realIdx}][title]" value="${item.name}">
-                        <input type="hidden" name="course_subjects[${realIdx}][credit]" value="${item.credit}">
-                        <input type="hidden" name="course_subjects[${realIdx}][marks]" value="${item.marks}">
-                        <input type="hidden" name="course_subjects[${realIdx}][grade]" value="${item.grade}">
-                        <input type="hidden" name="course_subjects[${realIdx}][grade_point]" value="${item.point}">
-                        <input type="hidden" name="course_subjects[${realIdx}][semester]" value="${item.semester}">
-                        <button type="button" onclick="removeFormCourseListRow(${realIdx})" class="text-rose-400 hover:text-rose-300 font-bold text-xs uppercase">
-                            Delete
-                        </button>
+                        <div class="inline-flex items-center justify-center gap-1.5">
+                            <input type="hidden" name="course_subjects[${realIdx}][code]" value="${item.code}">
+                            <input type="hidden" name="course_subjects[${realIdx}][title]" value="${item.name}">
+                            <input type="hidden" name="course_subjects[${realIdx}][credit]" value="${item.credit}">
+                            <input type="hidden" name="course_subjects[${realIdx}][marks]" value="${item.marks}">
+                            <input type="hidden" name="course_subjects[${realIdx}][grade]" value="${item.grade}">
+                            <input type="hidden" name="course_subjects[${realIdx}][grade_point]" value="${item.point}">
+                            <input type="hidden" name="course_subjects[${realIdx}][semester]" value="${item.semester}">
+                            <button type="button" onclick="saveFormCourseRow(${realIdx})" class="rounded bg-[#00a884] hover:bg-[#008f6c] text-white px-3 py-1 font-black text-[10px] uppercase shadow-sm transition">
+                                SAVE
+                            </button>
+                            <button type="button" onclick="removeFormCourseListRow(${realIdx})" class="rounded bg-[#e63946] hover:bg-[#d62828] text-white px-3 py-1 font-black text-[10px] uppercase shadow-sm transition">
+                                DELETE
+                            </button>
+                        </div>
                     </td>
                 </tr>`;
         });
@@ -1307,6 +1311,13 @@
     function updateFormCourseItem(index, field, value) {
         if (formCourseListItems[index]) {
             formCourseListItems[index][field] = value;
+
+            if (field === 'marks') {
+                const res = calculateGradeFromMarks(value);
+                formCourseListItems[index]['grade'] = res.grade;
+                formCourseListItems[index]['point'] = res.point;
+            }
+
             renderFormCourseListShow();
         }
     }

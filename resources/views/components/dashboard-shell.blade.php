@@ -36,7 +36,7 @@
                 @endif
                 <a href="/" class="flex items-center gap-3">
                     <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="size-8 sm:size-9 brightness-0 invert">
-                    <span class="text-xs sm:text-sm font-black uppercase tracking-wider">BNTEI</span>
+                    <span class="text-xs sm:text-sm font-black uppercase tracking-wider">South Asia Institute</span>
                 </a>
             </div>
             <div class="flex items-center gap-2 sm:gap-4">

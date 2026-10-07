@@ -93,19 +93,19 @@
     <article class="result-sheet mx-auto max-w-4xl border border-slate-300 bg-white shadow-2xl rounded-sm p-6 space-y-4">
 
         <!-- HEADER -->
-        <header class="grid grid-cols-[80px_1fr_80px] items-center gap-4 border-b border-slate-300 pb-3">
-            <img src="{{ asset('images/Logo.png') }}" alt="BNYTI Logo" class="size-16 object-contain mx-auto">
+        <header class="grid grid-cols-[105px_1fr_105px] items-center gap-4 border-b-2 border-slate-300 pb-4">
+            <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="w-24 h-24 sm:w-28 sm:h-28 object-contain mx-auto drop-shadow-sm">
 
-            <div class="text-center space-y-0.5">
-                <p class="text-[8px] font-bold uppercase tracking-[.2em] text-slate-500">Government of the People's Republic of Bangladesh</p>
-                <h1 class="text-sm sm:text-lg font-black uppercase tracking-wide text-slate-900">{{ ($result->student->institute_name && !in_array(strtoupper($result->student->institute_name), ['BNTEI', 'BNTI'])) ? $result->student->institute_name : 'SOUTH ASIA ENGINEERING & TECHNICAL INSTITUTE' }}</h1>
-                <p class="text-base sm:text-xl font-black tracking-[.15em] text-slate-900 border-t border-slate-200 pt-1 mt-1 inline-block px-4">RESULT SHEET</p>
+            <div class="text-center space-y-1">
+                <p class="text-[9px] font-bold uppercase tracking-[.22em] text-slate-600">Government of the People's Republic of Bangladesh</p>
+                <h1 class="text-base sm:text-xl font-black uppercase tracking-tight text-slate-900 leading-snug">{{ ($result->student->institute_name && !in_array(strtoupper($result->student->institute_name), ['BNTEI', 'BNTI'])) ? $result->student->institute_name : 'SOUTH ASIA ENGINEERING & TECHNICAL INSTITUTE' }}</h1>
+                <p class="text-lg sm:text-2xl font-black tracking-[.2em] text-slate-900 border-t-2 border-slate-300 pt-1.5 mt-1 inline-block px-6">RESULT SHEET</p>
             </div>
 
             @if ($result->student->image_path)
-                <img src="{{ str_starts_with($result->student->image_path, 'http') ? $result->student->image_path : Storage::disk('public')->url($result->student->image_path) }}" alt="Student photo" class="size-16 rounded border border-slate-300 object-cover mx-auto shadow-sm" onerror="this.onerror=null; this.src='https://i.ibb.co/qMgPTvMQ/1000072415.jpg';">
+                <img src="{{ str_starts_with($result->student->image_path, 'http') ? $result->student->image_path : Storage::disk('public')->url($result->student->image_path) }}" alt="Student photo" class="w-22 h-26 sm:w-24 sm:h-28 rounded-lg border-2 border-slate-300 object-cover mx-auto shadow-md" onerror="this.onerror=null; this.src='https://i.ibb.co/qMgPTvMQ/1000072415.jpg';">
             @else
-                <div class="size-16 rounded border border-dashed border-slate-300 bg-slate-50 flex items-center justify-center text-slate-400 text-[10px] mx-auto">Photo</div>
+                <div class="w-22 h-26 sm:w-24 sm:h-28 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 flex items-center justify-center text-slate-400 text-xs font-bold mx-auto">Photo</div>
             @endif
         </header>
 

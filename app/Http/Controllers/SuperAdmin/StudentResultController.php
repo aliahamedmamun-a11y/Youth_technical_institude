@@ -36,7 +36,9 @@ class StudentResultController extends Controller
 
         $student->load('course.semesters');
 
-        return view('super-admin.student-results.create', ['student' => $student, 'semesters' => $student->course->semesters->where('is_active', true)]);
+        $semesters = $student->course?->semesters?->where('is_active', true) ?? collect();
+
+        return view('super-admin.student-results.create', ['student' => $student, 'semesters' => $semesters]);
     }
 
     public function createForEnrollment(StudentSemesterEnrollment $enrollment): View
@@ -146,7 +148,9 @@ class StudentResultController extends Controller
 
         $result->load(['student.course.semesters', 'subjects']);
 
-        return view('super-admin.student-results.edit', ['result' => $result, 'semesters' => $result->student->course->semesters->where('is_active', true)]);
+        $semesters = $result->student->course?->semesters?->where('is_active', true) ?? collect();
+
+        return view('super-admin.student-results.edit', ['result' => $result, 'semesters' => $semesters]);
     }
 
     public function update(UpdateStudentResultRequest $request, StudentResult $result): RedirectResponse

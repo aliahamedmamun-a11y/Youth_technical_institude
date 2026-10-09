@@ -29,7 +29,9 @@ class StudentSemesterEnrollmentController extends Controller
         Gate::authorize('update', $student);
         $student->load('course.semesters.subjects');
 
-        return view('super-admin.student-enrollments.create', ['student' => $student, 'semesters' => $student->course->semesters->where('is_active', true)]);
+        $semesters = $student->course?->semesters?->where('is_active', true) ?? collect();
+
+        return view('super-admin.student-enrollments.create', ['student' => $student, 'semesters' => $semesters]);
     }
 
     public function store(StoreStudentSemesterEnrollmentRequest $request, Student $student): RedirectResponse

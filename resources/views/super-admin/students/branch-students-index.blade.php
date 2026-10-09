@@ -50,8 +50,8 @@
                                 <th class="px-4 py-4 text-center">ACTIONS</th>
                                 <th class="px-4 py-4 text-center">ADMIT-CARD</th>
                                 <th class="px-4 py-4 text-center">REGISTRATION</th>
-                                <th class="px-4 py-4 text-center">CERTIFICATE</th>
-                                <th class="px-4 py-4 text-center">TRANSCRIPT</th>
+                                <th class="px-4 py-4 text-center">CERTIFICATE 1</th>
+                                <th class="px-4 py-4 text-center">CERTIFICATE 2</th>
                                 <th class="px-4 py-4 text-center">TRANSCRIPTONE</th>
                                 <th class="px-4 py-4 text-center">TRANSCRIPTTWO</th>
                                 <th class="px-4 py-4 text-center">NIDCARD</th>
@@ -172,21 +172,21 @@
                                         </a>
                                     </td>
 
-                                    {{-- CERTIFICATE --}}
+                                    {{-- CERTIFICATE 1 --}}
                                     <td class="px-4 py-4 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'certificate']) }}"
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'certificate-one']) }}"
                                            onclick="downloadPdf(event, this.href)"
                                            class="inline-block rounded-lg bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
-                                            Certificate
+                                            Certificate 1
                                         </a>
                                     </td>
 
-                                    {{-- TRANSCRIPT --}}
+                                    {{-- CERTIFICATE 2 --}}
                                     <td class="px-4 py-4 text-center">
-                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'transcript']) }}"
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'certificate-two']) }}"
                                            onclick="downloadPdf(event, this.href)"
-                                           class="inline-block rounded-lg bg-teal-600 hover:bg-teal-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
-                                            Certificate One
+                                           class="inline-block rounded-lg bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
+                                            Certificate 2
                                         </a>
                                     </td>
 

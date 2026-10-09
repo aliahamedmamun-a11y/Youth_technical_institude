@@ -200,11 +200,12 @@
                     'admit-card' => 'Admit Card',
                     'registration-card' => 'Registration Card',
                     'student-id' => 'Student ID',
-                    'certificate' => 'Certificate',
+                    'certificate' => 'Certificate 2 (Gold Border)',
+                    'certificate-one' => 'Certificate 1 (Classic)',
                     'testimonial' => 'Testimonial',
                     'transcript' => 'Transcript',
                     'forwarding-letter' => 'Forwarding Letter',
-                    'results' => 'Legacy Results'
+                    'results' => 'Result Search Portal'
                 ] as $document => $label)
 
 

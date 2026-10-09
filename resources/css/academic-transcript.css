@@ -70,14 +70,14 @@
 /* Student Information Block Placement */
 .transcript-student-info-box {
     position: absolute;
-    top: 21.3%;
+    top: 23.0%;
     left: 10.5%;
     right: 10.5%;
     display: flex;
     flex-direction: column;
-    gap: 5.5pt;
+    gap: 3.5pt;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.2;
 }
 
@@ -103,7 +103,7 @@
 .ts-val {
     font-family: 'Times New Roman', Times, serif;
     font-style: italic;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: #0B1953;
 }
@@ -111,7 +111,7 @@
 /* Main Result Table Placement */
 .transcript-main-table-container {
     position: absolute;
-    top: 47.0%;
+    top: 48.5%;
     left: 10.5%;
     right: 10.5%;
     z-index: 10;
@@ -121,13 +121,13 @@
     width: 100%;
     border-collapse: collapse;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 14px;
+    font-size: 13.5px;
     background: transparent;
 }
 
 .ts-table th, .ts-table td {
     border: 0.75pt solid #222;
-    padding: 6.5pt 6pt;
+    padding: 5pt 6pt;
     text-align: center;
     font-weight: 600;
 }
@@ -135,7 +135,7 @@
 .ts-table th {
     background: #fdfdfd;
     font-weight: 800;
-    font-size: 14px;
+    font-size: 13.5px;
 }
 
 .ts-table td:nth-child(2) {

@@ -37,7 +37,7 @@
     "isEntry": true
   },
   "resources/css/admit-card.css": {
-    "file": "assets/admit-card-CXT5NTHa.css",
+    "file": "assets/admit-card-BRNelDhH.css",
     "name": "admit-card",
     "names": [
       "admit-card.css"
@@ -46,7 +46,7 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-NmP5Flpl.css",
+    "file": "assets/app-qTn5gih5.css",
     "name": "app",
     "names": [
       "app.css"
@@ -54,24 +54,31 @@
     "src": "resources/css/app.css",
     "isEntry": true,
     "assets": [
-      "assets/document-monotype-corsiva-bold-italic-BV2jaLKv.ttf"
+      "assets/certificate-shelle-BV2jaLKv.ttf"
     ]
   },
   "resources/css/certificate.css": {
-    "file": "assets/certificate-D3RDgQVl.css",
+    "file": "assets/certificate-CIh7hkkq.css",
     "name": "certificate",
     "names": [
       "certificate.css"
     ],
     "src": "resources/css/certificate.css",
-    "isEntry": true
+    "isEntry": true,
+    "assets": [
+      "assets/certificate-shelle-BV2jaLKv.ttf"
+    ]
+  },
+  "resources/css/fonts/certificate-shelle.ttf": {
+    "file": "assets/certificate-shelle-BV2jaLKv.ttf",
+    "src": "resources/css/fonts/certificate-shelle.ttf"
   },
   "resources/css/fonts/document-monotype-corsiva-bold-italic.ttf": {
-    "file": "assets/document-monotype-corsiva-bold-italic-BV2jaLKv.ttf",
-    "src": "resources/css/fonts/document-monotype-corsiva-bold-italic.ttf"
+    "file": "assets/certificate-shelle-BV2jaLKv.ttf",
+    "src": "resources/css/fonts/certificate-shelle.ttf"
   },
   "resources/css/registration-card.css": {
-    "file": "assets/registration-card-CZfHzXlQ.css",
+    "file": "assets/registration-card-DBy2aeBd.css",
     "name": "registration-card",
     "names": [
       "registration-card.css"
@@ -80,7 +87,7 @@
     "isEntry": true
   },
   "resources/css/student-id.css": {
-    "file": "assets/student-id-Dy__5e5H.css",
+    "file": "assets/student-id-DZjJ1-zN.css",
     "name": "student-id",
     "names": [
       "student-id.css"
@@ -98,7 +105,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-wheSRqDd.js",
+    "file": "assets/app-D2VT3nJ4.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

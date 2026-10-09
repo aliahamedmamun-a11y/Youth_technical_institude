@@ -31,6 +31,7 @@
                                 <th class="px-4 py-4 text-center">REGISTRATION</th>
                                 <th class="px-4 py-4 text-center">CERTIFICATE 1</th>
                                 <th class="px-4 py-4 text-center">CERTIFICATE 2</th>
+                                <th class="px-4 py-4 text-center">TESTIMONIAL</th>
                                 <th class="px-4 py-4 text-center">TRANSCRIPTONE</th>
                                 <th class="px-4 py-4 text-center">TRANSCRIPTTWO</th>
                                 <th class="px-4 py-4 text-center">NIDCARD</th>
@@ -176,6 +177,15 @@
                                            onclick="downloadPdf(event, this.href)"
                                            class="inline-block rounded-lg bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
                                             Certificate 2
+                                        </a>
+                                    </td>
+
+                                    {{-- TESTIMONIAL --}}
+                                    <td class="px-4 py-4 text-center">
+                                        <a href="{{ route('super-admin.students.documents.show', [$student, 'testimonial']) }}"
+                                           onclick="downloadPdf(event, this.href)"
+                                           class="inline-block rounded-lg bg-amber-600 hover:bg-amber-500 px-3 py-1.5 text-[10px] font-black text-white uppercase shadow transition">
+                                            Testimonial
                                         </a>
                                     </td>
 

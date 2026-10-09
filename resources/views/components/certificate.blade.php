@@ -8,22 +8,16 @@
 ])
 
 @php
-    $tpl = request()->query('tpl', $template ?? '2');
+    $tpl = (string) request()->query('tpl', $template ?? '2');
     $certificateGpa = $cumulativeGpa ?? $latestResult?->gpa ?? $student->cgpa ?? '3.75';
     $resultVerificationUrl = $latestResult?->verification_token
         ? route('results.show', $latestResult->verification_token)
         : route('results.index', ['roll_number' => $student->roll_number]);
 
     $verificationQr = $qrCode ?? (app(\App\Services\QrCodeService::class)->dataUri($resultVerificationUrl));
-    $templateImage = match ((string) $tpl) {
-        '1' => file_exists(public_path('images/certificate-template1.png'))
-            ? asset('images/certificate-template1.png')
-            : asset('images/certificate-template.png'),
-        default => file_exists(public_path('images/certificate-template.png'))
-            ? asset('images/certificate-template.png')
-            : (file_exists(public_path('images/Certificate-2.png'))
-                ? asset('images/Certificate-2.png')
-                : asset('images/certificate-template1.png')),
+    $templateImage = match ($tpl) {
+        '1' => asset('images/certificate-template1.png'),
+        default => asset('images/certificate-template.png'),
     };
 
     $formattedSerial = $certificateSerial
@@ -42,15 +36,15 @@
         <div class="inline-flex rounded-2xl bg-slate-900/90 p-1.5 border border-white/20 shadow-2xl backdrop-blur-md">
             <a href="?tpl=1" @class([
                 'rounded-xl px-4 py-2 text-xs font-black uppercase tracking-wider transition-all shadow-md flex items-center gap-2',
-                'bg-emerald-500 text-slate-950 shadow-lg ring-2 ring-emerald-300' => $tpl == '1',
-                'text-slate-300 hover:text-white hover:bg-white/10' => $tpl != '1'
+                'bg-emerald-500 text-slate-950 shadow-lg ring-2 ring-emerald-300' => $tpl === '1',
+                'text-slate-300 hover:text-white hover:bg-white/10' => $tpl !== '1'
             ])>
-                📜 Certificate 1 (Classic)
+                📜 Certificate 1 (Classic Green)
             </a>
             <a href="?tpl=2" @class([
                 'rounded-xl px-4 py-2 text-xs font-black uppercase tracking-wider transition-all shadow-md flex items-center gap-2',
-                'bg-emerald-500 text-slate-950 shadow-lg ring-2 ring-emerald-300' => $tpl == '2',
-                'text-slate-300 hover:text-white hover:bg-white/10' => $tpl != '2'
+                'bg-emerald-500 text-slate-950 shadow-lg ring-2 ring-emerald-300' => $tpl === '2',
+                'text-slate-300 hover:text-white hover:bg-white/10' => $tpl !== '2'
             ])>
                 📜 Certificate 2 (Gold Border)
             </a>
@@ -69,7 +63,7 @@
 
     <!-- CERTIFICATE FRAME -->
     <div class="certificate-frame">
-        <article class="certificate-document {{ $tpl == '1' ? 'certificate-document--tpl1' : 'certificate-document--tpl2' }}" aria-label="Certificate for {{ $student->name }}">
+        <article class="certificate-document {{ $tpl === '1' ? 'certificate-document--tpl1' : 'certificate-document--tpl2' }}" aria-label="Certificate for {{ $student->name }}">
             <img class="certificate-template" src="{{ $templateImage }}" alt="Certificate Template">
 
             <span class="certificate-data certificate-data--serial">{{ $formattedSerial }}</span>

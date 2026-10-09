@@ -184,9 +184,7 @@ class StudentDocumentController extends Controller
      */
     private function transcriptData(Student $student, ResultQrCodeService $qrCode): array
     {
-        $publishedResults = $student->results()
-            ->where('status', 'published')
-            ->whereNotNull('published_at')
+        $allResults = $student->results()
             ->with(['subjects', 'semesterDefinition'])
             ->get()
             ->sort(fn (StudentResult $first, StudentResult $second): int => [
@@ -200,44 +198,70 @@ class StudentDocumentController extends Controller
             ])
             ->values();
 
-        $transcriptPages = $publishedResults->flatMap(function (StudentResult $result) use ($qrCode): Collection {
-            $subjectChunks = $result->subjects->chunk(7);
-            $verificationUrl = $result->verification_token
-                ? route('results.show', $result->verification_token)
-                : null;
-            $verificationQrCode = $verificationUrl ? $qrCode->dataUri($result) : null;
+        if ($allResults->isNotEmpty()) {
+            $transcriptPages = $allResults->flatMap(function (StudentResult $result) use ($qrCode): Collection {
+                $subjectChunks = $result->subjects->chunk(7);
+                $verificationUrl = $result->verification_token
+                    ? route('results.show', $result->verification_token)
+                    : null;
+                $verificationQrCode = $verificationUrl ? $qrCode->dataUri($result) : null;
 
-            if ($subjectChunks->isEmpty()) {
-                $subjectChunks = collect([collect()]);
+                if ($subjectChunks->isEmpty()) {
+                    $subjectChunks = collect([collect()]);
+                }
+
+                return $subjectChunks->values()->map(fn (Collection $subjects, int $chunkIndex): array => [
+                    'result' => $result,
+                    'semesterName' => $result->semester,
+                    'subjects' => $subjects->values(),
+                    'isContinuation' => $chunkIndex > 0,
+                    'isSemesterFinal' => $chunkIndex === $subjectChunks->count() - 1,
+                    'serial' => sprintf('TRANS-%06d', $result->id),
+                    'outcome' => $result->overall_grade === null
+                        ? null
+                        : ($result->overall_grade === 'F' ? 'Failed' : 'Passed'),
+                    'verificationQrCode' => $verificationQrCode,
+                    'verificationUrl' => $verificationUrl,
+                    'verificationReference' => $result->verification_token,
+                ]);
+            })->values();
+        } else {
+            $courseSemesters = $student->course?->semesters()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get();
+
+            if ($courseSemesters && $courseSemesters->isNotEmpty()) {
+                $transcriptPages = $courseSemesters->map(function ($semester, int $index) use ($student): array {
+                    return [
+                        'result' => null,
+                        'semesterName' => $semester->name,
+                        'subjects' => $semester->subjects ?? collect(),
+                        'isContinuation' => false,
+                        'isSemesterFinal' => true,
+                        'serial' => sprintf('TRANS-%06d', $student->id * 100 + ($index + 1)),
+                        'outcome' => 'Passed',
+                        'verificationQrCode' => null,
+                        'verificationUrl' => null,
+                        'verificationReference' => null,
+                    ];
+                })->values();
+            } else {
+                $transcriptPages = collect([
+                    [
+                        'result' => null,
+                        'semesterName' => '1st Semester',
+                        'subjects' => collect(),
+                        'isContinuation' => false,
+                        'isSemesterFinal' => true,
+                        'serial' => sprintf('TRANS-%06d', $student->id),
+                        'outcome' => null,
+                        'verificationQrCode' => null,
+                        'verificationUrl' => null,
+                        'verificationReference' => null,
+                    ],
+                ]);
             }
-
-            return $subjectChunks->values()->map(fn (Collection $subjects, int $chunkIndex): array => [
-                'result' => $result,
-                'subjects' => $subjects->values(),
-                'isContinuation' => $chunkIndex > 0,
-                'isSemesterFinal' => $chunkIndex === $subjectChunks->count() - 1,
-                'serial' => sprintf('TRANS-%06d', $result->id),
-                'outcome' => $result->overall_grade === null
-                    ? null
-                    : ($result->overall_grade === 'F' ? 'Failed' : 'Passed'),
-                'verificationQrCode' => $verificationQrCode,
-                'verificationUrl' => $verificationUrl,
-                'verificationReference' => $result->verification_token,
-            ]);
-        })->values();
-
-        if ($transcriptPages->isEmpty()) {
-            $transcriptPages->push([
-                'result' => null,
-                'subjects' => collect(),
-                'isContinuation' => false,
-                'isSemesterFinal' => true,
-                'serial' => null,
-                'outcome' => null,
-                'verificationQrCode' => null,
-                'verificationUrl' => null,
-                'verificationReference' => null,
-            ]);
         }
 
         return [

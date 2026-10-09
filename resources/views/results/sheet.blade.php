@@ -385,11 +385,11 @@
                                 @endphp
                                 @forelse ($singleSubjects as $subject)
                                     @php
-                                        $sCode = is_array($subject) ? $subject['code'] : $subject->code;
-                                        $sTitle = is_array($subject) ? $subject['title'] : $subject->title;
-                                        $sCr = is_array($subject) ? $subject['cr'] : ($subject->credit ?? 3);
-                                        $sGrade = is_array($subject) ? $subject['grade'] : ($subject->grade ?? 'A');
-                                        $sCgpa = is_array($subject) ? $subject['cgpa'] : ($subject->grade_point ?? '3.75');
+                                        $sCode = is_array($subject) ? ($subject['code'] ?? '') : $subject->code;
+                                        $sTitle = is_array($subject) ? ($subject['title'] ?? '') : $subject->title;
+                                        $sCr = is_array($subject) ? ($subject['credit'] ?? $subject['cr'] ?? 3) : ($subject->credit ?? 3);
+                                        $sGrade = is_array($subject) ? ($subject['grade'] ?? 'A') : ($subject->grade ?? 'A');
+                                        $sCgpa = is_array($subject) ? ($subject['cgpa'] ?? $subject['grade_point'] ?? '3.75') : ($subject->grade_point ?? '3.75');
                                     @endphp
                                     <tr>
                                         <td class="border-r border-slate-300 px-3 py-1.5 font-mono text-slate-800">{{ $sCode }}</td>
@@ -436,11 +436,11 @@
                                 <tbody class="divide-y divide-slate-200 text-slate-900 font-medium">
                                     @forelse ($semBlock['subjects'] as $subj)
                                         @php
-                                            $sCode = is_array($subj) ? $subj['code'] : $subj->code;
-                                            $sTitle = is_array($subj) ? $subj['title'] : $subj->title;
-                                            $sCr = is_array($subj) ? $subj['cr'] : ($subj->credit ?? 3);
-                                            $sGrade = is_array($subj) ? $subj['grade'] : ($subj->grade ?? 'A');
-                                            $sCgpa = is_array($subj) ? $subj['cgpa'] : ($subj->grade_point ?? '3.75');
+                                            $sCode = is_array($subj) ? ($subj['code'] ?? '') : $subj->code;
+                                            $sTitle = is_array($subj) ? ($subj['title'] ?? '') : $subj->title;
+                                            $sCr = is_array($subj) ? ($subj['credit'] ?? $subj['cr'] ?? 3) : ($subj->credit ?? 3);
+                                            $sGrade = is_array($subj) ? ($subj['grade'] ?? 'A') : ($subj->grade ?? 'A');
+                                            $sCgpa = is_array($subj) ? ($subj['cgpa'] ?? $subj['grade_point'] ?? '3.75') : ($subj->grade_point ?? '3.75');
                                         @endphp
                                         <tr class="hover:bg-slate-50">
                                             <td class="border-r border-slate-300 px-1.5 py-0.5 font-mono text-slate-800 text-[9px]">{{ $sCode }}</td>

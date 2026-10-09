@@ -18,13 +18,14 @@
         :qr-code="$registrationCardQrCode"
         :qr-url="$registrationCardQrUrl"
     />
-@elseif ($document === 'certificate' || $document === 'certificate-one')
+@elseif ($document === 'certificate' || $document === 'certificate-one' || $document === 'certificate-two')
     <x-certificate
         :student="$student"
         :latest-result="$latestResult"
         :cumulative-gpa="$cumulativeGpa"
         :certificate-serial="$certificateSerial"
-        :qr-code="$registrationCardQrCode ?? null"
+        :qr-code="$qrCode ?? $registrationCardQrCode ?? null"
+        :template="$template ?? ($document === 'certificate-one' ? '1' : '2')"
     />
 @elseif ($document === 'testimonial')
     <x-testimonial

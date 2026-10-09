@@ -18,7 +18,7 @@
     min-height: 100vh;
     padding: 1.5rem;
     overflow-x: auto;
-    background: #292a26;
+    background: #071c2c;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,7 +30,7 @@
     margin-inline: auto;
     overflow: hidden;
     background: #ffffe9;
-    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.5);
 }
 
 .certificate-document {
@@ -67,107 +67,44 @@
     white-space: nowrap;
 }
 
-.certificate-data--serial,
-.cert-field--serial {
-    top: 39.1%;
-    left: 29.5%;
-    width: 19%;
-    color: #e11d48;
-}
+/* Template 1 (Classic certificate-template.png) Positions */
+.certificate-document--tpl1 .certificate-data--serial { top: 39.1%; left: 29.5%; width: 19%; color: #e11d48; }
+.certificate-document--tpl1 .certificate-data--registration { top: 37.5%; left: 68%; width: 23%; }
+.certificate-document--tpl1 .certificate-data--session { top: 42.8%; left: 64.5%; width: 27%; }
+.certificate-document--tpl1 .certificate-data--student { top: 48.2%; left: 35%; width: 56%; }
+.certificate-document--tpl1 .certificate-data--father { top: 52.7%; left: 34%; width: 50%; }
+.certificate-document--tpl1 .certificate-data--mother { top: 57.2%; left: 27%; width: 57%; }
+.certificate-document--tpl1 .certificate-data--course { top: 61.7%; left: 25%; width: 66%; }
+.certificate-document--tpl1 .certificate-data--roll { top: 66.2%; left: 32%; width: 14%; }
+.certificate-document--tpl1 .certificate-data--semester { top: 66.2%; left: 53.5%; width: 37.5%; }
+.certificate-document--tpl1 .certificate-data--month { top: 70.7%; left: 50%; width: 24%; }
+.certificate-document--tpl1 .certificate-data--gpa { top: 70.7%; left: 82%; width: 9%; }
+.certificate-document--tpl1 .certificate-data--date { top: 88.4%; left: 8%; width: 17%; }
+.certificate-document--tpl1 .cert-qr-code { top: 41.8%; left: 8.5%; width: 10.6%; }
 
-.certificate-data--registration,
-.cert-field--registration,
-.cert-field--reg-no {
-    top: 37.5%;
-    left: 68%;
-    width: 23%;
-}
-
-.certificate-data--session,
-.cert-field--session {
-    top: 42.8%;
-    left: 64.5%;
-    width: 27%;
-}
-
-.certificate-data--student,
-.cert-field--student,
-.cert-field--name {
-    top: 48.2%;
-    left: 35%;
-    width: 56%;
-    font-size: clamp(0.75rem, 1.5vw, 1.45rem);
-}
-
-.certificate-data--father,
-.cert-field--father {
-    top: 52.7%;
-    left: 34%;
-    width: 50%;
-}
-
-.certificate-data--mother,
-.cert-field--mother {
-    top: 57.2%;
-    left: 27%;
-    width: 57%;
-}
-
-.certificate-data--course,
-.cert-field--course {
-    top: 61.7%;
-    left: 25%;
-    width: 66%;
-}
-
-.certificate-data--roll,
-.cert-field--roll {
-    top: 66.2%;
-    left: 32%;
-    width: 14%;
-}
-
-.certificate-data--semester,
-.cert-field--semester {
-    top: 66.2%;
-    left: 53.5%;
-    width: 37.5%;
-}
-
-.certificate-data--month,
-.cert-field--month,
-.cert-field--exam-held {
-    top: 70.7%;
-    left: 50%;
-    width: 24%;
-}
-
-.certificate-data--gpa,
-.cert-field--gpa,
-.cert-field--cgpa {
-    top: 70.7%;
-    left: 82%;
-    width: 9%;
-}
-
-.certificate-data--date,
-.cert-field--date,
-.cert-field--publication-date {
-    top: 88.4%;
-    left: 8%;
-    width: 17%;
-    font-size: clamp(0.55rem, 1.1vw, 1.05rem);
-}
+/* Template 2 (Gold Border Certificate-2.png) Positions */
+.certificate-document--tpl2 .certificate-data--serial { top: 41.5%; left: 28%; width: 22%; color: #0B1953; }
+.certificate-document--tpl2 .certificate-data--registration { top: 37.2%; left: 68%; width: 23%; }
+.certificate-document--tpl2 .certificate-data--session { top: 42.5%; left: 68%; width: 23%; }
+.certificate-document--tpl2 .certificate-data--student { top: 48.2%; left: 36%; width: 55%; font-size: clamp(0.75rem, 1.5vw, 1.45rem); }
+.certificate-document--tpl2 .certificate-data--father { top: 52.8%; left: 34%; width: 48%; }
+.certificate-document--tpl2 .certificate-data--mother { top: 57.2%; left: 27%; width: 56%; }
+.certificate-document--tpl2 .certificate-data--course { top: 61.8%; left: 25%; width: 66%; }
+.certificate-document--tpl2 .certificate-data--roll { top: 66.2%; left: 32%; width: 14%; }
+.certificate-document--tpl2 .certificate-data--semester { top: 66.2%; left: 54%; width: 37%; }
+.certificate-document--tpl2 .certificate-data--month { top: 70.8%; left: 50%; width: 23%; }
+.certificate-document--tpl2 .certificate-data--gpa { top: 70.8%; left: 82%; width: 9%; }
+.certificate-document--tpl2 .certificate-data--date { top: 87.2%; left: 22%; width: 20%; font-size: clamp(0.55rem, 1.1vw, 1.05rem); }
+.certificate-document--tpl2 .cert-qr-code { top: 47.8%; left: 8.6%; width: 9.2%; }
 
 .cert-qr-code {
     position: absolute;
-    top: 41.8%;
-    left: 8.5%;
-    width: 10.6%;
-    aspect-ratio: 1;
     z-index: 10;
     background: #fff;
-    padding: 2px;
+    padding: 1px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    aspect-ratio: 1;
 }
 
 .cert-qr-code img {

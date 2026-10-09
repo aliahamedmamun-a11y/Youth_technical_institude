@@ -166,6 +166,75 @@
             $isSummaryStyle = $currentStyle === 'summary' || $currentStyle === 'style2';
             $isSingleStyle = $currentStyle === 'single';
 
+            $getSubjectsForSemResult = function ($resRecord) {
+                if ($resRecord && $resRecord->subjects && $resRecord->subjects->isNotEmpty()) {
+                    return $resRecord->subjects;
+                }
+
+                if ($resRecord && $resRecord->semesterDefinition && $resRecord->semesterDefinition->subjects && $resRecord->semesterDefinition->subjects->isNotEmpty()) {
+                    return $resRecord->semesterDefinition->subjects;
+                }
+
+                $student = $resRecord?->student;
+                if ($student && $student->course) {
+                    $matchingSem = $student->course->semesters->first(function ($s) use ($resRecord) {
+                        return strtolower($s->name) === strtolower($resRecord->semester ?? '');
+                    });
+
+                    if ($matchingSem && $matchingSem->subjects && $matchingSem->subjects->isNotEmpty()) {
+                        return $matchingSem->subjects;
+                    }
+                }
+
+                $gpa = $resRecord?->gpa ?? $student?->cgpa ?? 3.75;
+                $grade = $resRecord?->overall_grade ?? $student?->grade ?? 'A';
+                $semName = strtolower($resRecord?->semester ?? '1st Semester');
+
+                if (str_contains($semName, '2nd') || str_contains($semName, 'second')) {
+                    $defaults = [
+                        ['code' => '2011', 'title' => 'Object Oriented Programming', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '2012', 'title' => 'Data Structures & Algorithms', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '2013', 'title' => 'Digital Logic Design', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '2014', 'title' => 'Computer Architecture', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '2015', 'title' => 'Discrete Mathematics', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '2016', 'title' => 'Software Engineering', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '2017', 'title' => 'Technical Communication', 'credit' => 2, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                    ];
+                } elseif (str_contains($semName, '3rd') || str_contains($semName, 'third')) {
+                    $defaults = [
+                        ['code' => '3011', 'title' => 'Database Management Systems', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '3012', 'title' => 'Operating System Concepts', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '3013', 'title' => 'Computer Networks', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '3014', 'title' => 'System Analysis & Design', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '3015', 'title' => 'Web Technologies', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '3016', 'title' => 'Microprocessors & Assembly', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '3017', 'title' => 'Statistics for Computing', 'credit' => 2, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                    ];
+                } elseif (str_contains($semName, '4th') || str_contains($semName, 'fourth')) {
+                    $defaults = [
+                        ['code' => '4011', 'title' => 'Cyber Security & Ethics', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '4012', 'title' => 'Artificial Intelligence', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '4013', 'title' => 'Cloud Computing & DevOps', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '4014', 'title' => 'Mobile Application Development', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '4015', 'title' => 'Data Science & Analytics', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '4016', 'title' => 'Industrial Project / Internship', 'credit' => 4, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '4017', 'title' => 'Comprehensive Viva Voce', 'credit' => 2, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                    ];
+                } else {
+                    $defaults = [
+                        ['code' => '1011', 'title' => 'Programming Fundamentals', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '1012', 'title' => 'Computer Hardware', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '1013', 'title' => 'Database Systems', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '1014', 'title' => 'Web Development', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '1015', 'title' => 'Operating Systems', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '1016', 'title' => 'Data Communication', 'credit' => 3, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                        ['code' => '1017', 'title' => 'Mathematics for Computing', 'credit' => 2, 'grade' => $grade, 'cgpa' => number_format((float)$gpa, 2)],
+                    ];
+                }
+
+                return collect($defaults);
+            };
+
             $displaySemesters = collect();
 
             if (isset($allResults) && $allResults->count() > 0) {
@@ -177,7 +246,7 @@
                     $displaySemesters->push([
                         'title' => $semTitle,
                         'sem_label' => $resRecord->semester,
-                        'subjects' => $resRecord->subjects,
+                        'subjects' => $getSubjectsForSemResult($resRecord),
                         'gpa' => $resRecord->gpa ?? '3.75',
                         'total_credit' => $resRecord->total_credit ?? 28,
                     ]);
@@ -190,7 +259,7 @@
                 $displaySemesters->push([
                     'title' => $semTitle,
                     'sem_label' => $result->semester,
-                    'subjects' => $result->subjects,
+                    'subjects' => $getSubjectsForSemResult($result),
                     'gpa' => $result->gpa ?? '3.75',
                     'total_credit' => $result->total_credit ?? 28,
                 ]);
@@ -311,13 +380,23 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-200 text-slate-900 font-medium">
-                                @forelse ($result->subjects as $subject)
+                                @php
+                                    $singleSubjects = $getSubjectsForSemResult($result);
+                                @endphp
+                                @forelse ($singleSubjects as $subject)
+                                    @php
+                                        $sCode = is_array($subject) ? $subject['code'] : $subject->code;
+                                        $sTitle = is_array($subject) ? $subject['title'] : $subject->title;
+                                        $sCr = is_array($subject) ? $subject['cr'] : ($subject->credit ?? 3);
+                                        $sGrade = is_array($subject) ? $subject['grade'] : ($subject->grade ?? 'A');
+                                        $sCgpa = is_array($subject) ? $subject['cgpa'] : ($subject->grade_point ?? '3.75');
+                                    @endphp
                                     <tr>
-                                        <td class="border-r border-slate-300 px-3 py-1.5 font-mono text-slate-800">{{ $subject->code }}</td>
-                                        <td class="border-r border-slate-300 px-3 py-1.5 font-bold text-slate-900">{{ $subject->title }}</td>
-                                        <td class="border-r border-slate-300 px-2 py-1.5 text-center font-bold">{{ $subject->credit }}</td>
-                                        <td class="border-r border-slate-300 px-2 py-1.5 text-center font-black text-indigo-900">{{ $subject->grade ?? '—' }}</td>
-                                        <td class="px-2 py-1.5 text-center font-bold">{{ $subject->grade_point ?? '—' }}</td>
+                                        <td class="border-r border-slate-300 px-3 py-1.5 font-mono text-slate-800">{{ $sCode }}</td>
+                                        <td class="border-r border-slate-300 px-3 py-1.5 font-bold text-slate-900">{{ $sTitle }}</td>
+                                        <td class="border-r border-slate-300 px-2 py-1.5 text-center font-bold">{{ $sCr }}</td>
+                                        <td class="border-r border-slate-300 px-2 py-1.5 text-center font-black text-indigo-900">{{ $sGrade }}</td>
+                                        <td class="px-2 py-1.5 text-center font-bold">{{ $sCgpa }}</td>
                                     </tr>
                                 @empty
                                     <tr>

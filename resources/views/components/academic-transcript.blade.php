@@ -29,7 +29,7 @@
 
                 {{-- Dynamic Semester Name Header Overlay --}}
                 <div class="ts-field ts-field--semester">
-                    {{ $result?->semester ?? 'First Semester' }}
+                    {{ $page['semesterName'] ?? $result?->semester ?? 'First Semester' }}
                 </div>
 
                 {{-- Student Information Left-Aligned Dynamic Rows --}}
@@ -89,11 +89,11 @@
                     <table class="ts-table" aria-label="Subjects and Marks">
                         <thead>
                             <tr>
-                                <th style="width: 15%;">Subjects Code</th>
+                                <th style="width: 15%;">Subjects<br>Code</th>
                                 <th style="width: 50%;">Subjects Name</th>
-                                <th style="width: 12%;">Credit Hours</th>
-                                <th style="width: 11%;">Letter Grade</th>
-                                <th style="width: 12%;">Grade Points</th>
+                                <th style="width: 12%;">Credit<br>Hours</th>
+                                <th style="width: 11%;">Letter<br>Grade</th>
+                                <th style="width: 12%;">Grade<br>Points</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -110,7 +110,7 @@
 
                             {{-- Semester Summary Statistics Rows --}}
                             <tr class="ts-summary-row">
-                                <td colspan="3" style="border-right: 0; text-align: right; font-weight: 800;">{{ $result?->semester ?? '1st Semester' }} GPA</td>
+                                <td colspan="3" style="border-right: 0; text-align: right; font-weight: 800;">{{ $page['semesterName'] ?? $result?->semester ?? '1st Semester' }} GPA</td>
                                 <td colspan="2" style="border-left: 0; font-weight: 800; color: #111;">{{ $result?->gpa !== null ? number_format((float) $result->gpa, 2) : '3.75' }}</td>
                             </tr>
                             <tr class="ts-summary-row">

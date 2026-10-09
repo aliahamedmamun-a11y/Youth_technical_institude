@@ -32,7 +32,7 @@
 
             <span class="testimonial-data testimonial-data--student">{{ $student->name }}</span>
             <span class="testimonial-data testimonial-data--father">{{ $student->father_name ?? '—' }}</span>
-            <span class="testimonial-data testimonial-data--institute">{{ $student->branch?->name ?? $student->institute_name ?? 'Bangladesh National Youth Technical Institute' }}</span>
+            <span class="testimonial-data testimonial-data--institute">{{ $student->branch?->name ?? $student->institute_name ?? 'South Asia Engineering & Technical Institute' }}</span>
             <span class="testimonial-data testimonial-data--grade">{{ $testimonialGrade }}</span>
             <span class="testimonial-data testimonial-data--gpa">{{ $testimonialGpa !== null ? number_format((float) $testimonialGpa, 2) : '—' }}</span>
             <span class="testimonial-data testimonial-data--roll">{{ $student->roll_number ?? '—' }}</span>

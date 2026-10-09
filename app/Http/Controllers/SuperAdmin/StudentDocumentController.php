@@ -27,8 +27,9 @@ class StudentDocumentController extends Controller
         'admit-card' => 'Admit Card',
         'registration-card' => 'Registration Card',
         'student-id' => 'Student ID Card',
-        'certificate' => 'Certificate',
-        'certificate-one' => 'Certificate One',
+        'certificate' => 'Certificate 2 (Gold Border)',
+        'certificate-one' => 'Certificate 1 (Classic)',
+        'certificate-two' => 'Certificate 2 (Gold Border)',
         'testimonial' => 'Testimonial',
         'transcript' => 'Transcript',
         'transcript-one' => 'Transcript One',
@@ -91,16 +92,18 @@ class StudentDocumentController extends Controller
             $documentData = [...$documentData, ...$this->admitCardData($student, $qrCode)];
         }
 
-        if ($document === 'registration-card' || $document === 'student-id' || $document === 'certificate' || $document === 'certificate-one') {
+        if (in_array($document, ['registration-card', 'student-id', 'certificate', 'certificate-one', 'certificate-two'])) {
             $documentData = [...$documentData, ...$this->registrationCardData($student, $qrCode)];
         }
 
-        if ($document === 'certificate' || $document === 'certificate-one' || $document === 'testimonial') {
+        if (in_array($document, ['certificate', 'certificate-one', 'certificate-two', 'testimonial'])) {
             if ($latestResult) {
                 $documentData['qrCode'] = $resultQrCode->dataUri($latestResult);
             } else {
                 $documentData['qrCode'] = $qrCode->dataUri(route('results.index', ['roll_number' => $student->roll_number]));
             }
+
+            $documentData['template'] = $document === 'certificate-one' ? '1' : '2';
         }
 
         if ($document === 'transcript' || $document === 'transcript-one' || $document === 'transcript-two') {

@@ -180,10 +180,15 @@ class BranchStudentController extends Controller
             'registration-card',
             'student-id',
             'certificate',
+            'certificate-one',
+            'certificate-two',
             'testimonial',
             'transcript',
+            'transcript-one',
+            'transcript-two',
             'forwarding-letter',
             'results',
+            'results-2',
         ];
 
         abort_unless(
@@ -196,7 +201,7 @@ class BranchStudentController extends Controller
             $branch = \App\Models\BranchApplication::query()->where('email', $user->email)->first();
 
             if ($branch) {
-                if ($document === 'certificate' && ! ($branch->allow_certificate ?? true)) {
+                if (in_array($document, ['certificate', 'certificate-one', 'certificate-two'], true) && ! ($branch->allow_certificate ?? true)) {
                     return back()->with('error', 'Certificate access is disabled for your branch by Super Admin.');
                 }
                 if ($document === 'testimonial' && ! ($branch->allow_testimonial ?? true)) {

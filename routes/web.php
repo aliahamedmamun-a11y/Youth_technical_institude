@@ -329,7 +329,7 @@ Route::middleware('auth')->group(function (): void {
 
     Route::get('/super-admin/students/{student}/{document}', [StudentDocumentController::class, 'show'])
         ->middleware('role:'.UserRole::SuperAdmin->value)
-        ->whereIn('document', ['admit-card', 'registration-card', 'student-id', 'certificate', 'testimonial', 'transcript', 'forwarding-letter', 'results'])
+        ->whereIn('document', ['admit-card', 'registration-card', 'student-id', 'certificate', 'certificate-one', 'certificate-two', 'testimonial', 'transcript', 'transcript-one', 'transcript-two', 'forwarding-letter', 'results', 'results-2'])
         ->name('super-admin.students.documents.show');
 
     Route::get('/dashboard/branch', [DashboardController::class, 'branch'])

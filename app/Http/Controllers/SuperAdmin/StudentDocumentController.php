@@ -164,7 +164,7 @@ class StudentDocumentController extends Controller
         $admitCardQrUrl = route('public.admit-card', $result->verification_token);
 
         return [
-            'admitCardSerial' => $student->roll_number ?: sprintf('%06d', $student->id),
+            'admitCardSerial' => $student->certificate_serial ?: sprintf('SL-%06d', $student->id),
             'admitCardInstituteCode' => self::DOCUMENT_INSTITUTE_CODE,
             'admitCardInstituteName' => self::DOCUMENT_INSTITUTE_NAME,
             'admitCardExamineeType' => self::ADMIT_CARD_EXAMINEE_TYPE,
@@ -189,7 +189,7 @@ class StudentDocumentController extends Controller
         $registrationCardQrUrl = route('public.registration-card', $result->verification_token);
 
         return [
-            'registrationCardSerial' => $student->registration_number ?: sprintf('%08d', $student->id),
+            'registrationCardSerial' => $student->certificate_serial ?: sprintf('036%03d', $student->id),
             'registrationCardInstituteCode' => self::DOCUMENT_INSTITUTE_CODE,
             'registrationCardInstituteName' => self::DOCUMENT_INSTITUTE_NAME,
             'registrationCardQrCode' => $qrCode->dataUri($registrationCardQrUrl),
@@ -247,7 +247,7 @@ class StudentDocumentController extends Controller
                     'subjects' => $subjects->values(),
                     'isContinuation' => $chunkIndex > 0,
                     'isSemesterFinal' => $chunkIndex === $subjectChunks->count() - 1,
-                    'serial' => sprintf('TRANS-%06d', $result->id),
+                    'serial' => $student->certificate_serial ?: sprintf('TRANS-%06d', $result->id),
                     'outcome' => $result->overall_grade === null
                         ? null
                         : ($result->overall_grade === 'F' ? 'Failed' : 'Passed'),

@@ -120,4 +120,39 @@ class PublicResultController extends Controller
             'viewStyle' => $viewStyle,
         ]);
     }
+
+    public function verifyAdmitCard(string $verificationToken, ResultGradingService $grading, ResultQrCodeService $resultQrCode, QrCodeService $qrCode, \App\Http\Controllers\SuperAdmin\StudentDocumentController $documentController): View
+    {
+        $result = StudentResult::query()->where('verification_token', $verificationToken)->firstOrFail();
+
+        return $documentController->show($result->student, 'admit-card', $grading, $resultQrCode, $qrCode);
+    }
+
+    public function verifyRegistrationCard(string $verificationToken, ResultGradingService $grading, ResultQrCodeService $resultQrCode, QrCodeService $qrCode, \App\Http\Controllers\SuperAdmin\StudentDocumentController $documentController): View
+    {
+        $result = StudentResult::query()->where('verification_token', $verificationToken)->firstOrFail();
+
+        return $documentController->show($result->student, 'registration-card', $grading, $resultQrCode, $qrCode);
+    }
+
+    public function verifyTestimonial(string $verificationToken, ResultGradingService $grading, ResultQrCodeService $resultQrCode, QrCodeService $qrCode, \App\Http\Controllers\SuperAdmin\StudentDocumentController $documentController): View
+    {
+        $result = StudentResult::query()->where('verification_token', $verificationToken)->firstOrFail();
+
+        return $documentController->show($result->student, 'testimonial', $grading, $resultQrCode, $qrCode);
+    }
+
+    public function verifyCertificate(string $verificationToken, ResultGradingService $grading, ResultQrCodeService $resultQrCode, QrCodeService $qrCode, \App\Http\Controllers\SuperAdmin\StudentDocumentController $documentController): View
+    {
+        $result = StudentResult::query()->where('verification_token', $verificationToken)->firstOrFail();
+
+        return $documentController->show($result->student, 'certificate', $grading, $resultQrCode, $qrCode);
+    }
+
+    public function verifyTranscript(string $verificationToken, ResultGradingService $grading, ResultQrCodeService $resultQrCode, QrCodeService $qrCode, \App\Http\Controllers\SuperAdmin\StudentDocumentController $documentController): View
+    {
+        $result = StudentResult::query()->where('verification_token', $verificationToken)->firstOrFail();
+
+        return $documentController->show($result->student, 'transcript', $grading, $resultQrCode, $qrCode);
+    }
 }

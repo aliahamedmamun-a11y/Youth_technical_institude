@@ -7,7 +7,21 @@
     'gradingScale' => [],
 ])
 
-@php($transcriptTemplateUrl = asset('images/academic-transcript-template.png').'?v='.filemtime(public_path('images/academic-transcript-template.png')))
+@php
+    $transcriptTemplateUrl = asset('images/academic-transcript-template.png').'?v='.filemtime(public_path('images/academic-transcript-template.png'));
+
+    $branchApp = $student->branch_application
+        ?? \App\Models\BranchApplication::query()
+            ->where('id', (int) $student->branch_id)
+            ->orWhere('username', $student->branch_id)
+            ->orWhere('institute_name', $student->branch_id)
+            ->orWhere('institute_name', $student->institute_name)
+            ->first();
+
+    $headSignatureUrl = $branchApp?->director_signature_path
+        ? asset('storage/' . $branchApp->director_signature_path)
+        : null;
+@endphp
 
 @vite(['resources/css/app.css', 'resources/css/academic-transcript.css', 'resources/js/app.js'])
 
@@ -131,6 +145,12 @@
                 <div class="ts-footer-note">
                     N.B. To verify this marksheet, scan the QR code and visit the link.
                 </div>
+
+                @if ($headSignatureUrl)
+                    <div class="ts-head-signature">
+                        <img src="{{ $headSignatureUrl }}" alt="Branch Signature">
+                    </div>
+                @endif
             </article>
         @endforeach
     </div>

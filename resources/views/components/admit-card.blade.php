@@ -21,15 +21,17 @@
             <p class="admit-card__serial"><span class="sr-only">Serial No.</span>{{ $serial }}</p>
 
             <dl class="admit-card__student-details" aria-label="Student information">
-                <div><dt class="sr-only">Institute Code</dt><dd>{{ $instituteCode }}</dd></div>
-                <div><dt class="sr-only">Name of the Institute</dt><dd>{{ $instituteName }}</dd></div>
+                <div><dt class="sr-only">Name of the Institute</dt><dd>{{ $student->branch?->name ?? $student->institute_name ?? $instituteName }}</dd></div>
                 <div><dt class="sr-only">Name of the Student</dt><dd>{{ $student->name }}</dd></div>
                 <div><dt class="sr-only">Father's Name</dt><dd>{{ $student->father_name ?? '—' }}</dd></div>
                 <div><dt class="sr-only">Mother's Name</dt><dd>{{ $student->mother_name ?? '—' }}</dd></div>
                 <div><dt class="sr-only">Date of Birth</dt><dd>{{ $student->date_of_birth?->format('d M Y') ?? '—' }}</dd></div>
                 <div><dt class="sr-only">Session</dt><dd>{{ $student->session ?? '—' }}</dd></div>
-                <div><dt class="sr-only">Subject Name</dt><dd>{{ $student->course?->name ?? '—' }}</dd></div>
             </dl>
+
+            <div class="admit-card__subject-name">
+                <span class="sr-only">Subject Name</span>{{ $student->course?->name ?? '—' }}
+            </div>
 
             <figure class="admit-card__photo">
                 @if ($student->image_path)
@@ -45,9 +47,9 @@
             </figure>
 
             <dl class="admit-card__exam-details" aria-label="Examination information">
-                <div class="admit-card__exam-number"><dt class="sr-only">Roll.No</dt><dd>{{ $student->roll_number ?? '—' }}</dd></div>
-                <div class="admit-card__exam-number"><dt class="sr-only">Reg.No</dt><dd>{{ $student->registration_number ?? '—' }}</dd></div>
-                <div><dt class="sr-only">Sex</dt><dd>{{ $student->gender ?? '—' }}</dd></div>
+                <div class="admit-card__exam-number admit-card__exam-roll"><dt class="sr-only">Roll.No</dt><dd>{{ $student->roll_number ?? '—' }}</dd></div>
+                <div class="admit-card__exam-number admit-card__exam-reg"><dt class="sr-only">Reg.No</dt><dd>{{ $student->registration_number ?? '—' }}</dd></div>
+                <div class="admit-card__exam-gender"><dt class="sr-only">Sex</dt><dd>{{ $student->gender ?? '—' }}</dd></div>
                 <div class="admit-card__examinee-type"><dt class="sr-only">Type of the Examinee</dt><dd>{{ $examineeType }}</dd></div>
             </dl>
 

@@ -7,6 +7,18 @@
 @php
     $testimonialGrade = $latestResult?->overall_grade ?? $student->grade ?? 'A+';
     $testimonialGpa = $cumulativeGpa ?? $latestResult?->gpa ?? $student->cgpa ?? '3.75';
+
+    $branchApp = $student->branch_application
+        ?? \App\Models\BranchApplication::query()
+            ->where('id', (int) $student->branch_id)
+            ->orWhere('username', $student->branch_id)
+            ->orWhere('institute_name', $student->branch_id)
+            ->orWhere('institute_name', $student->institute_name)
+            ->first();
+
+    $headSignatureUrl = $branchApp?->director_signature_path
+        ? asset('storage/' . $branchApp->director_signature_path)
+        : null;
 @endphp
 
 @vite(['resources/css/app.css', 'resources/css/testimonial.css', 'resources/js/app.js'])
@@ -39,6 +51,12 @@
             <span class="testimonial-data testimonial-data--registration">{{ $student->registration_number ?? '—' }}</span>
             <span class="testimonial-data testimonial-data--session">{{ $latestResult?->session ?? $student->session ?? '2024-2025' }}</span>
             <span class="testimonial-data testimonial-data--date">{{ $latestResult?->published_at?->format('d/m/Y') ?? $student->publication_date ?? now()->format('d/m/Y') }}</span>
+
+            @if ($headSignatureUrl)
+                <div class="testimonial-head-signature">
+                    <img src="{{ $headSignatureUrl }}" alt="Branch Signature">
+                </div>
+            @endif
         </article>
     </div>
 

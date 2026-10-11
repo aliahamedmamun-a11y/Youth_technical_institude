@@ -8,6 +8,20 @@
     'printedAt' => null,
 ])
 
+@php
+    $branchApp = $student->branch_application
+        ?? \App\Models\BranchApplication::query()
+            ->where('id', (int) $student->branch_id)
+            ->orWhere('username', $student->branch_id)
+            ->orWhere('institute_name', $student->branch_id)
+            ->orWhere('institute_name', $student->institute_name)
+            ->first();
+
+    $headSignatureUrl = $branchApp?->director_signature_path
+        ? asset('storage/' . $branchApp->director_signature_path)
+        : null;
+@endphp
+
 @vite(['resources/css/app.css', 'resources/css/registration-card.css', 'resources/js/app.js'])
 
 <main class="registration-card-screen">
@@ -89,6 +103,12 @@
                     <span class="rc-val">{{ $student->session ?? '2020 - 2023' }}</span>
                 </div>
             </div>
+
+            @if ($headSignatureUrl)
+                <div class="rc-head-signature">
+                    <img src="{{ $headSignatureUrl }}" alt="Signature of Head of Institute">
+                </div>
+            @endif
         </article>
     </div>
 

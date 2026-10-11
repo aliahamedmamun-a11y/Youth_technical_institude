@@ -110,7 +110,7 @@ class StudentDocumentController extends Controller
         if ($document === 'transcript' || $document === 'transcript-one' || $document === 'transcript-two') {
             $documentData = [
                 ...$documentData,
-                ...$this->transcriptData($student, $resultQrCode),
+                ...$this->transcriptData($student, $qrCode),
                 'transcriptGradingScale' => $grading->gradingScale(),
                 'transcriptLetterGrade' => $grading->letterGradeForGpa($cumulativeGpa),
             ];
@@ -213,7 +213,7 @@ class StudentDocumentController extends Controller
      *     transcriptInstituteName: string
      * }
      */
-    private function transcriptData(Student $student, ResultQrCodeService $qrCode): array
+    private function transcriptData(Student $student, QrCodeService $qrCode): array
     {
         $allResults = $student->results()
             ->with(['subjects', 'semesterDefinition'])

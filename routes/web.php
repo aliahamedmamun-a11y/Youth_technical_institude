@@ -108,6 +108,11 @@ Route::get('/branch-application', [BranchApplicationController::class, 'create']
 Route::post('/branch-application', [BranchApplicationController::class, 'store'])->name('branch-applications.store');
 Route::get('/results', [PublicResultController::class, 'index'])->name('results.index');
 Route::get('/results/{verificationToken}', [PublicResultController::class, 'show'])->name('results.show');
+Route::get('/verify/admit-card/{verificationToken}', [PublicResultController::class, 'verifyAdmitCard'])->name('public.admit-card');
+Route::get('/verify/registration-card/{verificationToken}', [PublicResultController::class, 'verifyRegistrationCard'])->name('public.registration-card');
+Route::get('/verify/testimonial/{verificationToken}', [PublicResultController::class, 'verifyTestimonial'])->name('public.testimonial');
+Route::get('/verify/certificate/{verificationToken}', [PublicResultController::class, 'verifyCertificate'])->name('public.certificate');
+Route::get('/verify/transcript/{verificationToken}', [PublicResultController::class, 'verifyTranscript'])->name('public.transcript');
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{news:slug}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/teachers/{teacher}', [PublicTeacherController::class, 'show'])->name('teachers.show');

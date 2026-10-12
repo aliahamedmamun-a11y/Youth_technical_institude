@@ -65,7 +65,7 @@
     width: 47%;
     gap: clamp(0.35rem, 1.0vw, 0.92rem);
     margin: 0;
-    font-size: clamp(0.52rem, 1.05vw, 1.0rem);
+    font-size: clamp(0.9rem, 1.5vw, 1.5rem);
     font-weight: 700;
     line-height: 1.15;
     color: #0B1953;
@@ -88,7 +88,7 @@
     top: 75.0%;
     left: 28.5%;
     width: 47%;
-    font-size: clamp(0.52rem, 1.05vw, 1.0rem);
+    font-size: clamp(0.9rem, 1.5vw, 1.5rem);
     font-weight: 700;
     line-height: 1.15;
     color: #0B1953;
@@ -187,11 +187,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(0.55rem, 1.05vw, 1.05rem);
+    font-size: clamp(0.9rem, 1.5vw, 1.5rem);
 }
 
 .admit-card__exam-gender {
-    top: 63.8%;
+    top: 62.0%;
     left: 82.5%;
     width: 12%;
     height: 3.5%;
@@ -202,7 +202,7 @@
 }
 
 .admit-card__examinee-type {
-    top: 69.3%;
+    top: 68.3%;
     left: 82.5%;
     width: 12%;
     height: 3.5%;

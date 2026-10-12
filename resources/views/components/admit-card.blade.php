@@ -16,7 +16,7 @@
 
     <div class="admit-card-frame">
         <article class="admit-card" aria-label="Admit card for {{ $student->name }}">
-            <img class="admit-card__template" src="{{ asset('images/admit-card-template.png') }}" alt="">
+            <img class="admit-card__template" src="{{ asset('images/admit-card-template.png') }}" alt="Admit Card Template">
 
             <p class="admit-card__serial"><span class="sr-only">Serial No.</span>{{ $serial }}</p>
 
@@ -34,24 +34,29 @@
             </div>
 
             <figure class="admit-card__photo">
-                @if ($student->image_path)
-                    <img src="{{ asset('storage/'.$student->image_path) }}" alt="Photo of {{ $student->name }}">
+                @if ($student->image_path && file_exists(public_path('storage/'.$student->image_path)))
+                    <img src="{{ asset('storage/'.$student->image_path) }}" alt="Photo of {{ $student->name }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="admit-card__photo-placeholder" style="display:none;" aria-label="Student photo not available">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                        <span>Passport Photo</span>
+                    </div>
                 @else
                     <div class="admit-card__photo-placeholder" aria-label="Student photo not available">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" />
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                         </svg>
-                        <span>No photo</span>
+                        <span>Passport Photo</span>
                     </div>
                 @endif
             </figure>
 
-            <dl class="admit-card__exam-details" aria-label="Examination information">
-                <div class="admit-card__exam-number admit-card__exam-roll"><dt class="sr-only">Roll.No</dt><dd>{{ $student->roll_number ?? '—' }}</dd></div>
-                <div class="admit-card__exam-number admit-card__exam-reg"><dt class="sr-only">Reg.No</dt><dd>{{ $student->registration_number ?? '—' }}</dd></div>
-                <div class="admit-card__exam-gender"><dt class="sr-only">Sex</dt><dd>{{ $student->gender ?? '—' }}</dd></div>
-                <div class="admit-card__examinee-type"><dt class="sr-only">Type of the Examinee</dt><dd>{{ $examineeType }}</dd></div>
-            </dl>
+            <!-- Exam Details positioned exactly into template boxes -->
+            <div class="admit-card__exam-roll"><span class="sr-only">Roll.No</span>{{ $student->roll_number ?? '—' }}</div>
+            <div class="admit-card__exam-reg"><span class="sr-only">Reg.No</span>{{ $student->registration_number ?? '—' }}</div>
+            <div class="admit-card__exam-gender"><span class="sr-only">Sex</span>{{ $student->gender ?? 'Male' }}</div>
+            <div class="admit-card__examinee-type"><span class="sr-only">Type of the Examinee</span>{{ $examineeType ?? 'Regular' }}</div>
 
             <a class="admit-card__qr" href="{{ $qrUrl }}" aria-label="Open institute website">
                 <img src="{{ $qrCode }}" alt="QR code for {{ $qrUrl }}">
@@ -63,10 +68,13 @@
     </div>
 
     <nav class="admit-card-actions print:hidden" aria-label="Admit card actions">
-        <button type="button" data-print-document class="rounded-full bg-blue-800 px-5 py-3 font-black text-white transition hover:bg-blue-700">
-            Print admit card
+        <button type="button" data-print-document class="rounded-xl bg-[#03224c] hover:bg-slate-800 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-xl transition cursor-pointer active:scale-95 flex items-center gap-2 border border-slate-700">
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m11.318-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231a1.125 1.125 0 01-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.036 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.656" />
+            </svg>
+            Print Admit Card
         </button>
-        <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-full border border-slate-300 bg-white px-5 py-3 font-black text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">
+        <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-6 py-3 text-xs font-black uppercase tracking-wider text-slate-700 transition">
             Back to student
         </a>
     </nav>

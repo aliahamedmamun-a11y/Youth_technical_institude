@@ -85,7 +85,7 @@
 }
 
 .admit-card__subject-name {
-    top: 75.8%;
+    top: 74.0%;
     left: 28.5%;
     width: 47%;
     font-size: clamp(0.9rem, 1.5vw, 1.5rem);
@@ -98,9 +98,9 @@
 }
 
 .admit-card__photo {
-    top: 32.5%;
-    left: 77.1%;
-    width: 15.1%;
+    top: 30.0%;
+    left: 77.0%;
+    width: 12.0%;
     margin: 0;
 }
 
@@ -142,7 +142,7 @@
 }
 
 .admit-card__exam-details {
-    top: 53.0%;
+    top: 60.0%;
     left: 77.0%;
     display: flex;
     flex-direction: column;
@@ -171,7 +171,7 @@
 
 .admit-card__exam-number dd {
     margin: 0;
-    font-size: clamp(0.48rem, 0.92vw, 0.88rem);
+    font-size: clamp(0.9rem, 1.5vw, 1.5rem);
     font-weight: 700;
     text-align: center;
 }

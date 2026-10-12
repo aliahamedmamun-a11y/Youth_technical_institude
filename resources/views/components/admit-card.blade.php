@@ -37,14 +37,14 @@
                 @if ($student->image_path && file_exists(public_path('storage/'.$student->image_path)))
                     <img src="{{ asset('storage/'.$student->image_path) }}" alt="Photo of {{ $student->name }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="admit-card__photo-placeholder" style="display:none;" aria-label="Student photo not available">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                         </svg>
                         <span>Passport Photo</span>
                     </div>
                 @else
                     <div class="admit-card__photo-placeholder" aria-label="Student photo not available">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                         </svg>
                         <span>Passport Photo</span>
@@ -52,7 +52,7 @@
                 @endif
             </figure>
 
-            <!-- Exam Details positioned exactly into template boxes -->
+            <!-- Right side examination values aligned directly into template boxes with bold/deep font -->
             <div class="admit-card__exam-roll"><span class="sr-only">Roll.No</span>{{ $student->roll_number ?? '—' }}</div>
             <div class="admit-card__exam-reg"><span class="sr-only">Reg.No</span>{{ $student->registration_number ?? '—' }}</div>
             <div class="admit-card__exam-gender"><span class="sr-only">Sex</span>{{ $student->gender ?? 'Male' }}</div>

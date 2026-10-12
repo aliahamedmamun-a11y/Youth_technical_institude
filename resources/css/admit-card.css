@@ -85,10 +85,10 @@
 }
 
 .admit-card__subject-name {
-    top: 72.8%;
+    top: 75.8%;
     left: 28.5%;
     width: 47%;
-    font-size: clamp(0.52rem, 1.05vw, 1.0rem);
+    font-size: clamp(0.9rem, 1.5vw, 1.5rem);
     font-weight: 700;
     line-height: 1.15;
     color: #0B1953;
@@ -99,8 +99,8 @@
 
 .admit-card__photo {
     top: 32.5%;
-    left: 80.1%;
-    width: 10.1%;
+    left: 77.1%;
+    width: 15.1%;
     margin: 0;
 }
 
@@ -149,7 +149,7 @@
     width: 15%;
     gap: clamp(0.18rem, 0.55vw, 0.52rem);
     margin: 0;
-    font-size: clamp(0.5rem, 0.98vw, 0.92rem);
+    font-size: clamp(0.9rem, 1.5vw, 1.5rem);
     font-weight: 700;
     line-height: 1.15;
     color: #0B1953;

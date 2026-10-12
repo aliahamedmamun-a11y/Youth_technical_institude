@@ -58,7 +58,7 @@
 }
 
 .admit-card__student-details {
-    top: 48.0%;
+    top: 48.1%;
     left: 28.5%;
     display: flex;
     flex-direction: column;
@@ -191,7 +191,7 @@
 }
 
 .admit-card__exam-gender {
-    top: 63.0%;
+    top: 62.9%;
     left: 82.5%;
     width: 12%;
     height: 3.5%;

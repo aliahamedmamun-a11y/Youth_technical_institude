@@ -50,7 +50,7 @@
 }
 
 .rc-field--serial {
-    top: 20.2%;
+    top: 20.5%;
     left: 18.5%;
     font-size: 14pt;
     font-weight: 700;
@@ -131,7 +131,7 @@
 
 .rc-head-signature {
     position: absolute;
-    bottom: 9.8%;
+    bottom: 11.0%;
     left: 52%;
     transform: translateX(-50%);
     width: 15%;

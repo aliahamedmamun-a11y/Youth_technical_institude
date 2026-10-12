@@ -44,7 +44,7 @@
 }
 
 .admit-card__serial {
-    top: 30.9%;
+    top: 30.5%;
     left: 17.5%;
     width: 25%;
     margin: 0;
@@ -58,7 +58,7 @@
 }
 
 .admit-card__student-details {
-    top: 47.2%;
+    top: 48.0%;
     left: 28.5%;
     display: flex;
     flex-direction: column;

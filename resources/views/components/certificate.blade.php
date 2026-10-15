@@ -75,7 +75,6 @@
             <span class="certificate-data certificate-data--institute">{{ $student->branch?->name ?? $student->institute_name ?? 'Bangladesh National Youth Technical Institute' }}</span>
             <span class="certificate-data certificate-data--course">{{ $student->course?->name ?? 'Computer Science & Engineering' }}</span>
             <span class="certificate-data certificate-data--roll">{{ $student->roll_number ?? '—' }}</span>
-            <span class="certificate-data certificate-data--semester">{{ $latestResult?->semester ?? '1st Semester' }}</span>
             <span class="certificate-data certificate-data--month">{{ $latestResult?->examination_month ?? optional($latestResult?->published_at ?? $student->created_at)->format('F Y') ?? 'July 2025' }}</span>
             <span class="certificate-data certificate-data--gpa">{{ number_format((float) $certificateGpa, 2) }}</span>
             <span class="certificate-data certificate-data--date">{{ $student->publication_date ?: optional($latestResult?->published_at ?? $student->created_at)->format('d/m/Y') ?? '31/07/2025' }}</span>

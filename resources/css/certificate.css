@@ -88,33 +88,33 @@
 .certificate-document--tpl1 .certificate-data--serial { top: 42%; left: 26.5%; width: 21%; color: #0B1953; }
 .certificate-document--tpl1 .certificate-data--registration { top: 36.7%; left: 68%; width: 23%; }
 .certificate-document--tpl1 .certificate-data--session { top: 42.0%; left: 68%; width: 23%; }
-.certificate-document--tpl1 .certificate-data--student { top: 47.7%; left: 35%; width: 56%; font-size: clamp(0.75rem, 1.5vw, 1.45rem); }
-.certificate-document--tpl1 .certificate-data--father { top: 52.2%; left: 33%; width: 50%; }
-.certificate-document--tpl1 .certificate-data--mother { top: 56.5%; left: 27%; width: 57%; }
-.certificate-document--tpl1 .certificate-data--institute { top: 61.0%; left: 25%; width: 66%; }
+.certificate-document--tpl1 .certificate-data--student { top: 47.7%; left: 30%; width: 56%; font-size: clamp(0.75rem, 1.5vw, 1.45rem); }
+.certificate-document--tpl1 .certificate-data--father { top: 52.2%; left: 30%; width: 50%; }
+.certificate-document--tpl1 .certificate-data--mother { top: 56.5%; left: 30%; width: 57%; }
+.certificate-document--tpl1 .certificate-data--institute { top: 61.0%; left: 30%; width: 66%; }
 .certificate-document--tpl1 .certificate-data--course { top: 66.2%; left: 63%; width: 28%; }
-.certificate-document--tpl1 .certificate-data--roll { top: 66.2%; left: 32%; width: 14%; }
-.certificate-document--tpl1 .certificate-data--semester { top: 66.2%; left: 63%; width: 28%; }
-.certificate-document--tpl1 .certificate-data--month { top: 70.8%; left: 50%; width: 24%; }
-.certificate-document--tpl1 .certificate-data--gpa { top: 70.8%; left: 82%; width: 9%; }
-.certificate-document--tpl1 .certificate-data--date { top: 88.0%; left: 24%; width: 17%; font-size: clamp(0.55rem, 1.1vw, 1.05rem); }
+.certificate-document--tpl1 .certificate-data--roll { top: 65.5%; left: 32%; width: 14%; }
+.certificate-document--tpl1 .certificate-data--semester { top: 65.5%; left: 63%; width: 28%; }
+.certificate-document--tpl1 .certificate-data--month { top: 63.5%; left: 50%; width: 24%; }
+.certificate-document--tpl1 .certificate-data--gpa { top: 69.5%; left: 82%; width: 9%; }
+.certificate-document--tpl1 .certificate-data--date { top: 87.5%; left: 20%; width: 17%; font-size: clamp(0.55rem, 1.1vw, 1.05rem); }
 .certificate-document--tpl1 .cert-qr-code { top: 56.0%; left: 11.0%; width: 9.2%; }
 
 /* Template 2 (Gold Border certificate-template.png) Positions */
 .certificate-document--tpl2 .certificate-data--serial { top: 41.5%; left: 28%; width: 22%; color: #0B1953; }
 .certificate-document--tpl2 .certificate-data--registration { top: 37.2%; left: 68%; width: 23%; }
 .certificate-document--tpl2 .certificate-data--session { top: 42.5%; left: 68%; width: 23%; }
-.certificate-document--tpl2 .certificate-data--student { top: 48.2%; left: 36%; width: 55%; font-size: clamp(0.75rem, 1.5vw, 1.45rem); }
-.certificate-document--tpl2 .certificate-data--father { top: 52.8%; left: 34%; width: 48%; }
-.certificate-document--tpl2 .certificate-data--mother { top: 57.2%; left: 27%; width: 56%; }
-.certificate-document--tpl2 .certificate-data--institute { top: 61.8%; left: 25%; width: 66%; }
+.certificate-document--tpl2 .certificate-data--student { top: 48.2%; left: 30%; width: 55%; font-size: clamp(0.75rem, 1.5vw, 1.45rem); }
+.certificate-document--tpl2 .certificate-data--father { top: 52.8%; left: 30%; width: 48%; }
+.certificate-document--tpl2 .certificate-data--mother { top: 57.2%; left: 20%; width: 56%; }
+.certificate-document--tpl2 .certificate-data--institute { top: 61.8%; left: 30%; width: 66%; }
 .certificate-document--tpl2 .certificate-data--course { top: 66.2%; left: 63%; width: 28%; }
-.certificate-document--tpl2 .certificate-data--roll { top: 66.2%; left: 32%; width: 14%; }
-.certificate-document--tpl2 .certificate-data--semester { top: 66.2%; left: 63%; width: 28%; }
-.certificate-document--tpl2 .certificate-data--month { top: 70.8%; left: 50%; width: 23%; }
-.certificate-document--tpl2 .certificate-data--gpa { top: 70.8%; left: 82%; width: 9%; }
-.certificate-document--tpl2 .certificate-data--date { top: 87.2%; left: 22%; width: 20%; font-size: clamp(0.55rem, 1.1vw, 1.05rem); }
-.certificate-document--tpl2 .cert-qr-code { top: 56.0%; left: 11.0%; width: 9.2%; }
+.certificate-document--tpl2 .certificate-data--roll { top: 66.5%; left: 32%; width: 14%; }
+.certificate-document--tpl2 .certificate-data--semester { top: 66.5%; left: 63%; width: 28%; }
+.certificate-document--tpl2 .certificate-data--month { top: 71.3%; left: 50%; width: 23%; }
+.certificate-document--tpl2 .certificate-data--gpa { top: 71.3%; left: 82%; width: 9%; }
+.certificate-document--tpl2 .certificate-data--date { top: 90%; left: 20%; width: 20%; font-size: clamp(0.55rem, 1.1vw, 1.05rem); }
+.certificate-document--tpl2 .cert-qr-code { top: 56.5%; left: 10.5%; width: 9.2%; }
 
 .cert-qr-code {
     position: absolute;

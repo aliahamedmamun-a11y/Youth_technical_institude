@@ -161,8 +161,8 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-2 uppercase tracking-wider">Duration</label>
                     <select name="duration" class="w-full rounded-xl border border-white/10 bg-[#071c2c]/90 py-3.5 px-4 text-sm text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all">
-                        @foreach(['3 Months', '6 Months', '1 Year', '2 Years', '4 Years'] as $dur)
-                            <option value="{{ $dur }}" @selected(old('duration', $student->duration ?: '1 Year') === $dur)>{{ $dur }}</option>
+                        @foreach(['1 Month', "2 Month's", "3 Month's", "4 Month's", "5 Month's", "6 Month's", '1 Year', "2 Year's", "3 Year's", "4 Year's"] as $dur)
+                            <option value="{{ $dur }}" @selected(old('duration', $student->duration ?: "6 Month's") === $dur)>{{ $dur }}</option>
                         @endforeach
                     </select>
                 </div>

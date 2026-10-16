@@ -35,8 +35,10 @@
                         <span class="block text-[10px] font-bold tracking-[.17em] text-slate-500 dark:text-slate-300">TECHNICAL INSTITUTE</span>
                     </span>
                     <span class="sm:hidden">
-                        <span class="block text-base font-black text-[#03224c] dark:text-white">SOUTH ASIA</span>
-                        <span class="block text-[9px] font-bold tracking-[.14em] text-slate-500">TECHNICAL INSTITUTE</span>
+                        <span class="block text-xs font-black tracking-tight text-[#03224c] dark:text-white uppercase leading-none">
+                            <span class="text-[#03224c] dark:text-white">SOUTH ASIA</span> <span class="text-rose-600">ENGINEERING &</span>
+                        </span>
+                        <span class="block text-[8px] font-bold tracking-[0.08em] text-slate-500 uppercase dark:text-slate-400 mt-0.5">TECHNICAL INSTITUTE</span>
                     </span>
                 </a>
 

@@ -13,8 +13,8 @@
                 <a href="{{ url('/') }}" class="mb-8 flex items-center gap-3">
                     <img src="{{ asset('images/Logo.png') }}" alt="BNYTI logo" class="brand-logo size-12">
                     <span>
-                        <span class="block text-sm font-black text-slate-950">BNYTI</span>
-                        <span class="block text-xs font-bold tracking-[0.18em] text-slate-500">STAFF ACCESS</span>
+                        <span class="block text-sm font-black text-slate-950 uppercase leading-none">South Asia</span>
+                        <span class="block text-[9px] font-bold tracking-[0.08em] text-slate-500 uppercase mt-0.5">Engineering & Technical Institute</span>
                     </span>
                 </a>
 

@@ -72,7 +72,7 @@
             <span class="certificate-data certificate-data--student">{{ $student->name }}</span>
             <span class="certificate-data certificate-data--father">{{ $student->father_name ?? '—' }}</span>
             <span class="certificate-data certificate-data--mother">{{ $student->mother_name ?? '—' }}</span>
-            <span class="certificate-data certificate-data--institute">{{ $student->branch?->name ?? $student->institute_name ?? 'Bangladesh National Youth Technical Institute' }}</span>
+            <span class="certificate-data certificate-data--institute">{{ $student->branch?->name ?? $student->institute_name ?? 'South Asia Engineering & Technical Institute' }}</span>
             <span class="certificate-data certificate-data--course">{{ $student->course?->name ?? 'Computer Science & Engineering' }}</span>
             <span class="certificate-data certificate-data--roll">{{ $student->roll_number ?? '—' }}</span>
             <span class="certificate-data certificate-data--month">{{ $latestResult?->examination_month ?? optional($latestResult?->published_at ?? $student->created_at)->format('F Y') ?? 'July 2025' }}</span>

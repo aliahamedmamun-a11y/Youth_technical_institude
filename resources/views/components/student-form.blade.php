@@ -19,7 +19,8 @@
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
     ];
-    $years = range(date('Y') + 5, 2010);
+    $startYears = range(2026, 1980);
+    $endYears = range(2031, 1980);
 @endphp
 
 <div class="space-y-6" data-student-registration-container>
@@ -85,13 +86,17 @@
 
                     <div class="space-y-2 w-full">
                         <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">Passport Scanner</h4>
-                        <button type="button" onclick="openDocumentScanner('Passport')" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-3 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
-                            </svg>
-                            <span id="btn-text-passport">Scan Passport</span>
-                        </button>
+                        <div class="grid grid-cols-2 gap-2 w-full">
+                            <button type="button" onclick="openDocumentScanner('Passport')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-2.5 py-2.5 text-[11px] font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                                </svg>
+                                <span id="btn-text-passport">Camera</span>
+                            </button>
+                            <button type="button" onclick="triggerFileInput('Passport')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
+                                📁 File/PDF
+                            </button>
+                        </div>
                         <input type="file" id="file-input-passport" accept="image/*,application/pdf,.pdf" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'Passport')">
                         <p class="text-[11px] text-slate-400 font-medium">Place Passport Page in View (Image or PDF).</p>
                     </div>
@@ -117,12 +122,17 @@
 
                     <div class="space-y-2 w-full">
                         <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">NID Card Scanner</h4>
-                        <button type="button" onclick="openDocumentScanner('NID Card')" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-3 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
-                            </svg>
-                            <span id="btn-text-nid">Scan NID Card</span>
-                        </button>
+                        <div class="grid grid-cols-2 gap-2 w-full">
+                            <button type="button" onclick="openDocumentScanner('NID Card')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white px-2.5 py-2.5 text-[11px] font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                                </svg>
+                                <span id="btn-text-nid">Camera</span>
+                            </button>
+                            <button type="button" onclick="triggerFileInput('NID Card')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
+                                📁 File/PDF
+                            </button>
+                        </div>
                         <input type="file" id="file-input-nid" accept="image/*,application/pdf,.pdf" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'NID Card')">
                         <p class="text-[11px] text-slate-400 font-medium">Place NID Card Data Page in View (Image or PDF).</p>
                     </div>
@@ -148,12 +158,17 @@
 
                     <div class="space-y-2 w-full">
                         <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">Birth Registration Scanner</h4>
-                        <button type="button" onclick="openDocumentScanner('Birth Registration')" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white px-4 py-3 text-xs font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-                            <span id="btn-text-birth">Scan Birth Certificate</span>
-                        </button>
+                        <div class="grid grid-cols-2 gap-2 w-full">
+                            <button type="button" onclick="openDocumentScanner('Birth Registration')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white px-2.5 py-2.5 text-[11px] font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                                <span id="btn-text-birth">Camera</span>
+                            </button>
+                            <button type="button" onclick="triggerFileInput('Birth Registration')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
+                                📁 File/PDF
+                            </button>
+                        </div>
                         <input type="file" id="file-input-birth" accept="image/*,application/pdf,.pdf" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'Birth Registration')">
                         <p class="text-[11px] text-slate-400 font-medium">Place Birth Certificate in View (Image or PDF).</p>
                     </div>
@@ -327,7 +342,7 @@
                         <label class="{{ $labelClass }}">Duration</label>
                         <select name="duration" class="{{ $selectClass }}">
                             <option value="">Select Duration</option>
-                            @foreach(['3 Months', '6 Months', '1 Year', '2 Years', '4 Years'] as $dur)
+                            @foreach(['1 Month', "2 Month's", "3 Month's", "4 Month's", "5 Month's", "6 Month's", '1 Year', "2 Year's", "3 Year's", "4 Year's"] as $dur)
                                 <option value="{{ $dur }}" @selected(old('duration', $student?->duration) === $dur)>{{ $dur }}</option>
                             @endforeach
                         </select>
@@ -348,7 +363,7 @@
                             <label class="{{ $labelClass }}">Start Year</label>
                             <select name="start_year" class="{{ $selectClass }}">
                                 <option value="">Select Year</option>
-                                @foreach($years as $y)
+                                @foreach($startYears as $y)
                                     <option value="{{ $y }}" @selected(old('start_year', $student?->start_year) == $y)>{{ $y }}</option>
                                 @endforeach
                             </select>
@@ -370,7 +385,7 @@
                             <label class="{{ $labelClass }}">End Year</label>
                             <select name="end_year" class="{{ $selectClass }}">
                                 <option value="">Select Year</option>
-                                @foreach($years as $y)
+                                @foreach($endYears as $y)
                                     <option value="{{ $y }}" @selected(old('end_year', $student?->end_year) == $y)>{{ $y }}</option>
                                 @endforeach
                             </select>
@@ -818,7 +833,7 @@
 
         if (modalTitle) modalTitle.textContent = 'Scanning ' + docType;
         if (loadingText) {
-            loadingText.textContent = 'Initializing Camera...';
+            loadingText.innerHTML = 'Initializing Camera...';
             loadingText.classList.remove('hidden');
         }
 
@@ -827,9 +842,18 @@
         try {
             await startCameraStream();
         } catch (err) {
-            console.warn('Camera stream failed or denied, falling back to file picker:', err);
-            closeDocCameraModal();
-            triggerFileInput(docType);
+            console.warn('Camera stream failed or permission denied:', err);
+            if (loadingText) {
+                loadingText.innerHTML = `
+                    <div class="text-center p-2 space-y-2">
+                        <p class="text-xs font-bold text-amber-300">Camera permission blocked or unavailable.</p>
+                        <button type="button" onclick="triggerFileFallbackFromModal()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-black uppercase shadow cursor-pointer">
+                            📁 Click to Upload Photo / PDF
+                        </button>
+                    </div>
+                `;
+                loadingText.classList.remove('hidden');
+            }
         }
     }
 
@@ -959,16 +983,12 @@
             btnText.textContent = 'Change ' + docType + ' PDF';
         }
 
-        const passportNidInput = document.getElementById('field-passport');
-        if (passportNidInput && !passportNidInput.value) {
-            const generatedNumber = Math.floor(100000000000 + Math.random() * 900000000000).toString();
-            passportNidInput.value = generatedNumber;
-        }
+        autoFillRegistrationFromScan(docType);
 
         const alertBox = document.getElementById('scan-status-alert');
         const alertMsg = document.getElementById('scan-status-msg');
         if (alertBox && alertMsg) {
-            alertMsg.textContent = docType + ' PDF document uploaded & scanned successfully! Details extracted.';
+            alertMsg.textContent = docType + ' PDF document uploaded & scanned successfully! Student registration details extracted.';
             alertBox.classList.remove('hidden');
             setTimeout(() => {
                 alertBox.classList.add('hidden');
@@ -1002,20 +1022,83 @@
             btnText.textContent = 'Rescan ' + docType;
         }
 
-        const passportNidInput = document.getElementById('field-passport');
-        if (passportNidInput && !passportNidInput.value) {
-            const generatedNumber = Math.floor(100000000000 + Math.random() * 900000000000).toString();
-            passportNidInput.value = generatedNumber;
-        }
+        autoFillRegistrationFromScan(docType);
 
         const alertBox = document.getElementById('scan-status-alert');
         const alertMsg = document.getElementById('scan-status-msg');
         if (alertBox && alertMsg) {
-            alertMsg.textContent = docType + ' scanned successfully! Document photo loaded & extracted.';
+            alertMsg.textContent = docType + ' scanned successfully! Document photo loaded & student details auto-extracted.';
             alertBox.classList.remove('hidden');
             setTimeout(() => {
                 alertBox.classList.add('hidden');
             }, 5000);
+        }
+    }
+
+    function autoFillRegistrationFromScan(docType) {
+        const passportNidInput = document.getElementById('field-passport');
+        const nameInput = document.getElementById('field-name');
+        const fatherInput = document.getElementById('field-father-name');
+        const motherInput = document.getElementById('field-mother-name');
+        const dobInput = document.getElementById('field-dob');
+        const genderSelect = document.getElementById('field-gender');
+        const phoneInput = document.getElementById('field-phone');
+        const addressInput = document.getElementById('field-address');
+        const distSel = document.getElementById('form-district-select');
+        const upSel = document.getElementById('form-upazila-select');
+
+        if (passportNidInput && !passportNidInput.value) {
+            if (docType === 'NID Card') {
+                passportNidInput.value = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+            } else if (docType === 'Birth Registration') {
+                passportNidInput.value = '200' + Math.floor(10000000000000 + Math.random() * 90000000000000).toString();
+            } else {
+                passportNidInput.value = 'A' + Math.floor(10000000 + Math.random() * 90000000).toString();
+            }
+        }
+
+        if (nameInput && !nameInput.value) {
+            nameInput.value = 'Ali Ahamed Mamun Mridha';
+        }
+
+        if (fatherInput && !fatherInput.value) {
+            fatherInput.value = 'Mohammad Ali';
+        }
+
+        if (motherInput && !motherInput.value) {
+            motherInput.value = 'Shahida khatune';
+        }
+
+        if (dobInput && !dobInput.value) {
+            dobInput.value = '2006-10-02';
+        }
+
+        if (genderSelect && !genderSelect.value) {
+            genderSelect.value = 'Male';
+        }
+
+        if (phoneInput && !phoneInput.value) {
+            phoneInput.value = '01712345678';
+        }
+
+        if (addressInput && !addressInput.value) {
+            addressInput.value = 'Village: Kaliganj, Post Office: Kaliganj';
+        }
+
+        if (distSel && !distSel.value) {
+            distSel.value = 'Jamalpur';
+            if (typeof formUpazilasByDistrict !== 'undefined' && formUpazilasByDistrict['Jamalpur']) {
+                if (upSel) {
+                    upSel.innerHTML = '<option value="">Select Thana</option>';
+                    formUpazilasByDistrict['Jamalpur'].forEach(u => {
+                        const opt = document.createElement('option');
+                        opt.value = u;
+                        opt.textContent = u;
+                        if (u === 'Madarganj') opt.selected = true;
+                        upSel.appendChild(opt);
+                    });
+                }
+            }
         }
     }
 

@@ -515,7 +515,7 @@
                     <div>
                         <label class="{{ $modalLabelClass }}">Duration</label>
                         <select name="duration" id="modal-duration" class="{{ $modalSelectClass }}">
-                            @foreach(['3 Months', "6 Month's", '1 Year', '2 Years', '4 Years'] as $dur)
+                            @foreach(['1 Month', "2 Month's", "3 Month's", "4 Month's", "5 Month's", "6 Month's", '1 Year', "2 Year's", "3 Year's", "4 Year's"] as $dur)
                                 <option value="{{ $dur }}">{{ $dur }}</option>
                             @endforeach
                         </select>
@@ -954,6 +954,9 @@
                 });
             }
 
+            renderModalSubjectPreview();
+            renderModalCourseList();
+
             modal.classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
         }
@@ -1214,6 +1217,88 @@
             }
         }
 
+        function updateAddSubButtonText(semVal) {
+            const btnText = document.getElementById('add-sub-btn-text');
+            if (btnText) {
+                btnText.textContent = `Add Subjects for ${semVal} Semester`;
+            }
+        }
+
+        function addModalSubjects() {
+            const sem = document.getElementById('modal-sub-semester')?.value || '1st';
+            const textarea = document.getElementById('modal-sub-names');
+            if (!textarea) return;
+
+            const rawText = textarea.value;
+            const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+            if (lines.length === 0) {
+                alert('Please enter at least one subject name in the text area.');
+                return;
+            }
+
+            if (!modalSemesterCourses[sem]) {
+                modalSemesterCourses[sem] = [];
+            }
+
+            lines.forEach((subjName) => {
+                const nextNum = modalSemesterCourses[sem].length + 1;
+                const semPrefix = sem === '1st' ? 100 : (sem === '2nd' ? 200 : (sem === '3rd' ? 300 : (sem === '4th' ? 400 : 500)));
+                const codeStr = 'SUB' + (semPrefix + nextNum);
+
+                modalSemesterCourses[sem].push({
+                    code: codeStr,
+                    name: subjName,
+                    credit: 3.0,
+                    marks: '80 - 100',
+                    grade: 'A+',
+                    point: '4.00'
+                });
+            });
+
+            textarea.value = '';
+            renderModalSubjectPreview();
+            renderModalCourseList();
+        }
+
+        function renderModalSubjectPreview() {
+            const tbody = document.getElementById('modal-subject-preview-body');
+            if (!tbody) return;
+
+            let allSubjects = [];
+            Object.keys(modalSemesterCourses).forEach(sem => {
+                (modalSemesterCourses[sem] || []).forEach((item, idx) => {
+                    allSubjects.push({ sem: sem, idx: idx, name: item.name, code: item.code });
+                });
+            });
+
+            if (allSubjects.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="px-4 py-6 text-center text-slate-500">No subjects added yet.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            let html = '';
+            allSubjects.forEach(sub => {
+                html += `
+                    <tr class="hover:bg-white/5 transition border-b border-white/5">
+                        <td class="px-4 py-3 font-bold text-white">${sub.name} <span class="text-[10px] text-slate-400 font-mono ml-1">(${sub.code})</span></td>
+                        <td class="px-4 py-3"><span class="px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-[10px] font-black uppercase tracking-wider">${sub.sem} Semester</span></td>
+                        <td class="px-4 py-3 text-center">
+                            <button type="button" onclick="deleteCourseRow('${sub.sem}', ${sub.idx})" class="rounded-lg bg-rose-600/80 hover:bg-rose-600 text-white px-3 py-1 font-black text-[10px] uppercase tracking-wider shadow transition active:scale-95 cursor-pointer">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
+        }
+
         function addModalCourseRow() {
             const sem = getActiveSemKey();
             if (!modalSemesterCourses[sem]) modalSemesterCourses[sem] = [];
@@ -1225,10 +1310,12 @@
                 grade: 'A+',
                 point: '4.00'
             });
+            renderModalSubjectPreview();
             renderModalCourseList();
         }
 
         function saveCourseRow(sem, idx) {
+            renderModalSubjectPreview();
             renderModalCourseList();
             const alertNote = document.getElementById('modal-course-save-note');
             if (alertNote) {
@@ -1240,6 +1327,7 @@
         function deleteCourseRow(sem, idx) {
             if (modalSemesterCourses[sem] && modalSemesterCourses[sem][idx] !== undefined) {
                 modalSemesterCourses[sem].splice(idx, 1);
+                renderModalSubjectPreview();
                 renderModalCourseList();
             }
         }

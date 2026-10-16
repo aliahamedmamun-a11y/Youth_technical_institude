@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Writer\PngWriter;
 
 class QrCodeService
@@ -13,7 +14,8 @@ class QrCodeService
             writer: new PngWriter,
             data: $data,
             size: 280,
-            margin: 10,
+            margin: 0,
+            backgroundColor: new Color(255, 255, 255, 127),
         ))->build()->getDataUri();
     }
 }

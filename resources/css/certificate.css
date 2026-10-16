@@ -117,16 +117,18 @@
 .cert-qr-code {
     position: absolute;
     z-index: 10;
-    background: #fff;
-    padding: 1px;
-    border: 1px solid #cbd5e1;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
     aspect-ratio: 1;
 }
 
 .cert-qr-code img {
     width: 100%;
     height: 100%;
+    mix-blend-mode: multiply;
+    background: transparent;
 }
 
 .certificate-actions {
@@ -148,6 +150,20 @@
         margin: 0;
     }
 
+    .certificate-actions,
+    nav,
+    .certificate-screen > div.print\:hidden,
+    [class*="print:hidden"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
     html,
     body {
         width: 297mm !important;
@@ -163,7 +179,17 @@
         -webkit-print-color-adjust: exact !important;
     }
 
-    .certificate-screen,
+    .certificate-screen {
+        min-height: 0 !important;
+        height: 210mm !important;
+        width: 297mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        background: white !important;
+        display: block !important;
+    }
+
     .certificate-frame,
     .certificate-document {
         width: 297mm !important;
@@ -172,17 +198,11 @@
         max-height: none !important;
         margin: 0 !important;
         padding: 0 !important;
-    }
-
-    .certificate-screen {
-        min-height: 0 !important;
-        overflow: hidden !important;
-        background: white !important;
+        box-shadow: none !important;
+        border: none !important;
     }
 
     .certificate-frame {
-        box-shadow: none !important;
-        border: none !important;
         background: transparent !important;
     }
 
@@ -198,5 +218,17 @@
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
+    }
+
+    .cert-qr-code {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+
+    .cert-qr-code img {
+        mix-blend-mode: multiply !important;
+        background: transparent !important;
     }
 }

@@ -282,44 +282,73 @@
 
 @page {
     size: A4 landscape;
-    margin: 0;
+    margin: 0 !important;
 }
 
 @media print {
+    @page {
+        size: A4 landscape;
+        margin: 0 !important;
+    }
+
+    .print\:hidden,
+    .admit-card-actions,
+    nav,
+    header,
+    footer,
+    [class*="print:hidden"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
     html,
     body {
-        width: 297mm;
-        height: 210mm;
-        margin: 0;
-        background: white;
+        width: 297mm !important;
+        height: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        overflow: hidden !important;
     }
 
     body {
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
     }
 
     .admit-card-screen,
     .admit-card-frame,
     .admit-card {
-        width: 297mm;
-        height: 210mm;
-        margin: 0;
-        padding: 0;
+        width: 297mm !important;
+        height: 210mm !important;
+        max-width: none !important;
+        max-height: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
     }
 
     .admit-card-screen {
-        min-height: 0;
-        overflow: hidden;
-        background: white;
+        min-height: 0 !important;
+        overflow: hidden !important;
+        background: white !important;
+        display: block !important;
     }
 
     .admit-card-frame {
-        max-width: none;
-        box-shadow: none;
+        max-width: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
     }
 
     .admit-card {
-        aspect-ratio: auto;
+        aspect-ratio: auto !important;
     }
 }

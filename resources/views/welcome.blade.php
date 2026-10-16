@@ -34,23 +34,24 @@
         </a>
 
         <header class="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-ink">
-             <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-                <a href="#home" class="group flex items-center gap-3">
+             <div class="mx-auto flex h-16 sm:h-20 max-w-7xl items-center justify-between px-3 sm:px-6 lg:px-8">
+                <a href="#home" class="group flex items-center gap-2 sm:gap-3 min-w-0">
                     <img
                         src="{{ asset('images/Logo.png') }}"
                         alt="Logo"
-                        class="h-10 w-auto sm:h-12"
+                        class="h-9 w-auto shrink-0 sm:h-12"
                     >
-                    <div class="hidden sm:block">
-                        <span class="block text-2xl font-black tracking-tight text-[#03224c] dark:text-white uppercase leading-none">South Asia</span>
-                        <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400 mt-1">Engineering & Technical Institute</span>
-                    </div>
-                    <div class="sm:hidden">
-                        <span class="block text-xl font-black tracking-tighter text-[#03224c] dark:text-white">SOUTH ASIA</span>
+                    <div class="flex flex-col justify-center min-w-0">
+                        <span class="block text-sm sm:text-2xl font-black tracking-tight text-[#03224c] dark:text-white uppercase leading-tight shrink-0">
+                            South Asia
+                        </span>
+                        <span class="block text-[9px] sm:text-[11px] font-bold tracking-[0.03em] sm:tracking-[0.1em] text-slate-600 dark:text-slate-300 uppercase leading-none mt-0.5 sm:mt-1 whitespace-nowrap overflow-hidden text-ellipsis">
+                            Engineering & Technical Institute
+                        </span>
                     </div>
                 </a>
-                <div class="flex items-center gap-4">
-                    <a href="{{ route('branch-applications.create') }}" class="rounded-lg bg-[#03224c] px-5 py-2 text-xs font-black text-white uppercase tracking-widest transition hover:bg-slate-800 sm:text-sm">
+                <div class="flex items-center gap-2 sm:gap-4 shrink-0">
+                    <a href="{{ route('branch-applications.create') }}" class="rounded-lg bg-[#03224c] px-3 py-1.5 sm:px-5 sm:py-2 text-[10px] sm:text-xs font-black text-white uppercase tracking-wider transition hover:bg-slate-800">
                         Admission 2026
                     </a>
                     <button
@@ -90,9 +91,12 @@
         <div class="mobile-menu-overlay lg:hidden" data-menu-overlay aria-hidden="true"></div>
         <aside id="mobile-menu" class="mobile-menu-drawer lg:hidden" data-mobile-menu aria-hidden="true" aria-label="Mobile navigation" inert>
                 <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-white/10">
-                    <a href="#home" class="flex min-w-0 items-center gap-3" aria-label="BNYTI home">
-                        <img src="{{ asset('images/Logo.png') }}" alt="" class="size-11 shrink-0 object-contain">
-                        <span><span class="block font-black text-slate-950 dark:text-white">BNYTI</span><span class="block text-[9px] font-bold tracking-[.14em] text-slate-500 dark:text-slate-300">TECHNICAL INSTITUTE</span></span>
+                    <a href="#home" class="flex min-w-0 items-center gap-2.5" aria-label="South Asia Engineering & Technical Institute home">
+                        <img src="{{ asset('images/Logo.png') }}" alt="" class="size-10 shrink-0 object-contain">
+                        <span class="flex flex-col min-w-0">
+                            <span class="block font-black text-slate-950 dark:text-white text-base uppercase leading-tight">South Asia</span>
+                            <span class="block text-[9px] font-bold tracking-[0.03em] text-slate-500 dark:text-slate-300 uppercase mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis">Engineering & Technical Institute</span>
+                        </span>
                     </a>
                     <button type="button" class="icon-button" data-menu-dismiss aria-label="Close navigation"><svg viewBox="0 0 24 24" aria-hidden="true" class="size-6"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg></button>
                 </div>
@@ -1255,7 +1259,7 @@
                             </div>
                             <div>
                                 <span class="block text-2xl font-black tracking-tight text-white uppercase leading-none">South Asia</span>
-                                <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mt-1">National Technical Institute</span>
+                                <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mt-1">Engineering & Technical Institute</span>
                             </div>
                         </a>
                         <p class="text-sm leading-relaxed text-slate-300">

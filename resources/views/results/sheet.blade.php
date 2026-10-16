@@ -533,7 +533,7 @@
                     </div>
 
                     <div class="text-center">
-                        <img src="{{ ($qrCodes ?? collect())->get($result->id, $qrCode) }}" alt="Scan to verify result" class="mx-auto size-20 border border-slate-300 p-1 rounded bg-white shadow-sm">
+                        <img src="{{ ($qrCodes ?? collect())->get($result->id, $qrCode) }}" alt="Scan to verify result" class="mx-auto size-20 bg-transparent">
                         <p class="mt-1 text-[8px] font-bold text-slate-600 uppercase tracking-wider">SCAN TO VERIFY</p>
                     </div>
                 </div>

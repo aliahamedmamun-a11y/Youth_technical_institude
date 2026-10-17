@@ -81,7 +81,7 @@
                         styleTag.id = 'print-orientation-style';
                         document.head.appendChild(styleTag);
                     }
-                    styleTag.textContent = '@page { size: 297mm 210mm !important; margin: 0 !important; } @media print { @page { size: 297mm 210mm !important; margin: 0 !important; } html, body, .admit-card-screen, .admit-card-frame, .admit-card { width: 297mm !important; height: 210mm !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } }';
+                    styleTag.textContent = '@page { size: A4 landscape; margin: 0; } @media print { @page { size: A4 landscape; margin: 0; } html, body, .admit-card-screen, .admit-card-frame, .admit-card { width: 100% !important; height: 100% !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } }';
 
                     setTimeout(() => window.print(), 100);
                 });

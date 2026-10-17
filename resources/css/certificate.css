@@ -129,12 +129,6 @@
     width: 100%;
     height: 100%;
     mix-blend-mode: multiply;
-}
-
-.cert-qr-code img {
-    width: 100%;
-    height: 100%;
-    mix-blend-mode: multiply;
     background: transparent;
 }
 
@@ -147,14 +141,20 @@
 }
 
 @page {
-    size: landscape;
-    margin: 0;
+    size: 297mm 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
+
+@page :left { margin: 0 !important; }
+@page :right { margin: 0 !important; }
+@page :first { margin: 0 !important; }
 
 @media print {
     @page {
-        size: landscape;
-        margin: 0;
+        size: 297mm 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .certificate-actions,
@@ -173,8 +173,8 @@
 
     html,
     body {
-        width: 100% !important;
-        height: 100% !important;
+        width: 297mm !important;
+        height: 210mm !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
@@ -188,31 +188,29 @@
 
     .certificate-screen {
         min-height: 0 !important;
-        height: 100vh !important;
-        width: 100vw !important;
+        height: 210mm !important;
+        width: 297mm !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
         display: block !important;
+        overflow: hidden !important;
     }
 
     .certificate-frame,
     .certificate-document {
-        width: 100vw !important;
-        height: 100vh !important;
-        max-width: none !important;
-        max-height: none !important;
+        width: 297mm !important;
+        height: 210mm !important;
+        max-width: 297mm !important;
+        max-height: 210mm !important;
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
         border: none !important;
         background: transparent !important;
-    }
-        margin: 0 !important;
-        padding: 0 !important;
-        box-shadow: none !important;
-        border: none !important;
-        background: transparent !important;
+        overflow: hidden !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
     }
 
     .certificate-document.print-data-only {

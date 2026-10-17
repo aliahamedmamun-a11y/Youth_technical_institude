@@ -267,14 +267,20 @@
 }
 
 @page {
-    size: A4 landscape;
+    size: portrait;
     margin: 0 !important;
+    padding: 0 !important;
 }
+
+@page :left { margin: 0 !important; }
+@page :right { margin: 0 !important; }
+@page :first { margin: 0 !important; }
 
 @media print {
     @page {
-        size: A4 landscape;
+        size: portrait;
         margin: 0 !important;
+        padding: 0 !important;
     }
 
     .print\:hidden,

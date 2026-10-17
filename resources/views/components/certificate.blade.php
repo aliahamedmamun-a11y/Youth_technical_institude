@@ -91,18 +91,25 @@
 
     <!-- PRINT ACTIONS NAVBAR -->
     <nav class="certificate-actions print:hidden mt-6 flex flex-wrap items-center justify-center gap-3" aria-label="Certificate actions">
-        <button type="button" data-print-certificate="full" class="rounded-xl bg-[#03224c] hover:bg-slate-800 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-xl transition cursor-pointer active:scale-95 flex items-center gap-2 border border-slate-700">
+        <button type="button" data-download-certificate="full" class="rounded-xl bg-emerald-600 hover:bg-emerald-700 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-xl transition cursor-pointer active:scale-95 flex items-center gap-2 border border-emerald-500">
             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m11.318-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231a1.125 1.125 0 01-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.036 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.656" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
-            🖨️ Print with Template (টেমপ্লেট সহ)
+            📥 Download PDF (টেমপ্লেট সহ)
         </button>
 
-        <button type="button" data-print-certificate="data-only" class="rounded-xl bg-amber-600 hover:bg-amber-700 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-xl transition cursor-pointer active:scale-95 flex items-center gap-2 border border-amber-500">
+        <button type="button" data-download-certificate="data-only" class="rounded-xl bg-amber-600 hover:bg-amber-700 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-xl transition cursor-pointer active:scale-95 flex items-center gap-2 border border-amber-500">
             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
             </svg>
-            📄 Print Only Student Data (শুধুমাত্র ডাটা)
+            📄 Download Data Only (শুধুমাত্র ডাটা)
+        </button>
+
+        <button type="button" data-print-certificate="full" class="rounded-xl bg-[#03224c] hover:bg-slate-800 px-5 py-3 text-xs font-bold uppercase tracking-wider text-slate-200 shadow-xl transition cursor-pointer active:scale-95 flex items-center gap-2 border border-slate-700">
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m11.318-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231a1.125 1.125 0 01-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.036 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.656" />
+            </svg>
+            🖨️ Print
         </button>
 
         <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-6 py-3 text-xs font-black uppercase tracking-wider text-slate-700 transition">
@@ -110,6 +117,7 @@
         </a>
     </nav>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const doc = document.querySelector('.certificate-document');
@@ -136,9 +144,68 @@
                 });
             }
 
+            function downloadPDF(mode, btnElement) {
+                setPrintMode(mode);
+
+                if (!doc) return;
+
+                const originalHTML = btnElement.innerHTML;
+                btnElement.innerHTML = `
+                    <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                    </svg>
+                    <span>Generating PDF...</span>
+                `;
+                btnElement.disabled = true;
+
+                const studentName = "{{ addslashes($student->name) }}";
+                const cleanName = studentName.replace(/[^a-zA-Z0-9]/g, '_');
+                const filename = `Certificate_${cleanName}_${mode}.pdf`;
+
+                const opt = {
+                    margin: 0,
+                    filename: filename,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: {
+                        scale: 3,
+                        useCORS: true,
+                        logging: false,
+                        letterRendering: true
+                    },
+                    jsPDF: {
+                        unit: 'mm',
+                        format: 'a4',
+                        orientation: 'landscape'
+                    }
+                };
+
+                if (typeof html2pdf !== 'undefined') {
+                    html2pdf().set(opt).from(doc).save().then(() => {
+                        btnElement.innerHTML = originalHTML;
+                        btnElement.disabled = false;
+                    }).catch(err => {
+                        console.error('PDF error:', err);
+                        btnElement.innerHTML = originalHTML;
+                        btnElement.disabled = false;
+                        window.print();
+                    });
+                } else {
+                    btnElement.innerHTML = originalHTML;
+                    btnElement.disabled = false;
+                    window.print();
+                }
+            }
+
             document.querySelectorAll('[data-certificate-view]').forEach(btn => {
                 btn.addEventListener('click', function () {
                     setPrintMode(this.dataset.certificateView);
+                });
+            });
+
+            document.querySelectorAll('[data-download-certificate]').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    downloadPDF(this.dataset.downloadCertificate, this);
                 });
             });
 
@@ -153,7 +220,7 @@
                         styleTag.id = 'print-orientation-style';
                         document.head.appendChild(styleTag);
                     }
-                    styleTag.textContent = '@page { size: 297mm 210mm !important; margin: 0 !important; } @media print { @page { size: 297mm 210mm !important; margin: 0 !important; } html, body, .certificate-screen, .certificate-frame, .certificate-document { width: 297mm !important; height: 210mm !important; max-width: 297mm !important; max-height: 210mm !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } }';
+                    styleTag.textContent = '@page { size: landscape; margin: 0; } @media print { @page { size: landscape; margin: 0; } html, body, .certificate-screen, .certificate-frame, .certificate-document { width: 100% !important; height: 100% !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } }';
 
                     setTimeout(() => window.print(), 100);
                 });

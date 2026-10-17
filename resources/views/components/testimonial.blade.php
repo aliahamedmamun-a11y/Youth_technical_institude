@@ -124,7 +124,7 @@
                         styleTag.id = 'print-orientation-style';
                         document.head.appendChild(styleTag);
                     }
-                    styleTag.textContent = '@page { size: landscape; margin: 0; } @media print { @page { size: landscape; margin: 0; } html, body, .testimonial-screen, .testimonial-frame, .testimonial-document { width: 100% !important; height: 100% !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } }';
+                    styleTag.textContent = '@page { size: 297mm 210mm !important; margin: 0 !important; } @media print { @page { size: 297mm 210mm !important; margin: 0 !important; } html, body, .testimonial-screen, .testimonial-frame, .testimonial-document { width: 297mm !important; height: 210mm !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } }';
 
                     setTimeout(() => window.print(), 100);
                 });

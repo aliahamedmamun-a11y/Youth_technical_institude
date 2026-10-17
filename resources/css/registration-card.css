@@ -160,18 +160,20 @@
 }
 
 @page {
-    size: A4 portrait;
-    margin: 0;
+    size: portrait !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-@page :left { margin: 0; }
-@page :right { margin: 0; }
-@page :first { margin: 0; }
+@page :left { margin: 0 !important; }
+@page :right { margin: 0 !important; }
+@page :first { margin: 0 !important; }
 
 @media print {
     @page {
-        size: A4 portrait;
-        margin: 0;
+        size: portrait !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .print\:hidden,
@@ -192,8 +194,8 @@
 
     html,
     body {
-        width: 100% !important;
-        height: 100% !important;
+        width: 210mm !important;
+        height: 297mm !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
@@ -208,10 +210,10 @@
     .registration-card-screen,
     .registration-card-frame,
     .registration-card {
-        width: 100% !important;
-        height: 100% !important;
-        max-width: 100% !important;
-        max-height: 100% !important;
+        width: 210mm !important;
+        height: 297mm !important;
+        max-width: 210mm !important;
+        max-height: 297mm !important;
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;

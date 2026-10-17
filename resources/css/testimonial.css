@@ -160,18 +160,20 @@
 }
 
 @page {
-    size: landscape;
-    margin: 0;
+    size: 297mm 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-@page :left { margin: 0; }
-@page :right { margin: 0; }
-@page :first { margin: 0; }
+@page :left { margin: 0 !important; }
+@page :right { margin: 0 !important; }
+@page :first { margin: 0 !important; }
 
 @media print {
     @page {
-        size: landscape;
-        margin: 0;
+        size: 297mm 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .print\:hidden,
@@ -190,8 +192,8 @@
 
     html,
     body {
-        width: 100% !important;
-        height: 100% !important;
+        width: 297mm !important;
+        height: 210mm !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
@@ -206,10 +208,10 @@
     .testimonial-screen,
     .testimonial-frame,
     .testimonial-document {
-        width: 100% !important;
-        height: 100% !important;
-        max-width: 100% !important;
-        max-height: 100% !important;
+        width: 297mm !important;
+        height: 210mm !important;
+        max-width: 297mm !important;
+        max-height: 210mm !important;
         margin: 0 !important;
         padding: 0 !important;
         overflow: hidden !important;

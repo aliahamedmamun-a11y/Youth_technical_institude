@@ -147,20 +147,14 @@
 }
 
 @page {
-    size: 297mm 210mm !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    size: landscape;
+    margin: 0;
 }
-
-@page :left { margin: 0 !important; }
-@page :right { margin: 0 !important; }
-@page :first { margin: 0 !important; }
 
 @media print {
     @page {
-        size: 297mm 210mm !important;
-        margin: 0 !important;
-        padding: 0 !important;
+        size: landscape;
+        margin: 0;
     }
 
     .certificate-actions,
@@ -179,8 +173,8 @@
 
     html,
     body {
-        width: 297mm !important;
-        height: 210mm !important;
+        width: 100% !important;
+        height: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
@@ -194,8 +188,8 @@
 
     .certificate-screen {
         min-height: 0 !important;
-        height: 210mm !important;
-        width: 297mm !important;
+        height: 100vh !important;
+        width: 100vw !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
@@ -204,10 +198,16 @@
 
     .certificate-frame,
     .certificate-document {
-        width: 297mm !important;
-        height: 210mm !important;
-        max-width: 297mm !important;
-        max-height: 210mm !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: none !important;
+        max-height: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: transparent !important;
+    }
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;

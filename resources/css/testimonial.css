@@ -9,6 +9,12 @@
     justify-content: center;
 }
 
+@media (max-width: 640px) {
+    .testimonial-screen {
+        padding: 0.5rem;
+    }
+}
+
 .testimonial-frame {
     width: min(100%, 75rem);
     margin-inline: auto;
@@ -31,6 +37,7 @@
     color: #111;
     background: #ffffe9;
     font-family: 'Times New Roman', Times, serif;
+    container-type: inline-size;
 }
 
 .testimonial-document.print-data-only {
@@ -58,7 +65,7 @@
     overflow: hidden;
     color: #0B1953;
     font-family: 'Times New Roman', Times, serif;
-    font-size: clamp(0.7rem, 1.4vw, 1.32rem);
+    font-size: clamp(0.35rem, 1.8cqw, 1.35rem);
     font-style: italic;
     font-weight: 700;
     line-height: 1.15;
@@ -72,7 +79,7 @@
     top: 45.4%;
     left: 24%;
     width: 68%;
-    font-size: clamp(0.82rem, 1.58vw, 1.52rem);
+    font-size: clamp(0.45rem, 2.2cqw, 1.55rem);
 }
 
 .testimonial-data--father {

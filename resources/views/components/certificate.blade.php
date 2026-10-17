@@ -153,7 +153,7 @@
                         styleTag.id = 'print-orientation-style';
                         document.head.appendChild(styleTag);
                     }
-                    styleTag.textContent = '@page { size: A4 landscape; margin: 0; } @media print { @page { size: A4 landscape; margin: 0; } html, body { width: 100% !important; height: 100% !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } .certificate-screen { width: 100vw !important; height: 100vh !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; position: fixed !important; inset: 0 !important; display: flex !important; align-items: center !important; justify-content: center !important; } .certificate-frame, .certificate-document { width: 100vw !important; height: 100vh !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } @media (orientation: portrait) { .certificate-frame, .certificate-document { width: 100vh !important; height: 100vw !important; transform: rotate(90deg) !important; transform-origin: center center !important; } } }';
+                    styleTag.textContent = '@page { size: landscape; margin: 0; } @media print { @page { size: landscape; margin: 0; } html, body, .certificate-screen, .certificate-frame, .certificate-document { width: 100% !important; height: 100% !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } }';
 
                     setTimeout(() => window.print(), 100);
                 });

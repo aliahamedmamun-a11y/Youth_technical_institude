@@ -203,19 +203,45 @@
         -webkit-print-color-adjust: exact !important;
     }
 
-    .testimonial-screen,
+    .testimonial-screen {
+        width: 100vw !important;
+        height: 100vh !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+        position: fixed !important;
+        inset: 0 !important;
+    }
+
     .testimonial-frame,
     .testimonial-document {
-        width: 100% !important;
-        height: 100% !important;
-        max-width: 100% !important;
-        max-height: 100% !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: 100vw !important;
+        max-height: 100vh !important;
         margin: 0 !important;
         padding: 0 !important;
         overflow: hidden !important;
         box-shadow: none !important;
         border: none !important;
         background: transparent !important;
+    }
+
+    @media (orientation: portrait) {
+        .testimonial-frame,
+        .testimonial-document {
+            width: 100vh !important;
+            height: 100vw !important;
+            max-width: 100vh !important;
+            max-height: 100vw !important;
+            transform: rotate(90deg) !important;
+            transform-origin: center center !important;
+        }
     }
 
     .testimonial-document.print-data-only {

@@ -164,6 +164,8 @@
 
     .certificate-actions,
     nav,
+    header,
+    footer,
     .certificate-screen > div.print\:hidden,
     [class*="print:hidden"] {
         display: none !important;
@@ -180,21 +182,19 @@
     body {
         width: 100% !important;
         height: 100% !important;
+        min-height: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
         overflow: hidden !important;
-    }
-
-    body {
-        print-color-adjust: exact !important;
         -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
     .certificate-screen {
+        width: 100vw !important;
+        height: 100vh !important;
         min-height: 0 !important;
-        height: 100% !important;
-        width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
@@ -202,14 +202,16 @@
         align-items: center !important;
         justify-content: center !important;
         overflow: hidden !important;
+        position: fixed !important;
+        inset: 0 !important;
     }
 
     .certificate-frame,
     .certificate-document {
-        width: 100% !important;
-        height: 100% !important;
-        max-width: 100% !important;
-        max-height: 100% !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: 100vw !important;
+        max-height: 100vh !important;
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
@@ -218,6 +220,18 @@
         overflow: hidden !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
+    }
+
+    @media (orientation: portrait) {
+        .certificate-frame,
+        .certificate-document {
+            width: 100vh !important;
+            height: 100vw !important;
+            max-width: 100vh !important;
+            max-height: 100vw !important;
+            transform: rotate(90deg) !important;
+            transform-origin: center center !important;
+        }
     }
 
     .certificate-document.print-data-only {

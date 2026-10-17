@@ -153,13 +153,13 @@
 }
 
 @page {
-    size: A4 landscape;
+    size: auto;
     margin: 0;
 }
 
 @media print {
     @page {
-        size: A4 landscape;
+        size: auto;
         margin: 0;
     }
 
@@ -179,12 +179,11 @@
 
     html,
     body {
-        width: 297mm !important;
-        height: 210mm !important;
+        width: 100% !important;
+        height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
-        overflow: hidden !important;
     }
 
     body {
@@ -192,31 +191,33 @@
         -webkit-print-color-adjust: exact !important;
     }
 
-    .testimonial-screen,
-    .testimonial-frame,
-    .testimonial-document {
-        width: 297mm !important;
-        height: 210mm !important;
-        max-width: none !important;
-        max-height: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
     .testimonial-screen {
         min-height: 0 !important;
-        overflow: hidden !important;
+        height: auto !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
         background: white !important;
+        display: block !important;
     }
 
     .testimonial-frame {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
         box-shadow: none !important;
         border: none !important;
         background: transparent !important;
     }
 
     .testimonial-document {
-        aspect-ratio: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        aspect-ratio: 4700 / 3320 !important;
+        margin: 0 auto !important;
+        box-shadow: none !important;
+        border: none !important;
     }
 
     .testimonial-document.print-data-only {

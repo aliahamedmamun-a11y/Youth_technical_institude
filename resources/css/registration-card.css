@@ -160,13 +160,13 @@
 }
 
 @page {
-    size: A4 portrait;
+    size: auto;
     margin: 0 !important;
 }
 
 @media print {
     @page {
-        size: A4 portrait;
+        size: auto;
         margin: 0 !important;
     }
 
@@ -188,12 +188,11 @@
 
     html,
     body {
-        width: 210mm !important;
-        height: 297mm !important;
+        width: 100% !important;
+        height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
-        overflow: hidden !important;
     }
 
     body {
@@ -205,21 +204,27 @@
         padding: 0 !important;
         margin: 0 !important;
         min-height: 0 !important;
-        height: 297mm !important;
-        width: 210mm !important;
+        height: auto !important;
+        width: 100% !important;
         background: white !important;
-        overflow: hidden !important;
         display: block !important;
     }
 
-    .registration-card-frame,
-    .registration-card {
-        width: 210mm !important;
-        height: 297mm !important;
-        max-width: none !important;
-        max-height: none !important;
-        margin: 0 !important;
+    .registration-card-frame {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
         padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: transparent !important;
+    }
+
+    .registration-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        aspect-ratio: 210 / 297 !important;
+        margin: 0 auto !important;
         box-shadow: none !important;
         border: none !important;
     }

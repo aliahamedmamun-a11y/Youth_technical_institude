@@ -190,7 +190,7 @@
 }
 
 @page {
-    size: 210mm 297mm !important;
+    size: portrait !important;
     margin: 0 !important;
     padding: 0 !important;
 }
@@ -201,7 +201,7 @@
 
 @media print {
     @page {
-        size: 210mm 297mm !important;
+        size: portrait !important;
         margin: 0 !important;
         padding: 0 !important;
     }

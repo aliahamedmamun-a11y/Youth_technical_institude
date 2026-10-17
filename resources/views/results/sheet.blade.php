@@ -362,26 +362,27 @@
 
             </div>
         @elseif ($isSingleStyle)
-            <!-- SINGLE SEMESTER STYLE -->
+            <!-- SINGLE SEMESTER STYLE (EXACT MATCHING USER SCREENSHOT) -->
             <div class="pt-2">
                 <section class="min-w-0">
                     <div class="overflow-hidden border border-slate-400 rounded shadow-sm">
                         <h2 class="bg-slate-200/80 border-b border-slate-400 py-1.5 text-center text-xs font-black uppercase tracking-wider text-slate-900">
-                            {{ $result->semester }}
+                            {{ strtoupper((string) $result->semester) }}{{ str_contains(strtoupper((string) $result->semester), 'SEMESTER') ? '' : ' SEMESTER' }}
                         </h2>
                         <table class="w-full text-xs border-collapse">
                             <thead class="bg-slate-100 border-b border-slate-300">
                                 <tr class="text-slate-700 font-bold uppercase text-[10px]">
-                                    <th class="border-r border-slate-300 px-3 py-2 text-left">CODE</th>
-                                    <th class="border-r border-slate-300 px-3 py-2 text-left">TITLE</th>
-                                    <th class="border-r border-slate-300 px-2 py-2 text-center">CR</th>
-                                    <th class="border-r border-slate-300 px-2 py-2 text-center">GRADE</th>
-                                    <th class="px-2 py-2 text-center">CGPA</th>
+                                    <th class="border-r border-slate-300 px-3 py-2 text-left w-[12%]">CODE</th>
+                                    <th class="border-r border-slate-300 px-3 py-2 text-left w-[56%]">TITLE</th>
+                                    <th class="border-r border-slate-300 px-2 py-2 text-center w-[10%]">CR</th>
+                                    <th class="border-r border-slate-300 px-2 py-2 text-center w-[11%]">GRADE</th>
+                                    <th class="px-2 py-2 text-center w-[11%]">CGPA</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-200 text-slate-900 font-medium">
                                 @php
                                     $singleSubjects = $getSubjectsForSemResult($result);
+                                    $singleSemTotalCredit = 0;
                                 @endphp
                                 @forelse ($singleSubjects as $subject)
                                     @php
@@ -390,13 +391,14 @@
                                         $sCr = is_array($subject) ? ($subject['credit'] ?? $subject['cr'] ?? 3) : ($subject->credit ?? 3);
                                         $sGrade = is_array($subject) ? ($subject['grade'] ?? 'A') : ($subject->grade ?? 'A');
                                         $sCgpa = is_array($subject) ? ($subject['cgpa'] ?? $subject['grade_point'] ?? '3.75') : ($subject->grade_point ?? '3.75');
+                                        $singleSemTotalCredit += (float)$sCr;
                                     @endphp
-                                    <tr>
-                                        <td class="border-r border-slate-300 px-3 py-1.5 font-mono text-slate-800">{{ $sCode }}</td>
+                                    <tr class="hover:bg-slate-50 transition-all">
+                                        <td class="border-r border-slate-300 px-3 py-1.5 font-mono text-slate-800 font-bold">{{ $sCode }}</td>
                                         <td class="border-r border-slate-300 px-3 py-1.5 font-bold text-slate-900">{{ $sTitle }}</td>
                                         <td class="border-r border-slate-300 px-2 py-1.5 text-center font-bold">{{ $sCr }}</td>
                                         <td class="border-r border-slate-300 px-2 py-1.5 text-center font-black text-indigo-900">{{ $sGrade }}</td>
-                                        <td class="px-2 py-1.5 text-center font-bold">{{ $sCgpa }}</td>
+                                        <td class="px-2 py-1.5 text-center font-bold">{{ number_format((float)$sCgpa, 2) }}</td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -404,10 +406,10 @@
                                     </tr>
                                 @endforelse
                             </tbody>
-                            <tfoot class="bg-slate-100 border-t border-slate-300 font-bold text-slate-800">
+                            <tfoot class="bg-slate-100 border-t border-slate-300 font-bold text-slate-900 text-xs">
                                 <tr>
-                                    <td colspan="2" class="px-3 py-2">TOTAL CREDIT: {{ $result->total_credit ?: 28 }}</td>
-                                    <td colspan="3" class="px-3 py-2 text-right">GPA: {{ number_format((float)($result->gpa ?? 3.75), 2) }}</td>
+                                    <td colspan="2" class="px-3 py-2 uppercase font-black">TOTAL CREDIT: {{ $singleSemTotalCredit ?: ($result->total_credit ?: 28) }}</td>
+                                    <td colspan="3" class="px-3 py-2 text-right uppercase font-black">GPA: {{ number_format((float)($result->gpa ?? 3.75), 2) }}</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -468,76 +470,92 @@
             </div>
         @endif
 
-        <!-- SUMMARY FOOTER MATCHING SECOND IMAGE 100% -->
+        <!-- SUMMARY FOOTER MATCHING SCREENSHOT 100% -->
         <footer class="pt-4 border-t border-slate-300 space-y-4">
-            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-[10px] font-black uppercase tracking-wider">
-                <div class="p-2 border border-slate-400 rounded bg-slate-50 flex items-center justify-center gap-2">
-                    <svg class="size-4 text-indigo-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147L12 14.63l7.74-4.483a1.125 1.125 0 000-1.954L12 3.71 4.26 8.193a1.125 1.125 0 000 1.954z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12v5.25c0 1.5 2.686 2.25 6 2.25s6-.75 6-2.25V12" />
-                    </svg>
-                    <div>
-                        <span class="block text-[8px] text-slate-500">TOTAL SEMESTER</span>
-                        <span class="text-sm font-black text-slate-900">{{ $displaySemesters->count() }}</span>
-                    </div>
-                </div>
-                <div class="p-2 border border-slate-400 rounded bg-slate-50">
-                    <span class="block text-[8px] text-slate-500">TOTAL CREDIT</span>
-                    <span class="text-sm font-black text-slate-900">{{ $displaySemesters->sum('total_credit') ?: ($result->total_credit ?: 28) }}</span>
-                </div>
-                <div class="p-2 border border-slate-400 rounded bg-slate-50">
-                    <span class="block text-[8px] text-slate-500">TOTAL CREDIT EARNED</span>
-                    <span class="text-sm font-black text-slate-900">{{ $displaySemesters->sum('total_credit') ?: ($result->total_credit ?: 28) }}</span>
-                </div>
-                <div class="p-2 border border-slate-400 rounded bg-slate-50">
-                    <span class="block text-[8px] text-slate-500">CGPA</span>
-                    <span class="text-sm font-black text-indigo-900">{{ number_format((float)($cumulativeGpa ?? $result->student->cgpa ?? $result->gpa ?? 3.75), 2) }}</span>
-                </div>
-                <div class="p-2 border border-slate-400 rounded bg-slate-50 col-span-2 sm:col-span-1">
-                    <span class="block text-[8px] text-slate-500">OVERALL GRADE</span>
-                    <span class="text-sm font-black text-emerald-800">{{ $result->student->grade ?: $result->overall_grade ?: 'A' }}</span>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap items-end justify-between gap-6 pt-2">
-                <!-- NOTE & PUBLISHED DATE -->
-                <div class="space-y-3 text-[9px] text-slate-600 max-w-md">
-                    <div>
-                        <p class="font-bold text-slate-900">Note:</p>
-                        <ul class="list-disc pl-3 space-y-0.5">
-                            <li>This result sheet is computer generated.</li>
-                            <li>No signature is required.</li>
-                            <li>Any discrepancy should be reported to the institute authority.</li>
-                            <li>Scan the QR code to verify this result.</li>
-                        </ul>
+            @if ($isSingleStyle)
+                <!-- SINGLE SEMESTER BOTTOM SUMMARY BAR MATCHING USER IMAGE -->
+                <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+                    <div class="flex flex-wrap items-center gap-6 text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider">
+                        <span>TOTAL CREDIT: {{ $singleSemTotalCredit ?: ($result->total_credit ?: 28) }}</span>
+                        <span>CREDIT EARNED: {{ $result->credit_earned ?: $result->total_credit ?: $singleSemTotalCredit ?: 28 }}</span>
+                        <span>CGPA: {{ number_format((float)($cumulativeGpa ?? $result->student->cgpa ?? $result->gpa ?? 3.75), 2) }}</span>
                     </div>
 
-                    <div class="inline-flex items-center gap-2 border border-slate-300 rounded px-3 py-1 bg-slate-50 text-[10px]">
-                        <svg class="size-3.5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2"/>
-                            <path d="M16 2v4M8 2v4M3 10h18"/>
+                    <div class="text-center">
+                        <img src="{{ ($qrCodes ?? collect())->get($result->id, $qrCode) }}" alt="Scan to verify result" class="mx-auto size-16 bg-transparent">
+                        <p class="mt-0.5 text-[8px] font-black text-slate-600 uppercase tracking-wider">SCAN TO VERIFY</p>
+                    </div>
+                </div>
+            @else
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-[10px] font-black uppercase tracking-wider">
+                    <div class="p-2 border border-slate-400 rounded bg-slate-50 flex items-center justify-center gap-2">
+                        <svg class="size-4 text-indigo-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147L12 14.63l7.74-4.483a1.125 1.125 0 000-1.954L12 3.71 4.26 8.193a1.125 1.125 0 000 1.954z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12v5.25c0 1.5 2.686 2.25 6 2.25s6-.75 6-2.25V12" />
                         </svg>
-                        <span class="font-bold text-slate-800">Published On:</span>
-                        <span>{{ $result->student->publication_date ?: optional($result->published_at ?? $result->created_at)->format('d F Y') }}</span>
-                    </div>
-                </div>
-
-                <!-- SIGNATURE & QR CODE -->
-                <div class="flex items-end gap-6">
-                    <div class="text-center">
-                        <div class="h-8 border-b border-slate-400 w-36 mx-auto flex items-end justify-center pb-1">
-                            <span class="font-serif italic text-xs font-bold text-indigo-900">G. A. Mamun</span>
+                        <div>
+                            <span class="block text-[8px] text-slate-500">TOTAL SEMESTER</span>
+                            <span class="text-sm font-black text-slate-900">{{ $displaySemesters->count() }}</span>
                         </div>
-                        <p class="text-[9px] font-bold text-slate-800 mt-1">Controller of Examinations</p>
-                        <p class="text-[8px] text-slate-500 font-semibold">{{ $result->student->institute_name ?: ($result->student->branch?->institute_name ?? 'BANGLADESH NATIONAL YOUTH TECHNICAL INSTITUTE') }}</p>
                     </div>
-
-                    <div class="text-center">
-                        <img src="{{ ($qrCodes ?? collect())->get($result->id, $qrCode) }}" alt="Scan to verify result" class="mx-auto size-20 bg-transparent">
-                        <p class="mt-1 text-[8px] font-bold text-slate-600 uppercase tracking-wider">SCAN TO VERIFY</p>
+                    <div class="p-2 border border-slate-400 rounded bg-slate-50">
+                        <span class="block text-[8px] text-slate-500">TOTAL CREDIT</span>
+                        <span class="text-sm font-black text-slate-900">{{ $displaySemesters->sum('total_credit') ?: ($result->total_credit ?: 28) }}</span>
+                    </div>
+                    <div class="p-2 border border-slate-400 rounded bg-slate-50">
+                        <span class="block text-[8px] text-slate-500">TOTAL CREDIT EARNED</span>
+                        <span class="text-sm font-black text-slate-900">{{ $displaySemesters->sum('total_credit') ?: ($result->total_credit ?: 28) }}</span>
+                    </div>
+                    <div class="p-2 border border-slate-400 rounded bg-slate-50">
+                        <span class="block text-[8px] text-slate-500">CGPA</span>
+                        <span class="text-sm font-black text-indigo-900">{{ number_format((float)($cumulativeGpa ?? $result->student->cgpa ?? $result->gpa ?? 3.75), 2) }}</span>
+                    </div>
+                    <div class="p-2 border border-slate-400 rounded bg-slate-50 col-span-2 sm:col-span-1">
+                        <span class="block text-[8px] text-slate-500">OVERALL GRADE</span>
+                        <span class="text-sm font-black text-emerald-800">{{ $result->student->grade ?: $result->overall_grade ?: 'A' }}</span>
                     </div>
                 </div>
-            </div>
+
+                <div class="flex flex-wrap items-end justify-between gap-6 pt-2">
+                    <!-- NOTE & PUBLISHED DATE -->
+                    <div class="space-y-3 text-[9px] text-slate-600 max-w-md">
+                        <div>
+                            <p class="font-bold text-slate-900">Note:</p>
+                            <ul class="list-disc pl-3 space-y-0.5">
+                                <li>This result sheet is computer generated.</li>
+                                <li>No signature is required.</li>
+                                <li>Any discrepancy should be reported to the institute authority.</li>
+                                <li>Scan the QR code to verify this result.</li>
+                            </ul>
+                        </div>
+
+                        <div class="inline-flex items-center gap-2 border border-slate-300 rounded px-3 py-1 bg-slate-50 text-[10px]">
+                            <svg class="size-3.5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                <path d="M16 2v4M8 2v4M3 10h18"/>
+                            </svg>
+                            <span class="font-bold text-slate-800">Published On:</span>
+                            <span>{{ $result->student->publication_date ?: optional($result->published_at ?? $result->created_at)->format('d F Y') }}</span>
+                        </div>
+                    </div>
+
+                    <!-- SIGNATURE & QR CODE -->
+                    <div class="flex items-end gap-6">
+                        <div class="text-center">
+                            <div class="h-8 border-b border-slate-400 w-36 mx-auto flex items-end justify-center pb-1">
+                                <span class="font-serif italic text-xs font-bold text-indigo-900">G. A. Mamun</span>
+                            </div>
+                            <p class="text-[9px] font-bold text-slate-800 mt-1">Controller of Examinations</p>
+                            <p class="text-[8px] text-slate-500 font-semibold">{{ $result->student->institute_name ?: ($result->student->branch?->institute_name ?? 'BANGLADESH NATIONAL YOUTH TECHNICAL INSTITUTE') }}</p>
+                        </div>
+
+                        <div class="text-center">
+                            <img src="{{ ($qrCodes ?? collect())->get($result->id, $qrCode) }}" alt="Scan to verify result" class="mx-auto size-20 bg-transparent">
+                            <p class="mt-1 text-[8px] font-bold text-slate-600 uppercase tracking-wider">SCAN TO VERIFY</p>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </footer>
 
     </article>

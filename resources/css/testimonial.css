@@ -153,14 +153,14 @@
 }
 
 @page {
-    size: auto;
-    margin: 0;
+    size: A4 landscape;
+    margin: 0 !important;
 }
 
 @media print {
     @page {
-        size: auto;
-        margin: 0;
+        size: A4 landscape;
+        margin: 0 !important;
     }
 
     .print\:hidden,

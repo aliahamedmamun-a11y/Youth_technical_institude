@@ -160,13 +160,13 @@
 }
 
 @page {
-    size: auto;
+    size: A4 portrait;
     margin: 0 !important;
 }
 
 @media print {
     @page {
-        size: auto;
+        size: A4 portrait;
         margin: 0 !important;
     }
 

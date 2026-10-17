@@ -117,7 +117,18 @@
                 btn.addEventListener('click', function () {
                     const mode = this.dataset.printTestimonial;
                     setPrintMode(mode);
+
+                    let styleTag = document.getElementById('print-orientation-style');
+                    if (!styleTag) {
+                        styleTag = document.createElement('style');
+                        styleTag.id = 'print-orientation-style';
+                        document.head.appendChild(styleTag);
+                    }
+                    styleTag.textContent = '@page { size: 297mm 210mm !important; margin: 0 !important; } @media print { @page { size: 297mm 210mm !important; margin: 0 !important; } html, body, .testimonial-screen, .testimonial-frame, .testimonial-document { width: 297mm !important; height: 210mm !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } }';
+
                     setTimeout(() => window.print(), 100);
+                });
+            });
                 });
             });
         });

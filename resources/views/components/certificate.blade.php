@@ -146,6 +146,15 @@
                 btn.addEventListener('click', function () {
                     const mode = this.dataset.printCertificate;
                     setPrintMode(mode);
+
+                    let styleTag = document.getElementById('print-orientation-style');
+                    if (!styleTag) {
+                        styleTag = document.createElement('style');
+                        styleTag.id = 'print-orientation-style';
+                        document.head.appendChild(styleTag);
+                    }
+                    styleTag.textContent = '@page { size: landscape; margin: 0; } @media print { @page { size: landscape; margin: 0; } html, body, .certificate-screen, .certificate-frame, .certificate-document { width: 100vw !important; height: 100vh !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } }';
+
                     setTimeout(() => window.print(), 100);
                 });
             });

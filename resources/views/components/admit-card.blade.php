@@ -63,11 +63,29 @@
     </div>
 
     <nav class="admit-card-actions print:hidden" aria-label="Admit card actions">
-        <button type="button" data-print-document class="rounded-full bg-blue-800 px-5 py-3 font-black text-white transition hover:bg-blue-700">
+        <button type="button" data-print-document class="rounded-full bg-blue-800 px-5 py-3 font-black text-white transition hover:bg-blue-700 cursor-pointer">
             Print admit card
         </button>
         <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-full border border-slate-300 bg-white px-5 py-3 font-black text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">
             Back to student
         </a>
     </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('[data-print-document]').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    let styleTag = document.getElementById('print-orientation-style');
+                    if (!styleTag) {
+                        styleTag = document.createElement('style');
+                        styleTag.id = 'print-orientation-style';
+                        document.head.appendChild(styleTag);
+                    }
+                    styleTag.textContent = '@page { size: 297mm 210mm !important; margin: 0 !important; } @media print { @page { size: 297mm 210mm !important; margin: 0 !important; } html, body, .admit-card-screen, .admit-card-frame, .admit-card { width: 297mm !important; height: 210mm !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; } }';
+
+                    setTimeout(() => window.print(), 100);
+                });
+            });
+        });
+    </script>
 </main>

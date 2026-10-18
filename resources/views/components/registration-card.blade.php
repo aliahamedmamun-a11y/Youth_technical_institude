@@ -142,16 +142,16 @@
             function fallbackJsPDF(element, filename, finish) {
                 if (typeof html2canvas !== 'undefined') {
                     html2canvas(element, {
-                        scale: 5,
+                        scale: 3,
                         useCORS: true,
                         allowTaint: true,
                         logging: false
                     }).then(canvas => {
-                        const imgData = canvas.toDataURL('image/png', 1.0);
+                        const imgData = canvas.toDataURL('image/jpeg', 0.92);
                         const jsPDF = window.jspdf ? window.jspdf.jsPDF : null;
                         if (jsPDF) {
-                            const pdf = new jsPDF('portrait', 'mm', 'a4', false);
-                            pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, undefined, 'NONE');
+                            const pdf = new jsPDF('portrait', 'mm', 'a4', true);
+                            pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
                             pdf.save(filename);
                         }
                         finish();
@@ -173,7 +173,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>Ultra 4K PDF তৈরি হচ্ছে...</span>
+                    <span>HD PDF তৈরি হচ্ছে...</span>
                 `;
                 btnElement.disabled = true;
 
@@ -189,9 +189,9 @@
                 const opt = {
                     margin: 0,
                     filename: filename,
-                    image: { type: 'png' },
-                    html2canvas: { scale: 5, useCORS: true, allowTaint: true, logging: false },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: false }
+                    image: { type: 'jpeg', quality: 0.92 },
+                    html2canvas: { scale: 3, useCORS: true, allowTaint: true, logging: false },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true }
                 };
 
                 if (typeof html2pdf !== 'undefined') {
@@ -213,17 +213,17 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>4K HD ছবি তৈরি হচ্ছে...</span>
+                    <span>HD ছবি তৈরি হচ্ছে...</span>
                 `;
                 btnElement.disabled = true;
 
                 const studentName = "{{ addslashes($student->name) }}";
                 const cleanName = studentName.replace(/[^a-zA-Z0-9]/g, '_');
-                const filename = `RegistrationCard_${cleanName}.png`;
+                const filename = `RegistrationCard_${cleanName}.jpg`;
 
                 if (typeof html2canvas !== 'undefined') {
-                    html2canvas(doc, { scale: 5, useCORS: true, allowTaint: true, logging: false }).then(canvas => {
-                        const imageUri = canvas.toDataURL('image/png', 1.0);
+                    html2canvas(doc, { scale: 3, useCORS: true, allowTaint: true, logging: false, backgroundColor: '#ffffff' }).then(canvas => {
+                        const imageUri = canvas.toDataURL('image/jpeg', 0.92);
                         const link = document.createElement('a');
                         link.download = filename;
                         link.href = imageUri;

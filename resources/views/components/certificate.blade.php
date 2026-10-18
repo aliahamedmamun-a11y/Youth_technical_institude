@@ -149,16 +149,16 @@
             function fallbackJsPDF(element, filename, finish) {
                 if (typeof html2canvas !== 'undefined') {
                     html2canvas(element, {
-                        scale: 5,
+                        scale: 4,
                         useCORS: true,
                         allowTaint: true,
                         logging: false
                     }).then(canvas => {
-                        const imgData = canvas.toDataURL('image/png', 1.0);
+                        const imgData = canvas.toDataURL('image/jpeg', 0.98);
                         const jsPDF = window.jspdf ? window.jspdf.jsPDF : null;
                         if (jsPDF) {
-                            const pdf = new jsPDF('landscape', 'mm', 'a4', false);
-                            pdf.addImage(imgData, 'PNG', 0, 0, 297, 210, undefined, 'NONE');
+                            const pdf = new jsPDF('landscape', 'mm', 'a4', true);
+                            pdf.addImage(imgData, 'JPEG', 0, 0, 297, 210, undefined, 'FAST');
                             pdf.save(filename);
                         }
                         finish();
@@ -182,7 +182,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>Ultra 4K PDF তৈরি হচ্ছে...</span>
+                    <span>5-10MB Ultra HD PDF...</span>
                 `;
                 btnElement.disabled = true;
 
@@ -198,9 +198,9 @@
                 const opt = {
                     margin: 0,
                     filename: filename,
-                    image: { type: 'png' },
+                    image: { type: 'jpeg', quality: 0.98 },
                     html2canvas: {
-                        scale: 5,
+                        scale: 4,
                         useCORS: true,
                         allowTaint: true,
                         logging: false,
@@ -210,7 +210,7 @@
                         unit: 'mm',
                         format: 'a4',
                         orientation: 'landscape',
-                        compress: false
+                        compress: true
                     }
                 };
 
@@ -235,23 +235,23 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>4K HD ছবি তৈরি হচ্ছে...</span>
+                    <span>5-10MB Ultra HD ছবি...</span>
                 `;
                 btnElement.disabled = true;
 
                 const studentName = "{{ addslashes($student->name) }}";
                 const cleanName = studentName.replace(/[^a-zA-Z0-9]/g, '_');
-                const filename = `Certificate_${cleanName}_${mode}.png`;
+                const filename = `Certificate_${cleanName}_${mode}.jpg`;
 
                 if (typeof html2canvas !== 'undefined') {
                     html2canvas(doc, {
-                        scale: 5,
+                        scale: 4,
                         useCORS: true,
                         allowTaint: true,
                         logging: false,
-                        backgroundColor: mode === 'data-only' ? null : '#ffffe9'
+                        backgroundColor: mode === 'data-only' ? '#ffffff' : '#ffffe9'
                     }).then(canvas => {
-                        const imageUri = canvas.toDataURL('image/png', 1.0);
+                        const imageUri = canvas.toDataURL('image/jpeg', 0.98);
                         const link = document.createElement('a');
                         link.download = filename;
                         link.href = imageUri;

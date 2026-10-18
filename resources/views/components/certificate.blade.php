@@ -149,15 +149,16 @@
             function fallbackJsPDF(element, filename, finish) {
                 if (typeof html2canvas !== 'undefined') {
                     html2canvas(element, {
-                        scale: 3,
+                        scale: 4,
                         useCORS: true,
+                        allowTaint: true,
                         logging: false
                     }).then(canvas => {
-                        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+                        const imgData = canvas.toDataURL('image/png', 1.0);
                         const jsPDF = window.jspdf ? window.jspdf.jsPDF : null;
                         if (jsPDF) {
-                            const pdf = new jsPDF('landscape', 'mm', 'a4');
-                            pdf.addImage(imgData, 'JPEG', 0, 0, 297, 210);
+                            const pdf = new jsPDF('landscape', 'mm', 'a4', true);
+                            pdf.addImage(imgData, 'PNG', 0, 0, 297, 210, undefined, 'FAST');
                             pdf.save(filename);
                         }
                         finish();
@@ -181,7 +182,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>PDF তৈরি হচ্ছে...</span>
+                    <span>High-HD PDF তৈরি হচ্ছে...</span>
                 `;
                 btnElement.disabled = true;
 
@@ -197,17 +198,19 @@
                 const opt = {
                     margin: 0,
                     filename: filename,
-                    image: { type: 'jpeg', quality: 0.98 },
+                    image: { type: 'png' },
                     html2canvas: {
-                        scale: 3,
+                        scale: 4,
                         useCORS: true,
+                        allowTaint: true,
                         logging: false,
                         letterRendering: true
                     },
                     jsPDF: {
                         unit: 'mm',
                         format: 'a4',
-                        orientation: 'landscape'
+                        orientation: 'landscape',
+                        compress: false
                     }
                 };
 
@@ -232,7 +235,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>ছবি তৈরি হচ্ছে...</span>
+                    <span>HD ছবি তৈরি হচ্ছে...</span>
                 `;
                 btnElement.disabled = true;
 
@@ -242,8 +245,9 @@
 
                 if (typeof html2canvas !== 'undefined') {
                     html2canvas(doc, {
-                        scale: 3,
+                        scale: 4,
                         useCORS: true,
+                        allowTaint: true,
                         logging: false,
                         backgroundColor: mode === 'data-only' ? null : '#ffffe9'
                     }).then(canvas => {

@@ -81,12 +81,28 @@
             </div>
         </div>
 
-        <button onclick="window.print()" class="rounded-xl bg-slate-900 hover:bg-slate-800 px-5 py-2.5 text-xs font-black uppercase text-white shadow-lg transition active:scale-95 flex items-center gap-2">
-            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m11.318-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231a1.125 1.125 0 01-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.036 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.656" />
-            </svg>
-            Print / Download PDF (1 Page A4)
-        </button>
+        <div class="flex flex-wrap items-center gap-2">
+            <button type="button" data-download-pdf class="rounded-xl bg-emerald-600 hover:bg-emerald-700 px-5 py-2.5 text-xs font-black uppercase text-white shadow-lg transition active:scale-95 flex items-center gap-2 border border-emerald-500 cursor-pointer">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                📥 Download PDF (সরাসরি পিডিএফ)
+            </button>
+
+            <button type="button" data-download-image class="rounded-xl bg-blue-600 hover:bg-blue-700 px-5 py-2.5 text-xs font-black uppercase text-white shadow-lg transition active:scale-95 flex items-center gap-2 border border-blue-500 cursor-pointer">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+                🖼️ Download Image (ছবি)
+            </button>
+
+            <button type="button" onclick="window.print()" class="rounded-xl bg-slate-900 hover:bg-slate-800 px-4 py-2.5 text-xs font-black uppercase text-white shadow-lg transition active:scale-95 flex items-center gap-2 cursor-pointer">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m11.318-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231a1.125 1.125 0 01-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.036 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.656" />
+                </svg>
+                Print
+            </button>
+        </div>
     </div>
 
     <!-- MAIN RESULT SHEET DOCUMENT -->
@@ -98,7 +114,19 @@
 
             <div class="text-center space-y-1">
                 <p class="text-[9px] font-bold uppercase tracking-[.22em] text-slate-600">Government of the People's Republic of Bangladesh</p>
-                <h1 class="text-base sm:text-xl font-black uppercase tracking-tight text-slate-900 leading-snug">{{ ($result->student->institute_name && !in_array(strtoupper($result->student->institute_name), ['BNTEI', 'BNTI'])) ? $result->student->institute_name : 'SOUTH ASIA ENGINEERING & TECHNICAL INSTITUTE' }}</h1>
+                @php
+                    $studentHeaderInstitute = $result->student->branch?->name
+                        ?? $result->student->institute_name
+                        ?? $result->student->branch?->institute_name;
+
+                    if ($studentHeaderInstitute && in_array(strtoupper(trim($studentHeaderInstitute)), ['BNTEI', 'BNTI', 'BANGLADESH NATIONAL YOUTH TECHNICAL INSTITUTE', 'SOUTH ASIA ENGINEERING & TECHNICAL INSTITUTE', 'SOUTH ASIA ENGINEERING AND TECHNICAL INSTITUTE'])) {
+                        $studentHeaderInstitute = null;
+                    }
+                @endphp
+
+                @if ($studentHeaderInstitute)
+                    <h1 class="text-base sm:text-xl font-black uppercase tracking-tight text-slate-900 leading-snug">{{ $studentHeaderInstitute }}</h1>
+                @endif
                 <p class="text-lg sm:text-2xl font-black tracking-[.2em] text-slate-900 border-t-2 border-slate-300 pt-1.5 mt-1 inline-block px-6">RESULT SHEET</p>
             </div>
 
@@ -139,7 +167,7 @@
                     </tr>
                     <tr class="divide-x divide-slate-300">
                         <td class="bg-blue-50/80 px-3 py-1.5 font-bold text-slate-800">Institute Name</td>
-                        <td class="px-3 py-1.5 font-bold text-slate-900">: {{ ($result->student->institute_name && !in_array(strtoupper($result->student->institute_name), ['BNTEI', 'BNTI'])) ? $result->student->institute_name : ($result->student->branch?->institute_name ?: 'South Asia Engineering & Technical Institute') }}</td>
+                        <td class="px-3 py-1.5 font-bold text-slate-900">: {{ $result->student->branch?->name ?? $result->student->institute_name ?? $result->student->branch?->institute_name ?? '—' }}</td>
                         <td class="bg-blue-50/80 px-3 py-1.5 font-bold text-slate-800">CGPA</td>
                         <td class="px-3 py-1.5 font-bold text-indigo-900">: {{ number_format((float)($cumulativeGpa ?? $result->student->cgpa ?? $result->gpa ?? 3.75), 2) }}</td>
                     </tr>
@@ -149,14 +177,6 @@
                         <td class="bg-blue-50/80 px-3 py-1.5 font-bold text-slate-800">Overall Grade</td>
                         <td class="px-3 py-1.5 font-bold text-emerald-800">: {{ $result->student->grade ?: $result->overall_grade ?: 'A' }}</td>
                     </tr>
-                    @if ($result->student->certificate_serial || $result->student->branch_id)
-                        <tr class="divide-x divide-slate-300">
-                            <td class="bg-blue-50/80 px-3 py-1.5 font-bold text-slate-800">Certificate Serial No</td>
-                            <td class="px-3 py-1.5 font-bold text-indigo-900">: {{ $result->student->certificate_serial ?: ($certificateSerial ?? '—') }}</td>
-                            <td class="bg-blue-50/80 px-3 py-1.5 font-bold text-slate-800">Branch ID</td>
-                            <td class="px-3 py-1.5 font-bold text-slate-900">: {{ $result->student->branch_id ?: '—' }}</td>
-                        </tr>
-                    @endif
                 </tbody>
             </table>
         </div>
@@ -418,7 +438,7 @@
             </div>
         @else
             <!-- STYLE 1: DYNAMIC ADDED SEMESTERS TRANSCRIPT GRID -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+            <div class="grid grid-cols-2 gap-2 sm:gap-3 pt-2">
                 @foreach ($displaySemesters as $semBlock)
                     <section class="min-w-0 break-inside-avoid">
                         <div class="overflow-hidden border border-slate-400 rounded shadow-sm">
@@ -487,7 +507,7 @@
                     </div>
                 </div>
             @else
-                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-[10px] font-black uppercase tracking-wider">
+                <div class="grid grid-cols-5 gap-1 sm:gap-2 text-center text-[8px] sm:text-[10px] font-black uppercase tracking-wider">
                     <div class="p-2 border border-slate-400 rounded bg-slate-50 flex items-center justify-center gap-2">
                         <svg class="size-4 text-indigo-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147L12 14.63l7.74-4.483a1.125 1.125 0 000-1.954L12 3.71 4.26 8.193a1.125 1.125 0 000 1.954z" />
@@ -510,7 +530,7 @@
                         <span class="block text-[8px] text-slate-500">CGPA</span>
                         <span class="text-sm font-black text-indigo-900">{{ number_format((float)($cumulativeGpa ?? $result->student->cgpa ?? $result->gpa ?? 3.75), 2) }}</span>
                     </div>
-                    <div class="p-2 border border-slate-400 rounded bg-slate-50 col-span-2 sm:col-span-1">
+                    <div class="p-2 border border-slate-400 rounded bg-slate-50">
                         <span class="block text-[8px] text-slate-500">OVERALL GRADE</span>
                         <span class="text-sm font-black text-emerald-800">{{ $result->student->grade ?: $result->overall_grade ?: 'A' }}</span>
                     </div>
@@ -561,6 +581,128 @@
     </article>
 
 </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const doc = document.querySelector('.result-sheet');
+
+        function fallbackJsPDF(element, filename, finish) {
+            if (typeof html2canvas !== 'undefined') {
+                html2canvas(element, {
+                    scale: 5,
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png', 1.0);
+                    const jsPDF = window.jspdf ? window.jspdf.jsPDF : null;
+                    if (jsPDF) {
+                        const pdf = new jsPDF('portrait', 'mm', 'a4', false);
+                        pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, undefined, 'NONE');
+                        pdf.save(filename);
+                    }
+                    finish();
+                }).catch(err => {
+                    console.error('jsPDF fallback error:', err);
+                    finish();
+                });
+            } else {
+                finish();
+            }
+        }
+
+        function downloadPDF(btnElement) {
+            if (!doc) return;
+
+            const originalHTML = btnElement.innerHTML;
+            btnElement.innerHTML = `
+                <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+                <span>Ultra 4K PDF তৈরি হচ্ছে...</span>
+            `;
+            btnElement.disabled = true;
+
+            const studentName = "{{ addslashes($result->student->name) }}";
+            const cleanName = studentName.replace(/[^a-zA-Z0-9]/g, '_');
+            const filename = `ResultSheet_${cleanName}.pdf`;
+
+            const finish = () => {
+                btnElement.innerHTML = originalHTML;
+                btnElement.disabled = false;
+            };
+
+            const opt = {
+                margin: 0,
+                filename: filename,
+                image: { type: 'png' },
+                html2canvas: { scale: 5, useCORS: true, allowTaint: true, logging: false },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: false }
+            };
+
+            if (typeof html2pdf !== 'undefined') {
+                html2pdf().set(opt).from(doc).save().then(finish).catch(err => {
+                    console.error('html2pdf error:', err);
+                    fallbackJsPDF(doc, filename, finish);
+                });
+            } else {
+                fallbackJsPDF(doc, filename, finish);
+            }
+        }
+
+        function downloadImage(btnElement) {
+            if (!doc) return;
+
+            const originalHTML = btnElement.innerHTML;
+            btnElement.innerHTML = `
+                <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+                <span>4K HD ছবি তৈরি হচ্ছে...</span>
+            `;
+            btnElement.disabled = true;
+
+            const studentName = "{{ addslashes($result->student->name) }}";
+            const cleanName = studentName.replace(/[^a-zA-Z0-9]/g, '_');
+            const filename = `ResultSheet_${cleanName}.png`;
+
+            if (typeof html2canvas !== 'undefined') {
+                html2canvas(doc, { scale: 5, useCORS: true, allowTaint: true, logging: false }).then(canvas => {
+                    const imageUri = canvas.toDataURL('image/png', 1.0);
+                    const link = document.createElement('a');
+                    link.download = filename;
+                    link.href = imageUri;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    btnElement.innerHTML = originalHTML;
+                    btnElement.disabled = false;
+                }).catch(err => {
+                    console.error('Image error:', err);
+                    btnElement.innerHTML = originalHTML;
+                    btnElement.disabled = false;
+                });
+            } else {
+                btnElement.innerHTML = originalHTML;
+                btnElement.disabled = false;
+            }
+        }
+
+        document.querySelectorAll('[data-download-pdf]').forEach(btn => {
+            btn.addEventListener('click', function () { downloadPDF(this); });
+        });
+
+        document.querySelectorAll('[data-download-image]').forEach(btn => {
+            btn.addEventListener('click', function () { downloadImage(this); });
+        });
+    });
+</script>
 
 </body>
 </html>

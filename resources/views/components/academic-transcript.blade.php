@@ -185,7 +185,7 @@
             function fallbackJsPDF(element, filename, finish) {
                 if (typeof html2canvas !== 'undefined') {
                     html2canvas(element, {
-                        scale: 4,
+                        scale: 5,
                         useCORS: true,
                         allowTaint: true,
                         logging: false
@@ -193,8 +193,8 @@
                         const imgData = canvas.toDataURL('image/png', 1.0);
                         const jsPDF = window.jspdf ? window.jspdf.jsPDF : null;
                         if (jsPDF) {
-                            const pdf = new jsPDF('portrait', 'mm', 'a4', true);
-                            pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, undefined, 'FAST');
+                            const pdf = new jsPDF('portrait', 'mm', 'a4', false);
+                            pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, undefined, 'NONE');
                             pdf.save(filename);
                         }
                         finish();
@@ -216,7 +216,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>High-HD PDF তৈরি হচ্ছে...</span>
+                    <span>Ultra 4K PDF তৈরি হচ্ছে...</span>
                 `;
                 btnElement.disabled = true;
 
@@ -233,7 +233,7 @@
                     margin: 0,
                     filename: filename,
                     image: { type: 'png' },
-                    html2canvas: { scale: 4, useCORS: true, allowTaint: true, logging: false },
+                    html2canvas: { scale: 5, useCORS: true, allowTaint: true, logging: false },
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: false }
                 };
 
@@ -256,7 +256,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>HD ছবি তৈরি হচ্ছে...</span>
+                    <span>4K HD ছবি তৈরি হচ্ছে...</span>
                 `;
                 btnElement.disabled = true;
 
@@ -265,7 +265,7 @@
                 const filename = `AcademicTranscript_${cleanName}.png`;
 
                 if (typeof html2canvas !== 'undefined') {
-                    html2canvas(doc, { scale: 4, useCORS: true, allowTaint: true, logging: false }).then(canvas => {
+                    html2canvas(doc, { scale: 5, useCORS: true, allowTaint: true, logging: false }).then(canvas => {
                         const imageUri = canvas.toDataURL('image/png', 1.0);
                         const link = document.createElement('a');
                         link.download = filename;

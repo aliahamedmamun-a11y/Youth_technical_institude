@@ -230,7 +230,7 @@ class StudentDocumentController extends Controller
             ->values();
 
         if ($allResults->isNotEmpty()) {
-            $transcriptPages = $allResults->flatMap(function (StudentResult $result) use ($qrCode): Collection {
+            $transcriptPages = $allResults->flatMap(function (StudentResult $result) use ($student, $qrCode): Collection {
                 $subjectChunks = $result->subjects->chunk(7);
                 $verificationUrl = $result->verification_token
                     ? route('public.transcript', $result->verification_token)

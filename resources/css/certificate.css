@@ -96,29 +96,29 @@
 .certificate-document--tpl1 .certificate-data--registration { top: 36.7%; left: 62%; width: 23%; }
 .certificate-document--tpl1 .certificate-data--session { top: 42.0%; left: 62%; width: 23%; }
 .certificate-document--tpl1 .certificate-data--student { top: 47.7%; left: 22%; width: 56%; font-size: clamp(0.45rem, 2.2cqw, 1.55rem); }
-.certificate-document--tpl1 .certificate-data--father { top: 52.2%; left: 21%; width: 50%; }
-.certificate-document--tpl1 .certificate-data--mother { top: 56.5%; left: 20%; width: 57%; }
-.certificate-document--tpl1 .certificate-data--institute { top: 61.0%; left: 30%; width: 66%; }
-.certificate-document--tpl1 .certificate-data--course { top: 65.3%; left: 63%; width: 28%; }
+.certificate-document--tpl1 .certificate-data--father { top: 52.2%; left: 20%; width: 50%; }
+.certificate-document--tpl1 .certificate-data--mother { top: 56.5%; left: 18%; width: 57%; }
+.certificate-document--tpl1 .certificate-data--institute { top: 61.0%; left: 16%; width: 66%; }
+.certificate-document--tpl1 .certificate-data--course { top: 65.3%; left: 55%; width: 28%; }
 .certificate-document--tpl1 .certificate-data--roll { top: 65.3%; left: 32%; width: 14%; }
-.certificate-document--tpl1 .certificate-data--month { top: 69.7%; left: 50%; width: 24%; }
+.certificate-document--tpl1 .certificate-data--month { top: 69.7%; left: 46%; width: 24%; }
 .certificate-document--tpl1 .certificate-data--gpa { top: 69.7%; left: 82%; width: 9%; }
 .certificate-document--tpl1 .certificate-data--date { top: 87.5%; left: 20%; width: 17%; font-size: clamp(0.3rem, 1.4cqw, 1.15rem); }
 .certificate-document--tpl1 .cert-qr-code { top: 56.0%; left: 11.0%; width: 9.2%; }
 
 /* Template 2 (Gold Border certificate-template.png) Positions */
-.certificate-document--tpl2 .certificate-data--serial { top: 41.5%; left: 28%; width: 22%; color: #0B1953; }
-.certificate-document--tpl2 .certificate-data--registration { top: 37.2%; left: 68%; width: 23%; }
-.certificate-document--tpl2 .certificate-data--session { top: 42.5%; left: 68%; width: 23%; }
-.certificate-document--tpl2 .certificate-data--student { top: 48.2%; left: 30%; width: 55%; font-size: clamp(0.45rem, 2.2cqw, 1.55rem); }
-.certificate-document--tpl2 .certificate-data--father { top: 52.8%; left: 30%; width: 48%; }
-.certificate-document--tpl2 .certificate-data--mother { top: 57.0%; left: 20%; width: 56%; }
-.certificate-document--tpl2 .certificate-data--institute { top: 61.8%; left: 30%; width: 66%; }
-.certificate-document--tpl2 .certificate-data--course { top: 65.8%; left: 63%; width: 28%; }
+.certificate-document--tpl2 .certificate-data--serial { top: 42%; left: 24.5%; width: 21%; color: #0B1953; }
+.certificate-document--tpl2 .certificate-data--registration { top: 37.2%; left: 62%; width: 23%; }
+.certificate-document--tpl2 .certificate-data--session { top: 42.5%; left: 62%; width: 23%; }
+.certificate-document--tpl2 .certificate-data--student { top: 48.2%; left: 22%; width: 55%; font-size: clamp(0.45rem, 2.2cqw, 1.55rem); }
+.certificate-document--tpl2 .certificate-data--father { top: 52.8%; left: 20%; width: 48%; }
+.certificate-document--tpl2 .certificate-data--mother { top: 57.0%; left: 18%; width: 56%; }
+.certificate-document--tpl2 .certificate-data--institute { top: 61.8%; left: 16%; width: 66%; }
+.certificate-document--tpl2 .certificate-data--course { top: 65.8%; left: 55%; width: 28%; }
 .certificate-document--tpl2 .certificate-data--roll { top: 65.8%; left: 32%; width: 14%; }
-.certificate-document--tpl2 .certificate-data--month { top: 70.3%; left: 50%; width: 23%; }
+.certificate-document--tpl2 .certificate-data--month { top: 70.3%; left: 46%; width: 23%; }
 .certificate-document--tpl2 .certificate-data--gpa { top: 70.3%; left: 82%; width: 9%; }
-.certificate-document--tpl2 .certificate-data--date { top: 91%; left: 18%; width: 20%; font-size: clamp(0.3rem, 1.4cqw, 1.15rem); }
+.certificate-document--tpl2 .certificate-data--date { top: 90.9%; left: 18%; width: 20%; font-size: clamp(0.3rem, 1.4cqw, 1.15rem); }
 .certificate-document--tpl2 .cert-qr-code { top: 56.5%; left: 10.5%; width: 9.2%; }
 
 .cert-qr-code {

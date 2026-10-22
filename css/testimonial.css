@@ -1,0 +1,225 @@
+.testimonial-screen {
+    min-height: 100vh;
+    padding: 1.5rem;
+    overflow-x: auto;
+    background: #071c2c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.testimonial-frame {
+    width: min(100%, 75rem);
+    margin-inline: auto;
+    overflow: hidden;
+    background: #ffffe9;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.5);
+    transition: all 0.2s ease;
+}
+
+.testimonial-frame.print-data-only {
+    background: #ffffff !important;
+    box-shadow: 0 0 0 2px #f59e0b, 0 1.5rem 4rem rgb(0 0 0 / 0.5);
+}
+
+.testimonial-document {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4700 / 3320;
+    overflow: hidden;
+    color: #111;
+    background: #ffffe9;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.testimonial-document.print-data-only {
+    background: transparent !important;
+}
+
+.testimonial-template {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    transition: opacity 0.2s ease;
+}
+
+.print-data-only .testimonial-template {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
+}
+
+.testimonial-data {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    color: #0B1953;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: clamp(0.7rem, 1.4vw, 1.32rem);
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: center;
+    text-overflow: ellipsis;
+    transform: translateY(-50%);
+    white-space: nowrap;
+}
+
+.testimonial-data--student {
+    top: 45.4%;
+    left: 24%;
+    width: 68%;
+    font-size: clamp(0.82rem, 1.58vw, 1.52rem);
+}
+
+.testimonial-data--father {
+    top: 50.1%;
+    left: 19%;
+    width: 33%;
+}
+
+.testimonial-data--institute {
+    top: 50.1%;
+    left: 63%;
+    width: 31%;
+}
+
+.testimonial-data--grade {
+    top: 54.8%;
+    left: 63%;
+    width: 30%;
+}
+
+.testimonial-data--gpa {
+    top: 59.5%;
+    left: 20%;
+    width: 12%;
+}
+
+.testimonial-data--roll {
+    top: 59.5%;
+    left: 52%;
+    width: 14%;
+}
+
+.testimonial-data--registration {
+    top: 59.5%;
+    left: 74%;
+    width: 18%;
+}
+
+.testimonial-data--session {
+    top: 64.2%;
+    left: 23%;
+    width: 23%;
+}
+
+.testimonial-data--date {
+    top: 90.5%;
+    left: 12%;
+    width: 15%;
+    text-align: left;
+    font-style: normal;
+}
+
+.testimonial-head-signature {
+    position: absolute;
+    bottom: 9.2%;
+    left: 47%;
+    transform: translateX(-50%);
+    width: 14%;
+    height: 6%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.testimonial-head-signature img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.testimonial-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+@page {
+    size: 297mm 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+@page :left { margin: 0 !important; }
+@page :right { margin: 0 !important; }
+@page :first { margin: 0 !important; }
+
+@media print {
+    @page {
+        size: 297mm 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .print\:hidden,
+    .testimonial-actions,
+    nav,
+    [class*="print:hidden"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    html,
+    body {
+        width: 297mm !important;
+        height: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        overflow: hidden !important;
+    }
+
+    body {
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+    }
+
+    .testimonial-screen,
+    .testimonial-frame,
+    .testimonial-document {
+        width: 297mm !important;
+        height: 210mm !important;
+        max-width: 297mm !important;
+        max-height: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: transparent !important;
+    }
+
+    .testimonial-document.print-data-only {
+        background: transparent !important;
+    }
+
+    .print-data-only .testimonial-template {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}

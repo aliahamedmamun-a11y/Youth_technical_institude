@@ -1,0 +1,257 @@
+.student-id-screen {
+    min-height: 100vh;
+    padding: 1.5rem;
+    overflow-x: auto;
+    background: #071c2c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 640px) {
+    .student-id-screen {
+        padding: 0 .5rem;
+    }
+}
+
+.student-id-frame {
+    width: min(100%, 72rem);
+    margin-inline: auto;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.5);
+    border-radius: 0.75rem;
+}
+
+.student-id-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 297 / 210;
+    overflow: hidden;
+    color: #111;
+    background: white;
+    container-type: inline-size;
+    font-family: 'Instrument Sans', 'Segoe UI', Roboto, sans-serif;
+}
+
+.student-id__template {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    object-fit: fill;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.student-id__content {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+}
+
+/* Front Side Overlay (Left Card on Template) */
+.id-front-photo {
+    position: absolute;
+    top: 39.5%;
+    left: 27.5%;
+    width: 11.8%;
+    height: 20.8%;
+    border-radius: 0.4cqw;
+    overflow: hidden;
+    background: #f1f5f9;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.id-front-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.id-front-info {
+    position: absolute;
+    top: 62.2%;
+    left: 20.0%;
+    width: 26.6%;
+    text-align: center;
+}
+
+.id-student-name {
+    font-size: clamp(0.35rem, 0.95cqw, 0.8rem);
+    font-weight: 900;
+    color: #03224c;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 0.25rem;
+    line-height: 1.25;
+}
+
+.id-student-course {
+    font-size: clamp(0.28rem, 0.68cqw, 0.58rem);
+    font-weight: 700;
+    color: #334155;
+    margin-top: 0.1cqw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 0.25rem;
+    line-height: 1.25;
+}
+
+.id-student-roll {
+    font-size: clamp(0.3rem, 0.78cqw, 0.68rem);
+    font-weight: 900;
+    color: #03224c;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-top: 0.2cqw;
+    line-height: 1.25;
+}
+
+/* Back Side Overlay (Right Card on Template) */
+.id-back-details {
+    position: absolute;
+    top: 22.0%;
+    left: 60.5%;
+    width: 23.5%;
+    font-size: clamp(0.28rem, 1cqw, 0.58rem);
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.id-back-details dl {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.9fr);
+    row-gap: 0.25cqw;
+    width: 100%;
+}
+
+.id-back-details dt {
+    text-transform: uppercase;
+    font-size: clamp(0.28rem, 0.72cqw, 0.58rem);
+    color: #03224c;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+    line-height: 1.35;
+}
+
+.id-back-details dd {
+    margin: 0;
+    color: #0f172a;
+    font-weight: 800;
+    font-size: clamp(0.28rem, 0.72cqw, 0.58rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.35;
+}
+
+.id-back-qr {
+    position: absolute;
+    top: 67.0%;
+    left: 62.5%;
+    width: 6.6%;
+    aspect-ratio: 1;
+    background: transparent;
+    mix-blend-mode: multiply;
+}
+
+.id-back-qr img {
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: multiply;
+}
+
+/* Print Setup */
+@page {
+    size: 297mm 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+@page :left { margin: 0 !important; }
+@page :right { margin: 0 !important; }
+@page :first { margin: 0 !important; }
+
+@media print {
+    @page {
+        size: 297mm 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .print\:hidden,
+    .id-card-actions,
+    nav,
+    header,
+    footer,
+    [class*="print:hidden"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    html,
+    body {
+        width: 297mm !important;
+        height: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        overflow: hidden !important;
+    }
+
+    body {
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+    }
+
+    .student-id-screen {
+        min-height: 0 !important;
+        height: 210mm !important;
+        width: 297mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        display: block !important;
+        overflow: hidden !important;
+    }
+
+    .student-id-frame,
+    .student-id-card {
+        width: 297mm !important;
+        height: 210mm !important;
+        max-width: 297mm !important;
+        max-height: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: transparent !important;
+        overflow: hidden !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .student-id__template {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .id-back-qr img {
+        mix-blend-mode: multiply !important;
+    }
+}

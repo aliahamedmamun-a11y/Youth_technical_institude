@@ -1,0 +1,244 @@
+@font-face {
+    font-family: 'Certificate Shelley';
+    src: url('./fonts/certificate-shelle.ttf') format('truetype');
+    font-display: block;
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Certificate Shelley';
+    src: url('./fonts/certificate-shelle.ttf') format('truetype');
+    font-display: block;
+    font-style: italic;
+    font-weight: 700;
+}
+
+.certificate-screen {
+    min-height: 100vh;
+    padding: 1.5rem;
+    overflow-x: auto;
+    background: #071c2c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 640px) {
+    .certificate-screen {
+        padding: 0.5rem;
+    }
+}
+
+.certificate-frame {
+    width: min(100%, 75rem);
+    margin-inline: auto;
+    overflow: hidden;
+    background: #ffffe9;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.5);
+    transition: all 0.2s ease;
+}
+
+.certificate-frame.print-data-only {
+    background: #ffffff !important;
+    box-shadow: 0 0 0 2px #38bdf8, 0 1.5rem 4rem rgb(0 0 0 / 0.5);
+}
+
+.certificate-document {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 297 / 210;
+    overflow: hidden;
+    color: #111;
+    background: #ffffe9;
+    container-type: inline-size;
+}
+
+.certificate-document.print-data-only {
+    background: transparent !important;
+}
+
+.certificate-template {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    transition: opacity 0.2s ease;
+}
+
+.print-data-only .certificate-template {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
+}
+
+.certificate-data,
+.cert-field {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    color: #0B1953;
+    font-family: 'English 111 Vivace', 'English 111 Vivace BT', 'Certificate Shelley', 'Shelley-AllegroScriptWd', 'Calligri Expanded Italic', 'Alex Brush', 'Great Vibes', 'Cedarville Cursive', 'Palace Script MT', cursive, serif;
+    font-size: clamp(0.35rem, 1.8cqw, 1.35rem);
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: center;
+    text-overflow: ellipsis;
+    transform: translateY(-50%);
+    white-space: nowrap;
+}
+
+/* Template 1 (Classic Green certificate-template1.png) Positions */
+.certificate-document--tpl1 .certificate-data--serial { top: 42%; left: 24.5%; width: 21%; color: #0B1953; }
+.certificate-document--tpl1 .certificate-data--registration { top: 36.7%; left: 62%; width: 23%; }
+.certificate-document--tpl1 .certificate-data--session { top: 42.0%; left: 62%; width: 23%; }
+.certificate-document--tpl1 .certificate-data--student { top: 47.7%; left: 22%; width: 56%; font-size: clamp(0.45rem, 2.2cqw, 1.55rem); }
+.certificate-document--tpl1 .certificate-data--father { top: 52.2%; left: 19%; width: 50%; }
+.certificate-document--tpl1 .certificate-data--mother { top: 56.5%; left: 16%; width: 57%; }
+.certificate-document--tpl1 .certificate-data--institute { top: 61.0%; left: 20%; width: 66%; }
+.certificate-document--tpl1 .certificate-data--course { top: 65.2%; left: 58%; width: 28%; }
+.certificate-document--tpl1 .certificate-data--roll { top: 65.2%; left: 32%; width: 14%; }
+.certificate-document--tpl1 .certificate-data--month { top: 69.7%; left: 46%; width: 24%; }
+.certificate-document--tpl1 .certificate-data--gpa { top: 69.7%; left: 82%; width: 9%; }
+.certificate-document--tpl1 .certificate-data--date { top: 87.5%; left: 20%; width: 17%; font-size: clamp(0.3rem, 1.4cqw, 1.15rem); }
+.certificate-document--tpl1 .cert-qr-code { top: 56.0%; left: 11.0%; width: 9.2%; }
+
+/* Template 2 (Gold Border certificate-template.png) Positions */
+.certificate-document--tpl2 .certificate-data--serial { top: 42%; left: 24.5%; width: 22%; color: #0B1953; }
+.certificate-document--tpl2 .certificate-data--registration { top: 37.2%; left: 62%; width: 23%; }
+.certificate-document--tpl2 .certificate-data--session { top: 42.5%; left: 62%; width: 23%; }
+.certificate-document--tpl2 .certificate-data--student { top: 48.2%; left: 22%; width: 55%; font-size: clamp(0.45rem, 2.2cqw, 1.55rem); }
+.certificate-document--tpl2 .certificate-data--father { top: 52.8%; left: 20%; width: 48%; }
+.certificate-document--tpl2 .certificate-data--mother { top: 57.2%; left: 16%; width: 56%; }
+.certificate-document--tpl2 .certificate-data--institute { top: 61.0%; left: 20%; width: 66%; }
+.certificate-document--tpl2 .certificate-data--course { top: 65.5%; left: 58%; width: 28%; }
+.certificate-document--tpl2 .certificate-data--roll { top: 65.5%; left: 32%; width: 14%; }
+.certificate-document--tpl2 .certificate-data--month { top: 70.1%; left: 46%; width: 23%; }
+.certificate-document--tpl2 .certificate-data--gpa { top: 70.1%; left: 82%; width: 9%; }
+.certificate-document--tpl2 .certificate-data--date { top: 90.9%; left: 18%; width: 20%; font-size: clamp(0.3rem, 1.4cqw, 1.15rem); }
+.certificate-document--tpl2 .cert-qr-code { top: 56.5%; left: 10.5%; width: 9.2%; }
+
+.cert-qr-code {
+    position: absolute;
+    z-index: 10;
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    aspect-ratio: 1;
+    mix-blend-mode: multiply;
+}
+
+.cert-qr-code img {
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: multiply;
+    background: transparent;
+}
+
+.certificate-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+@page {
+    size: 297mm 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+@page :left { margin: 0 !important; }
+@page :right { margin: 0 !important; }
+@page :first { margin: 0 !important; }
+
+@media print {
+    @page {
+        size: 297mm 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .certificate-actions,
+    nav,
+    .certificate-screen > div.print\:hidden,
+    [class*="print:hidden"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    html,
+    body {
+        width: 297mm !important;
+        height: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        overflow: hidden !important;
+    }
+
+    body {
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+    }
+
+    .certificate-screen {
+        min-height: 0 !important;
+        height: 210mm !important;
+        width: 297mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        display: block !important;
+        overflow: hidden !important;
+    }
+
+    .certificate-frame,
+    .certificate-document {
+        width: 297mm !important;
+        height: 210mm !important;
+        max-width: 297mm !important;
+        max-height: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: transparent !important;
+        overflow: hidden !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .certificate-document.print-data-only {
+        background: transparent !important;
+    }
+
+    .print-data-only .certificate-template {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+
+    .cert-qr-code {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+
+    .cert-qr-code img {
+        mix-blend-mode: multiply !important;
+        background: transparent !important;
+    }
+}

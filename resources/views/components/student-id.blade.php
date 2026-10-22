@@ -6,15 +6,13 @@
 @vite(['resources/css/app.css', 'resources/css/student-id.css', 'resources/js/app.js'])
 
 <main class="student-id-screen">
-    <div class="student-id-container">
+    <div class="student-id-frame">
+        <article class="student-id-card">
+            <img src="{{ asset('images/Logo Or ID card-02.png') }}" alt="Student ID Card Template" class="student-id__template">
 
-        {{-- FRONT SIDE --}}
-        <article class="id-card id-card--front">
-            <img src="{{ asset('images/Logo Or ID card-02.png') }}" alt="ID Card Front Template" class="id-card__template id-card__template--front">
-
-            <div class="id-card__content">
-                <!-- Student Photo Frame -->
-                <div class="id-card__photo-box">
+            <div class="student-id__content">
+                {{-- FRONT SIDE OVERLAYS --}}
+                <div class="id-front-photo">
                     @if ($student->image_path)
                         <img src="{{ str_starts_with($student->image_path, 'http') ? $student->image_path : asset('storage/'.$student->image_path) }}" alt="{{ $student->name }}" onerror="this.onerror=null; this.src='https://i.ibb.co/qMgPTvMQ/1000072415.jpg';">
                     @else
@@ -24,33 +22,25 @@
                     @endif
                 </div>
 
-                <!-- Student Front Info -->
-                <div class="id-card__front-info text-center">
-                    <h3 class="text-sm font-black text-[#03224c] uppercase tracking-wide truncate px-2">
+                <div class="id-front-info">
+                    <h3 class="id-student-name">
                         {{ $student->name }}
                     </h3>
-                    <p class="text-[9.5px] font-bold text-slate-700 truncate px-2 mt-0.5">
+                    <p class="id-student-course">
                         {{ $student->course?->name ?? 'Technical Training Course' }}
                     </p>
-                    <p class="text-[9px] font-black text-[#03224c] uppercase tracking-wider mt-1">
+                    <p class="id-student-roll">
                         ROLL NO: {{ $student->roll_number ?: sprintf('%06d', $student->id) }}
                     </p>
                 </div>
-            </div>
-        </article>
 
-        {{-- BACK SIDE --}}
-        <article class="id-card id-card--back">
-            <img src="{{ asset('images/Logo Or ID card-02.png') }}" alt="ID Card Back Template" class="id-card__template id-card__template--back">
-
-            <div class="id-card__content">
-                <!-- Details List -->
-                <div class="id-card__details">
+                {{-- BACK SIDE OVERLAYS --}}
+                <div class="id-back-details">
                     <dl>
                         <dt>NAME</dt><dd>: {{ $student->name }}</dd>
                         <dt>ROLL NO</dt><dd>: {{ $student->roll_number ?? '—' }}</dd>
                         <dt>REG NO</dt><dd>: {{ $student->registration_number ?? '—' }}</dd>
-                        <dt>SESSION</dt><dd>: {{ $student->session ?? '2024-2025' }}</dd>
+                        <dt>SESSION</dt><dd>: {{ $student->session ?? '2020 - 2022' }}</dd>
                         <dt>COURSE</dt><dd>: {{ $student->course?->name ?? '—' }}</dd>
                         <dt>BLOOD GROUP</dt><dd>: {{ $student->blood_group ?? 'O+' }}</dd>
                         <dt>FATHER'S NAME</dt><dd>: {{ $student->father_name ?? '—' }}</dd>
@@ -59,8 +49,7 @@
                     </dl>
                 </div>
 
-                <!-- QR Code Box -->
-                <div class="id-card__qr-box">
+                <div class="id-back-qr">
                     @if($qrCode)
                         <img src="{{ $qrCode }}" alt="QR Verification">
                     @else
@@ -69,7 +58,6 @@
                 </div>
             </div>
         </article>
-
     </div>
 
     <!-- ACTIONS -->
@@ -98,7 +86,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const doc = document.querySelector('.student-id-container');
+            const doc = document.querySelector('.student-id-card');
 
             function fallbackJsPDF(element, filename, finish) {
                 if (typeof html2canvas !== 'undefined') {
@@ -111,8 +99,8 @@
                         const imgData = canvas.toDataURL('image/jpeg', 0.92);
                         const jsPDF = window.jspdf ? window.jspdf.jsPDF : null;
                         if (jsPDF) {
-                            const pdf = new jsPDF('portrait', 'mm', 'a4', true);
-                            pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
+                            const pdf = new jsPDF('landscape', 'mm', 'a4', true);
+                            pdf.addImage(imgData, 'JPEG', 0, 0, 297, 210, undefined, 'FAST');
                             pdf.save(filename);
                         }
                         finish();
@@ -152,7 +140,7 @@
                     filename: filename,
                     image: { type: 'jpeg', quality: 0.92 },
                     html2canvas: { scale: 3, useCORS: true, allowTaint: true, logging: false },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true }
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape', compress: true }
                 };
 
                 if (typeof html2pdf !== 'undefined') {

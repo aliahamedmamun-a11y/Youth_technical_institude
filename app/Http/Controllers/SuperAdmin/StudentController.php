@@ -211,24 +211,121 @@ class StudentController extends Controller
 
         $student->update($studentData);
 
-        // Update semester-wise GPAs & Grades in student_results
-        if ($request->has('semesters') && is_array($request->input('semesters'))) {
-            foreach ($request->input('semesters') as $semKey => $semData) {
-                if (! empty($semData['cgpa']) || ! empty($semData['grade'])) {
-                    $semTitle = str_contains((string) $semKey, 'Semester') ? $semKey : $semKey.' Semester';
-                    $student->results()->updateOrCreate(
-                        ['semester' => $semTitle],
-                        [
-                            'session' => $student->session ?: '2024 - 2025',
-                            'total_credit' => 28,
-                            'credit_earned' => 28,
-                            'gpa' => ! empty($semData['cgpa']) ? (float) $semData['cgpa'] : null,
-                            'overall_grade' => $semData['grade'] ?? null,
-                            'status' => 'published',
-                            'published_at' => now(),
-                            'verification_token' => Str::random(48),
-                        ]
-                    );
+        // Update semester-wise GPAs, Grades and Subjects in student_results dynamically
+        $semestersInput = $request->input('semesters');
+        if (! is_array($semestersInput)) {
+            $semestersInput = [];
+        }
+
+        $semCgpa = $request->input('semester_cgpa');
+        $semGrade = $request->input('semester_grade');
+
+        if (is_array($semCgpa)) {
+            foreach ($semCgpa as $semKey => $cgpaVal) {
+                if (! isset($semestersInput[$semKey]) || empty($semestersInput[$semKey]['cgpa'])) {
+                    $semestersInput[$semKey] = [
+                        'cgpa' => $cgpaVal,
+                        'grade' => is_array($semGrade) ? ($semGrade[$semKey] ?? null) : null,
+                    ];
+                }
+            }
+        }
+
+        // Group course_subjects by semester
+        $courseSubjectsBySem = [];
+        if ($request->has('course_subjects') && is_array($request->input('course_subjects'))) {
+            foreach ($request->input('course_subjects') as $cSub) {
+                if (! empty($cSub['semester'])) {
+                    $semRaw = (string) $cSub['semester'];
+                    $semTitle = str_contains($semRaw, 'Semester') ? $semRaw : $semRaw.' Semester';
+                    $courseSubjectsBySem[$semTitle][] = $cSub;
+                }
+            }
+        }
+
+        // Group simple subjects by semester
+        $simpleSubjectsBySem = [];
+        if ($request->has('subjects') && is_array($request->input('subjects'))) {
+            foreach ($request->input('subjects') as $sSub) {
+                $semRaw = $sSub['semester'] ?? $sSub['semester_name'] ?? '1st';
+                $semTitle = str_contains((string) $semRaw, 'Semester') ? $semRaw : $semRaw.' Semester';
+                $titleVal = $sSub['subject'] ?? $sSub['title'] ?? $sSub['name'] ?? null;
+                if ($titleVal) {
+                    $simpleSubjectsBySem[$semTitle][] = $titleVal;
+                }
+            }
+        }
+
+        // Collect all distinct semesters
+        $allSemKeys = array_unique(array_merge(
+            array_keys($semestersInput),
+            array_map(fn ($s) => str_replace(' Semester', '', $s), array_keys($courseSubjectsBySem)),
+            array_map(fn ($s) => str_replace(' Semester', '', $s), array_keys($simpleSubjectsBySem))
+        ));
+
+        foreach ($allSemKeys as $semKey) {
+            $semTitle = str_contains((string) $semKey, 'Semester') ? $semKey : $semKey.' Semester';
+            $semData = $semestersInput[$semKey] ?? $semestersInput[str_replace(' Semester', '', $semKey)] ?? [];
+            $cgpaVal = $semData['cgpa'] ?? null;
+            $gradeVal = $semData['grade'] ?? null;
+
+            $hasCourseSubs = ! empty($courseSubjectsBySem[$semTitle]);
+            $hasSimpleSubs = ! empty($simpleSubjectsBySem[$semTitle]);
+
+            if ($cgpaVal !== null || $gradeVal !== null || $hasCourseSubs || $hasSimpleSubs) {
+                $result = $student->results()->firstOrCreate(
+                    ['semester' => $semTitle],
+                    [
+                        'session' => $student->session ?: '2024 - 2025',
+                        'total_credit' => 28,
+                        'credit_earned' => 28,
+                        'gpa' => ! empty($cgpaVal) ? (float) $cgpaVal : ($student->cgpa ?: 3.75),
+                        'overall_grade' => $gradeVal ?: ($student->grade ?: 'A'),
+                        'status' => 'published',
+                        'published_at' => now(),
+                        'verification_token' => Str::random(48),
+                    ]
+                );
+
+                $result->update([
+                    'session' => $student->session ?: $result->session ?: '2024 - 2025',
+                    'gpa' => ! empty($cgpaVal) ? (float) $cgpaVal : ($result->gpa ?: $student->cgpa ?: 3.75),
+                    'overall_grade' => $gradeVal ?: ($result->overall_grade ?: $student->grade ?: 'A'),
+                    'status' => 'published',
+                    'published_at' => $result->published_at ?? now(),
+                ]);
+
+                if ($hasCourseSubs) {
+                    $result->subjects()->delete();
+                    $rows = [];
+                    foreach ($courseSubjectsBySem[$semTitle] as $sortIdx => $cSub) {
+                        $codeVal = $cSub['code'] ?? sprintf('CSE-%03d', $sortIdx + 101);
+                        $rows[] = [
+                            'code' => $codeVal,
+                            'title' => $cSub['title'] ?? $cSub['name'] ?? 'Subject',
+                            'credit' => ! empty($cSub['credit']) ? (float) $cSub['credit'] : 3.0,
+                            'marks' => ! empty($cSub['marks']) ? (float) $cSub['marks'] : null,
+                            'grade' => $cSub['grade'] ?? 'A',
+                            'grade_point' => ! empty($cSub['grade_point']) ? (float) $cSub['grade_point'] : 3.75,
+                            'sort_order' => $sortIdx,
+                        ];
+                    }
+                    $result->subjects()->createMany($rows);
+                } elseif ($hasSimpleSubs) {
+                    $result->subjects()->delete();
+                    $rows = [];
+                    foreach ($simpleSubjectsBySem[$semTitle] as $sortIdx => $subTitle) {
+                        $rows[] = [
+                            'code' => sprintf('SUB-%03d', $sortIdx + 101),
+                            'title' => $subTitle,
+                            'credit' => 3.0,
+                            'marks' => 80,
+                            'grade' => $result->overall_grade ?: 'A',
+                            'grade_point' => $result->gpa ?: 3.75,
+                            'sort_order' => $sortIdx,
+                        ];
+                    }
+                    $result->subjects()->createMany($rows);
                 }
             }
         }

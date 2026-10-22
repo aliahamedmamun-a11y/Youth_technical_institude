@@ -102,9 +102,17 @@ class StudentResultController extends Controller
 
         $viewStyle = $request->query('style', $request->query('view', 'all'));
 
+        $semesterResults = StudentResult::query()
+            ->whereBelongsTo($result->student)
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->orderBy('semester')
+            ->get();
+
         return view('results.sheet', [
             'result' => $result,
             'allResults' => $allResults,
+            'semesterResults' => $semesterResults,
             'cumulativeGpa' => app(ResultGradingService::class)->cumulativeGpa($result->student),
             'qrCode' => $qrCode->dataUri($result),
             'adminPreview' => true,

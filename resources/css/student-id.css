@@ -57,8 +57,8 @@
 /* Front Side Overlay (Left Card on Template) */
 .id-front-photo {
     position: absolute;
-    top: 27.5%;
-    left: 17.2%;
+    top: 37.5%;
+    left: 27.2%;
     width: 12%;
     height: 20.5%;
     border-radius: 0.5cqw;
@@ -82,7 +82,7 @@
 }
 
 .id-student-name {
-    font-size: clamp(0.5rem, 2.2cqw, 1.35rem);
+    font-size: clamp(0.25rem, 1.1cqw, 0.75rem);
     font-weight: 900;
     color: #03224c;
     text-transform: uppercase;
@@ -94,7 +94,7 @@
 }
 
 .id-student-course {
-    font-size: clamp(0.4rem, 1.5cqw, 0.95rem);
+    font-size: clamp(0.2rem, 0.75cqw, 0.425rem);
     font-weight: 700;
     color: #334155;
     margin-top: 0.2cqw;
@@ -116,10 +116,10 @@
 /* Back Side Overlay (Right Card on Template) */
 .id-back-details {
     position: absolute;
-    top: 15.0%;
-    left: 56.5%;
+    top: 22.0%;
+    left: 53.5%;
     width: 36.5%;
-    font-size: clamp(0.4rem, 1.55cqw, 0.95rem);
+    font-size: clamp(0.2rem, 0.8cqw, 0.425rem);
     font-weight: 700;
     color: #0f172a;
 }
@@ -150,9 +150,9 @@
 
 .id-back-qr {
     position: absolute;
-    top: 76.0%;
-    left: 77.0%;
-    width: 10.5%;
+    top: 70.0%;
+    left: 70.0%;
+    width: 6.5%;
     aspect-ratio: 1;
     background: transparent;
     mix-blend-mode: multiply;

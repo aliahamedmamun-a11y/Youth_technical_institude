@@ -1,115 +1,145 @@
 .student-id-screen {
     min-height: 100vh;
-    padding: 2rem;
+    padding: 1.5rem;
+    overflow-x: auto;
     background: #071c2c;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
-}
-
-.student-id-container {
-    display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 2.5rem;
 }
 
-.id-card {
-    width: 250pt;
-    height: 354pt;
-    background: white;
-    border-radius: 12pt;
+@media (max-width: 640px) {
+    .student-id-screen {
+        padding: 0.5rem;
+    }
+}
+
+.student-id-frame {
+    width: min(100%, 72rem);
+    margin-inline: auto;
     overflow: hidden;
-    position: relative;
-    box-shadow: 0 1rem 3rem rgba(0,0,0,0.4);
-    font-family: 'Instrument Sans', 'Segoe UI', Roboto, sans-serif;
-    color: #0f172a;
-    flex-shrink: 0;
+    background: white;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.5);
+    border-radius: 0.75rem;
 }
 
-.id-card__template {
+.student-id-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 297 / 210;
+    overflow: hidden;
+    color: #111;
+    background: white;
+    container-type: inline-size;
+    font-family: 'Instrument Sans', 'Segoe UI', Roboto, sans-serif;
+}
+
+.student-id__template {
     position: absolute;
-    top: 0;
-    width: 200% !important;
-    max-width: none !important;
+    inset: 0;
+    width: 100% !important;
+    max-width: 100% !important;
     height: 100% !important;
     object-fit: fill;
     z-index: 0;
     pointer-events: none;
 }
 
-.id-card__template--front {
-    left: 0;
-}
-
-.id-card__template--back {
-    left: -100%;
-}
-
-.id-card__content {
-    position: relative;
-    z-index: 10;
-    height: 100%;
-    width: 100%;
-}
-
-/* Front Side Photo & Details */
-.id-card--front .id-card__photo-box {
+.student-id__content {
     position: absolute;
-    top: 98pt;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 104pt;
-    height: 124pt;
-    border-radius: 6pt;
+    inset: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+}
+
+/* Front Side Overlay (Left Card on Template) */
+.id-front-photo {
+    position: absolute;
+    top: 27.5%;
+    left: 17.2%;
+    width: 20.8%;
+    height: 35.5%;
+    border-radius: 0.5cqw;
     overflow: hidden;
     background: #f1f5f9;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.id-card--front .id-card__photo-box img {
+.id-front-photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.id-card--front .id-card__front-info {
+.id-front-info {
     position: absolute;
-    top: 230pt;
-    left: 0;
-    width: 100%;
+    top: 64.5%;
+    left: 8%;
+    width: 39%;
     text-align: center;
 }
 
-/* Back Side Details */
-.id-card--back .id-card__details {
+.id-student-name {
+    font-size: clamp(0.5rem, 2.2cqw, 1.35rem);
+    font-weight: 900;
+    color: #03224c;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 0.5rem;
+}
+
+.id-student-course {
+    font-size: clamp(0.4rem, 1.5cqw, 0.95rem);
+    font-weight: 700;
+    color: #334155;
+    margin-top: 0.2cqw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 0.5rem;
+}
+
+.id-student-roll {
+    font-size: clamp(0.45rem, 1.6cqw, 1rem);
+    font-weight: 900;
+    color: #03224c;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.4cqw;
+}
+
+/* Back Side Overlay (Right Card on Template) */
+.id-back-details {
     position: absolute;
-    top: 36pt;
-    left: 0;
-    width: 100%;
-    padding: 0 1.25rem;
-    font-size: 8pt;
+    top: 15.0%;
+    left: 56.5%;
+    width: 36.5%;
+    font-size: clamp(0.4rem, 1.55cqw, 0.95rem);
     font-weight: 700;
     color: #0f172a;
 }
 
-.id-card--back .id-card__details dl {
+.id-back-details dl {
     display: grid;
-    grid-template-columns: 72pt 1fr;
-    row-gap: 3pt;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.9fr);
+    row-gap: 0.8cqw;
     width: 100%;
 }
 
-.id-card--back .id-card__details dt {
+.id-back-details dt {
     text-transform: uppercase;
-    font-size: 7.5pt;
+    font-size: clamp(0.38rem, 1.45cqw, 0.9rem);
     color: #03224c;
     font-weight: 900;
-    letter-spacing: 0.2pt;
+    letter-spacing: 0.01em;
 }
 
-.id-card--back .id-card__details dd {
+.id-back-details dd {
     margin: 0;
     color: #0f172a;
     font-weight: 800;
@@ -118,42 +148,38 @@
     text-overflow: ellipsis;
 }
 
-/* QR Code on Back */
-.id-card--back .id-card__qr-box {
+.id-back-qr {
     position: absolute;
-    bottom: 60pt;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 48pt;
-    height: 48pt;
-    background: white;
-    padding: 2pt;
-    border-radius: 4pt;
-    border: 1pt solid #cbd5e1;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    top: 76.0%;
+    left: 77.0%;
+    width: 10.5%;
+    aspect-ratio: 1;
+    background: transparent;
+    mix-blend-mode: multiply;
 }
 
-.id-card--back .id-card__qr-box img {
+.id-back-qr img {
     width: 100%;
     height: 100%;
+    mix-blend-mode: multiply;
 }
 
-/* Actions */
-.id-card-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
+/* Print Setup */
 @page {
-    size: A4 portrait !important;
+    size: 297mm 210mm !important;
     margin: 0 !important;
+    padding: 0 !important;
 }
+
+@page :left { margin: 0 !important; }
+@page :right { margin: 0 !important; }
+@page :first { margin: 0 !important; }
 
 @media print {
     @page {
-        size: A4 portrait !important;
+        size: 297mm 210mm !important;
         margin: 0 !important;
+        padding: 0 !important;
     }
 
     .print\:hidden,
@@ -174,59 +200,52 @@
 
     html,
     body {
-        width: 210mm !important;
-        height: 297mm !important;
+        width: 297mm !important;
+        height: 210mm !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
         overflow: hidden !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
     }
 
     body {
-        -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
     }
 
     .student-id-screen {
-        width: 210mm !important;
-        height: 297mm !important;
-        min-height: 297mm !important;
-        padding: 0 !important;
+        min-height: 0 !important;
+        height: 210mm !important;
+        width: 297mm !important;
         margin: 0 !important;
+        padding: 0 !important;
         background: white !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
+        display: block !important;
         overflow: hidden !important;
     }
 
-    .student-id-container {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 20pt !important;
-        margin: 0 auto !important;
+    .student-id-frame,
+    .student-id-card {
+        width: 297mm !important;
+        height: 210mm !important;
+        max-width: 297mm !important;
+        max-height: 210mm !important;
+        margin: 0 !important;
         padding: 0 !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
-    }
-
-    .id-card {
         box-shadow: none !important;
+        border: none !important;
+        background: transparent !important;
+        overflow: hidden !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
-        border: 0.1pt solid #cbd5e1 !important;
+    }
+
+    .student-id__template {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
 
-    .id-card__template {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+    .id-back-qr img {
+        mix-blend-mode: multiply !important;
     }
 }

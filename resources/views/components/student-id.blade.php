@@ -13,17 +13,6 @@
             <img src="{{ asset('images/Logo Or ID card-02.png') }}" alt="ID Card Front Template" class="id-card__template id-card__template--front">
 
             <div class="id-card__content">
-                <!-- Institute Header -->
-                <div class="id-card__header text-center pt-4 px-3">
-                    <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="size-10 mx-auto object-contain drop-shadow">
-                    <h2 class="text-[10px] font-black uppercase text-[#03224c] tracking-tight mt-1 leading-tight">
-                        South Asia Engineering & Technical Institute
-                    </h2>
-                    <span class="inline-block bg-[#03224c] text-white text-[8px] font-black uppercase tracking-widest px-3 py-0.5 rounded-full mt-1 shadow-sm">
-                        STUDENT ID
-                    </span>
-                </div>
-
                 <!-- Student Photo Frame -->
                 <div class="id-card__photo-box">
                     @if ($student->image_path)
@@ -37,10 +26,10 @@
 
                 <!-- Student Front Info -->
                 <div class="id-card__front-info text-center">
-                    <h3 class="text-sm sm:text-base font-black text-[#03224c] uppercase tracking-wide truncate px-2">
+                    <h3 class="text-sm font-black text-[#03224c] uppercase tracking-wide truncate px-2">
                         {{ $student->name }}
                     </h3>
-                    <p class="text-[10px] font-bold text-slate-600 truncate px-2">
+                    <p class="text-[9.5px] font-bold text-slate-700 truncate px-2 mt-0.5">
                         {{ $student->course?->name ?? 'Technical Training Course' }}
                     </p>
                     <p class="text-[9px] font-black text-[#03224c] uppercase tracking-wider mt-1">
@@ -55,13 +44,6 @@
             <img src="{{ asset('images/Logo Or ID card-02.png') }}" alt="ID Card Back Template" class="id-card__template id-card__template--back">
 
             <div class="id-card__content">
-                <!-- Header -->
-                <div class="text-center pt-3 pb-1 border-b border-slate-200/60 mx-4">
-                    <h3 class="text-[9px] font-black uppercase text-[#03224c] tracking-wider">
-                        South Asia Engineering & Technical Institute
-                    </h3>
-                </div>
-
                 <!-- Details List -->
                 <div class="id-card__details">
                     <dl>
@@ -70,29 +52,20 @@
                         <dt>REG NO</dt><dd>: {{ $student->registration_number ?? '—' }}</dd>
                         <dt>SESSION</dt><dd>: {{ $student->session ?? '2024-2025' }}</dd>
                         <dt>COURSE</dt><dd>: {{ $student->course?->name ?? '—' }}</dd>
-                        <dt>BLOOD GROUP</dt><dd>: O+</dd>
+                        <dt>BLOOD GROUP</dt><dd>: {{ $student->blood_group ?? 'O+' }}</dd>
                         <dt>FATHER'S NAME</dt><dd>: {{ $student->father_name ?? '—' }}</dd>
                         <dt>MOTHER'S NAME</dt><dd>: {{ $student->mother_name ?? '—' }}</dd>
                         <dt>PHONE</dt><dd>: {{ $student->phone ?? '—' }}</dd>
                     </dl>
                 </div>
 
-                <!-- QR Code & Signature -->
-                <div class="id-card__footer flex items-end justify-between px-5 pb-3">
-                    <div class="text-center">
-                        <div class="h-5 border-b border-slate-400 w-20 mx-auto flex items-end justify-center">
-                            <span class="font-serif italic text-[9px] font-bold text-slate-800">G. A. Mamun</span>
-                        </div>
-                        <span class="text-[7px] font-bold text-slate-600 block mt-0.5 uppercase">Authorized Signature</span>
-                    </div>
-
-                    <div class="id-card__qr-box">
-                        @if($qrCode)
-                            <img src="{{ $qrCode }}" alt="QR Verification">
-                        @else
-                            <div class="size-full bg-slate-50 flex items-center justify-center text-[7px] text-slate-400 font-bold">QR CODE</div>
-                        @endif
-                    </div>
+                <!-- QR Code Box -->
+                <div class="id-card__qr-box">
+                    @if($qrCode)
+                        <img src="{{ $qrCode }}" alt="QR Verification">
+                    @else
+                        <div class="size-full bg-slate-50 flex items-center justify-center text-[7px] text-slate-400 font-bold">QR CODE</div>
+                    @endif
                 </div>
             </div>
         </article>

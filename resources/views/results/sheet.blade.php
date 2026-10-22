@@ -79,6 +79,23 @@
                     📄 Single Semester
                 </a>
             </div>
+
+            <!-- DYNAMIC SEMESTER SELECT OPTION -->
+            @if (isset($semesterResults) && count($semesterResults) > 0)
+                <div class="inline-flex items-center gap-1.5 rounded-xl border border-indigo-200 bg-indigo-50/80 px-3 py-1.5 shadow-sm">
+                    <span class="text-[11px] font-black uppercase text-indigo-900 tracking-wider">Semester:</span>
+                    <select onchange="window.location.href=this.value" class="bg-transparent text-xs font-bold text-indigo-950 outline-none cursor-pointer">
+                        @foreach ($semesterResults as $semRes)
+                            @php
+                                $semUrl = route($adminPreview ? 'super-admin.results.show' : 'results.show', $adminPreview ? $semRes : $semRes->verification_token) . '?style=' . ($viewStyle ?? 'summary');
+                            @endphp
+                            <option value="{{ $semUrl }}" @selected($semRes->id === $result->id)>
+                                {{ $semRes->semester }} {{ $semRes->gpa ? '(GPA: '.number_format((float)$semRes->gpa, 2).')' : '' }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
         </div>
 
         <div class="flex flex-wrap items-center gap-2">

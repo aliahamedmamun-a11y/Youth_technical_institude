@@ -509,6 +509,15 @@
                     </div>
 
                     <!-- SECTION 4: ADD SUBJECTS -->
+                    @php
+                        $formDynamicSemesters = collect(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th']);
+                        if (isset($student) && $student?->course?->semesters && $student->course->semesters->isNotEmpty()) {
+                            $formCourseSemNames = $student->course->semesters->pluck('name')->map(fn($s) => str_replace([' Semester', ' semester'], '', $s));
+                            if ($formCourseSemNames->isNotEmpty()) {
+                                $formDynamicSemesters = $formCourseSemNames->unique()->values();
+                            }
+                        }
+                    @endphp
                     <div class="pt-6 border-t border-white/10 space-y-6">
                         <h2 class="text-base sm:text-lg font-black text-[#818cf8] uppercase tracking-tight">Add Subjects</h2>
 
@@ -516,14 +525,9 @@
                             <div>
                                 <label class="{{ $labelClass }}">Select Semester</label>
                                 <select id="form-semester-select" onchange="updateFormSubjectBtnLabel()" class="{{ $selectClass }}">
-                                    <option value="1st">1st</option>
-                                    <option value="2nd">2nd</option>
-                                    <option value="3rd">3rd</option>
-                                    <option value="4th">4th</option>
-                                    <option value="5th">5th</option>
-                                    <option value="6th">6th</option>
-                                    <option value="7th">7th</option>
-                                    <option value="8th">8th</option>
+                                    @foreach($formDynamicSemesters as $dSem)
+                                        <option value="{{ $dSem }}">{{ $dSem }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -565,14 +569,9 @@
 
                                 <div class="inline-flex items-center gap-2 rounded-2xl bg-[#1c2e42] px-5 py-2.5 shadow-md">
                                     <select id="form-course-list-sem-select" onchange="renderFormCourseListShow()" class="bg-transparent text-xs font-black text-white outline-none cursor-pointer">
-                                        <option value="1st">( 1st semester )</option>
-                                        <option value="2nd">( 2nd semester )</option>
-                                        <option value="3rd">( 3rd semester )</option>
-                                        <option value="4th">( 4th semester )</option>
-                                        <option value="5th">( 5th semester )</option>
-                                        <option value="6th">( 6th semester )</option>
-                                        <option value="7th">( 7th semester )</option>
-                                        <option value="8th">( 8th semester )</option>
+                                        @foreach($formDynamicSemesters as $dSem)
+                                            <option value="{{ $dSem }}">( {{ $dSem }}{{ str_contains(strtolower($dSem), 'semester') ? '' : ' semester' }} )</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

@@ -57,10 +57,10 @@
 /* Front Side Overlay (Left Card on Template) */
 .id-front-photo {
     position: absolute;
-    top: 39.2%;
-    left: 27.9%;
-    width: 11.8%;
-    height: 20.8%;
+    top: 40.2%;
+    left: 27.0%;
+    width: 12.5%;
+    height: 21.8%;
     border-radius: 0.4cqw;
     overflow: hidden;
     background: #f1f5f9;

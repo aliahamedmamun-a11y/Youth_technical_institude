@@ -410,6 +410,8 @@
         /\bnationality\b/i,
         /\bauthority\b/i,
         /\bdocument\s*no\b/i,
+        /\bfather(?:'s)?\s*name\b/i,
+        /\bmother(?:'s)?\s*name\b/i,
         /naidataandemergencycontact/i
     ];
 
@@ -439,14 +441,15 @@
 
     function cleanAddressText(rawAddr) {
         if (!rawAddr) return '';
-        let cleaned = rawAddr
+        return rawAddr
+            .replace(/^\s*\d+\s+address\s*[:\-]?\s*/i, '')
+            .replace(/^address\s*[:\-]?\s*/i, '')
             .replace(/\s+/g, ' ')
             .replace(/,\s*,+/g, ', ')
             .replace(/\b([A-Za-z])\s+([A-Za-z])\s*$/g, '')
             .replace(/\s+[-–]\s*$/, '')
+            .replace(/\b([A-Za-z]+),\s*\1\b/gi, '$1')
             .trim();
-        cleaned = cleaned.replace(/\b([A-Za-z]+),\s*\1\b/gi, '$1');
-        return cleaned;
     }
 
     function isValidPersonName(candidate) {
@@ -520,21 +523,41 @@
         };
 
         const phoneMatch = rawText.match(/(?:\+?88)?01[3-9]\d{8}/);
-        if (phoneMatch) {
-            result.phone = phoneMatch[0].replace(/^\+?88/, '');
+        const cleanPhone = phoneMatch ? phoneMatch[0].replace(/^\+?88/, '') : '';
+        if (cleanPhone) {
+            result.phone = cleanPhone;
         }
 
-        const dobMatch = rawText.match(/\b(\d{2})[\/\-](\d{2})[\/\-](\d{4})\b/) || rawText.match(/\b(\d{4})[\/\-](\d{2})[\/\-](\d{2})\b/);
-        if (dobMatch) {
-            if (dobMatch[1].length === 4) {
-                result.date_of_birth = `${dobMatch[1]}-${dobMatch[2]}-${dobMatch[3]}`;
+        const dobNumeric =
+            rawText.match(/\b(\d{2})[\/\-](\d{2})[\/\-](\d{4})\b/) ||
+            rawText.match(/\b(\d{4})[\/\-](\d{2})[\/\-](\d{2})\b/);
+
+        if (dobNumeric) {
+            if (dobNumeric[1].length === 4) {
+                result.date_of_birth = `${dobNumeric[1]}-${dobNumeric[2]}-${dobNumeric[3]}`;
             } else {
-                const day = parseInt(dobMatch[1], 10);
-                const month = parseInt(dobMatch[2], 10);
-                const year = dobMatch[3];
-                if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
-                    result.date_of_birth = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const d1 = parseInt(dobNumeric[1], 10);
+                const d2 = parseInt(dobNumeric[2], 10);
+                const yr = dobNumeric[3];
+                let month = d2, day = d1;
+                if (d1 <= 12 && d2 > 12) {
+                    month = d1;
+                    day = d2;
                 }
+                if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+                    result.date_of_birth = `${yr}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                }
+            }
+        } else {
+            const dobText = rawText.match(/\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(\d{1,2}),?\s+(\d{4})\b/i);
+            if (dobText) {
+                const monthsMap = {
+                    jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
+                    jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
+                };
+                const m = monthsMap[dobText[1].slice(0, 3).toLowerCase()];
+                const d = String(parseInt(dobText[2], 10)).padStart(2, '0');
+                result.date_of_birth = `${dobText[3]}-${m}-${d}`;
             }
         }
 
@@ -542,28 +565,34 @@
             const line = lines[i];
             const nextLine = lines[i + 1] || '';
 
-            if (/^(?:name|full\s*name|student\s*name)\s*[:\-]?\s*(.*)$/i.test(line)) {
-                const m = line.match(/^(?:name|full\s*name|student\s*name)\s*[:\-]?\s*(.*)$/i);
-                const val = (m && m[1]) ? m[1].trim() : nextLine;
-                if (isValidPersonName(val)) result.name = val;
+            if (/(?:student\s*name|applicant(?:'s)?\s*name|full\s*name|name\s*\(en\)|^name)\b/i.test(line) && !/father|mother|sur\s*name|given/i.test(line)) {
+                const afterColon = line.split(/[:\-]/).slice(1).join(':').trim();
+                const candidate = afterColon || nextLine;
+                if (isValidPersonName(candidate)) {
+                    result.name = candidate.trim();
+                }
             }
 
-            if (/^(?:father(?:'s)?\s*name)\s*[:\-]?\s*(.*)$/i.test(line)) {
-                const m = line.match(/^(?:father(?:'s)?\s*name)\s*[:\-]?\s*(.*)$/i);
-                const val = (m && m[1]) ? m[1].trim() : nextLine;
-                if (isValidPersonName(val)) result.father_name = val;
+            if (/father(?:'s)?\s*name/i.test(line)) {
+                const afterColon = line.split(/[:\-]/).slice(1).join(':').trim();
+                const candidate = afterColon || nextLine;
+                if (isValidPersonName(candidate)) {
+                    result.father_name = candidate.trim();
+                }
             }
 
-            if (/^(?:mother(?:'s)?\s*name)\s*[:\-]?\s*(.*)$/i.test(line)) {
-                const m = line.match(/^(?:mother(?:'s)?\s*name)\s*[:\-]?\s*(.*)$/i);
-                const val = (m && m[1]) ? m[1].trim() : nextLine;
-                if (isValidPersonName(val)) result.mother_name = val;
+            if (/mother(?:'s)?\s*name/i.test(line)) {
+                const afterColon = line.split(/[:\-]/).slice(1).join(':').trim();
+                const candidate = afterColon || nextLine;
+                if (isValidPersonName(candidate)) {
+                    result.mother_name = candidate.trim();
+                }
             }
 
-            if (/(?:address|location|vill|village|post|upazila|zila|district)/i.test(line) && line.length > 10) {
-                const addrVal = line.replace(/^(?:address|location)\s*[:\-]?\s*/i, '');
-                if (!result.address || addrVal.length > result.address.length) {
-                    result.address = cleanAddressText(addrVal);
+            if (/(?:address|location|vill|village|post|upazila|zila|district)/i.test(line) && line.length > 8) {
+                const cleaned = cleanAddressText(line);
+                if (!result.address || cleaned.length > result.address.length) {
+                    result.address = cleaned;
                 }
             }
         }
@@ -575,9 +604,10 @@
             if (mrz.dob) result.date_of_birth = mrz.dob;
         }
 
+        const textWithoutPhone = cleanPhone ? rawText.replaceAll(cleanPhone, ' ') : rawText;
         if (!result.passport_nid_number) {
-            const passNo = rawText.match(/\b[A-Z]{1,2}\d{7,8}\b/);
-            const nidNo = rawText.match(/\b(?:\d{10}|\d{13}|\d{17})\b/);
+            const passNo = textWithoutPhone.match(/\b[A-Z]{1,2}\d{7,8}\b/);
+            const nidNo = textWithoutPhone.match(/\b(?:\d{10}|\d{13}|\d{17})\b/);
             if (docType === 'Passport' && passNo) {
                 result.passport_nid_number = passNo[0];
             } else if (nidNo) {
@@ -676,18 +706,31 @@
         }
     }
 
-    async function pdfFileToDataUrl(file) {
+    async function extractTextFromPdfAndImage(file, docType) {
         await ensureOcrLibs();
         const arrayBuffer = await file.arrayBuffer();
         const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
         const page = await pdf.getPage(1);
-        const viewport = page.getViewport({ scale: 2.0 });
+
+        let pdfText = '';
+        try {
+            const textContent = await page.getTextContent();
+            pdfText = textContent.items.map((item) => item.str).join(' ');
+        } catch (_) {}
+
+        const viewport = page.getViewport({ scale: 2.5 });
         const canvas = document.createElement('canvas');
         canvas.width = viewport.width;
         canvas.height = viewport.height;
         const ctx = canvas.getContext('2d');
         await page.render({ canvasContext: ctx, viewport }).promise;
-        return canvas.toDataURL('image/png');
+        const dataUrl = canvas.toDataURL('image/png');
+
+        setScanStatus(`Scanning ${docType} PDF with OCR...`);
+        const { data } = await Tesseract.recognize(dataUrl, 'eng');
+        const ocrText = data.text || '';
+
+        return { dataUrl, combinedText: `${pdfText}\n${ocrText}`.trim() };
     }
 
     async function runOcrOnImageDataUrl(dataUrl, docType) {
@@ -703,18 +746,21 @@
         if (!file) return;
 
         try {
-            let dataUrl = '';
             if (file.type === 'application/pdf' || /\.pdf$/i.test(file.name)) {
                 setScanStatus(`Rendering PDF page for ${docType}...`);
-                dataUrl = await pdfFileToDataUrl(file);
-            } else {
-                dataUrl = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
+                const pdfRes = await extractTextFromPdfAndImage(file, docType);
+                updatePreviewBox(docType, pdfRes.dataUrl);
+                const parsed = parseDocumentText(pdfRes.combinedText, docType);
+                applyParsedDataToForm(parsed, docType);
+                return;
             }
+
+            const dataUrl = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
 
             updatePreviewBox(docType, dataUrl);
             await runOcrOnImageDataUrl(dataUrl, docType);

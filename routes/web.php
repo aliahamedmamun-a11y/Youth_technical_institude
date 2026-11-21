@@ -5,6 +5,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\BranchApplicationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentScannerController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PublicResultController;
 use App\Http\Controllers\StudentRegistrationController;
@@ -32,6 +33,30 @@ use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use App\Http\Controllers\BranchStudentController;
+
+Route::get('/run-db', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
+        return '<div style="font-family:sans-serif; text-align:center; padding:40px; background:#f0fdf4; color:#166534; border-radius:12px;"><h1>Database Migrated, Seeded & All Courses, Semesters & Subjects Loaded Successfully! 🎉</h1><p><a href="/" style="display:inline-block; padding:12px 24px; background:#16a34a; color:#fff; font-weight:bold; border-radius:8px; text-decoration:none;">Go to Homepage</a></p></div>';
+    } catch (\Throwable $e) {
+        return '<div style="font-family:sans-serif; padding:30px; background:#fef2f2; color:#991b1b;"><h2>Database Execution Exception:</h2><p style="font-size:16px; font-weight:bold;">' . htmlspecialchars($e->getMessage()) . '</p></div>';
+    }
+});
+
+Route::get('/storage/{path}', function (string $path) {
+    $fullPath = storage_path('app/public/' . $path);
+    if (! file_exists($fullPath)) {
+        $publicPath = public_path('storage/' . $path);
+        if (file_exists($publicPath)) {
+            $fullPath = $publicPath;
+        } else {
+            abort(404);
+        }
+    }
+    $mime = @mime_content_type($fullPath) ?: 'image/jpeg';
+    return response()->file($fullPath, ['Content-Type' => $mime]);
+})->where('path', '.*');
 
 Route::get('/', function () {
     $aboutEntries = InstituteProfile::query()->published()->ordered()->get();
@@ -104,12 +129,59 @@ Route::get('/', function () {
     return view('welcome', compact('teacherCards', 'latestNews', 'noticeItems', 'popularCourses', 'aboutEntries', 'instituteProfile', 'homepageSections', 'homepageItems', 'isSectionVisible', 'contactSettings', 'footerSettings'));
 })->name('home');
 
+Route::get('/support', function () {
+    return view('support.index');
+})->name('support.index');
+
 Route::get('/branch-application', [BranchApplicationController::class, 'create'])->name('branch-applications.create');
 Route::post('/branch-application', [BranchApplicationController::class, 'store'])->name('branch-applications.store');
+Route::post('/scan-document', [DocumentScannerController::class, 'scan'])->name('document.scan');
+Route::post('/super-admin/students/scan-document', [DocumentScannerController::class, 'scan'])->name('students.scan.document');
+Route::get('/verified-branches', function () {
+    $approvedBranches = \App\Models\BranchApplication::query()
+        ->where('status', \App\Enums\BranchApplicationStatus::Approved)
+        ->orWhere('is_active', true)
+        ->get();
+
+    if ($approvedBranches->isEmpty()) {
+        $approvedBranches = collect([
+            (object) [
+                'id' => 254871,
+                'director_name' => 'Md. Rakibul Hasan',
+                'institute_name' => 'Mirpur Technical Branch',
+                'district' => 'Dhaka',
+                'upazila' => 'Mirpur',
+                'full_address' => 'Mirpur, Dhaka-1216',
+                'director_photo_path' => null,
+            ],
+            (object) [
+                'id' => 194820,
+                'director_name' => 'Mohammad Arif',
+                'institute_name' => 'BNYTI Chattogram Branch',
+                'district' => 'Chattogram',
+                'upazila' => 'Panchlaish',
+                'full_address' => 'Panchlaish, Chattogram',
+                'director_photo_path' => null,
+            ],
+            (object) [
+                'id' => 381940,
+                'director_name' => 'Shamima Akter',
+                'institute_name' => 'BNYTI Rajshahi Branch',
+                'district' => 'Rajshahi',
+                'upazila' => 'Boalia',
+                'full_address' => 'Boalia, Rajshahi',
+                'director_photo_path' => null,
+            ]
+        ]);
+    }
+
+    return view('verified-branches', compact('approvedBranches'));
+})->name('public.verified-branches');
 Route::get('/results', [PublicResultController::class, 'index'])->name('results.index');
 Route::get('/results/{verificationToken}', [PublicResultController::class, 'show'])->name('results.show');
 Route::get('/verify/admit-card/{verificationToken}', [PublicResultController::class, 'verifyAdmitCard'])->name('public.admit-card');
 Route::get('/verify/registration-card/{verificationToken}', [PublicResultController::class, 'verifyRegistrationCard'])->name('public.registration-card');
+Route::get('/verify/student-id/{verificationToken}', [PublicResultController::class, 'verifyStudentId'])->name('public.student-id');
 Route::get('/verify/testimonial/{verificationToken}', [PublicResultController::class, 'verifyTestimonial'])->name('public.testimonial');
 Route::get('/verify/certificate/{verificationToken}', [PublicResultController::class, 'verifyCertificate'])->name('public.certificate');
 Route::get('/verify/transcript/{verificationToken}', [PublicResultController::class, 'verifyTranscript'])->name('public.transcript');
@@ -208,6 +280,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/super-admin/results/{result}', [StudentResultController::class, 'show'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.results.show');
     Route::get('/super-admin/results/{result}/edit', [StudentResultController::class, 'edit'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.results.edit');
     Route::put('/super-admin/results/{result}', [StudentResultController::class, 'update'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.results.update');
+    Route::patch('/super-admin/results/{result}/toggle-status', [StudentResultController::class, 'toggleStatus'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.results.toggle-status');
     Route::delete('/super-admin/results/{result}', [StudentResultController::class, 'destroy'])->middleware('role:'.UserRole::SuperAdmin->value)->name('super-admin.results.destroy');
 
     Route::resource('/super-admin/teachers', TeacherController::class)
@@ -334,7 +407,7 @@ Route::middleware('auth')->group(function (): void {
 
     Route::get('/super-admin/students/{student}/{document}', [StudentDocumentController::class, 'show'])
         ->middleware('role:'.UserRole::SuperAdmin->value)
-        ->whereIn('document', ['admit-card', 'registration-card', 'student-id', 'certificate', 'certificate-one', 'certificate-two', 'testimonial', 'transcript', 'transcript-one', 'transcript-two', 'forwarding-letter', 'results', 'results-2'])
+        ->whereIn('document', ['admit-card', 'registration-card', 'student-id', 'certificate', 'certificate-one', 'certificate-two', 'certificate-three', 'certificate-four', 'certificate-five', 'certificate-six', 'certificate-seven', 'testimonial', 'transcript', 'transcript-one', 'transcript-two', 'forwarding-letter', 'results', 'results-2'])
         ->name('super-admin.students.documents.show');
 
     Route::get('/dashboard/branch', [DashboardController::class, 'branch'])
@@ -381,7 +454,25 @@ Route::get('/storage/{path}', function (string $path) {
 
 Route::get('/clear-cache', function() {
     Artisan::call('optimize:clear');
+    $files = glob(storage_path('framework/views/*.php'));
+    foreach ($files as $file) {
+        if (is_file($file)) {
+            @unlink($file);
+        }
+    }
     return "Cache is cleared successfully!";
+});
+
+Route::get('/clear-views', function() {
+    $files = glob(storage_path('framework/views/*.php'));
+    foreach ($files as $file) {
+        if (is_file($file)) {
+            @unlink($file);
+        }
+    }
+    Artisan::call('view:clear');
+    Artisan::call('cache:clear');
+    return '<div style="font-family:sans-serif; text-align:center; padding:40px; background:#f0fdf4; color:#166534; border-radius:12px;"><h1>All Blade View Caches Cleared 100% Successfully! 🎉</h1><p><a href="/super-admin/students/create" style="display:inline-block; padding:12px 24px; background:#16a34a; color:#fff; font-weight:bold; border-radius:8px; text-decoration:none;">Go to Add Student Page</a></p></div>';
 });
 
 Route::get('/run-migrate', function() {

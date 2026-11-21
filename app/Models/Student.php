@@ -68,6 +68,25 @@ class Student extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::creating(function (Student $student): void {
+            if (empty($student->registration_number) || str_contains((string) $student->registration_number, '202611')) {
+                do {
+                    $reg = (string) random_int(10000000, 99999999);
+                } while (static::query()->where('registration_number', $reg)->exists());
+                $student->registration_number = $reg;
+            }
+
+            if (empty($student->roll_number)) {
+                do {
+                    $roll = (string) random_int(100000, 999999);
+                } while (static::query()->where('roll_number', $roll)->exists());
+                $student->roll_number = $roll;
+            }
+        });
+    }
+
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

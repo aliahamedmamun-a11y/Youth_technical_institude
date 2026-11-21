@@ -27,7 +27,7 @@ class AdminCardController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image_path'] = $request->file('image')->store('admin-cards', 'public');
+            $validated['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'admin-cards', 'public');
         }
 
         AdminCard::create($validated);
@@ -51,9 +51,9 @@ class AdminCardController extends Controller
 
         if ($request->hasFile('image')) {
             if ($adminCard->image_path) {
-                Storage::disk('public')->delete($adminCard->image_path);
+                \App\Services\FileUploadService::delete($adminCard->image_path);
             }
-            $validated['image_path'] = $request->file('image')->store('admin-cards', 'public');
+            $validated['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'admin-cards', 'public');
         }
 
         $adminCard->update($validated);
@@ -64,7 +64,7 @@ class AdminCardController extends Controller
     public function destroy(AdminCard $adminCard): RedirectResponse
     {
         if ($adminCard->image_path) {
-            Storage::disk('public')->delete($adminCard->image_path);
+            \App\Services\FileUploadService::delete($adminCard->image_path);
         }
         $adminCard->delete();
 

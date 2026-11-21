@@ -48,7 +48,7 @@ class NewsController extends Controller
         $data['is_published'] = $request->boolean('is_published');
         $data['published_at'] = $data['is_published'] ? now() : null;
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('news', 'public');
+            $data['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'news', 'public');
         } News::create($data);
 
         return redirect()->route('super-admin.news.index')->with('status', 'News created successfully.');
@@ -70,8 +70,8 @@ class NewsController extends Controller
         $data['published_at'] = $data['is_published'] ? ($news->published_at ?? now()) : null;
         if ($request->hasFile('image')) {
             if ($news->image_path) {
-                Storage::disk('public')->delete($news->image_path);
-            } $data['image_path'] = $request->file('image')->store('news', 'public');
+                \App\Services\FileUploadService::delete($news->image_path);
+            } $data['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'news', 'public');
         } $news->update($data);
 
         return redirect()->route('super-admin.news.index')->with('status', 'News updated successfully.');
@@ -81,7 +81,7 @@ class NewsController extends Controller
     {
         Gate::authorize('delete', $news);
         if ($news->image_path) {
-            Storage::disk('public')->delete($news->image_path);
+            \App\Services\FileUploadService::delete($news->image_path);
         } $news->delete();
 
         return back()->with('status', 'News deleted successfully.');

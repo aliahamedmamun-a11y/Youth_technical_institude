@@ -180,6 +180,25 @@ class StudentResultController extends Controller
         return redirect()->route('super-admin.students.results.index', $result->student)->with('status', 'Result updated successfully.');
     }
 
+    public function toggleStatus(Request $request, StudentResult $result): RedirectResponse
+    {
+        Gate::authorize('update', $result->student);
+
+        $newStatus = $request->string('status')->toString();
+        if (! in_array($newStatus, ['published', 'draft'], true)) {
+            $newStatus = $result->status === 'published' ? 'draft' : 'published';
+        }
+
+        $result->update([
+            'status' => $newStatus,
+            'published_at' => $newStatus === 'published' ? ($result->published_at ?? now()) : null,
+        ]);
+
+        $statusText = $newStatus === 'published' ? 'Published' : 'Hidden (Draft)';
+
+        return back()->with('status', "Result status updated to {$statusText}.");
+    }
+
     public function destroy(StudentResult $result): RedirectResponse
     {
         Gate::authorize('update', $result->student);

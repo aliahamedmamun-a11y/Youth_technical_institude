@@ -46,7 +46,7 @@ class InstituteProfileController extends Controller
         $data['is_active'] = true;
 
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('about', 'public');
+            $data['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'about', 'public');
         }
 
         InstituteProfile::query()->create($data);
@@ -71,13 +71,13 @@ class InstituteProfileController extends Controller
         $previousImagePath = $about->image_path;
 
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('about', 'public');
+            $data['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'about', 'public');
         }
 
         $about->update($data);
 
         if ($request->hasFile('image') && $previousImagePath) {
-            Storage::disk('public')->delete($previousImagePath);
+            \App\Services\FileUploadService::delete($previousImagePath);
         }
 
         return redirect()->route('super-admin.about.index')->with('status', 'About entry updated successfully.');
@@ -90,7 +90,7 @@ class InstituteProfileController extends Controller
         $about->delete();
 
         if ($imagePath) {
-            Storage::disk('public')->delete($imagePath);
+            \App\Services\FileUploadService::delete($imagePath);
         }
 
         return back()->with('status', 'About entry deleted successfully.');

@@ -26,7 +26,14 @@ class StudentRegistrationController extends Controller
     {
         $studentData = $request->safe()->except('image');
 
-        $studentData['registration_number'] = $this->registrationNumber();
+        if (empty($studentData['registration_number'])) {
+            $studentData['registration_number'] = $this->registrationNumber();
+        }
+
+        if (empty($studentData['roll_number'])) {
+            $studentData['roll_number'] = $this->rollNumber();
+        }
+
         $studentData['result_status'] = 'Pending';
 
         if ($request->user() && $request->user()->hasRole(\App\Enums\UserRole::Branch)) {
@@ -38,7 +45,7 @@ class StudentRegistrationController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            $studentData['image_path'] = $request->file('image')->store('students', 'public');
+            $studentData['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'students', 'public');
         }
 
         Student::query()->create($studentData);
@@ -74,24 +81,21 @@ class StudentRegistrationController extends Controller
     private function registrationNumber(): string
     {
         do {
-
-            $registrationNumber =
-                'BNYTI-'
-                . now()->format('YmdHis')
-                . '-'
-                . random_int(100, 999);
-
-
-        } while (
-            Student::query()
-                ->where(
-                    'registration_number',
-                    $registrationNumber
-                )
-                ->exists()
-        );
-
+            $registrationNumber = (string) random_int(10000000, 99999999);
+        } while (Student::query()->where('registration_number', $registrationNumber)->exists());
 
         return $registrationNumber;
+    }
+
+    /**
+     * Generate unique roll number.
+     */
+    private function rollNumber(): string
+    {
+        do {
+            $rollNumber = (string) random_int(100000, 999999);
+        } while (Student::query()->where('roll_number', $rollNumber)->exists());
+
+        return $rollNumber;
     }
 }

@@ -146,16 +146,16 @@ class BranchApplicationController extends Controller
         $validated['allow_result_publish'] = $request->boolean('allow_result_publish');
 
         if ($request->hasFile('director_photo')) {
-            $validated['director_photo_path'] = $request->file('director_photo')->store('branch-applications/directors', 'public');
+            $validated['director_photo_path'] = \App\Services\FileUploadService::store($request->file('director_photo'), 'branch-applications/directors', 'public');
         }
         if ($request->hasFile('institute_photo')) {
-            $validated['institute_photo_path'] = $request->file('institute_photo')->store('branch-applications/institutes', 'public');
+            $validated['institute_photo_path'] = \App\Services\FileUploadService::store($request->file('institute_photo'), 'branch-applications/institutes', 'public');
         }
         if ($request->hasFile('nid_photo')) {
-            $validated['nid_photo_path'] = $request->file('nid_photo')->store('branch-applications/nid', 'public');
+            $validated['nid_photo_path'] = \App\Services\FileUploadService::store($request->file('nid_photo'), 'branch-applications/nid', 'public');
         }
         if ($request->hasFile('director_signature')) {
-            $validated['director_signature_path'] = $request->file('director_signature')->store('branch-applications/signatures', 'public');
+            $validated['director_signature_path'] = \App\Services\FileUploadService::store($request->file('director_signature'), 'branch-applications/signatures', 'public');
         }
 
         $branchApplication->update($validated);

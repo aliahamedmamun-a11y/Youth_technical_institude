@@ -135,7 +135,7 @@ class StudentController extends Controller
         $studentData['result_status'] = 'Pending';
 
         if ($request->hasFile('image')) {
-            $studentData['image_path'] = $request->file('image')->store('students', 'public');
+            $studentData['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'students', 'public');
         }
 
         Student::query()->create($studentData);
@@ -165,7 +165,7 @@ class StudentController extends Controller
         $previousImagePath = $student->image_path;
 
         if ($request->hasFile('image')) {
-            $studentData['image_path'] = $request->file('image')->store('students', 'public');
+            $studentData['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'students', 'public');
         }
 
         // Field mappings from modal input names to Student model attributes
@@ -272,15 +272,17 @@ class StudentController extends Controller
             $hasCourseSubs = ! empty($courseSubjectsBySem[$semTitle]);
             $hasSimpleSubs = ! empty($simpleSubjectsBySem[$semTitle]);
 
-            if ($cgpaVal !== null || $gradeVal !== null || $hasCourseSubs || $hasSimpleSubs) {
+            if (($cgpaVal !== null && $cgpaVal !== '') || ($gradeVal !== null && $gradeVal !== '') || $hasCourseSubs || $hasSimpleSubs) {
+                $sessionVal = $student->session ?: ($student->start_year && $student->end_year ? $student->start_year.'-'.$student->end_year : '2025-2026');
+
                 $result = $student->results()->firstOrCreate(
                     ['semester' => $semTitle],
                     [
-                        'session' => $student->session ?: '2024 - 2025',
+                        'session' => $sessionVal,
                         'total_credit' => 28,
                         'credit_earned' => 28,
-                        'gpa' => ! empty($cgpaVal) ? (float) $cgpaVal : ($student->cgpa ?: 3.75),
-                        'overall_grade' => $gradeVal ?: ($student->grade ?: 'A'),
+                        'gpa' => ! empty($cgpaVal) ? (float) $cgpaVal : $student->cgpa,
+                        'overall_grade' => $gradeVal ?: $student->grade,
                         'status' => 'published',
                         'published_at' => now(),
                         'verification_token' => Str::random(48),
@@ -288,9 +290,9 @@ class StudentController extends Controller
                 );
 
                 $result->update([
-                    'session' => $student->session ?: $result->session ?: '2024 - 2025',
-                    'gpa' => ! empty($cgpaVal) ? (float) $cgpaVal : ($result->gpa ?: $student->cgpa ?: 3.75),
-                    'overall_grade' => $gradeVal ?: ($result->overall_grade ?: $student->grade ?: 'A'),
+                    'session' => $student->session ?: ($result->session ?: $sessionVal),
+                    'gpa' => ! empty($cgpaVal) ? (float) $cgpaVal : ($result->gpa ?: $student->cgpa),
+                    'overall_grade' => $gradeVal ?: ($result->overall_grade ?: $student->grade),
                     'status' => 'published',
                     'published_at' => $result->published_at ?? now(),
                 ]);
@@ -299,14 +301,14 @@ class StudentController extends Controller
                     $result->subjects()->delete();
                     $rows = [];
                     foreach ($courseSubjectsBySem[$semTitle] as $sortIdx => $cSub) {
-                        $codeVal = $cSub['code'] ?? sprintf('CSE-%03d', $sortIdx + 101);
+                        $codeVal = $cSub['code'] ?? sprintf('SUB-%03d', $sortIdx + 101);
                         $rows[] = [
                             'code' => $codeVal,
                             'title' => $cSub['title'] ?? $cSub['name'] ?? 'Subject',
                             'credit' => ! empty($cSub['credit']) ? (float) $cSub['credit'] : 3.0,
                             'marks' => ! empty($cSub['marks']) ? (float) $cSub['marks'] : null,
-                            'grade' => $cSub['grade'] ?? 'A',
-                            'grade_point' => ! empty($cSub['grade_point']) ? (float) $cSub['grade_point'] : 3.75,
+                            'grade' => $cSub['grade'] ?? $result->overall_grade,
+                            'grade_point' => ! empty($cSub['grade_point']) ? (float) $cSub['grade_point'] : $result->gpa,
                             'sort_order' => $sortIdx,
                         ];
                     }
@@ -320,8 +322,8 @@ class StudentController extends Controller
                             'title' => $subTitle,
                             'credit' => 3.0,
                             'marks' => 80,
-                            'grade' => $result->overall_grade ?: 'A',
-                            'grade_point' => $result->gpa ?: 3.75,
+                            'grade' => $result->overall_grade,
+                            'grade_point' => $result->gpa,
                             'sort_order' => $sortIdx,
                         ];
                     }
@@ -331,7 +333,7 @@ class StudentController extends Controller
         }
 
         if ($request->hasFile('image') && $previousImagePath) {
-            Storage::disk('public')->delete($previousImagePath);
+            \App\Services\FileUploadService::delete($previousImagePath);
         }
 
         return back()->with('status', 'Student information and result updated successfully.');
@@ -359,7 +361,7 @@ class StudentController extends Controller
             $student->delete();
 
             if ($imagePath && ! str_starts_with($imagePath, 'http')) {
-                Storage::disk('public')->delete($imagePath);
+                \App\Services\FileUploadService::delete($imagePath);
             }
         });
 

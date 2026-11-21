@@ -65,7 +65,7 @@ class HomepageContentController extends Controller
         $data['homepage_section_id'] = $section->id;
         $data['is_published'] = $request->boolean('is_published');
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('homepage', 'public');
+            $data['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'homepage', 'public');
         }
         HomepageItem::query()->create($data);
 
@@ -87,13 +87,14 @@ class HomepageContentController extends Controller
         unset($data['section'], $data['image']);
         $data['homepage_section_id'] = $section->id;
         $data['is_published'] = $request->boolean('is_published');
+        $data['sort_order'] = $data['sort_order'] ?? $item->sort_order ?? 0;
         $previousImage = $item->image_path;
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('homepage', 'public');
+            $data['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'homepage', 'public');
         }
         $item->update($data);
-        if ($request->hasFile('image') && $previousImage) {
-            Storage::disk('public')->delete($previousImage);
+        if ($request->hasFile('image') && $previousImage && ! str_starts_with($previousImage, 'images/')) {
+            \App\Services\FileUploadService::delete($previousImage);
         }
 
         return redirect()->route('super-admin.homepage.items.index', $section->key)->with('status', 'Homepage content updated successfully.');
@@ -104,7 +105,7 @@ class HomepageContentController extends Controller
         Gate::authorize('delete', $item);
         $section = $item->section;
         if ($item->image_path) {
-            Storage::disk('public')->delete($item->image_path);
+            \App\Services\FileUploadService::delete($item->image_path);
         }
         $item->delete();
 

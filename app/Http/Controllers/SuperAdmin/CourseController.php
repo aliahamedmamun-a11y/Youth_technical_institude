@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
+use App\Services\FileUploadService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class CourseController extends Controller
@@ -48,10 +48,11 @@ class CourseController extends Controller
     {
         Gate::authorize('create', Course::class);
 
-        $courseData = $request->safe()->except('image');
+        $courseData = $request->validated();
+        unset($courseData['image']);
 
         if ($request->hasFile('image')) {
-            $courseData['image_path'] = $request->file('image')->store('courses', 'public');
+            $courseData['image_path'] = FileUploadService::store($request->file('image'), 'courses', 'public');
         }
 
         Course::query()->create($courseData);
@@ -86,18 +87,19 @@ class CourseController extends Controller
     {
         Gate::authorize('update', $course);
 
-        $courseData = $request->safe()->except('image');
+        $courseData = $request->validated();
+        unset($courseData['image']);
         $previousImagePath = $course->image_path;
 
         if ($request->hasFile('image')) {
-            $newImagePath = $request->file('image')->store('courses', 'public');
+            $newImagePath = FileUploadService::store($request->file('image'), 'courses', 'public');
             $courseData['image_path'] = $newImagePath;
         }
 
         $course->update($courseData);
 
-        if ($request->hasFile('image') && $previousImagePath) {
-            Storage::disk('public')->delete($previousImagePath);
+        if ($request->hasFile('image') && $previousImagePath && $previousImagePath !== ($courseData['image_path'] ?? null)) {
+            FileUploadService::delete($previousImagePath);
         }
 
         return redirect()->route('super-admin.courses.index')->with('status', 'Course updated successfully.');
@@ -110,11 +112,13 @@ class CourseController extends Controller
     {
         Gate::authorize('delete', $course);
 
+        $course->students()->update(['course_id' => null]);
+
         $imagePath = $course->image_path;
         $course->delete();
 
         if ($imagePath) {
-            Storage::disk('public')->delete($imagePath);
+            FileUploadService::delete($imagePath);
         }
 
         return redirect()->route('super-admin.courses.index')->with('status', 'Course deleted successfully.');

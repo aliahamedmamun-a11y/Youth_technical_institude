@@ -22,6 +22,19 @@ class StoreHomepageItemRequest extends FormRequest
      */
     public function rules(): array
     {
-        return ['section' => ['required', 'exists:homepage_sections,key'], 'stable_key' => ['required', 'string', 'max:100'], 'title' => ['nullable', 'string', 'max:255'], 'subtitle' => ['nullable', 'string', 'max:255'], 'body' => ['nullable', 'string', 'max:5000'], 'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:25600'], 'icon' => ['nullable', 'string', 'max:100'], 'link_label' => ['nullable', 'string', 'max:100'], 'link_url' => ['nullable', 'string', 'max:2048'], 'sort_order' => ['required', 'integer', 'min:0'], 'is_published' => ['boolean'], 'metadata' => ['nullable', 'array']];
+        return [
+            'section' => ['required', 'exists:homepage_sections,key'],
+            'stable_key' => ['required', 'string', 'max:100'],
+            'title' => ['nullable', 'string', 'max:255'],
+            'subtitle' => ['nullable', 'string', 'max:255'],
+            'body' => ['nullable', 'string', 'max:5000'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:25600'],
+            'icon' => ['nullable', 'string', 'max:100'],
+            'link_label' => ['nullable', 'string', 'max:100'],
+            'link_url' => ['nullable', 'string', 'max:2048'],
+            'sort_order' => ['nullable', 'integer', 'min:0'],
+            'is_published' => ['boolean'],
+            'metadata' => ['nullable', 'array'],
+        ];
     }
 }

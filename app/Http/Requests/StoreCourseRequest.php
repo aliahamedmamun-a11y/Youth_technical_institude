@@ -27,7 +27,7 @@ class StoreCourseRequest extends FormRequest
             'duration' => ['nullable', 'string', 'max:100'],
             'description' => ['nullable', 'string', 'max:5000'],
             'price' => ['nullable', 'numeric', 'min:0'],
-            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:10240'],
             'is_active' => ['nullable', 'boolean'],
         ];
     }

@@ -43,7 +43,7 @@ class TeacherController extends Controller
         $teacherData = $request->safe()->except('image');
 
         if ($request->hasFile('image')) {
-            $teacherData['image_path'] = $request->file('image')->store('teachers', 'public');
+            $teacherData['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'teachers', 'public');
         }
 
         Teacher::query()->create($teacherData);
@@ -72,13 +72,13 @@ class TeacherController extends Controller
         $previousImagePath = $teacher->image_path;
 
         if ($request->hasFile('image')) {
-            $teacherData['image_path'] = $request->file('image')->store('teachers', 'public');
+            $teacherData['image_path'] = \App\Services\FileUploadService::store($request->file('image'), 'teachers', 'public');
         }
 
         $teacher->update($teacherData);
 
         if ($request->hasFile('image') && $previousImagePath) {
-            Storage::disk('public')->delete($previousImagePath);
+            \App\Services\FileUploadService::delete($previousImagePath);
         }
 
         return redirect()->route('super-admin.teachers.index')->with('status', 'Teacher updated successfully.');
@@ -91,7 +91,7 @@ class TeacherController extends Controller
         $teacher->delete();
 
         if ($imagePath) {
-            Storage::disk('public')->delete($imagePath);
+            \App\Services\FileUploadService::delete($imagePath);
         }
 
         return redirect()->route('super-admin.teachers.index')->with('status', 'Teacher deleted successfully.');

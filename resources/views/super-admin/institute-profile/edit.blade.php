@@ -38,7 +38,7 @@
             <input type="file" name="principal_image" accept="image/jpeg,image/png,image/webp" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm file:mr-4 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:font-bold file:text-blue-700">
             @error('principal_image')<span class="text-rose-600">{{ $message }}</span>@enderror
             @if ($profile->principal_image_path)
-                <img src="{{ str_starts_with($profile->principal_image_path, 'images/') ? asset($profile->principal_image_path) : Storage::disk('public')->url($profile->principal_image_path) }}" alt="Current principal portrait" class="mt-2 size-28 rounded-xl object-cover">
+                <img src="{{ str_starts_with($profile->principal_image_path, 'images/') ? asset($profile->principal_image_path) : asset('storage/' . $profile->principal_image_path) }}" alt="Current principal portrait" class="mt-2 size-28 rounded-xl object-cover">
             @endif
         </label>
 

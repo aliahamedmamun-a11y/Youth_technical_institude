@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Student Information | BNYTI</title>
+    <title>Edit Student Information | {{ config('app.name') }}</title>
     @vite(['resources/css/app.css'])
 </head>
 
@@ -347,16 +347,6 @@
 
             <!-- SECTION 4: ACADEMIC DETAILS (PER SEMESTER) -->
             @php
-                $semDefaults = [
-                    '1st' => ['cgpa' => '3.75', 'grade' => 'A+'],
-                    '2nd' => ['cgpa' => '3.50', 'grade' => 'A'],
-                    '3rd' => ['cgpa' => '4.00', 'grade' => 'A+'],
-                    '4th' => ['cgpa' => '3.50', 'grade' => 'A'],
-                    '5th' => ['cgpa' => '3.75', 'grade' => 'A+'],
-                    '6th' => ['cgpa' => '4.00', 'grade' => 'A+'],
-                    '7th' => ['cgpa' => '3.75', 'grade' => 'A+'],
-                    '8th' => ['cgpa' => '3.75', 'grade' => 'A+'],
-                ];
                 $savedSemResults = isset($student) && $student->relationLoaded('results') ? $student->results->keyBy('semester') : collect();
             @endphp
             <div class="pt-6 border-t border-white/10 space-y-4">
@@ -380,8 +370,8 @@
                     @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $idx => $semLabel)
                         @php
                             $resObj = $savedSemResults->get($semLabel.' Semester') ?? $savedSemResults->get($semLabel);
-                            $valCgpa = old('semester_cgpa.'.$semLabel, $resObj?->gpa ?? $semDefaults[$semLabel]['cgpa'] ?? '3.75');
-                            $valGrade = old('semester_grade.'.$semLabel, $resObj?->overall_grade ?? $semDefaults[$semLabel]['grade'] ?? 'A+');
+                            $valCgpa = old('semester_cgpa.'.$semLabel, $resObj?->gpa);
+                            $valGrade = old('semester_grade.'.$semLabel, $resObj?->overall_grade);
                         @endphp
                         <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-5 space-y-3">
                             <div class="flex items-center justify-between">

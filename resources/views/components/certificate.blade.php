@@ -20,9 +20,7 @@
         default => asset('images/certificate-template.png'),
     };
 
-    $formattedSerial = $certificateSerial
-        ? (str_starts_with($certificateSerial, 'CERT-') ? $certificateSerial : 'CERT-'.$certificateSerial)
-        : sprintf('CERT-%06d', $latestResult?->id ?? $student->id);
+    $formattedSerial = preg_replace('/^CERT-?/i', '', (string) ($certificateSerial ?? sprintf('%06d', $latestResult?->id ?? $student->id)));
 @endphp
 
 @vite(['resources/css/app.css', 'resources/css/certificate.css', 'resources/js/app.js'])
@@ -292,4 +290,3 @@
         });
     </script>
 </main>
-

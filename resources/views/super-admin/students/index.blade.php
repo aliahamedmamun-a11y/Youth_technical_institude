@@ -387,7 +387,7 @@
                     </div>
                     <label class="rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white px-5 py-2.5 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
                         <span>Change Image</span>
-                        <input type="file" name="image" accept="image/*" class="hidden" onchange="previewModalAvatar(this)">
+                        <input type="file" name="image" id="modal-file-input-primary" accept="image/*" class="hidden" onchange="previewModalAvatar(this)">
                     </label>
                 </div>
 
@@ -566,7 +566,7 @@
                     <!-- Picture -->
                     <div>
                         <label class="{{ $modalLabelClass }}">Picture Upload / Photo</label>
-                        <input type="file" name="image" accept="image/*" class="{{ $modalInputClass }} file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-indigo-600 file:text-white">
+                        <input type="file" id="modal-file-input-secondary" accept="image/*" class="{{ $modalInputClass }} file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-indigo-600 file:text-white" onchange="previewModalAvatar(this)">
                         <input type="text" id="modal-picture-url" readonly class="{{ $modalInputClass }} mt-1 cursor-not-allowed text-slate-400 text-xs truncate">
                     </div>
 
@@ -726,7 +726,7 @@
                             </div>
                             <div>
                                 <label class="{{ $modalLabelClass }}">Publication Date</label>
-                                <input type="date" name="publication_date" id="modal-pub-date" class="{{ $modalInputClass }}">
+                                <input type="text" name="publication_date" id="modal-pub-date" placeholder="15 Feb 2025" class="{{ $modalInputClass }}">
                             </div>
                             <div>
                                 <label class="{{ $modalLabelClass }}">Examination Month</label>
@@ -1374,12 +1374,23 @@
 
         function previewModalAvatar(input) {
             if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const primaryInput = document.getElementById('modal-file-input-primary');
+                if (primaryInput && input !== primaryInput) {
+                    try {
+                        const dt = new DataTransfer();
+                        dt.items.add(file);
+                        primaryInput.files = dt.files;
+                    } catch(e) {}
+                }
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const preview = document.getElementById('modal-avatar-preview');
                     if (preview) preview.src = e.target.result;
+                    const picUrlText = document.getElementById('modal-picture-url');
+                    if (picUrlText) picUrlText.value = file.name;
                 };
-                reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(file);
             }
         }
 

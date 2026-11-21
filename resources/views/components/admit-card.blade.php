@@ -7,10 +7,26 @@
     'qrCode',
     'qrUrl',
     'printedAt',
+    'isPublic' => false,
 ])
 
-@vite(['resources/css/app.css', 'resources/css/admit-card.css', 'resources/js/app.js'])
+@php
+    $studentPhotoUrl = null;
+    if ($student->image_path) {
+        if (str_starts_with($student->image_path, 'http://') || str_starts_with($student->image_path, 'https://')) {
+            $studentPhotoUrl = $student->image_path;
+        } elseif (str_starts_with($student->image_path, 'images/')) {
+            $studentPhotoUrl = asset($student->image_path);
+        } else {
+            $studentPhotoUrl = asset('storage/' . ltrim($student->image_path, '/'));
+        }
+    }
 
+    $formattedSerial = preg_replace('/^[a-zA-Z\s\/\-]+/', '', $serial ?? '');
+@endphp
+
+@vite(['resources/css/app.css', 'resources/css/admit-card.css', 'resources/js/app.js'])
+-
 <main class="admit-card-screen">
     <h1 class="sr-only">Admit Card for {{ $student->name }}</h1>
 
@@ -18,7 +34,7 @@
         <article class="admit-card" aria-label="Admit card for {{ $student->name }}">
             <img class="admit-card__template" src="{{ asset('images/admit-card-template.png') }}" alt="">
 
-            <p class="admit-card__serial"><span class="sr-only">Serial No.</span>{{ $serial }}</p>
+            <p class="admit-card__serial"><span class="sr-only">Serial No.</span>{{ $formattedSerial }}</p>
 
             <dl class="admit-card__student-details" aria-label="Student information">
                 <div><dt class="sr-only">Name of the Institute</dt><dd>{{ $student->branch?->name ?? $student->institute_name ?? $instituteName }}</dd></div>
@@ -34,8 +50,8 @@
             </div>
 
             <figure class="admit-card__photo">
-                @if ($student->image_path)
-                    <img src="{{ asset('storage/'.$student->image_path) }}" alt="Photo of {{ $student->name }}">
+                @if ($studentPhotoUrl)
+                    <img src="{{ $studentPhotoUrl }}" alt="Photo of {{ $student->name }}">
                 @else
                     <div class="admit-card__photo-placeholder" aria-label="Student photo not available">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -67,19 +83,14 @@
             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
-            📥 Download PDF (সরাসরি পিডিএফ ডাউনলোড)
-        </button>
-
-        <button type="button" data-download-image class="rounded-xl bg-blue-600 hover:bg-blue-700 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-xl transition cursor-pointer active:scale-95 flex items-center gap-2 border border-blue-500">
-            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-            </svg>
             🖼️ Download Image (ছবি)
         </button>
 
+        @if (! $isPublic)
         <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-6 py-3 text-xs font-black uppercase tracking-wider text-slate-700 transition">
             Back to student
         </a>
+        @endif
     </nav>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -92,12 +103,13 @@
             function fallbackJsPDF(element, filename, finish) {
                 if (typeof html2canvas !== 'undefined') {
                     html2canvas(element, {
-                        scale: 3,
+                        scale: 5,
                         useCORS: true,
-                        allowTaint: true,
-                        logging: false
+                        allowTaint: false,
+                        logging: false,
+                        dpi: 300
                     }).then(canvas => {
-                        const imgData = canvas.toDataURL('image/jpeg', 0.92);
+                        const imgData = canvas.toDataURL('image/jpeg', 1.0);
                         const jsPDF = window.jspdf ? window.jspdf.jsPDF : null;
                         if (jsPDF) {
                             const pdf = new jsPDF('landscape', 'mm', 'a4', true);
@@ -123,7 +135,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>HD PDF তৈরি হচ্ছে...</span>
+                    <span>Ultra HD PDF তৈরি হচ্ছে...</span>
                 `;
                 btnElement.disabled = true;
 
@@ -139,8 +151,8 @@
                 const opt = {
                     margin: 0,
                     filename: filename,
-                    image: { type: 'jpeg', quality: 0.92 },
-                    html2canvas: { scale: 3, useCORS: true, allowTaint: true, logging: false },
+                    image: { type: 'jpeg', quality: 1.0 },
+                    html2canvas: { scale: 5, useCORS: true, allowTaint: false, logging: false, dpi: 300 },
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape', compress: true }
                 };
 
@@ -163,7 +175,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>HD ছবি তৈরি হচ্ছে...</span>
+                    <span>Ultra HD ছবি তৈরি হচ্ছে...</span>
                 `;
                 btnElement.disabled = true;
 
@@ -172,8 +184,8 @@
                 const filename = `AdmitCard_${cleanName}.jpg`;
 
                 if (typeof html2canvas !== 'undefined') {
-                    html2canvas(doc, { scale: 3, useCORS: true, allowTaint: true, logging: false, backgroundColor: '#ffffff' }).then(canvas => {
-                        const imageUri = canvas.toDataURL('image/jpeg', 0.92);
+                    html2canvas(doc, { scale: 5, useCORS: true, allowTaint: false, logging: false, backgroundColor: '#ffffff', dpi: 300 }).then(canvas => {
+                        const imageUri = canvas.toDataURL('image/jpeg', 1.0);
                         const link = document.createElement('a');
                         link.download = filename;
                         link.href = imageUri;

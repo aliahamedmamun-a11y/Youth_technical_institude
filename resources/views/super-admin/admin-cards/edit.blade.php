@@ -24,7 +24,7 @@
                     <input type="file" name="image"
                         class="w-full rounded-lg border border-white/10 bg-[#071c2c]/50 py-3 px-4 text-sm text-white file:mr-4 file:rounded file:border-0 file:bg-blue-600 file:px-4 file:py-1 file:text-xs file:font-black file:text-white">
                     @if($adminCard->image_path)
-                        <img src="{{ Storage::disk('public')->url($adminCard->image_path) }}" class="mt-4 h-32 rounded-lg object-cover">
+                        <img src="{{ str_starts_with($adminCard->image_path, 'images/') ? asset($adminCard->image_path) : asset('storage/' . $adminCard->image_path) }}" class="mt-4 h-32 rounded-lg object-cover">
                     @endif
                 </div>
 

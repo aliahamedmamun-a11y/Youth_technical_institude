@@ -14,11 +14,12 @@
                     <input type="hidden" name="section" value="{{ $section->key }}">
                     <input type="hidden" name="stable_key" value="{{ $item->stable_key }}">
                     <input type="hidden" name="is_published" value="{{ $item->is_published }}">
+                    <input type="hidden" name="sort_order" value="{{ $item->sort_order ?? 0 }}">
 
                     {{-- Profile Photo Upload --}}
                     <div class="flex flex-col items-center">
                         <label for="review-photo" class="group relative flex size-32 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-white/10 bg-[#071c2c]/50 transition hover:border-blue-500/50">
-                            <img id="review-photo-preview" src="{{ $item->image_path ? (str_starts_with($item->image_path, 'images/') ? asset($item->image_path) : Storage::disk('public')->url($item->image_path)) : '#' }}"
+                            <img id="review-photo-preview" src="{{ $item->image_path ? (str_starts_with($item->image_path, 'images/') ? asset($item->image_path) : asset('storage/' . $item->image_path)) : '#' }}"
                                 class="absolute inset-0 {{ $item->image_path ? '' : 'hidden' }} size-full rounded-2xl object-cover">
                             <div id="review-photo-placeholder" class="{{ $item->image_path ? 'hidden' : 'flex' }} flex flex-col items-center gap-2 text-slate-500">
                                 <svg viewBox="0 0 24 24" class="size-8" fill="none" stroke="currentColor" stroke-width="1.5">

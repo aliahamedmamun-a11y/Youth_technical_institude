@@ -8,6 +8,7 @@
         :qr-code="$admitCardQrCode"
         :qr-url="$admitCardQrUrl"
         :printed-at="$admitCardPrintedAt"
+        :is-public="$isPublic ?? false"
     />
 @elseif ($document === 'registration-card')
     <x-registration-card
@@ -17,6 +18,7 @@
         :institute-name="$registrationCardInstituteName"
         :qr-code="$registrationCardQrCode"
         :qr-url="$registrationCardQrUrl"
+        :is-public="$isPublic ?? false"
     />
 @elseif ($document === 'certificate' || $document === 'certificate-one' || $document === 'certificate-two')
     <x-certificate
@@ -26,17 +28,20 @@
         :certificate-serial="$certificateSerial"
         :qr-code="$qrCode ?? $registrationCardQrCode ?? null"
         :template="$template ?? ($document === 'certificate-one' ? '1' : '2')"
+        :is-public="$isPublic ?? false"
     />
 @elseif ($document === 'testimonial')
     <x-testimonial
         :student="$student"
         :latest-result="$latestResult"
         :cumulative-gpa="$cumulativeGpa"
+        :is-public="$isPublic ?? false"
     />
 @elseif ($document === 'student-id')
     <x-student-id
         :student="$student"
-        :qr-code="$registrationCardQrCode ?? null"
+        :qr-code="$studentIdQrCode ?? $registrationCardQrCode ?? null"
+        :is-public="$isPublic ?? false"
     />
 @elseif ($document === 'transcript' || $document === 'transcript-one' || $document === 'transcript-two')
     <x-academic-transcript
@@ -46,6 +51,7 @@
         :letter-grade="$transcriptLetterGrade"
         :institute-name="$transcriptInstituteName"
         :grading-scale="$transcriptGradingScale"
+        :is-public="$isPublic ?? false"
     />
 @else
     <x-dashboard-shell :title="$documentTitle" eyebrow="Student document" :description="$student->name.' · '.$student->registration_number">

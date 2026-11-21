@@ -3,12 +3,17 @@
     'pages',
     'cumulativeGpa' => null,
     'letterGrade' => null,
-    'instituteName' => 'Bangladesh Technical Training Institute',
+    'instituteName' => null,
     'gradingScale' => [],
+    'isPublic' => false,
 ])
 
 @php
-    $transcriptTemplateUrl = asset('images/academic-transcript-template.png').'?v='.filemtime(public_path('images/academic-transcript-template.png'));
+    $transcriptImagePath = public_path('images/academic-transcript-template.png');
+    $transcriptTemplateUrl = asset('images/academic-transcript-template.png');
+    if (file_exists($transcriptImagePath)) {
+        $transcriptTemplateUrl .= '?v=' . filemtime($transcriptImagePath);
+    }
 
     $branchApp = $student->branch_application
         ?? \App\Models\BranchApplication::query()
@@ -33,79 +38,43 @@
             @php($result = $page['result'])
 
             <article class="transcript-page" data-transcript-page aria-label="Academic transcript page {{ $loop->iteration }} of {{ $loop->count }} for {{ $student->name }}">
-                {{-- Background high-quality template image providing headers, borders and static grading scales --}}
-                <img class="transcript-template" src="{{ $transcriptTemplateUrl }}" alt="">
+                {{-- Background high-quality clean template image --}}
+                <img class="transcript-template" src="{{ $transcriptTemplateUrl }}" alt="" crossorigin="anonymous" loading="eager">
 
                 {{-- Dynamic Serial No Overlay --}}
                 <div class="ts-field ts-field--serial">
-                    {{ $page['serial'] ?? '036097' }}
+                    Serial No: {{ str_replace('TRANS-', '', $page['serial'] ?? sprintf('%06d', $student->id)) }}
                 </div>
 
                 {{-- Dynamic Semester Name Header Overlay --}}
                 <div class="ts-field ts-field--semester">
-                    {{ $page['semesterName'] ?? $result?->semester ?? 'First Semester' }}
+                    {{ $page['semesterName'] ?? $result?->semester ?? '—' }}
                 </div>
 
                 {{-- Student Information Left-Aligned Dynamic Rows --}}
                 <div class="transcript-student-info-box">
-                    <div class="ts-row">
-                        <span class="ts-label">Name of Student</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $student->name }}</span>
-                    </div>
-                    <div class="ts-row">
-                        <span class="ts-label">Father's Name</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $student->father_name ?? '—' }}</span>
-                    </div>
-                    <div class="ts-row">
-                        <span class="ts-label">Mother's Name</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $student->mother_name ?? '—' }}</span>
-                    </div>
-                    <div class="ts-row">
-                        <span class="ts-label">Roll No</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $student->roll_number ?? '906445' }}</span>
-                    </div>
-                    <div class="ts-row">
-                        <span class="ts-label">Registration No</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $student->registration_number ?? '50936433' }}</span>
-                    </div>
-                    <div class="ts-row">
-                        <span class="ts-label">Institution</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $student->institute_name ?? $instituteName }}</span>
-                    </div>
-                    <div class="ts-row">
-                        <span class="ts-label">Technology</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $student->course?->name ?? '—' }}</span>
-                    </div>
-                    <div class="ts-row">
-                        <span class="ts-label">Course Duration</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $student->duration ?? $student->course?->duration ?? '1 Year' }}</span>
-                    </div>
-                    <div class="ts-row">
-                        <span class="ts-label">Session</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $result?->session ?? $student->session ?? 'Jan - Dec 2025' }}</span>
-                    </div>
-                    <div class="ts-row">
-                        <span class="ts-label">Credit</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $page['totalCredits'] ?? '154' }}</span>
-                    </div>
-                    <div class="ts-row">
-                        <span class="ts-label">Final CGPA</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $cumulativeGpa !== null ? number_format((float) $cumulativeGpa, 2) : '3.75' }}</span>
-                    </div>
-                    <div class="ts-row">
-                        <span class="ts-label">Letter Grade</span><span class="ts-sep">:</span>
-                        <span class="ts-val">{{ $letterGrade ?? 'A' }}</span>
-                    </div>
+                    <div class="ts-row"><span class="ts-label">Name of Student</span><span class="ts-sep">:</span><span class="ts-val">{{ $student->name }}</span></div>
+                    <div class="ts-row"><span class="ts-label">Father's Name</span><span class="ts-sep">:</span><span class="ts-val">{{ $student->father_name ?? '—' }}</span></div>
+                    <div class="ts-row"><span class="ts-label">Mother's Name</span><span class="ts-sep">:</span><span class="ts-val">{{ $student->mother_name ?? '—' }}</span></div>
+                    <div class="ts-row"><span class="ts-label">Roll No</span><span class="ts-sep">:</span><span class="ts-val">{{ $student->roll_number ?? '—' }}</span></div>
+                    <div class="ts-row"><span class="ts-label">Registration No</span><span class="ts-sep">:</span><span class="ts-val">{{ $student->registration_number ?? '—' }}</span></div>
+                    <div class="ts-row"><span class="ts-label">Institution</span><span class="ts-sep">:</span><span class="ts-val">{{ $student->institute_name ?? $student->branch?->name ?? $instituteName ?? '—' }}</span></div>
+                    <div class="ts-row"><span class="ts-label">Technology</span><span class="ts-sep">:</span><span class="ts-val">{{ $student->course?->name ?? '—' }}</span></div>
+                    <div class="ts-row"><span class="ts-label">Course Duration</span><span class="ts-sep">:</span><span class="ts-val">{{ $student->duration ?? $student->course?->duration ?? '—' }}</span></div>
+                    <div class="ts-row"><span class="ts-label">Session</span><span class="ts-sep">:</span><span class="ts-val">{{ $result?->session ?? $student->session ?? '—' }}</span></div>
+                    <div class="ts-row"><span class="ts-label">Credit</span><span class="ts-sep">:</span><span class="ts-val">{{ $page['totalCredits'] ?? $result?->total_credit ?? '—' }}</span></div>
+                    <div class="ts-row"><span class="ts-label">Final CGPA</span><span class="ts-sep">:</span><span class="ts-val">{{ $cumulativeGpa !== null ? number_format((float) $cumulativeGpa, 2) : '—' }}</span></div>
+                    <div class="ts-row"><span class="ts-label">Letter Grade</span><span class="ts-sep">:</span><span class="ts-val">{{ $letterGrade ?? $student->grade ?? '—' }}</span></div>
                 </div>
 
-                {{-- Main Content Academic Subjects Table Overlay --}}
+                {{-- Main Content Academic Subjects Table Overlay - Clean Masked Table --}}
                 <div class="transcript-main-table-container">
                     <table class="ts-table" aria-label="Subjects and Marks">
                         <thead>
                             <tr>
-                                <th style="width: 15%;">Subjects<br>Code</th>
-                                <th style="width: 50%;">Subjects Name</th>
-                                <th style="width: 12%;">Credit<br>Hours</th>
+                                <th style="width: 17%;">Subjects<br>Code</th>
+                                <th style="width: 49%;">Subjects Name</th>
+                                <th style="width: 11%;">Credit<br>Hours</th>
                                 <th style="width: 11%;">Letter<br>Grade</th>
                                 <th style="width: 12%;">Grade<br>Points</th>
                             </tr>
@@ -113,23 +82,23 @@
                         <tbody>
                             @for ($rowIndex = 0; $rowIndex < 7; $rowIndex++)
                                 @php($subject = $page['subjects']->get($rowIndex))
-                                <tr>
-                                    <td>{{ $subject?->code ?? ($rowIndex == 0 ? '1011' : ($rowIndex == 1 ? '5712' : ($rowIndex == 2 ? '5911' : ($rowIndex == 3 ? '6013' : ($rowIndex == 4 ? '6612' : ($rowIndex == 5 ? '6710' : '6711')))))) }}</td>
-                                    <td>{{ $subject?->title ?? ($rowIndex == 0 ? 'Programming Fundamentals' : ($rowIndex == 1 ? 'Computer Hardware' : ($rowIndex == 2 ? 'Database Systems' : ($rowIndex == 3 ? 'Web Development' : ($rowIndex == 4 ? 'Operating Systems' : ($rowIndex == 5 ? 'Data Communication' : 'Mathematics for Computing')))))) }}</td>
-                                    <td>{{ $subject ? number_format((float) $subject->credit, 0) : '2' }}</td>
-                                    <td>{{ $subject?->grade ?? ($rowIndex == 1 || $rowIndex == 3 ? 'A+' : ($rowIndex == 4 || $rowIndex == 6 ? 'A-' : 'A')) }}</td>
-                                    <td>{{ $subject?->grade_point !== null ? number_format((float) $subject->grade_point, 2) : ($rowIndex == 1 || $rowIndex == 3 ? '4.00' : ($rowIndex == 4 || $rowIndex == 6 ? '3.50' : '3.75')) }}</td>
+                                <tr data-transcript-subject-row>
+                                    <td>{{ $subject?->code ?? '' }}</td>
+                                    <td style="text-align: left; padding-left: 14px;">{{ $subject?->title ?? '' }}</td>
+                                    <td>{{ $subject ? number_format((float) $subject->credit, 0) : '' }}</td>
+                                    <td>{{ $subject?->grade ?? '' }}</td>
+                                    <td>{{ $subject?->grade_point !== null ? number_format((float) $subject->grade_point, 2) : '' }}</td>
                                 </tr>
                             @endfor
 
                             {{-- Semester Summary Statistics Rows --}}
                             <tr class="ts-summary-row">
-                                <td colspan="3" style="border-right: 0; text-align: right; font-weight: 800;">{{ $page['semesterName'] ?? $result?->semester ?? '1st Semester' }} GPA</td>
-                                <td colspan="2" style="border-left: 0; font-weight: 800; color: #111;">{{ $result?->gpa !== null ? number_format((float) $result->gpa, 2) : '3.75' }}</td>
+                                <td colspan="3" style="text-align: right; padding-right: 14px; font-weight: 800;">{{ $page['semesterName'] ?? $result?->semester ?? '1st Semester' }} GPA</td>
+                                <td colspan="2" style="font-weight: 800; color: #000000; text-align: center;">{{ $result?->gpa !== null ? number_format((float) $result->gpa, 2) : ($cumulativeGpa !== null ? number_format((float) $cumulativeGpa, 2) : '—') }}</td>
                             </tr>
                             <tr class="ts-summary-row">
-                                <td colspan="3" style="border-right: 0; text-align: right; font-weight: 800;">Result</td>
-                                <td colspan="2" style="border-left: 0; font-weight: 800; color: #15803d;">{{ $result?->status ?? 'Passed' }}</td>
+                                <td colspan="3" style="text-align: right; padding-right: 14px; font-weight: 800;">Result</td>
+                                <td colspan="2" style="font-weight: 800; color: #000000; text-align: center;">{{ $page['outcome'] ?? ($result?->status === 'published' ? 'Passed' : ($result?->status ?? '—')) }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -143,7 +112,7 @@
                 @endif
 
                 <div class="ts-footer-note">
-                    N.B. To verify this marksheet, scan the QR code and visit the link.
+                    N.B.: Scan QR code to verify.
                 </div>
 
                 @if ($headSignatureUrl)
@@ -170,130 +139,151 @@
             🖼️ Download Image (ছবি)
         </button>
 
+        @if (! $isPublic)
         <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-6 py-3 text-xs font-black uppercase tracking-wider text-slate-700 transition">
             Back to student
         </a>
+        @endif
     </nav>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const doc = document.querySelector('.transcript-stack');
 
-            function fallbackJsPDF(element, filename, finish) {
-                if (typeof html2canvas !== 'undefined') {
-                    html2canvas(element, {
-                        scale: 3,
-                        useCORS: true,
-                        allowTaint: true,
-                        logging: false
-                    }).then(canvas => {
-                        const imgData = canvas.toDataURL('image/jpeg', 0.92);
-                        const jsPDF = window.jspdf ? window.jspdf.jsPDF : null;
-                        if (jsPDF) {
-                            const pdf = new jsPDF('portrait', 'mm', 'a4', true);
-                            pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
-                            pdf.save(filename);
-                        }
-                        finish();
-                    }).catch(err => {
-                        console.error('jsPDF fallback error:', err);
-                        finish();
+            async function prepareDocForCapture() {
+                if (doc) {
+                    const imgs = doc.querySelectorAll('img');
+                    const promises = Array.from(imgs).map(img => {
+                        if (img.complete) return Promise.resolve();
+                        return new Promise(resolve => {
+                            img.onload = resolve;
+                            img.onerror = resolve;
+                        });
                     });
-                } else {
+                    await Promise.all(promises);
+                }
+                await new Promise(resolve => setTimeout(resolve, 150));
+            }
+
+            async function generateTranscriptPDF(filename, finish) {
+                const pages = document.querySelectorAll('[data-transcript-page]');
+                const jsPDF = window.jspdf ? window.jspdf.jsPDF : null;
+
+                if (!pages.length || !jsPDF || typeof html2canvas === 'undefined') {
+                    window.print();
+                    finish();
+                    return;
+                }
+
+                await prepareDocForCapture();
+
+                try {
+                    const pdf = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'mm',
+                        format: 'a4',
+                        compress: false
+                    });
+
+                    for (let i = 0; i < pages.length; i++) {
+                        const page = pages[i];
+                        const canvas = await html2canvas(page, {
+                            scale: 5,
+                            useCORS: true,
+                            allowTaint: true,
+                            logging: false,
+                            dpi: 300
+                        });
+
+                        const imgData = canvas.toDataURL('image/png');
+
+                        if (i > 0) {
+                            pdf.addPage('a4', 'portrait');
+                        }
+
+                        pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, undefined, 'NONE');
+                    }
+
+                    pdf.save(filename);
+                } catch (err) {
+                    console.error('PDF generation error:', err);
+                    window.print();
+                } finally {
                     finish();
                 }
             }
 
-            function downloadPDF(btnElement) {
-                if (!doc) return;
+            const downloadPdfBtn = document.querySelector('[data-download-pdf]');
+            if (downloadPdfBtn) {
+                downloadPdfBtn.addEventListener('click', async function () {
+                    const originalText = downloadPdfBtn.innerHTML;
+                    downloadPdfBtn.innerHTML = `
+                        <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                        </svg>
+                        <span>Ultra HD PDF তৈরি হচ্ছে...</span>
+                    `;
+                    downloadPdfBtn.disabled = true;
 
-                const originalHTML = btnElement.innerHTML;
-                btnElement.innerHTML = `
-                    <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                    </svg>
-                    <span>HD PDF তৈরি হচ্ছে...</span>
-                `;
-                btnElement.disabled = true;
+                    const studentName = '{{ Str::slug($student->name) }}' || 'student';
+                    const filename = `academic-transcript-${studentName}.pdf`;
 
-                const studentName = "{{ addslashes($student->name) }}";
-                const cleanName = studentName.replace(/[^a-zA-Z0-9]/g, '_');
-                const filename = `AcademicTranscript_${cleanName}.pdf`;
-
-                const finish = () => {
-                    btnElement.innerHTML = originalHTML;
-                    btnElement.disabled = false;
-                };
-
-                const opt = {
-                    margin: 0,
-                    filename: filename,
-                    image: { type: 'jpeg', quality: 0.92 },
-                    html2canvas: { scale: 3, useCORS: true, allowTaint: true, logging: false },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true }
-                };
-
-                if (typeof html2pdf !== 'undefined') {
-                    html2pdf().set(opt).from(doc).save().then(finish).catch(err => {
-                        console.error('html2pdf error:', err);
-                        fallbackJsPDF(doc, filename, finish);
+                    await generateTranscriptPDF(filename, () => {
+                        downloadPdfBtn.innerHTML = originalText;
+                        downloadPdfBtn.disabled = false;
                     });
-                } else {
-                    fallbackJsPDF(doc, filename, finish);
-                }
+                });
             }
 
-            function downloadImage(btnElement) {
-                if (!doc) return;
+            const downloadImgBtn = document.querySelector('[data-download-image]');
+            if (downloadImgBtn) {
+                downloadImgBtn.addEventListener('click', async function () {
+                    const originalText = downloadImgBtn.innerHTML;
+                    downloadImgBtn.innerHTML = `
+                        <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                        </svg>
+                        <span>Ultra HD ছবি তৈরি হচ্ছে...</span>
+                    `;
+                    downloadImgBtn.disabled = true;
 
-                const originalHTML = btnElement.innerHTML;
-                btnElement.innerHTML = `
-                    <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                    </svg>
-                    <span>HD ছবি তৈরি হচ্ছে...</span>
-                `;
-                btnElement.disabled = true;
+                    await prepareDocForCapture();
 
-                const studentName = "{{ addslashes($student->name) }}";
-                const cleanName = studentName.replace(/[^a-zA-Z0-9]/g, '_');
-                const filename = `AcademicTranscript_${cleanName}.jpg`;
+                    const studentName = '{{ Str::slug($student->name) }}' || 'student';
 
-                if (typeof html2canvas !== 'undefined') {
-                    html2canvas(doc, { scale: 3, useCORS: true, allowTaint: true, logging: false, backgroundColor: '#ffffff' }).then(canvas => {
-                        const imageUri = canvas.toDataURL('image/jpeg', 0.92);
-                        const link = document.createElement('a');
-                        link.download = filename;
-                        link.href = imageUri;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
+                    if (typeof html2canvas !== 'undefined') {
+                        const firstPage = document.querySelector('[data-transcript-page]') || doc;
+                        html2canvas(firstPage, {
+                            scale: 5,
+                            useCORS: true,
+                            allowTaint: true,
+                            logging: false,
+                            dpi: 300
+                        }).then(canvas => {
+                            const link = document.createElement('a');
+                            link.download = `academic-transcript-${studentName}.png`;
+                            link.href = canvas.toDataURL('image/png');
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
 
-                        btnElement.innerHTML = originalHTML;
-                        btnElement.disabled = false;
-                    }).catch(err => {
-                        console.error('Image error:', err);
-                        btnElement.innerHTML = originalHTML;
-                        btnElement.disabled = false;
-                    });
-                } else {
-                    btnElement.innerHTML = originalHTML;
-                    btnElement.disabled = false;
-                }
+                            downloadImgBtn.innerHTML = originalText;
+                            downloadImgBtn.disabled = false;
+                        }).catch(err => {
+                            console.error('Image generation error:', err);
+                            downloadImgBtn.innerHTML = originalText;
+                            downloadImgBtn.disabled = false;
+                        });
+                    } else {
+                        downloadImgBtn.innerHTML = originalText;
+                        downloadImgBtn.disabled = false;
+                    }
+                });
             }
-
-            document.querySelectorAll('[data-download-pdf]').forEach(btn => {
-                btn.addEventListener('click', function () { downloadPDF(this); });
-            });
-
-            document.querySelectorAll('[data-download-image]').forEach(btn => {
-                btn.addEventListener('click', function () { downloadImage(this); });
-            });
         });
     </script>
 </main>

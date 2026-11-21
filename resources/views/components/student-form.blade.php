@@ -93,11 +93,11 @@
                                 </svg>
                                 <span id="btn-text-passport">Camera</span>
                             </button>
-                            <button type="button" onclick="triggerFileInput('Passport')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
+                            <label for="file-input-passport" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
                                 📁 File/PDF
-                            </button>
+                                <input type="file" id="file-input-passport" accept="image/*,application/pdf,.pdf" class="sr-only" onchange="handleDocumentFileChange(this, 'Passport')">
+                            </label>
                         </div>
-                        <input type="file" id="file-input-passport" accept="image/*,application/pdf,.pdf" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'Passport')">
                         <p class="text-[11px] text-slate-400 font-medium">Place Passport Page in View (Image or PDF).</p>
                     </div>
                 </div>
@@ -125,15 +125,15 @@
                         <div class="grid grid-cols-2 gap-2 w-full">
                             <button type="button" onclick="openDocumentScanner('NID Card')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white px-2.5 py-2.5 text-[11px] font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
                                 <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zM7.5 15a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" />
                                 </svg>
                                 <span id="btn-text-nid">Camera</span>
                             </button>
-                            <button type="button" onclick="triggerFileInput('NID Card')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
+                            <label for="file-input-nid" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
                                 📁 File/PDF
-                            </button>
+                                <input type="file" id="file-input-nid" accept="image/*,application/pdf,.pdf" class="sr-only" onchange="handleDocumentFileChange(this, 'NID Card')">
+                            </label>
                         </div>
-                        <input type="file" id="file-input-nid" accept="image/*,application/pdf,.pdf" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'NID Card')">
                         <p class="text-[11px] text-slate-400 font-medium">Place NID Card Data Page in View (Image or PDF).</p>
                     </div>
                 </div>
@@ -165,11 +165,11 @@
                                 </svg>
                                 <span id="btn-text-birth">Camera</span>
                             </button>
-                            <button type="button" onclick="triggerFileInput('Birth Registration')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
+                            <label for="file-input-birth" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
                                 📁 File/PDF
-                            </button>
+                                <input type="file" id="file-input-birth" accept="image/*,application/pdf,.pdf" class="sr-only" onchange="handleDocumentFileChange(this, 'Birth Registration')">
+                            </label>
                         </div>
-                        <input type="file" id="file-input-birth" accept="image/*,application/pdf,.pdf" capture="environment" class="hidden" onchange="handleDocumentFileChange(this, 'Birth Registration')">
                         <p class="text-[11px] text-slate-400 font-medium">Place Birth Certificate in View (Image or PDF).</p>
                     </div>
                 </div>
@@ -257,8 +257,8 @@
 
                     <!-- Student Name -->
                     <div>
-                        <label class="{{ $labelClass }}">Student Name <span class="text-rose-400">*</span></label>
-                        <input type="text" name="name" id="field-name" value="{{ old('name', $student?->name) }}" required placeholder="Enter Full Name" class="{{ $inputClass }}">
+                        <label class="{{ $labelClass }}">Student Name</label>
+                        <input type="text" name="name" id="field-name" value="{{ old('name', $student?->name) }}" placeholder="Enter Full Name" class="{{ $inputClass }}">
                     </div>
 
                     <!-- Father's Name -->
@@ -403,14 +403,19 @@
                         </select>
                     </div>
 
-                    <!-- Picture -->
+                    <!-- Picture / Student Photo -->
                     <div>
-                        <label class="{{ $labelClass }}">Picture</label>
+                        <label class="{{ $labelClass }}">Picture / Student Photo</label>
                         <div class="flex items-center gap-4">
-                            @if($student?->image_path)
-                                <img src="{{ asset('storage/'.$student->image_path) }}" alt="Photo" class="size-12 rounded-xl object-cover border border-white/20">
-                            @endif
-                            <input type="file" name="image" accept="image/*" class="{{ $inputClass }} file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-indigo-600 file:text-white hover:file:bg-indigo-500">
+                            <div id="student-photo-preview-container" class="size-16 rounded-2xl border-2 border-dashed border-indigo-500/40 bg-[#071c2c] overflow-hidden flex items-center justify-center shrink-0 shadow-lg">
+                                @if($student?->image_path)
+                                    <img id="student-photo-preview-img" src="{{ str_starts_with($student->image_path, 'http') ? $student->image_path : asset('storage/'.$student->image_path) }}" alt="Photo" class="size-full object-cover">
+                                @else
+                                    <img id="student-photo-preview-img" class="hidden size-full object-cover" alt="Photo Preview">
+                                    <span id="student-photo-preview-icon" class="text-xs font-bold text-slate-400">Photo</span>
+                                @endif
+                            </div>
+                            <input type="file" name="image" id="student-photo-file-input" accept="image/*" onchange="previewStudentPhoto(this)" class="{{ $inputClass }} file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
                         </div>
                     </div>
 
@@ -640,16 +645,6 @@
 
                     <!-- SECTION 6: ACADEMIC DETAILS (PER SEMESTER) -->
                     @php
-                        $formSemDefaults = [
-                            '1st' => ['cgpa' => '3.75', 'grade' => 'A+'],
-                            '2nd' => ['cgpa' => '3.50', 'grade' => 'A'],
-                            '3rd' => ['cgpa' => '4.00', 'grade' => 'A+'],
-                            '4th' => ['cgpa' => '3.50', 'grade' => 'A'],
-                            '5th' => ['cgpa' => '3.75', 'grade' => 'A+'],
-                            '6th' => ['cgpa' => '4.00', 'grade' => 'A+'],
-                            '7th' => ['cgpa' => '3.75', 'grade' => 'A+'],
-                            '8th' => ['cgpa' => '3.75', 'grade' => 'A+'],
-                        ];
                         $formSavedResults = isset($student) && $student?->relationLoaded('results') ? $student->results->keyBy('semester') : collect();
                     @endphp
                     <div class="pt-6 border-t border-white/10 space-y-4">
@@ -673,8 +668,8 @@
                             @foreach(['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'] as $idx => $semLabel)
                                 @php
                                     $formResObj = $formSavedResults->get($semLabel.' Semester') ?? $formSavedResults->get($semLabel);
-                                    $formValCgpa = old('semester_cgpa.'.$semLabel, $formResObj?->gpa ?? $formSemDefaults[$semLabel]['cgpa'] ?? '3.75');
-                                    $formValGrade = old('semester_grade.'.$semLabel, $formResObj?->overall_grade ?? $formSemDefaults[$semLabel]['grade'] ?? 'A+');
+                                    $formValCgpa = old('semester_cgpa.'.$semLabel, $formResObj?->gpa);
+                                    $formValGrade = old('semester_grade.'.$semLabel, $formResObj?->overall_grade);
                                 @endphp
                                 <div class="rounded-2xl border border-white/10 bg-[#071c2c]/60 p-4 sm:p-5 space-y-3">
                                     <div class="flex items-center justify-between">
@@ -771,7 +766,7 @@
             @if ($declarationRequired)
                 <div class="rounded-2xl border border-indigo-500/20 bg-[#071c2c] p-4 sm:p-5 space-y-2">
                     <label class="flex items-start gap-3 cursor-pointer">
-                        <input type="checkbox" name="declaration" value="1" @checked(old('declaration')) required class="mt-1 size-4 rounded border-white/20 bg-[#070d19] text-indigo-600 focus:ring-indigo-500">
+                        <input type="checkbox" name="declaration" value="1" @checked(old('declaration')) class="mt-1 size-4 rounded border-white/20 bg-[#070d19] text-indigo-600 focus:ring-indigo-500">
                         <span class="text-xs font-bold text-slate-300 leading-relaxed uppercase tracking-wider">
                             I hereby declare that all the information provided above is true, complete, and accurate to the best of my knowledge and belief.
                         </span>
@@ -801,6 +796,24 @@
     let currentScanDocType = 'Passport';
     let cameraMediaStream = null;
     let currentFacingMode = 'environment';
+
+    function previewStudentPhoto(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.getElementById('student-photo-preview-img');
+                const icon = document.getElementById('student-photo-preview-icon');
+                if (img) {
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                }
+                if (icon) {
+                    icon.classList.add('hidden');
+                }
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
         const distSel = document.getElementById('form-district-select');
@@ -930,24 +943,110 @@
         if (input) input.click();
     }
 
-    function handleDocumentFileChange(input, docType) {
-        if (input.files && input.files[0]) {
-            const file = input.files[0];
-            const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+    function toTitleCase(str) {
+        if (!str) return '';
+        return str
+            .toLowerCase()
+            .replace(/(?:^|\s|[-,./(:])\S/g, function(match) {
+                return match.toUpperCase();
+            });
+    }
 
-            if (isPdf) {
-                processScannedPdfDocument(docType, file);
-            } else {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    processScannedDocument(docType, e.target.result);
-                };
-                reader.readAsDataURL(file);
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = error => reject(error);
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function setFieldValue(fieldId, fieldName, value) {
+        if (!value) return false;
+        let field = document.getElementById(fieldId) || document.querySelector(`input[name="${fieldName}"]`) || document.querySelector(`select[name="${fieldName}"]`);
+        if (field) {
+            field.value = value;
+            field.dispatchEvent(new Event('change'));
+            field.dispatchEvent(new Event('input'));
+            return true;
+        }
+        return false;
+    }
+
+    function populateFormFieldsFromAi(data) {
+        let count = 0;
+
+        if (data.student_name && setFieldValue('field-name', 'name', toTitleCase(data.student_name))) count++;
+        if (data.father_name && setFieldValue('field-father-name', 'father_name', toTitleCase(data.father_name))) count++;
+        if (data.mother_name && setFieldValue('field-mother-name', 'mother_name', toTitleCase(data.mother_name))) count++;
+        if (data.dob && setFieldValue('field-dob', 'date_of_birth', data.dob)) count++;
+        if (data.gender && setFieldValue('field-gender', 'gender', data.gender)) count++;
+        if (data.id_number && setFieldValue('field-passport', 'passport_nid_number', data.id_number)) count++;
+        if (data.phone && setFieldValue('field-phone', 'phone', data.phone)) count++;
+        if (data.phone_number && setFieldValue('field-phone', 'phone', data.phone_number)) count++;
+        if (data.address && setFieldValue('field-address', 'address', toTitleCase(data.address))) count++;
+
+        return count;
+    }
+
+    async function processDocumentWithAI(file, docType) {
+        const alertBox = document.getElementById('scan-status-alert');
+        const alertMsg = document.getElementById('scan-status-msg');
+
+        if (alertBox && alertMsg) {
+            alertMsg.textContent = `Scanning "${file.name}" (${docType.toUpperCase()})... Extracting text and details.`;
+            alertBox.classList.remove('hidden');
+        }
+
+        // Run instant local parser first (0ms response time guarantee)
+        const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+        if (isPdf) {
+            await scanPdfDocumentContent(docType, file);
+        } else {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                runOcrOnDocument(docType, e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Try server AI API as background enhancement
+        try {
+            const formData = new FormData();
+            formData.append('document', file);
+            formData.append('doc_type', docType);
+
+            const tokenEl = document.querySelector('input[name="_token"]');
+            const csrfToken = tokenEl ? tokenEl.value : '';
+
+            const response = await fetch('{{ route("students.scan.document") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                const resData = await response.json();
+                if (resData && resData.success && resData.data) {
+                    populateFormFieldsFromAi(resData.data);
+                }
             }
+        } catch (err) {
+            console.warn('Server AI background scan notice:', err);
         }
     }
 
-    function processScannedPdfDocument(docType, file) {
+    async function handleDocumentFileChange(input, docType) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            await processScannedPdfDocument(docType, file);
+        }
+    }
+
+    async function processScannedPdfDocument(docType, file) {
         let boxId = 'box-preview-passport';
         let btnTextId = 'btn-text-passport';
         if (docType === 'NID Card') {
@@ -982,16 +1081,237 @@
             btnText.textContent = 'Change ' + docType + ' PDF';
         }
 
-        autoFillRegistrationFromScan(docType);
+        await processDocumentWithAI(file, docType);
+    }
 
+    async function decompressFlateStream(bytes) {
+        if (!bytes || bytes.length < 10) return '';
+        if (bytes[0] !== 0x78) return '';
+
+        try {
+            if (typeof DecompressionStream !== 'undefined') {
+                const rawBody = bytes.subarray(2);
+                const ds = new DecompressionStream('deflate-raw');
+                const writer = ds.writable.getWriter();
+                writer.write(rawBody);
+                writer.close();
+                const response = new Response(ds.readable);
+                const buffer = await response.arrayBuffer();
+                const decompressedBytes = new Uint8Array(buffer);
+                let str = '';
+                for (let i = 0; i < decompressedBytes.length; i += 8192) {
+                    str += String.fromCharCode.apply(null, decompressedBytes.subarray(i, i + 8192));
+                }
+                if (str && str.length > 5) return str;
+            }
+        } catch (e) {}
+
+        return '';
+    }
+
+    async function extractAndDecompressPdfStreams(arrayBuffer) {
+        const bytes = new Uint8Array(arrayBuffer);
+        let combinedText = '';
+
+        const streamMarker = [115, 116, 114, 101, 97, 109];
+        const endMarker = [101, 110, 100, 115, 116, 114, 101, 97, 109];
+
+        let i = 0;
+        while (i < bytes.length - 10) {
+            let isStream = true;
+            for (let m = 0; m < 6; m++) {
+                if (bytes[i + m] !== streamMarker[m]) {
+                    isStream = false;
+                    break;
+                }
+            }
+
+            if (isStream) {
+                let start = i + 6;
+                while (start < bytes.length && (bytes[start] === 13 || bytes[start] === 10)) {
+                    start++;
+                }
+
+                let end = start;
+                while (end < bytes.length - 9) {
+                    let isEnd = true;
+                    for (let em = 0; em < 9; em++) {
+                        if (bytes[end + em] !== endMarker[em]) {
+                            isEnd = false;
+                            break;
+                        }
+                    }
+                    if (isEnd) break;
+                    end++;
+                }
+
+                if (end > start) {
+                    const streamBytes = bytes.subarray(start, end);
+                    const decompressed = await decompressFlateStream(streamBytes);
+                    if (decompressed) {
+                        combinedText += '\n' + decompressed;
+                    }
+                }
+                i = end + 9;
+            } else {
+                i++;
+            }
+        }
+
+        return combinedText;
+    }
+
+    function extractRawPdfTextFromBuffer(arrayBuffer) {
+        try {
+            const bytes = new Uint8Array(arrayBuffer);
+            let str = '';
+            const chunk = 8192;
+            for (let i = 0; i < bytes.length; i += chunk) {
+                str += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+            }
+
+            let extractedLines = [];
+
+            const parenthesisedText = str.match(/\(([^\(\)\r\n]{2,150})\)/g);
+            if (parenthesisedText) {
+                parenthesisedText.forEach(p => {
+                    const clean = p.slice(1, -1).replace(/\\([()\\])/g, '$1').trim();
+                    if (clean.length >= 2 && !/^\d{1,3}$/.test(clean) && !/^[\x00-\x1F]+$/.test(clean)) {
+                        extractedLines.push(clean);
+                    }
+                });
+            }
+
+            const textMatches = str.match(/(?:Name|Father|Mother|Address|Telephone|Passport|Birth|Sex|Gender|Permanent|Given|Surname)[\s\S]{1,120}/gi);
+            if (textMatches) {
+                textMatches.forEach(tm => {
+                    const cleanTm = tm.replace(/[^\x20-\x7E\u0980-\u09FF]/g, ' ').replace(/\s+/g, ' ').trim();
+                    if (cleanTm.length > 3) {
+                        extractedLines.push(cleanTm);
+                    }
+                });
+            }
+
+            return extractedLines.join('\n');
+        } catch (e) {
+            console.warn('Pure JS PDF text extraction error:', e);
+            return '';
+        }
+    }
+
+    async function ensurePdfJsLoaded() {
+        if (window.pdfjsLib) return true;
+        return new Promise((resolve) => {
+            if (window.pdfjsLib) return resolve(true);
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js';
+            script.onload = () => {
+                if (window.pdfjsLib) {
+                    try {
+                        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+                    } catch (e) {}
+                }
+                resolve(true);
+            };
+            script.onerror = () => resolve(false);
+            document.head.appendChild(script);
+        });
+    }
+
+    async function renderPdfPageToDataUrl(arrayBuffer) {
+        try {
+            const pdfLoaded = await ensurePdfJsLoaded();
+            if (!pdfLoaded || !window.pdfjsLib) return null;
+
+            const loadingTask = window.pdfjsLib.getDocument({ data: arrayBuffer, verbosity: 0 });
+            const pdf = await loadingTask.promise;
+            if (!pdf || pdf.numPages < 1) return null;
+
+            const page = await pdf.getPage(1);
+            const viewport = page.getViewport({ scale: 2.0 });
+
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            await page.render({ canvasContext: context, viewport: viewport }).promise;
+            return canvas.toDataURL('image/jpeg', 0.95);
+        } catch (err) {
+            console.warn('PDF page canvas render warning:', err);
+            return null;
+        }
+    }
+
+    async function scanPdfDocumentContent(docType, file) {
         const alertBox = document.getElementById('scan-status-alert');
         const alertMsg = document.getElementById('scan-status-msg');
+
         if (alertBox && alertMsg) {
-            alertMsg.textContent = docType + ' PDF document uploaded & scanned successfully! Student registration details extracted.';
+            alertMsg.textContent = 'Rendering & scanning ' + docType + ' PDF...';
             alertBox.classList.remove('hidden');
-            setTimeout(() => {
-                alertBox.classList.add('hidden');
-            }, 5000);
+        }
+
+        let combinedText = '';
+
+        try {
+            const arrayBuffer = await file.arrayBuffer();
+
+            // 1. Try PDF.js structured text layer extraction
+            try {
+                const pdfLoaded = await ensurePdfJsLoaded();
+                if (pdfLoaded && window.pdfjsLib) {
+                    const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer, verbosity: 0 }).promise;
+                    for (let i = 1; i <= Math.min(pdf.numPages, 3); i++) {
+                        const page = await pdf.getPage(i);
+                        const textContent = await page.getTextContent();
+                        const pageText = textContent.items.map(item => item.str).join(' ');
+                        combinedText += '\n' + pageText;
+                    }
+                }
+            } catch (tErr) {
+                console.warn('PDF text layer warning:', tErr);
+            }
+
+            // 2. Try native FlateDecode stream extraction
+            try {
+                const streamText = await extractAndDecompressPdfStreams(arrayBuffer);
+                if (streamText) combinedText += '\n' + streamText;
+            } catch (dErr) {}
+
+            let count = parseAndFillOcrText(docType, combinedText);
+
+            // 3. If text extraction produced < 2 fields (e.g. Photoshop / scanned PDF), render PDF Page 1 to Canvas image & run OCR!
+            if (count < 2) {
+                const pageImageDataUrl = await renderPdfPageToDataUrl(arrayBuffer);
+                if (pageImageDataUrl) {
+                    let boxId = (docType === 'NID Card' || docType === 'nid') ? 'box-preview-nid' : ((docType === 'Birth Registration' || docType === 'birth_reg') ? 'box-preview-birth' : 'box-preview-passport');
+                    const previewBox = document.getElementById(boxId);
+                    if (previewBox) {
+                        previewBox.innerHTML = `
+                            <img src="${pageImageDataUrl}" alt="${docType}" class="size-full object-cover rounded-lg">
+                            <div class="absolute top-2 right-2 bg-indigo-600 text-white font-black text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-lg">
+                                ✓ PDF Rendered
+                            </div>
+                        `;
+                    }
+
+                    await runOcrOnDocument(docType, pageImageDataUrl);
+                    return;
+                }
+            }
+
+            if (alertBox && alertMsg) {
+                if (count > 0) {
+                    alertMsg.textContent = docType + ' PDF scanned successfully! Auto-filled ' + count + ' fields.';
+                } else {
+                    alertMsg.textContent = docType + ' PDF loaded. Please check details.';
+                }
+                setTimeout(() => alertBox.classList.add('hidden'), 5000);
+            }
+
+        } catch (pdfErr) {
+            console.warn('PDF scanning error:', pdfErr);
         }
     }
 
@@ -1021,84 +1341,514 @@
             btnText.textContent = 'Rescan ' + docType;
         }
 
-        autoFillRegistrationFromScan(docType);
-
         const alertBox = document.getElementById('scan-status-alert');
         const alertMsg = document.getElementById('scan-status-msg');
         if (alertBox && alertMsg) {
-            alertMsg.textContent = docType + ' scanned successfully! Document photo loaded & student details auto-extracted.';
+            alertMsg.textContent = 'Scanning ' + docType + ' with OCR... Extracting data.';
             alertBox.classList.remove('hidden');
-            setTimeout(() => {
-                alertBox.classList.add('hidden');
-            }, 5000);
+        }
+
+        runOcrOnDocument(docType, imageDataUrl);
+    }
+
+    function preprocessImageForOcr(imageDataUrl) {
+        return new Promise((resolve) => {
+            if (!imageDataUrl) {
+                return resolve({ original: '', processed: '' });
+            }
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                try {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imageData.data;
+                    for (let i = 0; i < data.length; i += 4) {
+                        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                        const v = avg > 120 ? 255 : 0;
+                        data[i] = v;
+                        data[i + 1] = v;
+                        data[i + 2] = v;
+                    }
+                    ctx.putImageData(imageData, 0, 0);
+
+                    resolve({
+                        original: imageDataUrl,
+                        processed: canvas.toDataURL('image/jpeg', 0.9)
+                    });
+                } catch (e) {
+                    resolve({ original: imageDataUrl, processed: imageDataUrl });
+                }
+            };
+            img.onerror = () => {
+                resolve({ original: imageDataUrl, processed: imageDataUrl });
+            };
+            img.src = imageDataUrl;
+        });
+    }
+
+    async function ensureTesseractLoaded() {
+        if (window.Tesseract) return true;
+        return new Promise((resolve) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.head.appendChild(script);
+        });
+    }
+
+    async function runOcrOnDocument(docType, imageDataUrl) {
+        const alertBox = document.getElementById('scan-status-alert');
+        const alertMsg = document.getElementById('scan-status-msg');
+
+        const loaded = await ensureTesseractLoaded();
+        if (!loaded || !window.Tesseract) {
+            if (alertBox && alertMsg) {
+                alertMsg.textContent = docType + ' image attached. Please check details.';
+                setTimeout(() => alertBox.classList.add('hidden'), 5000);
+            }
+            return;
+        }
+
+        try {
+            if (alertMsg) alertMsg.textContent = 'Reading text from ' + docType + '...';
+
+            const { original, processed } = await preprocessImageForOcr(imageDataUrl);
+            let combinedText = '';
+
+            let worker;
+            try {
+                worker = await window.Tesseract.createWorker('eng');
+            } catch (wErr) {
+                console.warn('Tesseract worker error:', wErr);
+            }
+
+            if (worker) {
+                const retProcessed = await worker.recognize(processed || original);
+                if (retProcessed && retProcessed.data && retProcessed.data.text) {
+                    combinedText += retProcessed.data.text + '\n';
+                }
+                await worker.terminate();
+            }
+
+            const count = parseAndFillOcrText(docType, combinedText);
+
+            if (alertBox && alertMsg) {
+                if (count > 0) {
+                    alertMsg.textContent = docType + ' scanned successfully! Auto-filled ' + count + ' fields.';
+                } else {
+                    alertMsg.textContent = docType + ' scanned. Please check details.';
+                }
+                setTimeout(() => alertBox.classList.add('hidden'), 5000);
+            }
+        } catch (err) {
+            console.warn('OCR error:', err);
+            if (alertBox && alertMsg) {
+                alertMsg.textContent = docType + ' attached successfully.';
+                setTimeout(() => alertBox.classList.add('hidden'), 5000);
+            }
         }
     }
 
-    function autoFillRegistrationFromScan(docType) {
-        const passportNidInput = document.getElementById('field-passport');
-        const nameInput = document.getElementById('field-name');
-        const fatherInput = document.getElementById('field-father-name');
-        const motherInput = document.getElementById('field-mother-name');
-        const dobInput = document.getElementById('field-dob');
-        const genderSelect = document.getElementById('field-gender');
-        const phoneInput = document.getElementById('field-phone');
-        const addressInput = document.getElementById('field-address');
-        const distSel = document.getElementById('form-district-select');
-        const upSel = document.getElementById('form-upazila-select');
+    function formatTitleCase(str) {
+        if (!str) return '';
+        let clean = str.replace(/[_|\-=\#\~\;\{\}\\\/\|\*\+]+/g, ' ').replace(/\s+/g, ' ').trim();
+        if (!clean) return '';
+        return clean.toLowerCase().replace(/(?:^|\s|-|\.)[a-z]/g, function(letter) {
+            return letter.toUpperCase();
+        });
+    }
 
-        if (passportNidInput && !passportNidInput.value) {
-            if (docType === 'NID Card') {
-                passportNidInput.value = Math.floor(1000000000 + Math.random() * 9000000000).toString();
-            } else if (docType === 'Birth Registration') {
-                passportNidInput.value = '200' + Math.floor(10000000000000 + Math.random() * 90000000000000).toString();
-            } else {
-                passportNidInput.value = 'A' + Math.floor(10000000 + Math.random() * 90000000).toString();
+    function cleanNameValue(str) {
+        if (!str) return '';
+        let val = str.split(/[\r\n]/)[0].trim();
+        val = val.replace(/^(?:name|full\s*name|given\s*name|surname|student\s*name|father's\s*name|father\s*name|mother's\s*name|mother\s*name|pita|mata|নাম|পিতার\s*নাম|মাতার\s*নাম)\s*[:;.\-|=_\s]+/i, '');
+        val = val.replace(/<+/g, ' ').replace(/[Iil1c|]{3,}/gi, ' ');
+        val = val.replace(/[^A-Za-z\u0980-\u09FF\s.\-']/g, ' ').replace(/\s+/g, ' ').trim();
+        return val;
+    }
+
+    function isValidPersonName(str) {
+        if (!str || typeof str !== 'string') return false;
+        let clean = str.replace(/[_|\-=\#\~\;\{\}\\\/\|\*\+\:\,\<\>]+/g, ' ').replace(/\s+/g, ' ').trim();
+        if (clean.length < 2 || clean.length > 50) return false;
+        if (/\d/.test(clean)) return false;
+
+        const words = clean.split(/\s+/);
+        if (words.length < 1 || words.length > 5) return false;
+
+        if (words.some(w => w.length > 18)) return false;
+
+        const lower = clean.toLowerCase();
+        const badKeywords = [
+            'adobe', 'photoshop', 'windows', 'creator', 'producer', 'microsoft', 'word', 'canvas', 'coreldraw',
+            'illustrator', 'indesign', 'acrobat', 'software', 'scanner', 'camscanner', 'hp', 'epson', 'canon',
+            'passport', 'republic', 'bangladesh', 'government', 'birth', 'registration', 'national', 'identity',
+            'card', 'date', 'gender', 'district', 'thana', 'number', 'address', 'signature', 'holder', 'authority',
+            'department', 'peoples', 'people', 'ministry', 'home', 'affairs', 'immigration', 'issuing', 'place', 'issue',
+            'expiry', 'type', 'code', 'country', 'personal', 'spouse', 'permanent', 'present', 'emergency', 'contact',
+            'mother', 'father', 'husband', 'wife', 'name', 'full name', 'given name', 'surname', 'male', 'female',
+            'office', 'registrar', 'certificate', 'place of birth', 'commission', 'election', 'union', 'parishad',
+            'porishad', 'paurashava', 'municipality', 'corporation', 'city', 'seal', 'signed', 'verification',
+            'additional', 'data', 'info', 'information', 'details', 'contact', 'telephone', 'mobile', 'phone'
+        ];
+
+        if (badKeywords.some(kw => lower.includes(kw))) return false;
+
+        return /^[A-Za-z\u0980-\u09FF\s.\-']+$/.test(clean);
+    }
+
+    function parsePassportMrz(rawText) {
+        if (!rawText) return null;
+        const lines = rawText.split(/\r?\n/).map(l => l.replace(/\s+/g, '').toUpperCase());
+
+        let line1 = null;
+        let line2 = null;
+
+        for (let i = 0; i < lines.length; i++) {
+            const l = lines[i];
+            if (l.includes('P<BGD') || l.includes('P<') || /^P[A-Z0-9<]{25,44}$/.test(l)) {
+                line1 = l;
+                if (lines[i+1]) line2 = lines[i+1];
+                break;
             }
         }
 
+        if (!line1) return null;
+        const res = {};
+
+        const namePart = line1.substring(5);
+        const nameParts = namePart.split('<<');
+        if (nameParts.length >= 1) {
+            const surname = cleanNameValue(nameParts[0]);
+            const given = cleanNameValue(nameParts[1] || '');
+            if (given || surname) {
+                res.name = formatTitleCase((given + ' ' + surname).trim());
+            }
+        }
+
+        if (line2) {
+            const passNoMatch = line2.match(/([A-Z][0-9]{7,8})/);
+            if (passNoMatch) {
+                res.passportNo = passNoMatch[1];
+            }
+
+            const dobMatch = line2.match(/(\d{6})\d[MF<]/);
+            if (dobMatch) {
+                const yymmdd = dobMatch[1];
+                const yy = parseInt(yymmdd.substring(0, 2), 10);
+                const mm = yymmdd.substring(2, 4);
+                const dd = yymmdd.substring(4, 6);
+                const currentYY = new Date().getFullYear() % 100;
+                const fullYear = (yy > currentYY) ? (1900 + yy) : (2000 + yy);
+                res.dob = `${fullYear}-${mm}-${dd}`;
+            }
+
+            if (line2.includes('M')) res.gender = 'Male';
+            else if (line2.includes('F')) res.gender = 'Female';
+        }
+
+        return Object.keys(res).length > 0 ? res : null;
+    }
+
+    function parseAndFillOcrText(docType, rawText) {
+        if (!rawText) return 0;
+        let count = 0;
+        const lines = rawText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+
+        // 0. Passport MRZ parsing
+        const mrzData = parsePassportMrz(rawText);
+        if (mrzData) {
+            if (mrzData.name && setFieldValue('field-name', 'name', mrzData.name)) count++;
+            if (mrzData.passportNo && setFieldValue('field-passport', 'passport_nid_number', mrzData.passportNo)) count++;
+            if (mrzData.dob && setFieldValue('field-dob', 'date_of_birth', mrzData.dob)) count++;
+            if (mrzData.gender && setFieldValue('field-gender', 'gender', mrzData.gender)) count++;
+            if (mrzData.nidNo && setFieldValue('field-passport', 'passport_nid_number', mrzData.nidNo)) count++;
+        }
+
+        // Helper date formatter
+        const monthMap = {
+            'jan': '01', 'january': '01', 'feb': '02', 'february': '02',
+            'mar': '03', 'march': '03', 'apr': '04', 'april': '04',
+            'may': '05', 'jun': '06', 'june': '06', 'jul': '07', 'july': '07',
+            'aug': '08', 'august': '08', 'sep': '09', 'september': '09', 'sept': '09',
+            'oct': '10', 'october': '10', 'nov': '11', 'november': '11', 'dec': '12', 'december': '12'
+        };
+
+        function parseDateString(str) {
+            if (!str) return null;
+            const ymdMatch = str.match(/\b(19\d{2}|20\d{2})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})\b/);
+            if (ymdMatch) {
+                return `${ymdMatch[1]}-${ymdMatch[2].padStart(2, '0')}-${ymdMatch[3].padStart(2, '0')}`;
+            }
+            const dmyMatch = str.match(/\b(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](19\d{2}|20\d{2})\b/);
+            if (dmyMatch) {
+                return `${dmyMatch[3]}-${dmyMatch[2].padStart(2, '0')}-${dmyMatch[1].padStart(2, '0')}`;
+            }
+            const textDateMatch = str.match(/\b(\d{1,2})\s*([A-Za-z]{3,10})\s*(19\d{2}|20\d{2})\b/);
+            if (textDateMatch) {
+                const mKey = textDateMatch[2].toLowerCase();
+                const mCode = monthMap[mKey] || monthMap[mKey.substring(0, 3)];
+                if (mCode) {
+                    return `${textDateMatch[3]}-${mCode}-${textDateMatch[1].padStart(2, '0')}`;
+                }
+            }
+            const monthFirstMatch = str.match(/\b([A-Za-z]{3,10})\s*(\d{1,2})[,\s]+(19\d{2}|20\d{2})\b/);
+            if (monthFirstMatch) {
+                const mKey = monthFirstMatch[1].toLowerCase();
+                const mCode = monthMap[mKey] || monthMap[mKey.substring(0, 3)];
+                if (mCode) {
+                    return `${monthFirstMatch[3]}-${mCode}-${monthFirstMatch[2].padStart(2, '0')}`;
+                }
+            }
+            return null;
+        }
+
+        // 1. Passport / NID / Birth Reg Number
+        let docNum = null;
+        lines.forEach(line => {
+            const passLabelMatch = line.match(/(?:passport\s*number|passport\s*no|পাসপোর্ট\s*নম্বর|পাসপোর্ট\s*নং)\s*[:;.\-|=_\s]+\s*([A-Z0-9]+)/i);
+            if (passLabelMatch) {
+                const val = passLabelMatch[1].trim().toUpperCase();
+                if (/^[A-Z][0-9]{7,8}$/.test(val) || /^[A-Z]{1,2}\d{6,8}$/.test(val)) {
+                    docNum = val;
+                }
+            }
+        });
+
+        if (!docNum && (docType === 'Passport' || docType === 'passport')) {
+            const passMatch = rawText.match(/\b[A-Z][0-9]{7,8}\b/i) || rawText.match(/\b[A-Z]{1,2}\d{6,8}\b/i);
+            if (passMatch) docNum = passMatch[0].toUpperCase();
+        }
+
+        if (!docNum && (docType === 'NID Card' || docType === 'nid')) {
+            const cleanNoSpaces = rawText.replace(/[\s\-\.]/g, '');
+            const nid17 = rawText.match(/\b\d{17}\b/) || cleanNoSpaces.match(/\b\d{17}\b/);
+            const nid13 = rawText.match(/\b\d{13}\b/) || cleanNoSpaces.match(/\b\d{13}\b/);
+            const nid10 = rawText.match(/\b\d{10}\b/) || cleanNoSpaces.match(/\b\d{10}\b/);
+            if (nid17) docNum = nid17[0];
+            else if (nid13) docNum = nid13[0];
+            else if (nid10) docNum = nid10[0];
+        }
+
+        if (!docNum && (docType === 'Birth Registration' || docType === 'birth_reg')) {
+            const cleanNoSpaces = rawText.replace(/[\s\-\.]/g, '');
+            const birthMatch = rawText.match(/\b(?:19|20)\d{15}\b/) || cleanNoSpaces.match(/\b(?:19|20)\d{15}\b/) || rawText.match(/\b\d{17}\b/);
+            if (birthMatch) docNum = birthMatch[0];
+        }
+
+        if (!docNum) {
+            const personalNoMatch = rawText.match(/(?:personal\s*no|personal\s*number|ব্যক্তিগত\s*নং)\s*[:;.\-|=_\s]+\s*(\d{10,17})/i);
+            if (personalNoMatch) {
+                docNum = personalNoMatch[1];
+            } else {
+                const genMatch = rawText.match(/\b[A-Z][0-9]{7,8}\b/i) || rawText.match(/\b\d{17}\b/) || rawText.match(/\b\d{13}\b/);
+                if (genMatch) docNum = genMatch[0];
+            }
+        }
+
+        if (docNum && setFieldValue('field-passport', 'passport_nid_number', docNum)) {
+            count++;
+        }
+
+        // 2. Date of Birth
+        let dobVal = null;
+        lines.forEach((line, idx) => {
+            const lower = line.toLowerCase();
+            if (!dobVal && (lower.includes('date of birth') || lower.includes('dob') || lower.includes('birth date') || lower.includes('জন্ম তারিখ'))) {
+                dobVal = parseDateString(line);
+                if (!dobVal && lines[idx + 1]) {
+                    dobVal = parseDateString(lines[idx + 1]);
+                }
+            }
+        });
+
+        if (!dobVal) {
+            dobVal = parseDateString(rawText);
+        }
+
+        if (dobVal && setFieldValue('field-dob', 'date_of_birth', dobVal)) {
+            count++;
+        }
+
+        // 3. Gender
+        if (/\b(female|মহিলা|sex\s*:\s*f|gender\s*:\s*female)\b/i.test(rawText)) {
+            if (setFieldValue('field-gender', 'gender', 'Female')) count++;
+        } else if (/\b(male|পুরুষ|sex\s*:\s*m|gender\s*:\s*male)\b/i.test(rawText)) {
+            if (setFieldValue('field-gender', 'gender', 'Male')) count++;
+        }
+
+        // 4. Guardian Phone Number
+        let matchedPhone = null;
+        lines.forEach(line => {
+            const phoneLabelMatch = line.match(/(?:telephone\s*no|telephone|tel|phone|mobile|contact|মোবাইল|ফোন)\s*[:;.\-|=_\s]+\s*([\+0-9\s\-]+)/i);
+            if (phoneLabelMatch) {
+                const rawDigits = phoneLabelMatch[1].replace(/[\-\s\(\)]/g, '');
+                const m = rawDigits.match(/(?:\+?88)?01[3-9]\d{8}/);
+                if (m) matchedPhone = m[0];
+            }
+        });
+
+        if (!matchedPhone) {
+            const cleanDigits = rawText.replace(/[\-\s\(\)]/g, '');
+            const m = cleanDigits.match(/(?:\+?88)?01[3-9]\d{8}/);
+            if (m) matchedPhone = m[0];
+        }
+
+        if (matchedPhone) {
+            let num = matchedPhone;
+            if (num.startsWith('+88')) num = num.substring(3);
+            if (num.startsWith('88')) num = num.substring(2);
+            if (setFieldValue('field-phone', 'phone', num)) count++;
+        }
+
+        // 5. Student Name, Father, Mother
+        let surnameVal = '';
+        let givenNameVal = '';
+
+        lines.forEach(line => {
+            const surMatch = line.match(/(?:surname|বংশগত\s*নাম)\s*[:;.\-|=_\s]+\s*([A-Za-z\s.\-'`]+)/i);
+            if (surMatch && isValidPersonName(surMatch[1])) {
+                surnameVal = cleanNameValue(surMatch[1]);
+            }
+            const givMatch = line.match(/(?:given\s*name|প্রদত্ত\s*নাম)\s*[:;.\-|=_\s]+\s*([A-Za-z\s.\-'`]+)/i);
+            if (givMatch && isValidPersonName(givMatch[1])) {
+                givenNameVal = cleanNameValue(givMatch[1]);
+            }
+        });
+
+        if (givenNameVal || surnameVal) {
+            const combined = (givenNameVal + ' ' + surnameVal).trim();
+            if (isValidPersonName(combined)) {
+                if (setFieldValue('field-name', 'name', toTitleCase(combined))) count++;
+            }
+        }
+
+        const nameLabelRegex = /(?:student\s*name|full\s*name|given\s*name|surname|name|নাম)\s*[:;.\-|=_\s]+\s*([A-Za-z\u0980-\u09FF\s.\-'`]+)/i;
+        const fatherLabelRegex = /(?:father's\s*name|father\s*name|fathers\s*name|father|pita|পিতার\s*নাম|পিতা)\s*[:;.\-|=_\s]+\s*([A-Za-z\u0980-\u09FF\s.\-'`]+)/i;
+        const motherLabelRegex = /(?:mother's\s*name|mother\s*name|mothers\s*name|mother|mata|মাতার\s*নাম|মাতা)\s*[:;.\-|=_\s]+\s*([A-Za-z\u0980-\u09FF\s.\-'`]+)/i;
+
+        const nameInput = document.getElementById('field-name') || document.querySelector('input[name="name"]');
+        const fatherInput = document.getElementById('field-father-name') || document.querySelector('input[name="father_name"]');
+        const motherInput = document.getElementById('field-mother-name') || document.querySelector('input[name="mother_name"]');
+
+        lines.forEach((line, idx) => {
+            const lower = line.toLowerCase();
+
+            if (nameInput && !nameInput.value) {
+                const match = line.match(nameLabelRegex);
+                if (match && isValidPersonName(cleanNameValue(match[1]))) {
+                    if (setFieldValue('field-name', 'name', toTitleCase(cleanNameValue(match[1])))) count++;
+                } else if ((lower.includes('name:') || lower.includes('name :') || lower.includes('full name') || lower.includes('given name') || lower.includes('surname')) && lines[idx + 1]) {
+                    const nextVal = cleanNameValue(lines[idx + 1]);
+                    if (isValidPersonName(nextVal)) {
+                        if (setFieldValue('field-name', 'name', toTitleCase(nextVal))) count++;
+                    }
+                }
+            }
+
+            if (fatherInput && !fatherInput.value) {
+                const match = line.match(fatherLabelRegex);
+                if (match && isValidPersonName(cleanNameValue(match[1]))) {
+                    if (setFieldValue('field-father-name', 'father_name', toTitleCase(cleanNameValue(match[1])))) count++;
+                } else if ((lower.startsWith("father's name") || lower.startsWith("father name") || lower.startsWith("pita")) && lines[idx + 1]) {
+                    const nextVal = cleanNameValue(lines[idx + 1]);
+                    if (isValidPersonName(nextVal)) {
+                        if (setFieldValue('field-father-name', 'father_name', toTitleCase(nextVal))) count++;
+                    }
+                }
+            }
+
+            if (motherInput && !motherInput.value) {
+                const match = line.match(motherLabelRegex);
+                if (match && isValidPersonName(cleanNameValue(match[1]))) {
+                    if (setFieldValue('field-mother-name', 'mother_name', toTitleCase(cleanNameValue(match[1])))) count++;
+                } else if ((lower.startsWith("mother's name") || lower.startsWith("mother name") || lower.startsWith("mata")) && lines[idx + 1]) {
+                    const nextVal = cleanNameValue(lines[idx + 1]);
+                    if (isValidPersonName(nextVal)) {
+                        if (setFieldValue('field-mother-name', 'mother_name', toTitleCase(nextVal))) count++;
+                    }
+                }
+            }
+        });
+
         if (nameInput && !nameInput.value) {
-            nameInput.value = 'Ali Ahamed Mamun Mridha';
-        }
-
-        if (fatherInput && !fatherInput.value) {
-            fatherInput.value = 'Mohammad Ali';
-        }
-
-        if (motherInput && !motherInput.value) {
-            motherInput.value = 'Shahida khatune';
-        }
-
-        if (dobInput && !dobInput.value) {
-            dobInput.value = '2006-10-02';
-        }
-
-        if (genderSelect && !genderSelect.value) {
-            genderSelect.value = 'Male';
-        }
-
-        if (phoneInput && !phoneInput.value) {
-            phoneInput.value = '01712345678';
-        }
-
-        if (addressInput && !addressInput.value) {
-            addressInput.value = 'Village: Kaliganj, Post Office: Kaliganj';
-        }
-
-        if (distSel && !distSel.value) {
-            distSel.value = 'Jamalpur';
-            if (typeof formUpazilasByDistrict !== 'undefined' && formUpazilasByDistrict['Jamalpur']) {
-                if (upSel) {
-                    upSel.innerHTML = '<option value="">Select Thana</option>';
-                    formUpazilasByDistrict['Jamalpur'].forEach(u => {
-                        const opt = document.createElement('option');
-                        opt.value = u;
-                        opt.textContent = u;
-                        if (u === 'Madarganj') opt.selected = true;
-                        upSel.appendChild(opt);
-                    });
+            for (const line of lines) {
+                const cleanLine = cleanNameValue(line);
+                if (isValidPersonName(cleanLine) && cleanLine.split(/\s+/).length >= 2 && cleanLine.split(/\s+/).length <= 4) {
+                    if (setFieldValue('field-name', 'name', toTitleCase(cleanLine))) count++;
+                    break;
                 }
             }
         }
+
+        // 6. Address / Location
+        const addressInput = document.getElementById('field-address') || document.querySelector('input[name="address"]');
+        if (addressInput && !addressInput.value) {
+            let addrVal = '';
+            lines.forEach((line, idx) => {
+                const lower = line.toLowerCase();
+                if (!addrVal) {
+                    if (lower.includes('permanent address') || lower.includes('present address') || lower.includes('address:') || lower.includes('location:') || lower.includes('ঠিকানা:')) {
+                        let val = line.split(/[:=]/).slice(1).join(':').trim();
+                        val = val.replace(/^(?:permanent\s*address|present\s*address|address|location|ঠিকানা)\s*[:;.\-|=_\s]+/i, '').trim();
+                        if (val && val.length > 5) {
+                            addrVal = val;
+                        } else if (lines[idx + 1] && lines[idx + 1].length > 5) {
+                            addrVal = lines[idx + 1].trim();
+                        }
+                    }
+                }
+            });
+
+            if (addrVal) {
+                addrVal = addrVal.replace(/\s+(?:for|hold|page|signature|official).*$/i, '').trim();
+                if (setFieldValue('field-address', 'address', toTitleCase(addrVal))) count++;
+            }
+        }
+
+        // 7. District and Upazila / Thana Auto-detection
+        const distSel = document.getElementById('form-district-select') || document.querySelector('select[name="district"]');
+        const upSel = document.getElementById('form-upazila-select') || document.querySelector('select[name="upazila"]');
+
+        if (typeof formUpazilasByDistrict !== 'undefined' && distSel) {
+            for (const districtName of Object.keys(formUpazilasByDistrict)) {
+                const reg = new RegExp('\\b' + districtName + '\\b', 'i');
+                if (reg.test(rawText)) {
+                    distSel.value = districtName;
+                    distSel.dispatchEvent(new Event('change'));
+                    count++;
+
+                    if (upSel) {
+                        upSel.innerHTML = '<option value="">Select Thana</option>';
+                        formUpazilasByDistrict[districtName].forEach(u => {
+                            const opt = document.createElement('option');
+                            opt.value = u;
+                            opt.textContent = u;
+                            upSel.appendChild(opt);
+                        });
+
+                        for (const upazilaName of formUpazilasByDistrict[districtName]) {
+                            const upReg = new RegExp('\\b' + upazilaName + '\\b', 'i');
+                            if (upReg.test(rawText)) {
+                                upSel.value = upazilaName;
+                                upSel.dispatchEvent(new Event('change'));
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        return count;
     }
 
     function updateFormSubjectBtnLabel() {
@@ -1388,6 +2138,22 @@
 
         const finalCgpa = totalCredit > 0 ? (totalPointScore / totalCredit).toFixed(2) : '0.00';
         updateFormCourseListTotals(totalCredit.toFixed(1), finalCgpa);
+    }
+
+    function calculateGradeFromMarks(valStr) {
+        let val = parseFloat(valStr);
+        if (isNaN(val)) return { grade: 'F', point: '0.00' };
+
+        if (val >= 80) return { grade: 'A+', point: '4.00' };
+        if (val >= 75) return { grade: 'A', point: '3.75' };
+        if (val >= 70) return { grade: 'A-', point: '3.50' };
+        if (val >= 65) return { grade: 'B+', point: '3.25' };
+        if (val >= 60) return { grade: 'B', point: '3.00' };
+        if (val >= 55) return { grade: 'B-', point: '2.75' };
+        if (val >= 50) return { grade: 'C+', point: '2.50' };
+        if (val >= 45) return { grade: 'C', point: '2.25' };
+        if (val >= 40) return { grade: 'D', point: '2.00' };
+        return { grade: 'F', point: '0.00' };
     }
 
     function updateFormCourseItem(index, field, value) {

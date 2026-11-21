@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ $about->about_heading }} | BNYTI</title>
+        <title>{{ $about->about_heading }} | {{ config('app.name') }}</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="min-h-screen bg-stone-50 text-slate-900 dark:bg-ink dark:text-white">
@@ -14,7 +14,7 @@
                     $aboutImage = $about->image_path ?: $about->principal_image_path;
                 @endphp
                 @if ($aboutImage)
-                    <img src="{{ str_starts_with($aboutImage, 'images/') ? asset($aboutImage) : Storage::disk('public')->url($aboutImage) }}" alt="{{ $about->about_heading }}" class="h-64 w-full object-cover sm:h-80">
+                    <img src="{{ str_starts_with($aboutImage, 'images/') ? asset($aboutImage) : asset('storage/' . $aboutImage) }}" alt="{{ $about->about_heading }}" class="h-64 w-full object-cover sm:h-80">
                 @endif
                 <div class="p-7 sm:p-10">
                     <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">About the institute</p>

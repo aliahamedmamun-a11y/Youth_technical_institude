@@ -28,7 +28,7 @@
                         <div class="flex items-center gap-5">
                             <div class="relative">
                                 <div class="size-16 overflow-hidden rounded-xl border-2 border-white/5 bg-slate-800 shadow-xl">
-                                    <img src="{{ $item->image_path ? (str_starts_with($item->image_path, 'images/') ? asset($item->image_path) : Storage::disk('public')->url($item->image_path)) : asset('images/placeholder-avatar.png') }}"
+                                    <img src="{{ $item->image_path ? (str_starts_with($item->image_path, 'images/') ? asset($item->image_path) : asset('storage/' . $item->image_path)) : asset('images/placeholder-avatar.png') }}"
                                         class="size-full object-cover">
                                 </div>
                                 <div class="absolute -bottom-1 -right-1 size-3 rounded-full bg-emerald-500 ring-4 ring-[#0f2d44]"></div>
@@ -112,7 +112,7 @@
                         <div class="flex items-center justify-between rounded-2xl border border-white/5 bg-[#071c2c]/30 p-4 transition-colors hover:bg-white/5">
                             <div class="flex items-center gap-6">
                                 <div class="h-20 w-32 overflow-hidden rounded-xl border border-white/10 bg-slate-800 shadow-xl">
-                                    <img src="{{ $item->image_path ? (str_starts_with($item->image_path, 'images/') ? asset($item->image_path) : Storage::disk('public')->url($item->image_path)) : asset('images/placeholder-avatar.png') }}" class="size-full object-cover">
+                                    <img src="{{ $item->image_path ? (str_starts_with($item->image_path, 'images/') ? asset($item->image_path) : asset('storage/' . $item->image_path)) : asset('images/placeholder-avatar.png') }}" class="size-full object-cover">
                                 </div>
                                 <p class="text-sm font-black text-white uppercase tracking-widest">{{ $item->title ?: 'Untitled' }}</p>
                             </div>

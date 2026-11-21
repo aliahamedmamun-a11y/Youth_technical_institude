@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#e7f3f9">
         <meta name="description" content="Find and verify your official South Asia Engineering & Technical Institute examination result.">
-        <title>Student Result Portal | BNYTI</title>
+        <title>Student Result Portal | {{ config('app.name') }}</title>
         <link rel="icon" href="{{ asset('images/Logo.png') }}" type="image/png">
         @fonts
         @vite(['resources/css/app.css', 'resources/js/app.js'])

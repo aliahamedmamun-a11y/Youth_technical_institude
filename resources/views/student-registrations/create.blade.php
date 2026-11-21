@@ -18,8 +18,8 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta name="theme-color" content="#03224c">
-            <meta name="description" content="Register as a student at Bangladesh National Youth Technical Institute.">
-            <title>Student Registration | BNYTI</title>
+            <meta name="description" content="Register as a student at South Asia Engineering & Technical Institute.">
+            <title>Student Registration | {{ config('app.name') }}</title>
             <link rel="icon" href="{{ asset('images/Logo.png') }}" type="image/png">
             @fonts
             @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -81,7 +81,7 @@
                     @endforeach
                 </div>
                 <div class="mt-10 border-t border-slate-300 pt-8 text-center text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] dark:border-white/5">
-                    © {{ date('Y') }} Bangladesh National Youth Technical Institute. All rights reserved.
+                    © {{ date('Y') }} South Asia Engineering & Technical Institute. All rights reserved.
                 </div>
             </footer>
         </body>

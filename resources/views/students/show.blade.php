@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Student Registration Details | BNYTI</title>
+    <title>Student Registration Details | {{ config('app.name') }}</title>
 
     @vite(['resources/css/app.css'])
 
@@ -28,7 +28,7 @@
         </h1>
 
         <p class="text-green-100 mt-2">
-            Bangladesh National Youth Technical Institute
+            {{ config('app.name') }}
         </p>
 
     </div>

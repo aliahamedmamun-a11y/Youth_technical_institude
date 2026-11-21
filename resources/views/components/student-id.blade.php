@@ -1,20 +1,34 @@
 @props([
     'student',
     'qrCode' => null,
+    'isPublic' => false,
 ])
+
+@php
+    $studentPhotoUrl = null;
+    if ($student->image_path) {
+        if (str_starts_with($student->image_path, 'http://') || str_starts_with($student->image_path, 'https://')) {
+            $studentPhotoUrl = $student->image_path;
+        } elseif (str_starts_with($student->image_path, 'images/')) {
+            $studentPhotoUrl = asset($student->image_path);
+        } else {
+            $studentPhotoUrl = asset('storage/' . ltrim($student->image_path, '/'));
+        }
+    }
+@endphp
 
 @vite(['resources/css/app.css', 'resources/css/student-id.css', 'resources/js/app.js'])
 
 <main class="student-id-screen">
     <div class="student-id-frame">
         <article class="student-id-card">
-            <img src="{{ asset('images/Logo Or ID card-02.png') }}" alt="Student ID Card Template" class="student-id__template">
+            <img src="{{ asset('images/' . rawurlencode('Logo Or ID card-02.png')) }}" alt="Student ID Card Template" class="student-id__template">
 
             <div class="student-id__content">
                 {{-- FRONT SIDE OVERLAYS --}}
                 <div class="id-front-photo">
-                    @if ($student->image_path)
-                        <img src="{{ str_starts_with($student->image_path, 'http') ? $student->image_path : asset('storage/'.$student->image_path) }}" alt="{{ $student->name }}" onerror="this.onerror=null; this.src='https://i.ibb.co/qMgPTvMQ/1000072415.jpg';">
+                    @if ($studentPhotoUrl)
+                        <img src="{{ $studentPhotoUrl }}" alt="{{ $student->name }}" onerror="this.onerror=null; this.src='https://i.ibb.co/qMgPTvMQ/1000072415.jpg';">
                     @else
                         <div class="flex size-full items-center justify-center bg-slate-100 text-slate-400">
                             <svg class="size-16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -26,9 +40,6 @@
                     <h3 class="id-student-name">
                         {{ $student->name }}
                     </h3>
-                    <p class="id-student-course">
-                        {{ $student->course?->name ?? 'Technical Training Course' }}
-                    </p>
                     <p class="id-student-roll">
                         ROLL NO: {{ $student->roll_number ?: sprintf('%06d', $student->id) }}
                     </p>
@@ -40,11 +51,10 @@
                         <dt>NAME</dt><dd>: {{ $student->name }}</dd>
                         <dt>ROLL NO</dt><dd>: {{ $student->roll_number ?? '—' }}</dd>
                         <dt>REG NO</dt><dd>: {{ $student->registration_number ?? '—' }}</dd>
-                        <dt>SESSION</dt><dd>: {{ $student->session ?? '2020 - 2022' }}</dd>
+                        <dt>SESSION</dt><dd>: {{ $student->session ?? '—' }}</dd>
                         <dt>COURSE</dt><dd>: {{ $student->course?->name ?? '—' }}</dd>
-                        <dt>BLOOD GROUP</dt><dd>: {{ $student->blood_group ?? 'O+' }}</dd>
-                        <dt>FATHER'S NAME</dt><dd>: {{ $student->father_name ?? '—' }}</dd>
-                        <dt>MOTHER'S NAME</dt><dd>: {{ $student->mother_name ?? '—' }}</dd>
+                        <dt>FATHER</dt><dd>: {{ $student->father_name ?? '—' }}</dd>
+                        <dt>MOTHER</dt><dd>: {{ $student->mother_name ?? '—' }}</dd>
                         <dt>PHONE</dt><dd>: {{ $student->phone ?? '—' }}</dd>
                     </dl>
                 </div>
@@ -66,7 +76,7 @@
             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
-            📥 Download PDF (সরাসরি পিডিএফ ডাউনলোড)
+            📥 Download PDF (পিডিএফ ডাউনলোড)
         </button>
 
         <button type="button" data-download-image class="rounded-xl bg-blue-600 hover:bg-blue-700 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-xl transition cursor-pointer active:scale-95 flex items-center gap-2 border border-blue-500">
@@ -76,9 +86,18 @@
             🖼️ Download Image (ছবি)
         </button>
 
+        <button type="button" onclick="window.print()" class="rounded-xl bg-slate-900 hover:bg-slate-800 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-xl transition cursor-pointer active:scale-95 flex items-center gap-2 border border-slate-700">
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m11.318-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231a1.125 1.125 0 01-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 001.913-.247m10.5 0a48.536 48.036 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.656" />
+            </svg>
+            🖨️ Print / Save (প্রিন্ট করুন)
+        </button>
+
+        @if (! $isPublic)
         <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-6 py-3 text-xs font-black uppercase tracking-wider text-slate-700 transition">
             Back
         </a>
+        @endif
     </nav>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -88,68 +107,38 @@
         document.addEventListener('DOMContentLoaded', function () {
             const doc = document.querySelector('.student-id-card');
 
-            function fallbackJsPDF(element, filename, finish) {
-                if (typeof html2canvas !== 'undefined') {
-                    html2canvas(element, {
-                        scale: 3,
-                        useCORS: true,
-                        allowTaint: true,
-                        logging: false
-                    }).then(canvas => {
-                        const imgData = canvas.toDataURL('image/jpeg', 0.92);
-                        const jsPDF = window.jspdf ? window.jspdf.jsPDF : null;
-                        if (jsPDF) {
-                            const pdf = new jsPDF('landscape', 'mm', 'a4', true);
-                            pdf.addImage(imgData, 'JPEG', 0, 0, 297, 210, undefined, 'FAST');
-                            pdf.save(filename);
-                        }
-                        finish();
-                    }).catch(err => {
-                        console.error('jsPDF fallback error:', err);
-                        finish();
-                    });
-                } else {
-                    finish();
-                }
-            }
-
-            function downloadPDF(btnElement) {
-                if (!doc) return;
-
-                const originalHTML = btnElement.innerHTML;
-                btnElement.innerHTML = `
-                    <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                    </svg>
-                    <span>HD PDF তৈরি হচ্ছে...</span>
-                `;
-                btnElement.disabled = true;
-
-                const studentName = "{{ addslashes($student->name) }}";
-                const cleanName = studentName.replace(/[^a-zA-Z0-9]/g, '_');
-                const filename = `StudentID_${cleanName}.pdf`;
-
                 const finish = () => {
                     btnElement.innerHTML = originalHTML;
                     btnElement.disabled = false;
                 };
 
-                const opt = {
-                    margin: 0,
-                    filename: filename,
-                    image: { type: 'jpeg', quality: 0.92 },
-                    html2canvas: { scale: 3, useCORS: true, allowTaint: true, logging: false },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape', compress: true }
-                };
-
-                if (typeof html2pdf !== 'undefined') {
-                    html2pdf().set(opt).from(doc).save().then(finish).catch(err => {
-                        console.error('html2pdf error:', err);
-                        fallbackJsPDF(doc, filename, finish);
+                if (typeof html2canvas !== 'undefined') {
+                    html2canvas(doc, {
+                        scale: 4,
+                        useCORS: true,
+                        allowTaint: false,
+                        logging: false,
+                        imageTimeout: 15000,
+                        dpi: 300
+                    }).then(canvas => {
+                        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                        const jsPDF = window.jspdf ? window.jspdf.jsPDF : (window.jsPDF ? window.jsPDF : null);
+                        if (jsPDF) {
+                            const pdf = new jsPDF('landscape', 'mm', 'a4', true);
+                            pdf.addImage(imgData, 'JPEG', 0, 0, 297, 210, undefined, 'FAST');
+                            pdf.save(filename);
+                        } else {
+                            window.print();
+                        }
+                        finish();
+                    }).catch(err => {
+                        console.error('PDF error:', err);
+                        window.print();
+                        finish();
                     });
                 } else {
-                    fallbackJsPDF(doc, filename, finish);
+                    window.print();
+                    finish();
                 }
             }
 
@@ -162,34 +151,43 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>HD ছবি তৈরি হচ্ছে...</span>
+                    <span>ছবি তৈরি হচ্ছে...</span>
                 `;
                 btnElement.disabled = true;
 
                 const studentName = "{{ addslashes($student->name) }}";
                 const cleanName = studentName.replace(/[^a-zA-Z0-9]/g, '_');
-                const filename = `StudentID_${cleanName}.jpg`;
+                const filename = `StudentID_${cleanName}.pdf`;
+
+                const finish = () => {
+                    btnElement.innerHTML = originalHTML;
+                    btnElement.disabled = false;
+                };
 
                 if (typeof html2canvas !== 'undefined') {
-                    html2canvas(doc, { scale: 3, useCORS: true, allowTaint: true, logging: false, backgroundColor: '#ffffff' }).then(canvas => {
-                        const imageUri = canvas.toDataURL('image/jpeg', 0.92);
+                    html2canvas(doc, {
+                        scale: 4,
+                        useCORS: true,
+                        allowTaint: false,
+                        logging: false,
+                        imageTimeout: 15000,
+                        backgroundColor: '#ffffff',
+                        dpi: 300
+                    }).then(canvas => {
+                        const imageUri = canvas.toDataURL('image/jpeg', 1.0);
                         const link = document.createElement('a');
                         link.download = filename;
                         link.href = imageUri;
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
-
-                        btnElement.innerHTML = originalHTML;
-                        btnElement.disabled = false;
+                        finish();
                     }).catch(err => {
                         console.error('Image error:', err);
-                        btnElement.innerHTML = originalHTML;
-                        btnElement.disabled = false;
+                        finish();
                     });
                 } else {
-                    btnElement.innerHTML = originalHTML;
-                    btnElement.disabled = false;
+                    finish();
                 }
             }
 

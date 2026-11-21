@@ -78,6 +78,40 @@
         box-shadow: 18px 0 50px rgb(15 23 42 / 0.12);
         transform: translateX(-105%);
         transition: transform 220ms ease;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        touch-action: pan-y !important;
+    }
+
+    .scrollbar-hide {
+        overflow-x: auto !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        touch-action: pan-x pan-y !important;
+    }
+
+    .overflow-x-auto {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        touch-action: pan-x pan-y !important;
+    }
+
+    .overflow-x-auto::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .overflow-x-auto::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+    }
+
+    .overflow-x-auto::-webkit-scrollbar-thumb {
+        background: #3b82f6;
+        border-radius: 9999px;
+    }
+
+    .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+        background: #60a5fa;
     }
 
     .admin-sidebar.is-open { transform: translateX(0); }
@@ -132,6 +166,18 @@
     [data-admin-workspace] input:not([type='checkbox']):not([type='radio']):focus,
     [data-admin-workspace] select:focus,
     [data-admin-workspace] textarea:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgb(37 99 235 / 0.12); outline: none; }
+
+    input:not([type='checkbox']):not([type='radio']),
+    select,
+    textarea {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+    }
+
+    select option {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+    }
 
     @media (min-width: 768px) { .admin-record-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (min-width: 1280px) { .admin-record-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

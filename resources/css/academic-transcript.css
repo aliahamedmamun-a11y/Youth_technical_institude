@@ -20,7 +20,11 @@
     color: #000;
     background: white;
     box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.38);
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Times New Roman', Times, serif !important;
+}
+
+.transcript-page * {
+    font-family: 'Times New Roman', Times, serif !important;
 }
 
 .transcript-template {
@@ -35,62 +39,71 @@
 /* Absolute overlays for dynamic elements */
 .ts-field {
     position: absolute;
-    z-index: 10;
+    z-index: 15;
     font-family: 'Times New Roman', Times, serif;
     font-size: 15px;
     font-weight: 700;
-    color: #0B1953;
+    color: #000000;
     white-space: nowrap;
 }
 
 .ts-field--serial {
-    top: 17.2%;
-    left: 21.5%;
+    top: 18.5%;
+    left: 10.5%;
     font-family: 'Times New Roman', Times, serif;
-    font-style: italic;
-    font-size: 15px;
+    font-style: normal;
+    font-size: 14px;
     font-weight: 700;
-    color: #e11d48;
+    color: #000000;
+    background: transparent !important;
+    padding: 0;
+    z-index: 15;
 }
 
 .ts-field--semester {
-    top: 17.2%;
+    top: 16.2%;
     left: 50%;
     transform: translateX(-50%);
     font-family: 'Times New Roman', Times, serif;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
     color: white;
     background: #e11d48;
-    padding: 2pt 12pt;
-    border-radius: 2pt;
+    padding: 2.5pt 16pt;
+    border-radius: 3pt;
     text-transform: uppercase;
+    text-align: center;
+    z-index: 15;
 }
 
-/* Student Information Block Placement */
+/* Student Information Block Placement - Transparent background to show template background graphics */
 .transcript-student-info-box {
     position: absolute;
-    top: 23.0%;
+    top: 20.6%;
     left: 10.5%;
-    right: 10.5%;
+    width: 78.4%;
     display: flex;
     flex-direction: column;
-    gap: 3.5pt;
+    gap: 2pt;
     font-family: 'Times New Roman', Times, serif;
     font-size: 14px;
-    line-height: 1.2;
+    line-height: 1.25;
+    z-index: 10;
+    background: transparent !important;
 }
 
 .ts-row {
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    background: transparent !important;
 }
 
 .ts-label {
-    width: 135pt;
+    width: 125pt;
     font-family: 'Times New Roman', Times, serif;
     font-weight: 800;
     color: #000000;
+    background: transparent !important;
 }
 
 .ts-sep {
@@ -98,86 +111,103 @@
     font-family: 'Times New Roman', Times, serif;
     font-weight: 800;
     color: #000000;
+    background: transparent !important;
 }
 
 .ts-val {
+    flex: 1;
     font-family: 'Times New Roman', Times, serif;
-    font-style: italic;
+    font-style: normal;
     font-size: 14px;
     font-weight: 700;
-    color: #0B1953;
+    color: #000000;
+    background: transparent !important;
+    padding: 0 6px;
+    border-radius: 2px;
 }
 
-/* Main Result Table Placement */
+/* Main Result Table Placement - Transparent background to show template background graphics */
 .transcript-main-table-container {
     position: absolute;
-    top: 48.5%;
+    top: 47.4%;
     left: 10.5%;
-    right: 10.5%;
+    width: 78.4%;
     z-index: 10;
+    background: transparent !important;
 }
 
 .ts-table {
     width: 100%;
     border-collapse: collapse;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 13.5px;
-    background: transparent;
-}
-
-.ts-table th, .ts-table td {
-    border: 0.75pt solid #222;
-    padding: 5pt 6pt;
-    text-align: center;
-    font-weight: 600;
+    font-size: 15px;
+    background: transparent !important;
 }
 
 .ts-table th {
-    background: #fdfdfd;
+    border: 1px solid #000000 !important;
+    padding: 7pt 6pt;
+    text-align: center;
     font-weight: 800;
-    font-size: 13.5px;
+    font-size: 15px;
+    color: #000000;
+    background: transparent !important;
+    line-height: 1.2;
+}
+
+.ts-table td {
+    border: 1px solid #000000 !important;
+    padding: 7.5pt 6pt;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    color: #000000;
+    background: transparent !important;
+    height: 10mm;
 }
 
 .ts-table td:nth-child(2) {
     text-align: left;
-    padding-left: 12pt;
+    padding-left: 14pt;
 }
 
 /* Summary Row at the bottom of the table */
 .ts-summary-row td {
-    padding: 5pt 8pt;
+    border: 1px solid #000000 !important;
+    padding: 7pt 10pt;
     font-weight: 800;
-    background: #fcfcfc;
+    font-size: 15px;
+    background: transparent !important;
+    color: #000000;
 }
 
 /* Footer elements */
 .ts-footer-qr {
     position: absolute;
-    bottom: 7.2%;
+    bottom: 6.2%;
     left: 10.8%;
     width: 11%;
     aspect-ratio: 1;
     z-index: 10;
     background: transparent !important;
-    mix-blend-mode: multiply;
 }
 
 .ts-footer-qr img {
     width: 100%;
     height: 100%;
-    mix-blend-mode: multiply;
 }
 
 .ts-footer-note {
     position: absolute;
-    bottom: 5.2%;
+    bottom: 4.2%;
     left: 10.5%;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 12px;
+    font-size: 10.5px;
     font-weight: 700;
-    color: #333;
-    max-width: 25%;
-    line-height: 1.3;
+    color: #000000;
+    max-width: 28%;
+    line-height: 1.2;
+    z-index: 10;
 }
 
 .transcript-actions {
@@ -190,80 +220,71 @@
 }
 
 @page {
-    size: portrait !important;
+    size: A4 portrait !important;
     margin: 0 !important;
     padding: 0 !important;
 }
 
-@page :left { margin: 0 !important; }
-@page :right { margin: 0 !important; }
-@page :first { margin: 0 !important; }
-
 @media print {
     @page {
-        size: portrait !important;
+        size: A4 portrait !important;
         margin: 0 !important;
         padding: 0 !important;
     }
 
-    .print\:hidden,
     .transcript-actions,
     nav,
     header,
     footer,
+    .print\:hidden,
     [class*="print:hidden"] {
         display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        height: 0 !important;
-        width: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
     }
 
     html,
     body {
         width: 210mm !important;
-        height: 297mm !important;
+        height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
-        overflow: hidden !important;
-    }
-
-    body {
-        print-color-adjust: exact !important;
+        overflow: visible !important;
         -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
     .transcript-screen {
-        padding: 0 !important;
-        margin: 0 !important;
-        min-height: 0 !important;
-        height: 297mm !important;
+        min-height: auto !important;
         width: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
         background: white !important;
-        display: block !important;
     }
 
     .transcript-stack {
-        display: block !important;
         width: 210mm !important;
         margin: 0 !important;
         padding: 0 !important;
+        display: block !important;
     }
 
     .transcript-page {
         width: 210mm !important;
         height: 297mm !important;
-        max-width: 210mm !important;
         max-height: 297mm !important;
-        margin: 0 !important;
-        padding: 0 !important;
         box-shadow: none !important;
-        border: none !important;
         page-break-after: always !important;
         break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    .transcript-page:last-child {
+        page-break-after: avoid !important;
+        break-after: auto !important;
     }
 }

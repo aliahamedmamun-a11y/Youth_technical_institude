@@ -9,7 +9,7 @@ const translations = {
         navServices: 'Student Services',
         navContact: 'Contact',
         getStarted: 'Get Started',
-        heroEyebrow: 'Bangladesh National Youth Technical Institute',
+        heroEyebrow: 'South Asia Engineering & Technical Institute',
         heroTitleOne: 'Practical skills for a',
         heroTitleTwo: 'future without limits.',
         heroBody: 'Industry-focused technical training, experienced mentors, and nationwide opportunity—designed to turn ambition into employable expertise.',
@@ -46,7 +46,7 @@ const translations = {
         yearsImpact: 'Years of impact',
         aboutEyebrow: 'ABOUT THE INSTITUTE',
         aboutTitle: 'Education that moves beyond the classroom.',
-        aboutBodyOne: 'Bangladesh National Youth Technical Institute is committed to developing skilled, confident, and self-reliant people through modern technical education.',
+        aboutBodyOne: 'South Asia Engineering & Technical Institute is committed to developing skilled, confident, and self-reliant people through modern technical education.',
         aboutBodyTwo: 'Our programs combine foundational knowledge with hands-on practice, professional ethics, and the tools learners need to compete in a changing job market.',
         aboutPointOne: 'Experienced instructors',
         aboutPointTwo: 'Practical lab sessions',
@@ -438,7 +438,7 @@ document.querySelectorAll('[data-result-form]').forEach((resultForm) => {
         subjectsBody.replaceChildren(...subjects.map((subject, index) => {
             const row = document.createElement('tr');
             row.dataset.resultSubjectRow = '';
-            row.innerHTML = `<td class="px-3 py-2"><input name="subjects[${index}][code]" required value="${subject.code}" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input name="subjects[${index}][title]" required value="${subject.title}" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][credit]" required min="0.5" max="20" step="0.5" value="${subject.credit}" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][marks]" min="0" max="100" step="0.01" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input name="subjects[${index}][grade]" required class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][grade_point]" required min="0" max="4" step="0.01" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"></td><td class="px-3 py-2 text-right"><button type="button" data-remove-result-subject class="font-black text-rose-600">Remove</button></td>`;
+            row.innerHTML = `<td class="px-3 py-2"><input name="subjects[${index}][code]" required value="${subject.code}" class="w-full rounded-xl border border-slate-300 bg-white text-slate-900 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input name="subjects[${index}][title]" list="global-subject-suggestions" required value="${subject.title}" class="w-full rounded-xl border border-slate-300 bg-white text-slate-900 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][credit]" required min="0.5" max="20" step="0.5" value="${subject.credit}" class="w-full rounded-xl border border-slate-300 bg-white text-slate-900 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][marks]" min="0" max="100" step="0.01" class="w-full rounded-xl border border-slate-300 bg-white text-slate-900 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input name="subjects[${index}][grade]" required class="w-full rounded-xl border border-slate-300 bg-white text-slate-900 px-3 py-2.5 text-sm"></td><td class="px-3 py-2"><input type="number" name="subjects[${index}][grade_point]" required min="0" max="4" step="0.01" class="w-full rounded-xl border border-slate-300 bg-white text-slate-900 px-3 py-2.5 text-sm"></td><td class="px-3 py-2 text-right"><button type="button" data-remove-result-subject class="font-black text-rose-600">Remove</button></td>`;
             return row;
         }));
     };
@@ -587,7 +587,7 @@ teacherCarousels.forEach((carousel) => {
     let autoplayTimer;
     let scrollFrame;
 
-    if (!track || slides.length < 2) {
+    if (!track || slides.length < 2 || !controls || !previous || !next || !currentLabel || !totalLabel) {
         return;
     }
 

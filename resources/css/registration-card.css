@@ -23,9 +23,13 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    color: #000;
+    color: #000000;
     background: white;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Times New Roman', Times, serif !important;
+}
+
+.registration-card * {
+    font-family: 'Times New Roman', Times, serif !important;
 }
 
 .registration-card__template {
@@ -43,7 +47,7 @@
     z-index: 10;
     font-size: 13.5pt;
     font-weight: 600;
-    color: #111;
+    color: #000000;
     white-space: nowrap;
     transform: translateY(-50%);
     font-family: 'Times New Roman', Times, serif;
@@ -54,7 +58,7 @@
     left: 18.5%;
     font-size: 14pt;
     font-weight: 700;
-    color: #e11d48;
+    color: #000000;
 }
 
 /* Main Information rows placement */
@@ -78,17 +82,18 @@
 .rc-label {
     width: 175pt;
     font-weight: 700;
-    color: #222;
+    color: #000000;
 }
 
 .rc-sep {
     width: 20pt;
     font-weight: 700;
+    color: #000000;
 }
 
 .rc-val {
     font-weight: 600;
-    color: #000;
+    color: #000000;
 }
 
 /* Top Right Meta (Photo and QR) */
@@ -122,13 +127,11 @@
     aspect-ratio: 1;
     background: transparent !important;
     padding: 0 !important;
-    mix-blend-mode: multiply;
 }
 
 .registration-card__qr img {
     width: 100%;
     height: 100%;
-    mix-blend-mode: multiply;
 }
 
 .rc-head-signature {
@@ -156,26 +159,14 @@
     justify-content: center;
     gap: 0.75rem;
     margin-top: 1.5rem;
-    z-index: 20;
 }
 
 @page {
-    size: portrait !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    size: portrait;
+    margin: 0;
 }
 
-@page :left { margin: 0 !important; }
-@page :right { margin: 0 !important; }
-@page :first { margin: 0 !important; }
-
 @media print {
-    @page {
-        size: portrait !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
     .print\:hidden,
     .registration-card-actions,
     nav,
@@ -183,42 +174,22 @@
     footer,
     [class*="print:hidden"] {
         display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        height: 0 !important;
-        width: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
     }
 
-    html,
-    body {
+    html, body {
         width: 210mm !important;
         height: 297mm !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
-        overflow: hidden !important;
     }
 
-    body {
-        print-color-adjust: exact !important;
-        -webkit-print-color-adjust: exact !important;
-    }
-
-    .registration-card-screen,
-    .registration-card-frame,
-    .registration-card {
-        width: 210mm !important;
-        height: 297mm !important;
-        max-width: 210mm !important;
-        max-height: 297mm !important;
-        margin: 0 !important;
+    .registration-card-screen {
         padding: 0 !important;
+        background: white !important;
+    }
+
+    .registration-card-frame {
         box-shadow: none !important;
-        border: none !important;
-        background: transparent !important;
-        overflow: hidden !important;
     }
 }

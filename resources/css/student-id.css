@@ -31,8 +31,11 @@
     overflow: hidden;
     color: #111;
     background: white;
-    container-type: inline-size;
-    font-family: 'Instrument Sans', 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Times New Roman', Times, serif !important;
+}
+
+.student-id-card * {
+    font-family: 'Times New Roman', Times, serif !important;
 }
 
 .student-id__template {
@@ -61,7 +64,7 @@
     left: 26.5%;
     width: 13.0%;
     height: 21.8%;
-    border-radius: 0.4cqw;
+    border-radius: 4px;
     overflow: hidden;
     background: #f1f5f9;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
@@ -76,15 +79,15 @@
 .id-front-info {
     position: absolute;
     top: 63.2%;
-    left: 20.5%;
+    left: 19.0%;
     width: 26.6%;
     text-align: center;
 }
 
 .id-student-name {
-    font-size: clamp(0.35rem, 0.95cqw, 0.8rem);
+    font-size: clamp(8px, 1vw, 15px);
     font-weight: 900;
-    color: #03224c;
+    color: #000000;
     text-transform: uppercase;
     letter-spacing: 0.01em;
     white-space: nowrap;
@@ -95,10 +98,10 @@
 }
 
 .id-student-course {
-    font-size: clamp(0.28rem, 0.68cqw, 0.58rem);
+    font-size: clamp(6px, 0.7vw, 11px);
     font-weight: 700;
-    color: #334155;
-    margin-top: 0.1cqw;
+    color: #000000;
+    margin-top: 2px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -107,12 +110,12 @@
 }
 
 .id-student-roll {
-    font-size: clamp(0.3rem, 0.78cqw, 0.68rem);
+    font-size: clamp(7px, 0.8vw, 13px);
     font-weight: 900;
-    color: #03224c;
+    color: #000000;
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    margin-top: 0.2cqw;
+    margin-top: 3px;
     line-height: 1.25;
 }
 
@@ -120,9 +123,9 @@
 .id-back-details {
     position: absolute;
     top: 25.2%;
-    left: 55.5%;
+    left: 53.5%;
     width: 23.5%;
-    font-size: clamp(0.35rem, 0.95cqw, 0.8rem);
+    font-size: clamp(5px, 0.9vw, 14px);
     font-weight: 700;
     color: #0f172a;
 }
@@ -130,13 +133,13 @@
 .id-back-details dl {
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.9fr);
-    row-gap: 0.25cqw;
+    row-gap: 4.5px;
     width: 100%;
 }
 
 .id-back-details dt {
     text-transform: uppercase;
-    font-size: clamp(0.3rem, 0.92cqw, 0.8rem);
+    font-size: clamp(5px, 0.9vw, 14px);
     color: #03224c;
     font-weight: 900;
     letter-spacing: 0.01em;
@@ -147,7 +150,7 @@
     margin: 0;
     color: #0f172a;
     font-weight: 800;
-    font-size: clamp(0.3rem, 0.92cqw, 0.8rem);
+    font-size: clamp(7px, 0.9vw, 14px);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -157,17 +160,15 @@
 .id-back-qr {
     position: absolute;
     top: 65.9%;
-    left: 62.4%;
+    left: 62.3%;
     width: 6.3%;
     aspect-ratio: 1;
     background: transparent;
-    mix-blend-mode: multiply;
 }
 
 .id-back-qr img {
     width: 100%;
     height: 100%;
-    mix-blend-mode: multiply;
 }
 
 /* Print Setup */
@@ -249,9 +250,5 @@
     .student-id__template {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-    }
-
-    .id-back-qr img {
-        mix-blend-mode: multiply !important;
     }
 }

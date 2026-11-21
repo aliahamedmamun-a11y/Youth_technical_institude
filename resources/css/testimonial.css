@@ -56,7 +56,7 @@
     position: absolute;
     z-index: 1;
     overflow: hidden;
-    color: #0B1953;
+    color: #000000;
     font-family: 'Times New Roman', Times, serif;
     font-size: clamp(0.7rem, 1.4vw, 1.32rem);
     font-style: italic;

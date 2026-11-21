@@ -41,7 +41,7 @@
     <div class="registration-card-frame">
         <article class="registration-card" aria-label="Registration card for {{ $student->name }}">
             {{-- Background registration card template containing layout and static borders/text --}}
-            <img class="registration-card__template" src="{{ asset('images/registration-card-template.png') }}" alt="Registration Card Background">
+            <img class="registration-card__template" src="{{ asset('images/registration-card-template.png') }}" alt="Registration Card Background" crossorigin="anonymous">
 
             {{-- Dynamic Serial No overlay --}}
             <div class="rc-field rc-field--serial">
@@ -62,7 +62,7 @@
 
                 @if($qrCode)
                     <div class="registration-card__qr">
-                        <img src="{{ $qrCode }}" alt="QR Verification">
+                        <img src="{{ $qrCode }}" alt="QR Verification" crossorigin="anonymous">
                     </div>
                 @endif
             </aside>
@@ -147,12 +147,23 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const doc = document.querySelector('.registration-card');
+            const cardEl = document.querySelector('.registration-card');
             const studentName = @json($student->name ?? 'Student');
             const cleanName = studentName.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'Student';
+
+            async function waitForImages(container) {
+                const imgs = Array.from(container.querySelectorAll('img'));
+                await Promise.all(imgs.map((img) => {
+                    if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+                    return new Promise((resolve) => {
+                        img.addEventListener('load', resolve, { once: true });
+                        img.addEventListener('error', resolve, { once: true });
+                        setTimeout(resolve, 3000);
+                    });
+                }));
+            }
 
             function oklchToRgb(colorValue) {
                 if (!colorValue || !colorValue.includes('oklch')) return colorValue;
@@ -213,43 +224,38 @@
                 };
             }
 
-            async function renderCardCanvas(scaleValue = 3) {
+            async function renderCardCanvas(scaleValue = 2.5) {
+                if (!cardEl) {
+                    throw new Error('Registration card element not found');
+                }
                 if (typeof html2canvas === 'undefined') {
                     throw new Error('html2canvas is not loaded');
                 }
 
-                const restore = sanitizeOklchStyles(doc);
+                await waitForImages(cardEl);
+                const restore = sanitizeOklchStyles(cardEl);
+
                 try {
-                    return await html2canvas(doc, {
+                    const canvas = await html2canvas(cardEl, {
                         scale: scaleValue,
                         useCORS: true,
                         allowTaint: false,
                         logging: false,
                         backgroundColor: '#ffffff'
                     });
+
+                    if (!canvas || canvas.width === 0 || canvas.height === 0) {
+                        throw new Error('Canvas rendered with zero dimensions');
+                    }
+
+                    return canvas;
                 } finally {
                     restore();
                 }
             }
 
-            function fallbackJsPDF(filename, finish) {
-                renderCardCanvas(3).then(canvas => {
-                    const imgData = canvas.toDataURL('image/png', 1.0);
-                    const jsPDF = window.jspdf ? window.jspdf.jsPDF : (window.jsPDF ? window.jsPDF : null);
-                    if (jsPDF) {
-                        const pdf = new jsPDF('portrait', 'mm', 'a4', false);
-                        pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, undefined, 'NONE');
-                        pdf.save(filename);
-                    }
-                    finish();
-                }).catch(err => {
-                    console.error('PDF fallback error:', err);
-                    finish();
-                });
-            }
-
             async function downloadPDF(btnElement) {
-                if (!doc) return;
+                if (!cardEl) return;
 
                 const originalHTML = btnElement.innerHTML;
                 btnElement.innerHTML = `
@@ -261,52 +267,47 @@
                 `;
                 btnElement.disabled = true;
 
-                const filename = `RegistrationCard_${cleanName}.pdf`;
+                try {
+                    const canvas = await renderCardCanvas(2.5);
+                    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                    const jsPDFConstructor = window.jspdf?.jsPDF || window.jsPDF;
 
-                const finish = () => {
+                    if (!jsPDFConstructor) {
+                        throw new Error('jsPDF is not loaded');
+                    }
+
+                    const pdf = new jsPDFConstructor('portrait', 'mm', 'a4');
+                    const pageWidth = pdf.internal.pageSize.getWidth();
+                    const pageHeight = pdf.internal.pageSize.getHeight();
+                    const imgRatio = canvas.width / canvas.height;
+                    const pageRatio = pageWidth / pageHeight;
+
+                    let renderWidth = pageWidth;
+                    let renderHeight = pageHeight;
+                    let offsetX = 0;
+                    let offsetY = 0;
+
+                    if (imgRatio > pageRatio) {
+                        renderHeight = pageWidth / imgRatio;
+                        offsetY = (pageHeight - renderHeight) / 2;
+                    } else {
+                        renderWidth = pageHeight * imgRatio;
+                        offsetX = (pageWidth - renderWidth) / 2;
+                    }
+
+                    pdf.addImage(imgData, 'JPEG', offsetX, offsetY, renderWidth, renderHeight);
+                    pdf.save(`RegistrationCard_${cleanName}.pdf`);
+                } catch (err) {
+                    console.error('PDF error:', err);
+                    alert('PDF তৈরি করতে সমস্যা হয়েছে। অনুগ্রহ করে Console চেক করুন বা আবার চেষ্টা করুন।');
+                } finally {
                     btnElement.innerHTML = originalHTML;
                     btnElement.disabled = false;
-                };
-
-                const restore = sanitizeOklchStyles(doc);
-
-                try {
-                    const opt = {
-                        margin: 0,
-                        filename: filename,
-                        image: { type: 'png', quality: 1.0 },
-                        html2canvas: {
-                            scale: 3,
-                            useCORS: true,
-                            allowTaint: false,
-                            logging: false,
-                            letterRendering: true
-                        },
-                        jsPDF: {
-                            unit: 'mm',
-                            format: 'a4',
-                            orientation: 'portrait',
-                            compress: false
-                        }
-                    };
-
-                    if (typeof html2pdf !== 'undefined') {
-                        await html2pdf().set(opt).from(doc).save();
-                        restore();
-                        finish();
-                    } else {
-                        restore();
-                        fallbackJsPDF(filename, finish);
-                    }
-                } catch (err) {
-                    restore();
-                    console.error('html2pdf error:', err);
-                    fallbackJsPDF(filename, finish);
                 }
             }
 
             async function downloadImage(btnElement) {
-                if (!doc) return;
+                if (!cardEl) return;
 
                 const originalHTML = btnElement.innerHTML;
                 btnElement.innerHTML = `
@@ -318,19 +319,17 @@
                 `;
                 btnElement.disabled = true;
 
-                const filename = `RegistrationCard_${cleanName}.png`;
-
                 try {
-                    const canvas = await renderCardCanvas(3);
-                    const imageUri = canvas.toDataURL('image/png', 1.0);
+                    const canvas = await renderCardCanvas(2.5);
                     const link = document.createElement('a');
-                    link.download = filename;
-                    link.href = imageUri;
+                    link.download = `RegistrationCard_${cleanName}.png`;
+                    link.href = canvas.toDataURL('image/png', 1.0);
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
                 } catch (err) {
                     console.error('Image error:', err);
+                    alert('ছবি ডাউনলোড করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
                 } finally {
                     btnElement.innerHTML = originalHTML;
                     btnElement.disabled = false;

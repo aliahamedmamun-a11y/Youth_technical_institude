@@ -128,7 +128,7 @@
             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
-            📥 Download PDF (সরাসরি পিডিএফ ডাউনলোড)
+            📥 Download PDF (~3MB)
         </button>
 
         <button type="button" data-download-image class="rounded-xl bg-blue-600 hover:bg-blue-700 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-xl transition cursor-pointer active:scale-95 flex items-center gap-2 border border-blue-500">
@@ -152,6 +152,10 @@
             const cardEl = document.querySelector('.registration-card');
             const studentName = @json($student->name ?? 'Student');
             const cleanName = studentName.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'Student';
+
+            // ~3 MB PDF সাইজের জন্য টিউনিং প্যারামিটার
+            const PDF_SCALE = 4;
+            const PDF_JPEG_QUALITY = 0.92;
 
             async function waitForImages(container) {
                 const imgs = Array.from(container.querySelectorAll('img'));
@@ -224,7 +228,7 @@
                 };
             }
 
-            async function renderCardCanvas(scaleValue = 2.5) {
+            async function renderCardCanvas(scaleValue = PDF_SCALE) {
                 if (!cardEl) {
                     throw new Error('Registration card element not found');
                 }
@@ -263,13 +267,13 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
-                    <span>PDF তৈরি হচ্ছে...</span>
+                    <span>~3MB PDF তৈরি হচ্ছে...</span>
                 `;
                 btnElement.disabled = true;
 
                 try {
-                    const canvas = await renderCardCanvas(2.5);
-                    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                    const canvas = await renderCardCanvas(PDF_SCALE);
+                    const imgData = canvas.toDataURL('image/jpeg', PDF_JPEG_QUALITY);
                     const jsPDFConstructor = window.jspdf?.jsPDF || window.jsPDF;
 
                     if (!jsPDFConstructor) {
@@ -295,11 +299,11 @@
                         offsetX = (pageWidth - renderWidth) / 2;
                     }
 
-                    pdf.addImage(imgData, 'JPEG', offsetX, offsetY, renderWidth, renderHeight);
+                    pdf.addImage(imgData, 'JPEG', offsetX, offsetY, renderWidth, renderHeight, undefined, 'FAST');
                     pdf.save(`RegistrationCard_${cleanName}.pdf`);
                 } catch (err) {
                     console.error('PDF error:', err);
-                    alert('PDF তৈরি করতে সমস্যা হয়েছে। অনুগ্রহ করে Console চেক করুন বা আবার চেষ্টা করুন।');
+                    alert('PDF তৈরি করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
                 } finally {
                     btnElement.innerHTML = originalHTML;
                     btnElement.disabled = false;
@@ -320,7 +324,7 @@
                 btnElement.disabled = true;
 
                 try {
-                    const canvas = await renderCardCanvas(2.5);
+                    const canvas = await renderCardCanvas(3);
                     const link = document.createElement('a');
                     link.download = `RegistrationCard_${cleanName}.png`;
                     link.href = canvas.toDataURL('image/png', 1.0);

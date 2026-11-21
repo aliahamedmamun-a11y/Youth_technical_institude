@@ -10,22 +10,21 @@
 ])
 
 @php
-    $branchApp =$student->branch_application
-        ?? \App\Models\BranchApplication::query()
-            ->where('id', (int) $student->branch_id)
-            ->orWhere('username', $student->branch_id)
-            ->orWhere('institute_name', $student->branch_id)
-            ->orWhere('institute_name', $student->institute_name)
-            ->first();
+    $branchApp = $student->branch_application ?? \App\Models\BranchApplication::query()
+        ->where('id', (int) $student->branch_id)
+        ->orWhere('username', $student->branch_id)
+        ->orWhere('institute_name', $student->branch_id)
+        ->orWhere('institute_name', $student->institute_name)
+        ->first();
 
-    $headSignatureUrl =$branchApp?->director_signature_path
+    $headSignatureUrl = $branchApp?->director_signature_path
         ? asset('storage/' . $branchApp->director_signature_path)
         : null;
 
     $studentPhotoUrl = null;
     if ($student->image_path) {
-        if (str_starts_with($student->image_path, 'http://') \vert{}\vert{} str_starts_with($student->image_path, 'https://')) {
-            $studentPhotoUrl =$student->image_path;
+        if (str_starts_with($student->image_path, 'http://') || str_starts_with($student->image_path, 'https://')) {
+            $studentPhotoUrl = $student->image_path;
         } elseif (str_starts_with($student->image_path, 'images/')) {
             $studentPhotoUrl = asset($student->image_path);
         } else {
@@ -46,7 +45,7 @@
 
             {{-- Dynamic Serial No overlay --}}
             <div class="rc-field rc-field--serial">
-                {{ $serial ?? sprintf('\%06d', $student->id) }}
+                {{ $serial ?? sprintf('%06d', $student->id) }}
             </div>
 
             {{-- Top Right Photo and QR Code Overlay --}}
@@ -161,4 +160,190 @@
                 const temp = document.createElement('span');
                 temp.style.color = colorValue;
                 temp.style.display = 'none';
-                document.body.appendChild(temp
+                document.body.appendChild(temp);
+                const resolved = getComputedStyle(temp).color;
+                document.body.removeChild(temp);
+                return resolved && !resolved.includes('oklch') ? resolved : 'rgb(15, 23, 42)';
+            }
+
+            function sanitizeOklchStyles(rootEl) {
+                const elements = [rootEl, ...rootEl.querySelectorAll('*')];
+                const backups = [];
+                const propsToCheck = [
+                    'color',
+                    'backgroundColor',
+                    'borderColor',
+                    'borderTopColor',
+                    'borderRightColor',
+                    'borderBottomColor',
+                    'borderLeftColor',
+                    'outlineColor',
+                    'fill',
+                    'stroke'
+                ];
+
+                elements.forEach((el) => {
+                    const computed = getComputedStyle(el);
+                    const savedInline = {};
+
+                    propsToCheck.forEach((prop) => {
+                        const val = computed[prop];
+                        if (val && val.includes('oklch')) {
+                            savedInline[prop] = el.style[prop];
+                            el.style[prop] = oklchToRgb(val);
+                        }
+                    });
+
+                    if (computed.boxShadow && computed.boxShadow.includes('oklch')) {
+                        savedInline.boxShadow = el.style.boxShadow;
+                        el.style.boxShadow = 'none';
+                    }
+
+                    if (Object.keys(savedInline).length > 0) {
+                        backups.push({ el, savedInline });
+                    }
+                });
+
+                return function restoreStyles() {
+                    backups.forEach(({ el, savedInline }) => {
+                        Object.keys(savedInline).forEach((prop) => {
+                            el.style[prop] = savedInline[prop];
+                        });
+                    });
+                };
+            }
+
+            async function renderCardCanvas(scaleValue = 3) {
+                if (typeof html2canvas === 'undefined') {
+                    throw new Error('html2canvas is not loaded');
+                }
+
+                const restore = sanitizeOklchStyles(doc);
+                try {
+                    return await html2canvas(doc, {
+                        scale: scaleValue,
+                        useCORS: true,
+                        allowTaint: false,
+                        logging: false,
+                        backgroundColor: '#ffffff'
+                    });
+                } finally {
+                    restore();
+                }
+            }
+
+            function fallbackJsPDF(filename, finish) {
+                renderCardCanvas(3).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png', 1.0);
+                    const jsPDF = window.jspdf ? window.jspdf.jsPDF : (window.jsPDF ? window.jsPDF : null);
+                    if (jsPDF) {
+                        const pdf = new jsPDF('portrait', 'mm', 'a4', false);
+                        pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, undefined, 'NONE');
+                        pdf.save(filename);
+                    }
+                    finish();
+                }).catch(err => {
+                    console.error('PDF fallback error:', err);
+                    finish();
+                });
+            }
+
+            async function downloadPDF(btnElement) {
+                if (!doc) return;
+
+                const originalHTML = btnElement.innerHTML;
+                btnElement.innerHTML = `
+                    <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                    </svg>
+                    <span>PDF তৈরি হচ্ছে...</span>
+                `;
+                btnElement.disabled = true;
+
+                const filename = `RegistrationCard_${cleanName}.pdf`;
+
+                const finish = () => {
+                    btnElement.innerHTML = originalHTML;
+                    btnElement.disabled = false;
+                };
+
+                const restore = sanitizeOklchStyles(doc);
+
+                try {
+                    const opt = {
+                        margin: 0,
+                        filename: filename,
+                        image: { type: 'png', quality: 1.0 },
+                        html2canvas: {
+                            scale: 3,
+                            useCORS: true,
+                            allowTaint: false,
+                            logging: false,
+                            letterRendering: true
+                        },
+                        jsPDF: {
+                            unit: 'mm',
+                            format: 'a4',
+                            orientation: 'portrait',
+                            compress: false
+                        }
+                    };
+
+                    if (typeof html2pdf !== 'undefined') {
+                        await html2pdf().set(opt).from(doc).save();
+                        restore();
+                        finish();
+                    } else {
+                        restore();
+                        fallbackJsPDF(filename, finish);
+                    }
+                } catch (err) {
+                    restore();
+                    console.error('html2pdf error:', err);
+                    fallbackJsPDF(filename, finish);
+                }
+            }
+
+            async function downloadImage(btnElement) {
+                if (!doc) return;
+
+                const originalHTML = btnElement.innerHTML;
+                btnElement.innerHTML = `
+                    <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                    </svg>
+                    <span>ছবি তৈরি হচ্ছে...</span>
+                `;
+                btnElement.disabled = true;
+
+                const filename = `RegistrationCard_${cleanName}.png`;
+
+                try {
+                    const canvas = await renderCardCanvas(3);
+                    const imageUri = canvas.toDataURL('image/png', 1.0);
+                    const link = document.createElement('a');
+                    link.download = filename;
+                    link.href = imageUri;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } catch (err) {
+                    console.error('Image error:', err);
+                } finally {
+                    btnElement.innerHTML = originalHTML;
+                    btnElement.disabled = false;
+                }
+            }
+
+            document.querySelectorAll('[data-download-pdf]').forEach(btn => {
+                btn.addEventListener('click', function () { downloadPDF(this); });
+            });
+
+            document.querySelectorAll('[data-download-image]').forEach(btn => {
+                btn.addEventListener('click', function () { downloadImage(this); });
+            });
+        });
+    </script>
+</main>

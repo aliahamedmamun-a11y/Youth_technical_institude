@@ -10,7 +10,7 @@
 ])
 
 @php
-    $branchApp = $student->branch_application
+    $branchApp =$student->branch_application
         ?? \App\Models\BranchApplication::query()
             ->where('id', (int) $student->branch_id)
             ->orWhere('username', $student->branch_id)
@@ -18,14 +18,14 @@
             ->orWhere('institute_name', $student->institute_name)
             ->first();
 
-    $headSignatureUrl = $branchApp?->director_signature_path
+    $headSignatureUrl =$branchApp?->director_signature_path
         ? asset('storage/' . $branchApp->director_signature_path)
         : null;
 
     $studentPhotoUrl = null;
     if ($student->image_path) {
-        if (str_starts_with($student->image_path, 'http://') || str_starts_with($student->image_path, 'https://')) {
-            $studentPhotoUrl = $student->image_path;
+        if (str_starts_with($student->image_path, 'http://') \vert{}\vert{} str_starts_with($student->image_path, 'https://')) {
+            $studentPhotoUrl =$student->image_path;
         } elseif (str_starts_with($student->image_path, 'images/')) {
             $studentPhotoUrl = asset($student->image_path);
         } else {
@@ -46,7 +46,7 @@
 
             {{-- Dynamic Serial No overlay --}}
             <div class="rc-field rc-field--serial">
-                {{ $serial ?? sprintf('%06d', $student->id) }}
+                {{ $serial ?? sprintf('\%06d', $student->id) }}
             </div>
 
             {{-- Top Right Photo and QR Code Overlay --}}
@@ -140,9 +140,9 @@
         </button>
 
         @if (! $isPublic)
-        <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-6 py-3 text-xs font-black uppercase tracking-wider text-slate-700 transition">
-            Back to student
-        </a>
+            <a href="{{ route('super-admin.students.show', $student) }}" class="rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-6 py-3 text-xs font-black uppercase tracking-wider text-slate-700 transition">
+                Back to student
+            </a>
         @endif
     </nav>
 
@@ -155,132 +155,10 @@
             const studentName = @json($student->name ?? 'Student');
             const cleanName = studentName.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'Student';
 
-            function fallbackJsPDF(filename, finish) {
-                if (typeof html2canvas !== 'undefined') {
-                    html2canvas(doc, {
-                        scale: 7,
-                        useCORS: true,
-                        allowTaint: false,
-                        logging: false
-                    }).then(canvas => {
-                        const imgData = canvas.toDataURL('image/png', 1.0);
-                        const jsPDF = window.jspdf ? window.jspdf.jsPDF : (window.jsPDF ? window.jsPDF : null);
-                        if (jsPDF) {
-                            const pdf = new jsPDF('portrait', 'mm', 'a4', false);
-                            pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, undefined, 'NONE');
-                            pdf.save(filename);
-                        }
-                        finish();
-                    }).catch(err => {
-                        console.error('PDF fallback error:', err);
-                        finish();
-                    });
-                } else {
-                    finish();
-                }
-            }
+            function oklchToRgb(colorValue) {
+                if (!colorValue || !colorValue.includes('oklch')) return colorValue;
 
-            function downloadPDF(btnElement) {
-                if (!doc) return;
-
-                const originalHTML = btnElement.innerHTML;
-                btnElement.innerHTML = `
-                    <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                    </svg>
-                    <span>Ultra HD 600DPI PDF (5-7MB) তৈরি হচ্ছে...</span>
-                `;
-                btnElement.disabled = true;
-
-                const filename = `RegistrationCard_${cleanName}.pdf`;
-
-                const finish = () => {
-                    btnElement.innerHTML = originalHTML;
-                    btnElement.disabled = false;
-                };
-
-                const opt = {
-                    margin: 0,
-                    filename: filename,
-                    image: { type: 'png', quality: 1.0 },
-                    html2canvas: {
-                        scale: 7,
-                        useCORS: true,
-                        allowTaint: false,
-                        logging: false,
-                        letterRendering: true
-                    },
-                    jsPDF: {
-                        unit: 'mm',
-                        format: 'a4',
-                        orientation: 'portrait',
-                        compress: false
-                    }
-                };
-
-                if (typeof html2pdf !== 'undefined') {
-                    html2pdf().set(opt).from(doc).save().then(finish).catch(err => {
-                        console.error('html2pdf error:', err);
-                        fallbackJsPDF(filename, finish);
-                    });
-                } else {
-                    fallbackJsPDF(filename, finish);
-                }
-            }
-
-            function downloadImage(btnElement) {
-                if (!doc) return;
-
-                const originalHTML = btnElement.innerHTML;
-                btnElement.innerHTML = `
-                    <svg class="size-4 animate-spin inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                    </svg>
-                    <span>Ultra HD ছবি তৈরি হচ্ছে...</span>
-                `;
-                btnElement.disabled = true;
-
-                const filename = `RegistrationCard_${cleanName}.png`;
-
-                const finish = () => {
-                    btnElement.innerHTML = originalHTML;
-                    btnElement.disabled = false;
-                };
-
-                if (typeof html2canvas !== 'undefined') {
-                    html2canvas(doc, {
-                        scale: 3,
-                        useCORS: true,
-                        allowTaint: false,
-                        logging: false,
-                        backgroundColor: '#ffffff'
-                    }).then(canvas => {
-                        const imageUri = canvas.toDataURL('image/png', 1.0);
-                        const link = document.createElement('a');
-                        link.download = filename;
-                        link.href = imageUri;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        finish();
-                    }).catch(err => {
-                        console.error('Image error:', err);
-                        finish();
-                    });
-                } else {
-                    finish();
-                }
-            }
-
-            document.querySelectorAll('[data-download-pdf]').forEach(btn => {
-                btn.addEventListener('click', function () { downloadPDF(this); });
-            });
-
-            document.querySelectorAll('[data-download-image]').forEach(btn => {
-                btn.addEventListener('click', function () { downloadImage(this); });
-            });
-        });
-    </script>
-</main>
+                const temp = document.createElement('span');
+                temp.style.color = colorValue;
+                temp.style.display = 'none';
+                document.body.appendChild(temp

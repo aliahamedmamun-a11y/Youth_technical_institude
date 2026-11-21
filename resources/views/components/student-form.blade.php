@@ -1,9 +1,400 @@
+@props([
+    'student' => null,
+    'courses' => [],
+    'action' => '#',
+    'method' => 'POST',
+    'submitLabel' => 'Save Changes',
+    'cancelRoute' => null,
+    'declarationRequired' => false,
+    'isEdit' => false,
+])
+
+@php
+    $isEdit = $isEdit || $student !== null;
+    $inputClass = 'w-full rounded-xl border border-white/10 bg-[#071c2c]/90 py-3.5 px-4 text-sm text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all';
+    $selectClass = $inputClass . ' cursor-pointer';
+    $labelClass = 'block text-xs font-bold text-slate-300 mb-2 uppercase tracking-wider';
+
+    $months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    $startYears = range(2026, 1980);
+    $endYears = range(2031, 1980);
+    $districts = config('bangladesh.districts', []);
+@endphp
+
+<div class="space-y-6" data-student-registration-container>
+
+    <!-- Main Card Container -->
+    <div class="rounded-2xl sm:rounded-3xl border border-white/10 bg-[#0e1828] p-4 sm:p-6 lg:p-10 shadow-2xl space-y-8 sm:space-y-10">
+
+        <!-- Header -->
+        <div class="text-center space-y-2">
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-black text-[#818cf8] uppercase tracking-tight">
+                {{ $isEdit ? 'Edit Student Information' : 'Student Registration' }}
+            </h1>
+            <p class="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">
+                {{ $isEdit ? 'Update student details and academic records' : 'Fill the form below to register a new student' }}
+            </p>
+        </div>
+
+        <!-- Validation Errors -->
+        @if(isset($errors) && $errors->any())
+            <div class="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4 sm:p-5 text-rose-300 text-xs sm:text-sm">
+                <ul class="list-disc pl-5 space-y-1 font-bold">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <!-- SECTION: BIOMETRIC AND DOCUMENT SCAN -->
+        <div class="rounded-2xl border border-indigo-500/20 bg-[#071c2c] p-4 sm:p-6 shadow-xl space-y-6">
+            <h3 class="text-center text-xs sm:text-sm font-black text-indigo-400 uppercase tracking-wider flex items-center justify-center gap-2">
+                Biometric and Document Scan
+            </h3>
+
+            <!-- Alert banner for scanner status -->
+            <div id="scan-status-alert" class="hidden rounded-xl bg-indigo-500/10 border border-indigo-500/30 p-3 text-center text-xs font-bold text-indigo-300">
+                <span id="scan-status-msg"></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+
+                <!-- 1. PASSPORT SCANNER -->
+                <div class="flex flex-col items-center justify-between p-4 sm:p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
+                    <div id="box-preview-passport" class="relative w-full h-32 rounded-xl border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 shadow-inner">
+                        <div class="flex items-center gap-2">
+                            <div class="size-10 rounded-full bg-slate-700/60 border border-slate-500/30 flex items-center justify-center text-slate-300 text-xs font-bold">ID</div>
+                            <div class="space-y-1 text-[9px] font-mono text-slate-300">
+                                <div class="w-16 h-1.5 bg-slate-600/80 rounded"></div>
+                                <div class="w-12 h-1.5 bg-slate-600/60 rounded"></div>
+                                <div class="w-14 h-1.5 bg-slate-600/60 rounded"></div>
+                            </div>
+                        </div>
+                        <div class="absolute inset-x-0 top-1/2 h-0.5 bg-rose-500 shadow-[0_0_12px_#f43f5e] animate-pulse"></div>
+                    </div>
+
+                    <div class="space-y-2 w-full">
+                        <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">Passport Scanner</h4>
+                        <div class="grid grid-cols-2 gap-2 w-full">
+                            <button type="button" onclick="window.openDocumentScanner('Passport')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-2.5 py-2.5 text-[11px] font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                <span id="btn-text-passport">Camera</span>
+                            </button>
+                            <label for="file-input-passport" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
+                                📁 File/PDF
+                                <input type="file" id="file-input-passport" accept="image/*,application/pdf,.pdf" class="sr-only" onchange="window.handleDocumentFileChange(this, 'Passport')">
+                            </label>
+                        </div>
+                        <p class="text-[11px] text-slate-400 font-medium">Place Passport Page in View (Image or PDF).</p>
+                    </div>
+                </div>
+
+                <!-- 2. NID CARD SCANNER -->
+                <div class="flex flex-col items-center justify-between p-4 sm:p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
+                    <div id="box-preview-nid" class="relative w-full h-32 rounded-xl border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 shadow-inner">
+                        <div class="flex items-center gap-2">
+                            <div class="size-10 rounded bg-cyan-700/40 border border-cyan-500/30 flex items-center justify-center text-cyan-300 text-xs font-bold">NID</div>
+                            <div class="space-y-1 text-[9px] font-mono text-slate-300">
+                                <div class="w-16 h-1.5 bg-cyan-600/80 rounded"></div>
+                                <div class="w-12 h-1.5 bg-cyan-600/60 rounded"></div>
+                                <div class="w-14 h-1.5 bg-cyan-600/60 rounded"></div>
+                            </div>
+                        </div>
+                        <div class="absolute inset-x-0 top-1/2 h-0.5 bg-cyan-400 shadow-[0_0_12px_#22d3ee] animate-pulse"></div>
+                    </div>
+
+                    <div class="space-y-2 w-full">
+                        <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">NID Card Scanner</h4>
+                        <div class="grid grid-cols-2 gap-2 w-full">
+                            <button type="button" onclick="window.openDocumentScanner('NID Card')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white px-2.5 py-2.5 text-[11px] font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                <span id="btn-text-nid">Camera</span>
+                            </button>
+                            <label for="file-input-nid" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
+                                📁 File/PDF
+                                <input type="file" id="file-input-nid" accept="image/*,application/pdf,.pdf" class="sr-only" onchange="window.handleDocumentFileChange(this, 'NID Card')">
+                            </label>
+                        </div>
+                        <p class="text-[11px] text-slate-400 font-medium">Place NID Card Data Page in View (Image or PDF).</p>
+                    </div>
+                </div>
+
+                <!-- 3. BIRTH REGISTRATION CERTIFICATE SCANNER -->
+                <div class="flex flex-col items-center justify-between p-4 sm:p-5 rounded-xl border border-white/5 bg-[#0a2036]/60 text-center space-y-4">
+                    <div id="box-preview-birth" class="relative w-full h-32 rounded-xl border border-white/10 bg-[#0f2d48] overflow-hidden flex items-center justify-center p-2 shadow-inner">
+                        <div class="flex items-center gap-2">
+                            <div class="size-10 rounded bg-violet-700/40 border border-violet-500/30 flex items-center justify-center text-violet-300 text-xs font-bold">BR</div>
+                            <div class="space-y-1 text-[9px] font-mono text-slate-300">
+                                <div class="w-16 h-1.5 bg-violet-500/80 rounded"></div>
+                                <div class="w-12 h-1.5 bg-violet-500/60 rounded"></div>
+                                <div class="w-14 h-1.5 bg-violet-500/60 rounded"></div>
+                            </div>
+                        </div>
+                        <div class="absolute inset-x-0 top-1/2 h-0.5 bg-violet-400 shadow-[0_0_12px_#c084fc] animate-pulse"></div>
+                    </div>
+
+                    <div class="space-y-2 w-full">
+                        <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">Birth Registration Scanner</h4>
+                        <div class="grid grid-cols-2 gap-2 w-full">
+                            <button type="button" onclick="window.openDocumentScanner('Birth Registration')" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white px-2.5 py-2.5 text-[11px] font-black uppercase tracking-wider cursor-pointer shadow-lg transition-all active:scale-95">
+                                <span id="btn-text-birth">Camera</span>
+                            </button>
+                            <label for="file-input-birth" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2.5 text-[11px] font-bold uppercase tracking-wider cursor-pointer shadow transition-all active:scale-95">
+                                📁 File/PDF
+                                <input type="file" id="file-input-birth" accept="image/*,application/pdf,.pdf" class="sr-only" onchange="window.handleDocumentFileChange(this, 'Birth Registration')">
+                            </label>
+                        </div>
+                        <p class="text-[11px] text-slate-400 font-medium">Place Birth Certificate in View (Image or PDF).</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CAMERA SCANNER MODAL -->
+        <div id="doc-camera-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+            <div class="w-full max-w-lg rounded-2xl border border-indigo-500/30 bg-[#071c2c] p-5 shadow-2xl space-y-4 relative">
+                <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="size-3 rounded-full bg-rose-500 animate-ping"></span>
+                        <h3 id="camera-modal-title" class="text-sm font-black text-indigo-300 uppercase tracking-wider">
+                            Live Scanner
+                        </h3>
+                    </div>
+                    <button type="button" onclick="window.closeDocCameraModal()" class="rounded-lg bg-white/10 px-2.5 py-1 text-slate-300 hover:bg-white/20 hover:text-white transition-all cursor-pointer">
+                        ✕
+                    </button>
+                </div>
+
+                <div class="relative w-full h-64 sm:h-80 rounded-xl overflow-hidden bg-black border border-white/10 shadow-inner flex items-center justify-center">
+                    <video id="camera-feed" autoplay playsinline class="size-full object-cover"></video>
+                    <canvas id="camera-canvas" class="hidden"></canvas>
+
+                    <div class="absolute inset-0 pointer-events-none border-2 border-indigo-500/40 rounded-xl flex items-center justify-center">
+                        <div class="w-5/6 h-3/4 border-2 border-dashed border-indigo-400/80 rounded-lg relative">
+                            <div class="w-full h-0.5 bg-indigo-400 shadow-[0_0_15px_#818cf8] animate-pulse absolute top-1/2"></div>
+                        </div>
+                    </div>
+
+                    <p id="camera-loading-text" class="absolute text-xs font-bold text-slate-300 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-white/10">
+                        Initializing Camera...
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between gap-3 pt-2">
+                    <button type="button" onclick="window.switchCameraFacing()" class="inline-flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 px-3.5 py-2.5 text-xs font-bold uppercase transition-all cursor-pointer">
+                        Flip
+                    </button>
+
+                    <button type="button" onclick="window.captureCameraPhoto()" class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 text-xs font-black uppercase tracking-wider shadow-lg transition-all active:scale-95 cursor-pointer">
+                        Capture & Scan
+                    </button>
+
+                    <button type="button" onclick="window.triggerFileFallbackFromModal()" class="inline-flex items-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white px-3.5 py-2.5 text-xs font-bold uppercase transition-all cursor-pointer">
+                        Upload
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ $action }}" enctype="multipart/form-data" class="space-y-8 sm:space-y-10" id="student-form">
+            @csrf
+            @if (strtoupper($method) !== 'POST') @method($method) @endif
+
+            <!-- SECTION 1: REGISTRATION FIELDS -->
+            <div class="space-y-6">
+                <h2 class="text-base sm:text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
+                    Student Details & Location
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                    <div>
+                        <label class="{{ $labelClass }}">Student Name</label>
+                        <input type="text" name="name" id="field-name" value="{{ old('name', $student?->name) }}" placeholder="Enter Full Name" class="{{ $inputClass }}">
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Father's Name</label>
+                        <input type="text" name="father_name" id="field-father-name" value="{{ old('father_name', $student?->father_name) }}" placeholder="Enter Father's Name" class="{{ $inputClass }}">
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Mother's Name</label>
+                        <input type="text" name="mother_name" id="field-mother-name" value="{{ old('mother_name', $student?->mother_name) }}" placeholder="Enter Mother's Name" class="{{ $inputClass }}">
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Birthday / Date of Birth</label>
+                        <input type="date" name="date_of_birth" id="field-dob" value="{{ old('date_of_birth', optional($student?->date_of_birth)->format('Y-m-d')) }}" class="{{ $inputClass }}">
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Gender</label>
+                        <select name="gender" id="field-gender" class="{{ $selectClass }}">
+                            <option value="Male" @selected(old('gender', $student?->gender ?? 'Male') === 'Male')>Male</option>
+                            <option value="Female" @selected(old('gender', $student?->gender) === 'Female')>Female</option>
+                            <option value="Other" @selected(old('gender', $student?->gender) === 'Other')>Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Passport / NID / Birth Reg. Number</label>
+                        <input type="text" name="passport_nid_number" id="field-passport" value="{{ old('passport_nid_number', $student?->passport_nid_number) }}" placeholder="Or Enter Passport/NID/Birth Reg manually" class="{{ $inputClass }}">
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Guardian Phone</label>
+                        <input type="text" name="phone" id="field-phone" value="{{ old('phone', $student?->phone) }}" placeholder="Enter Mobile Number" class="{{ $inputClass }}">
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Location / Student Address</label>
+                        <input type="text" name="address" id="field-address" value="{{ old('address', $student?->address) }}" placeholder="Enter Location / Village / Address" class="{{ $inputClass }}">
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">District (Location)</label>
+                        <select name="district" id="form-district-select" class="{{ $selectClass }}">
+                            <option value="">Select District</option>
+                            @foreach($districts as $dist)
+                                <option value="{{ $dist }}" @selected(old('district', $student?->district) === $dist)>{{ $dist }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Thana / Upazila (Location)</label>
+                        <select name="upazila" id="form-upazila-select" class="{{ $selectClass }}">
+                            <option value="{{ old('upazila', $student?->upazila) }}">{{ old('upazila', $student?->upazila ?: 'Select Thana') }}</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Course</label>
+                        <select name="course_id" class="{{ $selectClass }}">
+                            <option value="">Select Course</option>
+                            @foreach($courses ?? [] as $crs)
+                                <option value="{{ $crs->id }}" @selected(old('course_id', $student?->course_id) == $crs->id)>{{ $crs->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Duration</label>
+                        <select name="duration" class="{{ $selectClass }}">
+                            <option value="">Select Duration</option>
+                            @foreach(['1 Month', "2 Month's", "3 Month's", "4 Month's", "5 Month's", "6 Month's", '1 Year', "2 Year's", "3 Year's", "4 Year's"] as $dur)
+                                <option value="{{ $dur }}" @selected(old('duration', $student?->duration) === $dur)>{{ $dur }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="{{ $labelClass }}">Start Month</label>
+                            <select name="start_month" class="{{ $selectClass }}">
+                                <option value="">Select Month</option>
+                                @foreach($months as $m)
+                                    <option value="{{ $m }}" @selected(old('start_month', $student?->start_month) === $m)>{{ $m }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="{{ $labelClass }}">Start Year</label>
+                            <select name="start_year" class="{{ $selectClass }}">
+                                <option value="">Select Year</option>
+                                @foreach($startYears as $y)
+                                    <option value="{{ $y }}" @selected(old('start_year', $student?->start_year) == $y)>{{ $y }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="{{ $labelClass }}">End Month</label>
+                            <select name="end_month" class="{{ $selectClass }}">
+                                <option value="">Select Month</option>
+                                @foreach($months as $m)
+                                    <option value="{{ $m }}" @selected(old('end_month', $student?->end_month) === $m)>{{ $m }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="{{ $labelClass }}">End Year</label>
+                            <select name="end_year" class="{{ $selectClass }}">
+                                <option value="">Select Year</option>
+                                @foreach($endYears as $y)
+                                    <option value="{{ $y }}" @selected(old('end_year', $student?->end_year) == $y)>{{ $y }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Education Qualification</label>
+                        <select name="education_qualification" class="{{ $selectClass }}">
+                            <option value="">Select Qualification</option>
+                            @foreach(['PSC', 'JSC', 'SSC', 'HSC', 'Diploma', 'Honours / Degree', 'Masters', 'Other'] as $qual)
+                                <option value="{{ $qual }}" @selected(old('education_qualification', $student?->education_qualification) === $qual)>{{ $qual }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Picture / Student Photo</label>
+                        <div class="flex items-center gap-4">
+                            <div id="student-photo-preview-container" class="size-16 rounded-2xl border-2 border-dashed border-indigo-500/40 bg-[#071c2c] overflow-hidden flex items-center justify-center shrink-0 shadow-lg">
+                                @if($student?->image_path)
+                                    <img id="student-photo-preview-img" src="{{ str_starts_with($student->image_path, 'http') ? $student->image_path : asset('storage/'.$student->image_path) }}" alt="Photo" class="size-full object-cover">
+                                @else
+                                    <img id="student-photo-preview-img" class="hidden size-full object-cover" alt="Photo Preview">
+                                    <span id="student-photo-preview-icon" class="text-xs font-bold text-slate-400">Photo</span>
+                                @endif
+                            </div>
+                            <input type="file" name="image" id="student-photo-file-input" accept="image/*" onchange="window.previewStudentPhoto(this)" class="{{ $inputClass }} file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: ID CARD INFORMATION -->
+            <div class="space-y-6 pt-6 border-t border-white/10">
+                <h2 class="text-base sm:text-lg font-black text-indigo-400 uppercase tracking-wider border-b border-white/10 pb-3">
+                    ID Card Information
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                    <div>
+                        <label class="{{ $labelClass }}">Join Date</label>
+                        <input type="date" name="admitted_at" value="{{ old('admitted_at', optional($student?->admitted_at)->format('Y-m-d')) }}" class="{{ $inputClass }}">
+                    </div>
+                    <div>
+                        <label class="{{ $labelClass }}">Expire Date</label>
+                        <input type="date" name="expire_date" value="{{ old('expire_date', optional($student?->expire_date)->format('Y-m-d')) }}" class="{{ $inputClass }}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex items-center justify-end gap-3 pt-6 border-t border-white/10">
+                @if($cancelRoute)
+                    <a href="{{ $cancelRoute }}" class="rounded-xl bg-white/10 hover:bg-white/20 px-5 py-3 text-xs font-bold uppercase text-slate-300 transition-all">
+                        Cancel
+                    </a>
+                @endif
+                <button type="submit" class="rounded-xl bg-indigo-600 hover:bg-indigo-500 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-lg transition-all cursor-pointer">
+                    {{ $submitLabel }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
 (function () {
-    if (window.pdfjsLib) {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-    }
-
     let activeDocType = null;
     let cameraStream = null;
     let facingMode = 'environment';
@@ -125,8 +516,7 @@
             passport_nid_number: '',
             phone: '',
             address: '',
-            district: '',
-            upazila: ''
+            district: ''
         };
 
         const phoneMatch = rawText.match(/(?:\+?88)?01[3-9]\d{8}/);

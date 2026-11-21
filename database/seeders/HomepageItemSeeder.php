@@ -68,9 +68,15 @@ class HomepageItemSeeder extends Seeder
             ]],
             'contact' => [[
                 'key' => 'main',
-                'title' => 'Contact Us',
-                'body' => 'Haji Hossain Plaza, Demra Bazar Road, Dhaka-1360',
-                'metadata' => ['phone' => '+880 9696-481628', 'email' => 'bnyti-edubd@gmail.com', 'map_url' => 'https://maps.google.com/?q=Haji+Hossain+Plaza+Demra+Dhaka'],
+                'title' => 'Main Campus',
+                'body' => 'Kanchan Bridge Crossing (Adj. Purbachal American City), Rupganj, Narayanganj',
+                'metadata' => [
+                    'phone' => '+880 2-55000000',
+                    'mobile' => '01619-142266',
+                    'email' => 'southasian.edu.bd@gmail.com',
+                    'website' => 'www.southasian.edu.bd',
+                    'map_url' => 'https://maps.google.com/?q=Kanchan+Bridge+Crossing+Rupganj+Narayanganj',
+                ],
             ]],
             'footer' => [[
                 'key' => 'main',

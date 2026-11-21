@@ -25,8 +25,13 @@ class DatabaseSeeder extends Seeder
         );
 
         $this->call([
+            InstituteProfileSeeder::class,
+            AcademicDataSeeder::class,
+            AcademicStructureSeeder::class,
             HomepageSectionSeeder::class,
             HomepageItemSeeder::class,
+            NewsSeeder::class,
+            NoticeSeeder::class,
         ]);
     }
 }

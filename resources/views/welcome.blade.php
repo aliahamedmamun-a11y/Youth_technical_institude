@@ -6,10 +6,10 @@
         <meta name="theme-color" content="#071c2c">
         <meta
             name="description"
-            content="Bangladesh National Youth Technical Institute provides practical, industry-focused technical education for a skilled future."
+            content="South Asia Engineering & Technical Institute provides practical, industry-focused technical education for a skilled future."
         >
 
-        <title>Bangladesh National Youth Technical Institute</title>
+        <title>{{ config('app.name') }}</title>
         <link rel="icon" href="{{ asset('images/Logo.png') }}" type="image/png">
 
         <script>
@@ -76,9 +76,10 @@
                     <div class="flex items-center gap-7">
                         <a href="#home" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Home</a>
                         <a href="#courses" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Course List</a>
-                        <a href="#verified-branches" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Verified Branches</a>
+                        <a href="{{ route('public.verified-branches') }}" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Verified Branches</a>
                         <a href="{{ route('results.index') }}" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Result Search</a>
                         <a href="#about" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">About</a>
+                        <a href="{{ route('support.index') }}" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Support Team</a>
                         <a href="#contact" class="text-xs font-bold text-white uppercase tracking-widest transition hover:text-amber-400">Contact</a>
                     </div>
                     <a href="{{ route('login') }}" class="rounded bg-amber-500 px-6 py-1.5 text-xs font-black text-[#03224c] uppercase transition hover:bg-amber-400">
@@ -107,7 +108,7 @@
                         <div class="space-y-1">
                             <a href="#home" class="mobile-nav-link active" data-mobile-nav-link><span class="mobile-nav-icon">H</span><span>Home</span></a>
                             <a href="#courses" class="mobile-nav-link" data-mobile-nav-link><span class="mobile-nav-icon">C</span><span>Course List</span></a>
-                            <a href="#verified-branches" class="mobile-nav-link" data-mobile-nav-link><span class="mobile-nav-icon">B</span><span>Verified Branches</span></a>
+                            <a href="{{ route('public.verified-branches') }}" class="mobile-nav-link"><span class="mobile-nav-icon">B</span><span>Verified Branches</span></a>
                             <a href="{{ route('results.index') }}" class="mobile-nav-link"><span class="mobile-nav-icon">R</span><span>Result Search</span></a>
                             <a href="#about" class="mobile-nav-link" data-mobile-nav-link><span class="mobile-nav-icon">A</span><span>About</span></a>
                         </div>
@@ -174,11 +175,11 @@
                         </h1>
 
                         <div class="hero-actions mt-4 flex w-full flex-wrap items-center gap-4 sm:w-auto">
-                            <a href="{{ $heroLead?->link_url ?? '#courses' }}" class="rounded-md bg-amber-500 px-10 py-4 text-sm font-black text-[#03224c] uppercase tracking-wider shadow-2xl transition hover:bg-amber-400">
-                                <span>{{ $heroLead?->link_label ?? 'Join Course' }}</span>
+                            <a href="{{ route('support.index') }}" class="rounded-md bg-amber-500 px-10 py-4 text-sm font-black text-[#03224c] uppercase tracking-wider shadow-2xl transition hover:bg-amber-400">
+                                <span>Support Team</span>
                             </a>
-                            <a href="#courses" class="rounded-md border-2 border-white px-10 py-4 text-sm font-black text-white uppercase tracking-wider transition hover:bg-white hover:text-[#03224c]">
-                                <span>Programs</span>
+                            <a href="/branch-application" class="rounded-md border-2 border-white px-10 py-4 text-sm font-black text-white uppercase tracking-wider transition hover:bg-white hover:text-[#03224c]">
+                                <span>Branch Apply</span>
                             </a>
                         </div>
                     </div>
@@ -214,33 +215,146 @@
             </section>
 
             @if ($isSectionVisible('trust'))
-            <section class="relative z-20 mt-6 px-3 pb-6 sm:mt-8 sm:px-5 lg:px-8" aria-label="Why choose BNYTI">
-                <div class="mx-auto grid max-w-[1460px] grid-cols-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_4px_15px_rgba(15,23,42,.12)] dark:border-white/10 dark:bg-deep sm:grid-cols-3 lg:grid-cols-6">
-                    @foreach ($homepageItems('trust') as $item)
-                        @php
-                            $title = $item->title;
-                            $description = $item->body;
-                            $icon = match ($item->icon) {
-                            'shield' => 'M12 2.5v4m0 11v4m9.5-9.5h-4m-11 0h-4m16.2-6.2-2.8 2.8m-7.8 7.8-2.8 2.8m13.4 0-2.8-2.8M8.1 6.6 5.3 3.8M16.5 10a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm-6.4 9.5h3.8',
-                            'lab' => 'M9.5 3h5v5.2l4.9 8.5A2.9 2.9 0 0 1 16.9 21H7.1a2.9 2.9 0 0 1-2.5-4.3l4.9-8.5V3Zm-2 11h9M8 17h8m-4-14v5',
-                            'users' => 'M9.5 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm5.5 1a2.5 2.5 0 1 0 0-5m-11 12a5.5 5.5 0 0 1 11 0v2H4v-2Zm11-4a4.5 4.5 0 0 1 5 4v2h-3',
-                            'handshake' => 'M8.5 13.5 12 17l3.5-3.5m-9-4 3-3a2 2 0 0 1 2.8 0l.7.7.7-.7a2 2 0 0 1 2.8 0l3 3-7 7a2 2 0 0 1-2.8 0l-7-7 3-3m1 3 2 2m7-2 2 2',
-                            'verification' => 'M7 2.5h7l4 4V21H7a2 2 0 0 1-2-2V4.5a2 2 0 0 1 2-2Zm7 0v4h4M8.5 12l2 2 4-4m-6 7h6',
-                            default => 'M4 7.5 12 3l8 4.5-8 4.5-8-4.5Zm3 2.2V15c3 2.3 7 2.3 10 0V9.7M20 8v6m-1 2h2',
-                            };
-                        @endphp
-                        <article class="group flex min-h-[108px] flex-col items-center justify-center gap-1.5 border-r border-b border-slate-100 px-2.5 py-3 text-center transition-colors hover:bg-sky-50/50 even:border-r-0 dark:border-white/10 dark:hover:bg-sky-400/5 sm:min-h-[116px] sm:border-r sm:[&:nth-child(3n)]:border-r-0 lg:min-h-[104px] lg:border-b-0 lg:border-r lg:[&:nth-child(3n)]:border-r lg:last:border-r-0 {{ $item->stable_key === 'practical-lab' ? 'bg-sky-50 dark:bg-sky-400/5' : '' }}">
-                            <span class="grid h-8 place-items-center text-[#03224c] transition-transform duration-200 group-hover:-translate-y-0.5 dark:text-sky-400">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55">
-                                    <path d="{{ $icon }}" />
-                                </svg>
-                            </span>
-                            <div class="grid gap-0.5">
-                                <h2 class="text-[10px] leading-4 font-extrabold text-slate-800 dark:text-white">{{ $title }}</h2>
-                                <p class="mx-auto max-w-[150px] text-[8px] leading-[1.35] font-medium text-slate-500 sm:text-[8.5px] dark:text-slate-300">{{ $description }}</p>
-                            </div>
-                        </article>
-                    @endforeach
+            @php
+                $trustCards = [
+                    [
+                        'number' => '01',
+                        'title' => 'Government Approved',
+                        'subtitle' => 'RECOGNIZED BY THE GOVT. OF BANGLADESH',
+                        'description' => 'Yes, it is a fully government-approved and recognized Institution committed to delivering exceptional academic standards.',
+                        'link_url' => '#about',
+                        'icon' => 'academic',
+                    ],
+                    [
+                        'number' => '02',
+                        'title' => 'Practical Lab Training',
+                        'subtitle' => 'HANDS-ON TRAINING WITH MODERN TOOLS',
+                        'description' => 'Equipped with advanced laboratories and modern Industry-grade instruments to ensure every student gains real practical mastery.',
+                        'link_url' => '#courses',
+                        'icon' => 'lab',
+                    ],
+                    [
+                        'number' => '03',
+                        'title' => 'Expert Trainers',
+                        'subtitle' => 'EXPERIENCED & INDUSTRY-CERTIFIED INSTRUCTORS',
+                        'description' => 'Learn directly from highly qualified, certified mentors with years of academic excellence and real-world engineering experience.',
+                        'link_url' => '#support',
+                        'icon' => 'instructor',
+                    ],
+                    [
+                        'number' => '04',
+                        'title' => 'Industry Partnership',
+                        'subtitle' => 'COLLABORATION WITH LEADING INDUSTRIES',
+                        'description' => 'Strong strategic partnerships with top national and international organizations to bridge academic learning with Industry demands.',
+                        'link_url' => '#about',
+                        'icon' => 'handshake',
+                    ],
+                    [
+                        'number' => '05',
+                        'title' => 'Online Verification',
+                        'subtitle' => 'VERIFY YOUR CERTIFICATE ANYTIME, ANYWHERE',
+                        'description' => 'Instant digital certificate and student record verification system accessible 24/7 from anywhere in the world with full authenticity.',
+                        'link_url' => route('results.index'),
+                        'icon' => 'verification',
+                    ],
+                    [
+                        'number' => '06',
+                        'title' => 'Career Support',
+                        'subtitle' => 'INTERNSHIP, PLACEMENT & CAREER GUIDANCE',
+                        'description' => 'Dedicated placement cell offering Internship opportunities, resume building, interview preparation, and direct job placement support.',
+                        'link_url' => '#contact',
+                        'icon' => 'briefcase',
+                    ],
+                ];
+
+                $dbItems = $homepageItems('trust');
+                if ($dbItems->isNotEmpty()) {
+                    foreach ($dbItems->values() as $index => $item) {
+                        if (isset($trustCards[$index])) {
+                            if (! empty($item->title)) $trustCards[$index]['title'] = $item->title;
+                            if (! empty($item->subtitle)) {
+                                $trustCards[$index]['subtitle'] = mb_strtoupper($item->subtitle);
+                            }
+                            if (! empty($item->body)) {
+                                if (strlen($item->body) > 60 || str_contains($item->body, '.')) {
+                                    $trustCards[$index]['description'] = $item->body;
+                                } else {
+                                    $trustCards[$index]['subtitle'] = mb_strtoupper($item->body);
+                                }
+                            }
+                        }
+                    }
+                }
+            @endphp
+            <section class="relative z-20 bg-[#f4f8fb] py-12 dark:bg-deep/80 sm:py-16 lg:py-20" aria-label="Why choose South Asia">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="mb-10 text-center">
+                        <span class="inline-flex items-center gap-2.5 rounded-full border border-slate-200/80 bg-white px-6 py-2.5 text-xs font-black uppercase tracking-widest text-slate-700 shadow-sm dark:border-white/10 dark:bg-slate-800 dark:text-slate-200">
+                            <span class="size-2.5 rounded-full bg-[#03224c] dark:bg-amber-400"></span>
+                            WELCOME TO OUR ACADEMIC EXCELLENCE
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+                        @foreach ($trustCards as $card)
+                            <article class="group relative flex flex-col justify-between rounded-3xl border border-slate-200/80 bg-white p-7 shadow-[0_4px_20px_rgba(15,23,42,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-slate-800/90 sm:p-8">
+                                <div>
+                                    <div class="mb-6 flex items-center justify-between">
+                                        <div class="flex size-12 items-center justify-center rounded-2xl border border-sky-100/60 bg-sky-50 text-[#03224c] dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-400">
+                                            @if ($card['icon'] === 'academic')
+                                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                                    <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
+                                                </svg>
+                                            @elseif ($card['icon'] === 'lab')
+                                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M9 3h6m-3 0v6.5l4.5 7.5A2 2 0 0 1 14.8 20H9.2a2 2 0 0 1-1.7-3L12 9.5V3"/>
+                                                </svg>
+                                            @elseif ($card['icon'] === 'instructor')
+                                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                                </svg>
+                                            @elseif ($card['icon'] === 'handshake')
+                                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M11 17l-5-5m0 0l5-5m-5 5h12"/>
+                                                    <path d="M7 11.5l1.5-1.5a2 2 0 0 1 2.8 0l1.4 1.4a2 2 0 0 0 2.8 0l2.5-2.5"/>
+                                                </svg>
+                                            @elseif ($card['icon'] === 'verification')
+                                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0 1 12 2.944a11.955 11.955 0 0 1-8.618 3.04A12.02 12.02 0 0 0 3 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                                </svg>
+                                            @else
+                                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                                                </svg>
+                                            @endif
+                                        </div>
+                                        <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-black tracking-wide text-slate-500 dark:bg-slate-700/60 dark:text-slate-300">
+                                            {{ $card['number'] }}
+                                        </span>
+                                    </div>
+
+                                    <h3 class="mb-1.5 text-xl font-black leading-tight text-[#03224c] dark:text-white sm:text-2xl">
+                                        {{ $card['title'] }}
+                                    </h3>
+                                    <p class="mb-4 text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 sm:text-[11px]">
+                                        {{ $card['subtitle'] }}
+                                    </p>
+                                    <p class="mb-6 text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-sm">
+                                        {{ $card['description'] }}
+                                    </p>
+                                </div>
+
+                                <a href="{{ $card['link_url'] }}" class="mt-auto inline-flex items-center gap-1.5 text-xs font-extrabold text-[#03224c] transition-colors group-hover:text-amber-500 dark:text-sky-400 dark:group-hover:text-amber-400">
+                                    <span>Learn More</span>
+                                    <svg class="size-3.5 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                    </svg>
+                                </a>
+                            </article>
+                        @endforeach
+                    </div>
                 </div>
             </section>
             @endif
@@ -281,7 +395,7 @@
                         <div class="reveal" style="--reveal-delay: 150ms">
                             <div class="min-w-0">
                                 <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-                                    {{ $about?->content ?? "Bangladesh National Youth Technical Institute (BNYTI) is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation's youth with industry-relevant knowledge, practical expertise, and modern technological skills." }}
+                                    {{ $about?->content ?? "South Asia Engineering & Technical Institute is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation's youth with industry-relevant knowledge, practical expertise, and modern technological skills." }}
                                 </p>
 
                                 <div class="mt-8">
@@ -323,23 +437,60 @@
 
 
             @if ($isSectionVisible('statistics'))
+            @php
+                $statItems = $homepageItems('statistics');
+
+                if ($statItems->isEmpty()) {
+                    $realStudentCount = \App\Models\Student::count();
+                    $realBranchCount = \App\Models\BranchApplication::query()->where('status', \App\Enums\BranchApplicationStatus::Approved)->count();
+                    $realCourseCount = \App\Models\Course::query()->where('is_active', true)->count();
+                    $realTeacherCount = \App\Models\Teacher::query()->where('is_active', true)->count();
+
+                    $statItems = collect([
+                        (object) [
+                            'title' => ($realStudentCount > 0 ? number_format(max(20000, $realStudentCount)) . '+' : '20,000+'),
+                            'subtitle' => 'STUDENTS ENROLLED',
+                            'body' => 'STUDENTS ENROLLED'
+                        ],
+                        (object) [
+                            'title' => ($realBranchCount > 0 ? max(250, $realBranchCount) . '+' : '250+'),
+                            'subtitle' => 'BRANCHES ACROSS BD',
+                            'body' => 'BRANCHES ACROSS BD'
+                        ],
+                        (object) [
+                            'title' => ($realCourseCount > 0 ? max(80, $realCourseCount) . '+' : '80+'),
+                            'subtitle' => 'COURSES OFFERED',
+                            'body' => 'COURSES OFFERED'
+                        ],
+                        (object) [
+                            'title' => ($realTeacherCount > 0 ? max(150, $realTeacherCount) . '+' : '150+'),
+                            'subtitle' => 'EXPERT TRAINERS',
+                            'body' => 'EXPERT TRAINERS'
+                        ],
+                    ]);
+                }
+            @endphp
             <section class="bg-[#03224c] py-20 dark:bg-deep" aria-label="BNYTI achievements">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="mb-16 text-center">
-                        <h2 class="text-3xl font-black uppercase tracking-[0.25em] text-white sm:text-4xl">Training Input</h2>
+                        <h2 class="text-3xl font-black uppercase tracking-[0.25em] text-white sm:text-4xl">Our Achievements</h2>
                     </div>
 
                     <div class="grid grid-cols-2 justify-center gap-y-12 gap-x-8 md:grid-cols-4 lg:gap-16">
-                        @foreach ($homepageItems('statistics')->take(4) as $item)
+                        @foreach ($statItems->take(4) as $item)
                             @php
                                 $borderColors = ['border-sky-400', 'border-amber-400', 'border-sky-400', 'border-amber-400'];
                                 $borderColor = $borderColors[$loop->index % 4];
                             @endphp
                             <div class="flex flex-col items-center">
-                                <div class="relative flex size-40 items-center justify-center rounded-full border-[6px] {{ $borderColor }} p-6 text-center transition-transform duration-300 hover:scale-105 sm:size-48 lg:size-52">
+                                <div class="relative flex size-40 items-center justify-center rounded-full border-[6px] {{ $borderColor }} p-6 text-center transition-transform duration-300 hover:scale-105 sm:size-48 lg:size-52 shadow-2xl">
                                     <div class="flex flex-col items-center justify-center">
-                                        <span class="text-3xl font-black text-white sm:text-4xl">{{ $item->title }}</span>
-                                        <span class="mt-2 max-w-[130px] text-[10px] font-extrabold leading-tight text-slate-200 uppercase tracking-widest sm:text-11px">{{ $item->subtitle ?: $item->body }}</span>
+                                        <span class="text-2xl font-black text-white sm:text-3xl lg:text-4xl tracking-tight" data-stat-counter data-target-text="{{ $item->title }}">
+                                            0
+                                        </span>
+                                        <span class="mt-2 max-w-[130px] text-[10px] font-extrabold leading-tight text-slate-200 uppercase tracking-widest sm:text-11px">
+                                            {{ $item->subtitle ?: $item->body }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -526,313 +677,9 @@
                 </div>
             </section>
 
-            <!-- VERIFIED BRANCHES CARDS SECTION -->
-            <section id="verified-branches" class="bg-[#e7f3f9] py-16 dark:bg-[#071c2c] sm:py-20">
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="mb-12 text-center">
-                        <span class="text-xs font-black uppercase tracking-[0.2em] text-[#03224c] dark:text-amber-400">Official Branch Network</span>
-                        <h2 class="mt-1 text-3xl font-black uppercase tracking-tight text-slate-900 dark:text-white sm:text-4xl">Verified Branches</h2>
-                        <div class="mx-auto mt-3 h-1 w-16 rounded-full bg-[#03224c] dark:bg-amber-400"></div>
-                    </div>
+            <!-- VERIFIED BRANCHES MOVED TO DEDICATED /verified-branches PAGE -->
 
-                    @php
-                        $approvedBranches = \App\Models\BranchApplication::query()
-                            ->where('status', \App\Enums\BranchApplicationStatus::Approved)
-                            ->orWhere('is_active', true)
-                            ->take(6)
-                            ->get();
-
-                        if ($approvedBranches->isEmpty()) {
-                            $approvedBranches = collect([
-                                (object) [
-                                    'id' => 254871,
-                                    'director_name' => 'Md. Rakibul Hasan',
-                                    'institute_name' => 'Mirpur Technical Branch',
-                                    'district' => 'Dhaka',
-                                    'upazila' => 'Mirpur',
-                                    'full_address' => 'Mirpur, Dhaka-1216',
-                                    'director_photo_path' => null,
-                                ],
-                                (object) [
-                                    'id' => 194820,
-                                    'director_name' => 'Mohammad Arif',
-                                    'institute_name' => 'BNYTI Chattogram Branch',
-                                    'district' => 'Chattogram',
-                                    'upazila' => 'Panchlaish',
-                                    'full_address' => 'Panchlaish, Chattogram',
-                                    'director_photo_path' => null,
-                                ],
-                                (object) [
-                                    'id' => 381940,
-                                    'director_name' => 'Shamima Akter',
-                                    'institute_name' => 'BNYTI Rajshahi Branch',
-                                    'district' => 'Rajshahi',
-                                    'upazila' => 'Boalia',
-                                    'full_address' => 'Boalia, Rajshahi',
-                                    'director_photo_path' => null,
-                                ]
-                            ]);
-                        }
-                    @endphp
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        @foreach ($approvedBranches as $branch)
-                            @php
-                                $directorPhoto = $branch->director_photo_path
-                                    ? asset('storage/' . $branch->director_photo_path)
-                                    : 'https://i.ibb.co/qMgPTvMQ/1000072415.jpg';
-                                $directorName = $branch->director_name ?: 'Branch Director';
-                                $branchName = $branch->institute_name ?: 'Authorized Technical Branch';
-                                $branchCode = str_pad($branch->id, 6, '0', STR_PAD_LEFT);
-                                $branchLocation = ($branch->upazila ? $branch->upazila . ', ' : '') . ($branch->district ?: 'Bangladesh');
-                            @endphp
-
-                            <!-- VERIFIED BRANCH CARD -->
-                            <div class="relative w-full rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl text-center space-y-4 overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-3xl">
-
-                                <!-- TOP LEFT RIBBON BADGE -->
-                                <div class="absolute top-0 left-5 w-10 h-14 bg-[#03224c] text-white flex flex-col items-center justify-start pt-1.5 rounded-b-lg shadow-md z-10">
-                                    <div class="flex gap-0.5 text-amber-300 text-[8px]">
-                                        <span>★</span><span>★</span><span>★</span>
-                                    </div>
-                                    <svg class="size-4 text-amber-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                    </svg>
-                                </div>
-
-                                <!-- DIRECTOR PHOTO FRAME -->
-                                <div class="relative pt-2">
-                                    <div class="size-32 sm:size-36 rounded-full border-4 border-[#03224c] overflow-hidden mx-auto shadow-xl ring-4 ring-[#03224c]/20 bg-slate-100">
-                                        <img src="{{ $directorPhoto }}" alt="{{ $directorName }}" class="size-full object-cover object-center" onerror="this.onerror=null; this.src='https://i.ibb.co/qMgPTvMQ/1000072415.jpg';">
-                                    </div>
-                                    <!-- BRANCH DIRECTOR BADGE -->
-                                    <div class="relative -mt-4 inline-block">
-                                        <span class="bg-[#03224c] text-white text-[9px] font-black uppercase tracking-widest px-4 py-1 rounded-full shadow-lg border border-white/30">
-                                            • BRANCH DIRECTOR •
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <!-- DIRECTOR NAME -->
-                                <div class="space-y-1">
-                                    <h3 class="text-xl sm:text-2xl font-serif font-black text-[#03224c] tracking-wide truncate">
-                                        {{ $directorName }}
-                                    </h3>
-                                    <div class="flex items-center justify-center gap-2 text-[#03224c]">
-                                        <span class="h-0.5 w-10 bg-[#03224c]/30 rounded-full"></span>
-                                        <span class="text-[10px]">❖</span>
-                                        <span class="h-0.5 w-10 bg-[#03224c]/30 rounded-full"></span>
-                                    </div>
-                                </div>
-
-                                <!-- TWO WHITE INFO CARDS SIDE BY SIDE -->
-                                <div class="grid grid-cols-2 gap-3 pt-1">
-
-                                    <!-- LEFT: BRANCH CODE -->
-                                    <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 text-center space-y-1 shadow-sm">
-                                        <div class="size-9 rounded-full bg-[#03224c] text-white flex items-center justify-center mx-auto shadow">
-                                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
-                                            </svg>
-                                        </div>
-                                        <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">BRANCH CODE</p>
-                                        <p class="text-lg sm:text-xl font-black text-[#03224c] tracking-wider">{{ $branchCode }}</p>
-                                    </div>
-
-                                    <!-- RIGHT: BRANCH NAME -->
-                                    <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 text-center space-y-1 shadow-sm flex flex-col justify-between">
-                                        <div>
-                                            <div class="size-9 rounded-full bg-[#03224c] text-white flex items-center justify-center mx-auto shadow">
-                                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.5h-15V21" />
-                                                </svg>
-                                            </div>
-                                            <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mt-1">BRANCH NAME</p>
-                                            <p class="text-xs font-black text-[#03224c] leading-tight line-clamp-2 mt-0.5">{{ $branchName }}</p>
-                                        </div>
-                                        <p class="text-[9px] font-semibold text-slate-500 flex items-center justify-center gap-1 mt-1 truncate">
-                                            <svg class="size-3 text-[#03224c] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                                            </svg>
-                                            <span class="truncate">{{ $branchLocation }}</span>
-                                        </p>
-                                    </div>
-
-                                </div>
-
-                                <!-- FOOTER WITH CENTER SEAL & 4 PILLARS -->
-                                <div class="-mx-6 -mb-6 mt-4 bg-[#031735] text-white p-3 pt-5 relative rounded-b-3xl">
-                                    <!-- CENTER SEAL EMBLEM -->
-                                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 size-9 rounded-full bg-white p-0.5 shadow-xl border-2 border-[#03224c] flex items-center justify-center">
-                                        <img src="{{ asset('images/Logo.png') }}" alt="BNYTI Seal" class="size-full object-contain">
-                                    </div>
-
-                                    <div class="grid grid-cols-4 gap-0.5 text-center text-[7px] font-extrabold uppercase tracking-wider text-slate-200">
-                                        <div class="flex flex-col items-center gap-0.5">
-                                            <svg class="size-3.5 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147L12 14.63l7.74-4.483a1.125 1.125 0 000-1.954L12 3.71 4.26 8.193a1.125 1.125 0 000 1.954z" />
-                                            </svg>
-                                            <span class="line-clamp-1">SKILL</span>
-                                        </div>
-                                        <div class="flex flex-col items-center gap-0.5">
-                                            <svg class="size-3.5 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253" />
-                                            </svg>
-                                            <span class="line-clamp-1">QUALITY</span>
-                                        </div>
-                                        <div class="flex flex-col items-center gap-0.5">
-                                            <svg class="size-3.5 text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.83-5.83M11.42 15.17l2.496-3.03" />
-                                            </svg>
-                                            <span class="line-clamp-1">PRACTICAL</span>
-                                        </div>
-                                        <div class="flex flex-col items-center gap-0.5">
-                                            <svg class="size-3.5 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 005.814-5.519l2.74-1.22" />
-                                            </svg>
-                                            <span class="line-clamp-1">FUTURE</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-
-            <section id="branch-application-promo" class="bg-[#e7f3f9] pb-12 dark:bg-ink sm:pb-16">
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="relative isolate overflow-hidden rounded-[1.4rem] bg-[#03224c] px-5 py-6 text-white shadow-[0_16px_40px_rgba(3,34,76,.22)] sm:px-8 sm:py-8 lg:px-9">
-                        <div class="absolute inset-0 -z-10 opacity-40 [background-image:radial-gradient(circle,rgba(250,204,21,.85)_1px,transparent_1.5px)] [background-size:78px_72px]"></div>
-                        <div class="absolute top-1/2 left-[58%] -z-10 size-80 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-300/10"></div>
-                        <div class="absolute top-1/2 left-[58%] -z-10 size-[27rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-300/10"></div>
-
-                        <div class="grid items-center gap-8 lg:grid-cols-[1.18fr_.9fr_.48fr] lg:gap-7">
-                            <div>
-                                <p class="text-sm font-extrabold text-lime-300">Expand With BNYTI</p>
-                                <h2 class="mt-1 text-3xl leading-[1.05] font-black tracking-tight sm:text-4xl">
-                                    APPLY AS A BRANCH<br>
-                                    ACROSS <span class="text-lime-400">BANGLADESH</span>
-                                </h2>
-                                <p class="mt-4 max-w-xl text-sm leading-5 text-slate-200">
-                                    Join our growing network of technical education and establish an authorized BNYTI branch in your district. Together, we can empower the next generation with quality skills and career opportunities.
-                                </p>
-
-                                <div class="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                                    @foreach ([
-                                        ['Government Approved Training System', 'shield'],
-                                        ['Complete Academic & Operational Support', 'support'],
-                                        ['Standard Curriculum & Learning Resources', 'book'],
-                                        ['Certificate Verification System', 'certificate'],
-                                        ['Marketing & Student Admission Support', 'network'],
-                                        ['Long-Term Institutional Partnership', 'partner'],
-                                    ] as [$label, $icon])
-                                        <div class="flex min-h-20 flex-col items-center justify-center rounded-xl border border-sky-200/25 bg-[#062a58]/80 px-2 py-2.5 text-center">
-                                            <svg viewBox="0 0 24 24" aria-hidden="true" class="size-6 text-lime-300" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
-                                                @if ($icon === 'shield')
-                                                    <path d="M12 3 19 6v5c0 4.7-3 8-7 10-4-2-7-5.3-7-10V6l7-3Z" /><path d="m9 12 2 2 4-4" />
-                                                @elseif ($icon === 'support')
-                                                    <path d="M4 13v-2a8 8 0 0 1 16 0v2" /><path d="M4 12h3v6H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 1-2Zm16 0h-3v6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-1-2Z" />
-                                                @elseif ($icon === 'book')
-                                                    <path d="M4 5a3 3 0 0 1 3-2h5v17H7a3 3 0 0 0-3 2V5Zm16 0a3 3 0 0 0-3-2h-5v17h5a3 3 0 0 1 3 2V5Z" />
-                                                @elseif ($icon === 'certificate')
-                                                    <circle cx="12" cy="9" r="5" /><path d="m8.5 13-1 8 4.5-2.5 4.5 2.5-1-8" /><path d="m10 9 1.4 1.4L14 7.8" />
-                                                @elseif ($icon === 'network')
-                                                    <circle cx="6" cy="7" r="2" /><circle cx="18" cy="7" r="2" /><circle cx="12" cy="17" r="2" /><path d="m7.5 8.5 3 6m6-6-3 6M8 7h8" />
-                                                @else
-                                                    <path d="M7 20v-3a5 5 0 0 1 10 0v3M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z" /><path d="m17 10 2 2 3-4" />
-                                                @endif
-                                            </svg>
-                                            <p class="mt-2 text-[9px] leading-3 font-bold text-slate-100">{{ $label }}</p>
-                                        </div>
-                                    @endforeach
-                                </div>
-
-                                <div class="mt-6 flex flex-wrap gap-3">
-                                    <a href="{{ route('branch-applications.create') }}" class="inline-flex min-h-11 items-center justify-center gap-3 rounded-xl bg-amber-300 px-6 text-sm font-black text-[#09234c] transition hover:bg-amber-200 focus:outline-none focus:ring-4 focus:ring-amber-300/30">
-                                        Apply as a Branch
-                                        <span aria-hidden="true">→</span>
-                                    </a>
-                                    <a href="#contact" class="inline-flex min-h-11 items-center justify-center gap-3 rounded-xl border border-slate-300/35 px-6 text-sm font-bold text-white transition hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-white/15">
-                                        Download Prospectus
-                                        <span aria-hidden="true">↓</span>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="relative mx-auto hidden aspect-square w-full max-w-[330px] md:block">
-                                <svg viewBox="0 0 300 300" role="img" aria-label="Bangladesh branch coverage map" class="size-full">
-                                    <rect width="300" height="300" rx="24" fill="#03224c" />
-
-                                    <g fill="none" stroke="#24527d" stroke-width="1.2" opacity=".65">
-                                        <circle cx="150" cy="146" r="142" />
-                                        <circle cx="150" cy="146" r="108" />
-                                        <circle cx="150" cy="146" r="75" />
-                                    </g>
-
-                                    <g fill="none" stroke="#facc15" stroke-linecap="round" opacity=".75">
-                                        <path d="M8 171C64 102 193 67 294 104" stroke-dasharray="1 9" stroke-width="2" />
-                                        <path d="M19 197C92 241 224 252 291 188" stroke-dasharray="1 8" stroke-width="2" />
-                                        <path d="M72 72c42 34 122 59 213 52" stroke-dasharray="1 8" stroke-width="1.7" />
-                                    </g>
-
-                                    <g fill="#facc15">
-                                        <circle cx="11" cy="19" r="1.2" />
-                                        <circle cx="89" cy="18" r="1.2" />
-                                        <circle cx="169" cy="17" r="1.2" />
-                                        <circle cx="250" cy="18" r="1.2" />
-                                        <circle cx="24" cy="235" r="1.2" />
-                                        <circle cx="50" cy="173" r="3" />
-                                        <circle cx="279" cy="221" r="1.5" />
-                                    </g>
-
-                                    <path
-                                        d="M248.6 215.7 247.7 246.7 232.6 240.1 235.4 275 223.1 252.4 220.6 230.4 212.3 209.5 194.2 184.3 154.4 182.6 158.3 200.4 144.7 224.5 126.3 215.8 120 223.6 107.8 218.9 91 215 84.3 179.4 69.3 146.8 76.6 120.8 50 109.2 59.6 93.4 86.7 77.3 55.4 54.4 70.7 25 105 43.7 125.7 45.8 129.5 75.9 170.7 81.9 210.8 81.2 235.7 88.6 215.8 125.2 196.4 127.7 183.1 152.4 206.8 174.8 213.8 147.1 225.8 147 248.6 215.7Z"
-                                        fill="#198f65"
-                                        stroke="#8df0b1"
-                                        stroke-linejoin="round"
-                                        stroke-width="3"
-                                    />
-
-                                    <g fill="none" stroke="#9ae6b4" stroke-linecap="round" opacity=".55">
-                                        <path d="M111 47c21 40 17 76 29 117 10 36 3 68-9 90" />
-                                        <path d="M206 91c-21 26-37 55-30 92 5 28 26 49 48 62" />
-                                        <path d="M83 147c41-10 86-5 130 11" />
-                                    </g>
-
-                                    @foreach ([[99,68], [158,104], [207,106], [151,145], [108,190], [218,205]] as [$x, $y])
-                                        <g transform="translate({{ $x }} {{ $y }})">
-                                            <path d="M0-11c-5.8 0-10 4.3-10 10.2C-10 6.5 0 15 0 15S10 6.5 10-.8C10-6.7 5.8-11 0-11Z" fill="#facc15" />
-                                            <circle cy="-1" r="3.2" fill="white" />
-                                        </g>
-                                    @endforeach
-                                </svg>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3 rounded-2xl border border-sky-200/25 bg-[#062a58]/80 p-4 sm:grid-cols-4 lg:grid-cols-1">
-                                @foreach ([
-                                    ['250+', 'Branches', 'M5 20v-6h4v6m6 0v-9h4v9M3 20h18M7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm10-1a3 3 0 1 0 0-6'],
-                                    ['64', 'District Coverage', 'M12 21s7-6 7-12a7 7 0 1 0-14 0c0 6 7 12 7 12Zm0-9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z'],
-                                    ['20,000+', 'Students', 'M12 3 19 6v5c0 4.7-3 8-7 10-4-2-7-5.3-7-10V6l7-3Zm-3 9 2 2 4-4'],
-                                    ['150+', 'Expert Trainers', 'm12 3 2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7L12 3Z'],
-                                ] as [$number, $label, $path])
-                                    <div class="flex items-center gap-3 lg:border-b lg:border-white/10 lg:pb-3 lg:last:border-0 lg:last:pb-0">
-                                        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-7 shrink-0 text-lime-300" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
-                                            <path d="{{ $path }}" />
-                                        </svg>
-                                        <div>
-                                            <p class="text-xl font-black leading-none text-lime-300">{{ $number }}</p>
-                                            <p class="mt-1 text-[10px] leading-3 font-bold text-slate-200">{{ $label }}</p>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <!-- BRANCH APPLICATION PROMO MOVED OR HIDDEN AS REQUESTED -->
 
             <section id="institute-gallery" class="bg-[#03224c] py-16 text-white sm:py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -999,7 +846,7 @@
                                     <circle cx="146" cy="66" r="6" fill="white" />
                                 </svg>
                                 <div class="absolute inset-x-4 bottom-4">
-                                    <a href="https://maps.google.com/?q=Haji+Hossain+Plaza+Demra+Dhaka" target="_blank" rel="noopener noreferrer" class="flex w-full items-center justify-center rounded-xl bg-[#0b2447] py-3 text-xs font-black text-white shadow-lg transition hover:bg-slate-800">View Map</a>
+                                    <a href="https://maps.google.com/?q=Kanchan+Bridge+Crossing+Rupganj+Narayanganj" target="_blank" rel="noopener noreferrer" class="flex w-full items-center justify-center rounded-xl bg-[#0b2447] py-3 text-xs font-black text-white shadow-lg transition hover:bg-slate-800">View Map</a>
                                 </div>
                              </div>
                              <div class="px-5 py-6">
@@ -1007,11 +854,11 @@
                                  <div class="mt-4 space-y-3">
                                      <div class="flex items-start gap-3">
                                          <svg viewBox="0 0 20 20" class="mt-0.5 size-4 shrink-0 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 18s6-5 6-10A6 6 0 1 0 4 8c0 5 6 10 6 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
-                                         <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['address'] ?? 'Haji Hossain Plaza, Demra Bazar Road, Dhaka-1360' }}</p>
+                                         <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['address'] ?? 'Kanchan Bridge Crossing (Adj. Purbachal American City), Rupganj, Narayanganj' }}</p>
                                      </div>
                                      <div class="flex items-center gap-3">
                                          <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h3l1 4-2 1c1 2.5 2.5 4 5 5l1-2 4 1v3c0 1.1-.9 2-2 2C8.4 17 3 11.6 3 5a2 2 0 0 1 2-2Z"/></svg>
-                                         <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['phone'] ?? '+880 9696-481628' }}</p>
+                                         <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400">{{ $contactSettings?->metadata['phone'] ?? '+880 2-55000000' }}</p>
                                      </div>
                                  </div>
                              </div>
@@ -1052,8 +899,10 @@
                                     <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Student Address</h3>
-                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">Haji Hossain Plaza, Demra,<br>Dhaka-1360, Bangladesh</p>
+                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Main Campus</h3>
+                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">
+                                        {{ $contactSettings?->body ?: 'Kanchan Bridge Crossing (Adj. Purbachal American City), Rupganj, Narayanganj' }}
+                                    </p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
@@ -1061,17 +910,23 @@
                                     <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Phone Number</h3>
-                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">+880 9696-481628</p>
+                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Phone & Mobile</h3>
+                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">
+                                        Mobile: {{ $contactSettings?->metadata['mobile'] ?? '01619-142266' }}<br>
+                                        Phone: {{ $contactSettings?->metadata['phone'] ?? '+880 2-55000000' }}
+                                    </p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
                                 <div class="grid size-8 shrink-0 place-items-center rounded-full bg-[#0b2447] text-white">
-                                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Mobile Number</h3>
-                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">+880 1675-870000<br>bnyti-edubd@gmail.com</p>
+                                    <h3 class="text-sm font-black text-[#0b2447] dark:text-white">Website & Email</h3>
+                                    <p class="mt-1 text-xs font-bold text-slate-600 dark:text-slate-400">
+                                        Website: <a href="https://www.southasian.edu.bd" target="_blank" class="hover:text-cyan-400 transition">{{ $contactSettings?->metadata['website'] ?? 'www.southasian.edu.bd' }}</a><br>
+                                        Email: <a href="mailto:southasian.edu.bd@gmail.com" class="hover:text-cyan-400 transition">{{ $contactSettings?->metadata['email'] ?? 'southasian.edu.bd@gmail.com' }}</a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -1079,7 +934,7 @@
                         <!-- Map -->
                         <div class="relative aspect-square w-full overflow-hidden rounded-2xl bg-white shadow-lg">
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.887255866185!2d90.49969147589417!3d23.715694889785834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b719489f6b95%3A0xc6c4f8d55d144983!2sDemra%20Bazar%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1716800000000!5m2!1sen!2sbd"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.889!2d90.584!3d23.822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755cb3b4b8a2133%3A0x6a1329c0a6e0df34!2sKanchan%20Bridge%2C%20Rupganj!5e0!3m2!1sen!2sbd!4v1716800000000!5m2!1sen!2sbd"
                                 class="size-full border-0"
                                 allowfullscreen=""
                                 loading="lazy"
@@ -1088,6 +943,8 @@
                     </div>
                 </div>
             </section>
+
+
 
             {{-- Legacy homepage sections retained temporarily for reference and excluded from rendered output.
             <section class="hidden" aria-hidden="true">
@@ -1161,10 +1018,10 @@
                         <div class="mt-7 flex flex-col gap-4 text-[15px] leading-7 text-slate-600 dark:text-slate-300">
                             <h3 class="font-bold text-slate-900 dark:text-white">About the Institution</h3>
                             <p>
-                                Bangladesh National Youth Technical Institute (BNYTI) is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation’s youth with industry-relevant knowledge, practical expertise, and modern technological skills.
+                                South Asia Engineering & Technical Institute is a renowned technical and skills development institution in Bangladesh, committed to empowering the nation’s youth with industry-relevant knowledge, practical expertise, and modern technological skills.
                             </p>
                             <p>
-                                BNYTI provides a comprehensive learning environment that combines theoretical knowledge with hands-on training, professional ethics, and practical experience. Our goal is to equip every learner with the confidence and competence required to succeed in today’s competitive world.
+                                The institute provides a comprehensive learning environment that combines theoretical knowledge with hands-on training, professional ethics, and practical experience. Our goal is to equip every learner with the confidence and competence required to succeed in today’s competitive world.
                             </p>
                             <p>
                                 Through years of excellence and dedication, the institute has expanded its educational services across Bangladesh. Our growing branch network continues to deliver accessible, quality technical education and skills development training to students and trainees.
@@ -1249,52 +1106,164 @@
             --}}
         </main>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const counters = document.querySelectorAll('[data-stat-counter]');
+                if (!counters.length) return;
+
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const el = entry.target;
+                            const rawText = (el.getAttribute('data-target-text') || '0').trim();
+
+                            const numericString = rawText.replace(/[^0-9]/g, '');
+                            const targetNumber = parseInt(numericString, 10);
+
+                            if (isNaN(targetNumber) || targetNumber <= 0) {
+                                el.textContent = rawText;
+                                obs.unobserve(el);
+                                return;
+                            }
+
+                            const suffixMatch = rawText.match(/[^0-9,]+$/);
+                            const suffix = suffixMatch ? suffixMatch[0] : (rawText.includes('+') ? '+' : '');
+
+                            const duration = 2000;
+                            const startTime = performance.now();
+
+                            function updateCounter(currentTime) {
+                                const elapsedTime = currentTime - startTime;
+                                const progress = Math.min(elapsedTime / duration, 1);
+
+                                const easeOutProgress = 1 - Math.pow(1 - progress, 3);
+                                const currentVal = Math.floor(easeOutProgress * targetNumber);
+
+                                el.textContent = currentVal.toLocaleString() + suffix;
+
+                                if (progress < 1) {
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    el.textContent = targetNumber.toLocaleString() + suffix;
+                                }
+                            }
+
+                            requestAnimationFrame(updateCounter);
+                            obs.unobserve(el);
+                        }
+                    });
+                }, { threshold: 0.15 });
+
+                counters.forEach(counter => observer.observe(counter));
+            });
+        </script>
+
         <footer class="bg-[#031735] text-white">
-            <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-                <div class="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr]">
-                    <div class="space-y-6">
-                        <a href="#home" class="flex items-center gap-4">
-                            <div class="grid size-14 place-items-center rounded-xl bg-white p-2">
-                                <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="size-full">
+            <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
+
+                {{-- ROW 1: BRANDING & VERIFIED CERTIFICATE CARD --}}
+                <div class="grid gap-8 lg:grid-cols-12 items-center border-b border-white/10 pb-10">
+                    {{-- Top Left: Logo & Institute Name --}}
+                    <div class="lg:col-span-6 space-y-4">
+                        <a href="#home" class="inline-flex items-center gap-4">
+                            <div class="grid size-14 place-items-center rounded-2xl bg-white p-2 shadow-xl ring-1 ring-white/20">
+                                <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="size-full object-contain">
                             </div>
                             <div>
-                                <span class="block text-2xl font-black tracking-tight text-white uppercase leading-none">South Asia</span>
-                                <span class="block text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mt-1">Engineering & Technical Institute</span>
+                                <span class="block text-2xl sm:text-3xl font-black tracking-tight text-white uppercase leading-tight">South Asia</span>
+                                <span class="block text-[11px] font-bold tracking-[0.15em] text-slate-200 uppercase">Engineering & Technical Institute</span>
                             </div>
                         </a>
-                        <p class="text-sm leading-relaxed text-slate-300">
-                            Bangladesh National Youth Technical Institute provides practical, industry-focused technical education for a skilled future.
+                        <p class="text-xs sm:text-sm leading-relaxed text-slate-300 max-w-xl">
+                            South Asia Engineering & Technical Institute provides practical, industry-focused technical education and skill-building for a secure, professional future.
                         </p>
                     </div>
 
-                    <div>
-                        <h3 class="text-lg font-black text-white">Quick Links</h3>
-                        <div class="mt-6 grid gap-3 text-sm font-bold text-slate-400">
-                            <a href="#home" class="hover:text-emerald-400 transition">Admission</a>
-                            <a href="#courses" class="hover:text-emerald-400 transition">Courses</a>
-                            <a href="{{ route('results.index') }}" class="hover:text-emerald-400 transition">Exam Site</a>
-                            <a href="#institute-gallery" class="hover:text-emerald-400 transition">Photogallery</a>
-                            <a href="#" class="hover:text-emerald-400 transition">Primary Report</a>
-                            <a href="{{ route('login') }}" class="hover:text-emerald-400 transition">Student Status</a>
+                    {{-- Top Right: Prominent Verified Certificate Box --}}
+                    <div class="lg:col-span-6">
+                        <div class="rounded-2xl border border-white/20 bg-gradient-to-br from-[#071d3d] to-[#041228] p-5 sm:p-6 shadow-2xl backdrop-blur-md">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="size-9 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-400 shrink-0 shadow-md">
+                                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm sm:text-base font-black text-white uppercase tracking-wider">Online Certificate Verification</h4>
+                                    <p class="text-[10px] font-bold text-slate-400">Verify student authenticity using Roll or Reg. Number</p>
+                                </div>
+                            </div>
+                            <form action="{{ route('results.index') }}" method="GET" class="flex flex-col sm:flex-row gap-3">
+                                <input type="hidden" name="type" value="certificate">
+                                <input type="text" name="roll_number" required placeholder="Enter Roll or Registration Number"
+                                    class="flex-1 rounded-xl border border-white/15 bg-[#020b18] px-4 py-3 text-xs text-white placeholder-slate-400 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition shadow-inner">
+                                <button type="submit" class="rounded-xl bg-amber-500 hover:bg-amber-400 text-[#03224c] font-black text-xs uppercase tracking-wider px-6 py-3 transition active:scale-95 flex items-center justify-center gap-2 shadow-lg shrink-0">
+                                    <span>🔍 VERIFY</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- ROW 2: 4-COLUMN LINKS & CONTACT INFO --}}
+                <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 text-xs">
+                    {{-- Column 1: Quick Links --}}
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-black uppercase tracking-wider text-white border-b border-white/10 pb-2">Quick Navigation</h3>
+                        <ul class="space-y-2.5 font-bold text-slate-300">
+                            <li><a href="#home" class="hover:text-amber-400 transition flex items-center gap-2"><span class="text-slate-400">▸</span> Admission Info</a></li>
+                            <li><a href="#courses" class="hover:text-amber-400 transition flex items-center gap-2"><span class="text-slate-400">▸</span> Available Courses</a></li>
+                            <li><a href="{{ route('results.index') }}" class="hover:text-amber-400 transition flex items-center gap-2"><span class="text-slate-400">▸</span> Exam & Result Site</a></li>
+                            <li><a href="#institute-gallery" class="hover:text-amber-400 transition flex items-center gap-2"><span class="text-slate-400">▸</span> Photo Gallery</a></li>
+                            <li><a href="{{ route('login') }}" class="hover:text-amber-400 transition flex items-center gap-2"><span class="text-slate-400">▸</span> Student Status</a></li>
+                        </ul>
+                    </div>
+
+                    {{-- Column 2: Institutional & Notices --}}
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-black uppercase tracking-wider text-white border-b border-white/10 pb-2">Institute & Notice</h3>
+                        <ul class="space-y-2.5 font-bold text-slate-300">
+                            <li><a href="#about" class="hover:text-amber-400 transition flex items-center gap-2"><span class="text-slate-400">▸</span> General Info</a></li>
+                            <li><a href="#branch-application-promo" class="hover:text-amber-400 transition flex items-center gap-2"><span class="text-slate-400">▸</span> Branch Information</a></li>
+                            <li><a href="#notice-bar" class="hover:text-amber-400 transition flex items-center gap-2"><span class="text-slate-400">▸</span> Latest Notice Board</a></li>
+                            <li><a href="#contact" class="hover:text-amber-400 transition flex items-center gap-2"><span class="text-slate-400">▸</span> Contact Details</a></li>
+                            <li><a href="/branch-application" class="hover:text-amber-400 transition flex items-center gap-2"><span class="text-slate-400">▸</span> Apply For Branch</a></li>
+                        </ul>
+                    </div>
+
+                    {{-- Column 3: Main Campus & Address --}}
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-black uppercase tracking-wider text-white border-b border-white/10 pb-2">Main Campus</h3>
+                        <p class="font-bold text-slate-300 leading-relaxed">
+                            Kanchan Bridge Crossing (Adj. Purbachal American City), Rupganj, Narayanganj
+                        </p>
+                        <div class="space-y-1.5 font-bold text-slate-300">
+                            <p>Mobile: <span class="text-white font-mono">01619-142266</span></p>
+                            <p>Phone: <span class="text-white font-mono">+880 2-55000000</span></p>
                         </div>
                     </div>
 
-                    <div>
-                        <h3 class="text-lg font-black text-white">Careers</h3>
-                        <div class="mt-6 grid gap-3 text-sm font-bold text-slate-400">
-                            <a href="#about" class="hover:text-emerald-400 transition">General Info</a>
-                            <a href="#branch-application-promo" class="hover:text-emerald-400 transition">Branches Info</a>
-                            <a href="#notice-bar" class="hover:text-emerald-400 transition">Notice</a>
-                            <a href="#contact" class="hover:text-emerald-400 transition">Contact Details</a>
-                            <a href="#" class="hover:text-emerald-400 transition">Careers</a>
+                    {{-- Column 4: Online Access & Email --}}
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-black uppercase tracking-wider text-white border-b border-white/10 pb-2">Online Portal</h3>
+                        <div class="space-y-2 font-bold text-slate-300">
+                            <p>Website: <a href="https://www.southasian.edu.bd" target="_blank" class="text-slate-200 hover:text-amber-400 hover:underline">www.southasian.edu.bd</a></p>
+                            <p>Email: <a href="mailto:southasian.edu.bd@gmail.com" class="text-slate-200 hover:text-amber-400 hover:underline">southasian.edu.bd@gmail.com</a></p>
+                        </div>
+                        <div class="pt-2">
+                            <span class="inline-flex items-center gap-2 rounded-xl bg-white/10 border border-white/20 px-3 py-1.5 text-[10px] font-black uppercase text-slate-200">
+                                ✓ Govt. Registered Institute
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-white/10 py-8 text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+
+            {{-- FOOTER BOTTOM BAR --}}
+            <div class="border-t border-white/10 py-6 text-center text-[11px] font-bold text-slate-400 uppercase tracking-widest bg-[#020d20]">
                 <div class="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
                     <p>© {{ date('Y') }} South Asia Engineering & Technical Institute. All rights reserved.</p>
-                    <p>Managed by BNYTI Technical Solutions</p>
+                    <p class="text-slate-400">Managed by Technical Solutions</p>
                 </div>
             </div>
         </footer>

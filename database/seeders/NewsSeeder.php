@@ -10,7 +10,12 @@ class NewsSeeder extends Seeder
 {
     public function run(): void
     {
-        $author = User::query()->where('email', 'superadmin@bnyti.test')->firstOrFail();
+        $author = User::query()->where('email', 'superadmin@bnyti.test')->first()
+            ?? User::query()->first();
+
+        if (! $author) {
+            return;
+        }
 
         foreach ([
             ['key' => 'july-admission', 'title' => 'July 2026 Admission Open', 'excerpt' => 'Applications are now open for the next technical training session.', 'content' => 'Applications are now open for the July 2026 session. Contact the institute for course counselling and admission support.'],

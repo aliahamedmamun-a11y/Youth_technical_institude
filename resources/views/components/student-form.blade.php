@@ -567,3 +567,8 @@ $districts = config('bangladesh.districts', [
         </div>
     </form>
 </div>
+
+
+@verbatim
+
+@endverbatim

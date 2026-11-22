@@ -73,14 +73,14 @@ $districts = config('bangladesh.districts', [
                 </span>
                 <button
                     type="button"
-                    onclick="window.runDemoScan()"
+                    onclick="window.runDemoScan && window.runDemoScan()"
                     class="rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold px-3 py-1.5 transition cursor-pointer"
                 >
                     Try Demo Scan
                 </button>
                 <button
                     type="button"
-                    onclick="window.resetRegistrationForm()"
+                    onclick="window.resetRegistrationForm && window.resetRegistrationForm()"
                     class="rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-300 text-[11px] font-bold px-3 py-1.5 transition cursor-pointer"
                 >
                     Reset
@@ -88,7 +88,7 @@ $districts = config('bangladesh.districts', [
                 <button
                     type="button"
                     id="copyBladeCodeBtn"
-                    onclick="window.copyComponentCode(this)"
+                    onclick="window.copyComponentCode && window.copyComponentCode(this)"
                     class="rounded-xl bg-emerald-600/20 hover:bg-emerald-600/35 border border-emerald-400/40 text-emerald-200 text-[11px] font-bold px-3 py-1.5 transition cursor-pointer"
                 >
                     Copy Code
@@ -138,7 +138,7 @@ $districts = config('bangladesh.districts', [
             <div class="flex flex-wrap items-center gap-2.5">
                 <button
                     type="button"
-                    onclick="window.openCameraModal()"
+                    onclick="window.openCameraModal && window.openCameraModal()"
                     class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black uppercase tracking-wider px-4 py-2.5 shadow-lg transition active:scale-95 cursor-pointer"
                 >
                     <span>Camera</span>
@@ -150,7 +150,7 @@ $districts = config('bangladesh.districts', [
                         type="file"
                         accept="image/*,application/pdf,.pdf"
                         class="hidden"
-                        onchange="window.handleDocumentFileChange(event)"
+                        onchange="window.handleDocumentFileChange && window.handleDocumentFileChange(event)"
                     />
                 </label>
             </div>
@@ -160,7 +160,7 @@ $districts = config('bangladesh.districts', [
         <div class="rounded-xl border border-white/10 bg-[#09192b]/90">
             <button
                 type="button"
-                onclick="window.toggleInspector()"
+                onclick="window.toggleInspector && window.toggleInspector()"
                 class="w-full flex items-center justify-between gap-3 px-4 py-3 text-left text-xs font-bold text-slate-200 hover:bg-white/5 rounded-xl transition cursor-pointer"
             >
                 <div class="flex flex-wrap items-center gap-2">
@@ -188,14 +188,14 @@ $districts = config('bangladesh.districts', [
                     <div class="flex items-center gap-2">
                         <button
                             type="button"
-                            onclick="window.saveApiKey()"
+                            onclick="window.saveApiKey && window.saveApiKey()"
                             class="w-full rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 transition cursor-pointer"
                         >
                             Save Key
                         </button>
                         <button
                             type="button"
-                            onclick="window.reparseRawOcrText()"
+                            onclick="window.reparseRawOcrText && window.reparseRawOcrText()"
                             class="rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold px-3.5 py-2 border border-white/10 transition shrink-0 cursor-pointer"
                         >
                             Re-Parse
@@ -211,14 +211,14 @@ $districts = config('bangladesh.districts', [
                         <div class="flex items-center gap-1.5">
                             <button
                                 type="button"
-                                onclick="window.pasteIntoOcrInspector()"
+                                onclick="window.pasteIntoOcrInspector && window.pasteIntoOcrInspector()"
                                 class="rounded-lg bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-200 text-[11px] font-bold px-2.5 py-1 transition cursor-pointer"
                             >
                                 Paste &amp; Parse
                             </button>
                             <button
                                 type="button"
-                                onclick="window.copyOcrInspectorText(this)"
+                                onclick="window.copyOcrInspectorText && window.copyOcrInspectorText(this)"
                                 class="rounded-lg bg-indigo-600/25 hover:bg-indigo-600/40 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold px-2.5 py-1 transition cursor-pointer"
                             >
                                 Copy OCR
@@ -241,7 +241,7 @@ $districts = config('bangladesh.districts', [
         <div class="w-full max-w-lg rounded-2xl border border-indigo-500/30 bg-[#071c2c] p-5 space-y-4 shadow-2xl">
             <div class="flex items-center justify-between border-b border-white/10 pb-3">
                 <h3 class="text-sm font-black text-indigo-300 uppercase tracking-wider">Scan Document with Camera</h3>
-                <button type="button" onclick="window.closeCameraModal()" class="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">
+                <button type="button" onclick="window.closeCameraModal && window.closeCameraModal()" class="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">
                     Close ✕
                 </button>
             </div>
@@ -250,14 +250,14 @@ $districts = config('bangladesh.districts', [
             <div class="flex items-center justify-end gap-2.5">
                 <button
                     type="button"
-                    onclick="window.closeCameraModal()"
+                    onclick="window.closeCameraModal && window.closeCameraModal()"
                     class="rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-2 cursor-pointer"
                 >
                     Cancel
                 </button>
                 <button
                     type="button"
-                    onclick="window.captureCameraPhoto()"
+                    onclick="window.captureCameraPhoto && window.captureCameraPhoto()"
                     class="rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black uppercase tracking-wider px-4 py-2 cursor-pointer"
                 >
                     Capture &amp; Scan
@@ -336,7 +336,7 @@ $districts = config('bangladesh.districts', [
                 <!-- District (Location) -->
                 <div>
                     <label class="{{ $labelClass }}">District (Location)</label>
-                    <select name="district" id="form-district-select" onchange="window.populateThanasForDistrict()" class="{{ $selectClass }}">
+                    <select name="district" id="form-district-select" onchange="window.populateThanasForDistrict && window.populateThanasForDistrict()" class="{{ $selectClass }}">
                         <option value="">Select District</option>
                         @foreach($districts as $dist)
                             <option value="{{ $dist }}" @selected(old('district', $student?->district) === $dist)>{{ $dist }}</option>
@@ -441,7 +441,7 @@ $districts = config('bangladesh.districts', [
                                 <span id="student-photo-preview-icon" class="text-xs font-bold text-slate-400">Photo</span>
                             @endif
                         </div>
-                        <input type="file" name="image" id="student-photo-file-input" accept="image/*" onchange="window.previewStudentPhoto(this)" class="{{ $inputClass }} file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
+                        <input type="file" name="image" id="student-photo-file-input" accept="image/*" onchange="window.previewStudentPhoto && window.previewStudentPhoto(this)" class="{{ $inputClass }} file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
                     </div>
                 </div>
 
